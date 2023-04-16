@@ -1,0 +1,35 @@
+.container-products {
+  display: flex;
+  justify-content: space-around;
+  padding: 50px;
+  margin-bottom: auto;
+}
+
+.row-product {
+  text-align: center;
+}
+.card-item-image img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+
+.anticon {
+  color: #000000;
+}
+.ant-btn {
+  background-color: #fff;
+}
+.ant-card-grid {
+  min-width: 260px;
+}
+.btn-shopping:hover {
+  background: #ffff;
+}
+
+.tag{
+  position: absolute;
+  top: 25px;
+  right: 10px;
+}

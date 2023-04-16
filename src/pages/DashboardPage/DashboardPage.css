@@ -1,0 +1,56 @@
+.brand {
+  font-size: 2.3em;
+  padding: 10px;
+}
+.content {
+  padding: 24px;
+}
+
+/* search input */
+.search-global-input {
+  display: flex;
+  width: 220px;
+  justify-content: center;
+}
+
+.User-icon-global {
+  font-size: 20px;
+  margin: 25px 25px;
+}
+
+.icon-money {
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 16px;
+  margin: auto;
+  background-color: #1890ff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart {
+  display: flex;
+  flex-wrap: row wrap;
+}
+.left-chart {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+  height: 100%;
+  width: 30%;
+  margin-top: 20px;
+}
+.right-chart {
+  margin-bottom: 24px;
+  height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+  width: 70%;
+  margin-left: 20px;
+  margin-top: 20px;
+}
