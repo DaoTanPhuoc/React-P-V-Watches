@@ -5,6 +5,7 @@ import {
   Checkbox,
   notification,
   Pagination,
+  Select,
   Slider,
   Space,
   Tag,
@@ -184,66 +185,109 @@ const ShopPage = () => {
   }
 
   return (
-    <>
-      <>
-        <Space>
-          <Button type="primary" onClick={showDrawer}>
-            <p style={{ color: "black" }}>
-              <FilterFilled className="btn-filter" /> Filter
-            </p>
-          </Button>
-        </Space>
-        <Drawer
-          title="VP-Watches"
-          placement={placement}
-          closable={false}
-          onClose={onClose}
-          open={open}
-          key={placement}
-        >
-          {/* brand */}
-          <p
-            color="black"
-            style={{ fontWeight: "bold", textAlign: "center", margin: 15 }}
-          >
-            Brand
-          </p>
-          <Checkbox.Group style={{ width: "100%" }} onChange={onChangeCheckBox}>
-            <Row>
-              <Col span={8}>
-                <Checkbox value="A">Rolex</Checkbox>
-              </Col>
-              <Col span={8}>
-                <Checkbox value="B">Citizen</Checkbox>
-              </Col>
-              <Col span={8}>
-                <Checkbox value="C">Orient</Checkbox>
-              </Col>
-              <Col span={8}>
-                <Checkbox value="D">Omega</Checkbox>
-              </Col>
-              <Col span={8}>
-                <Checkbox value="E">Hublot</Checkbox>
-              </Col>
-              <Col span={8}>
-                <Checkbox value="E">Chanel</Checkbox>
-              </Col>
-            </Row>
-          </Checkbox.Group>
+    <div>
+      <section className="ban_sec">
+        <div className="container-ban">
+          <div className="ban_img">
+            <img src="https://i.ibb.co/NVjsGWG/banner.jpg" alt="banner" />
+            <div className="ban_text">
+              <strong>
+                <span>Meeting current</span>
+                <br /> needs now
+              </strong>
+              <p>
+                You can prioritize a child’s mental, emotional, <br />
+                behavioral, and physical health{" "}
+              </p>
+              <a href="#">Lend a hand</a>
+            </div>
+          </div>
+        </div>
+      </section>
 
-          <p
-            color="black"
-            style={{ fontWeight: "bold", textAlign: "center", margin: 15 }}
-          >
-            Price Range
-          </p>
-          <>
-            <Slider marks={marks} step={null} defaultValue={37} />
-          </>
-        </Drawer>
-      </>
-      <div>
-        <Card title="Card Title">
+      {/* filter */}
+      <div className="Products-container">
+        <div className="filter">
+          <div className="filter-items">
+            <Select
+              showSearch
+              style={{
+                width: 150,
+                fontWeight: "bold",
+              }}
+              placeholder="Chose Brand"
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? "").includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? "")
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? "").toLowerCase())
+              }
+              options={[
+                {
+                  value: "1",
+                  label: "Rolex",
+                },
+                {
+                  value: "2",
+                  label: "Channel",
+                },
+                {
+                  value: "3",
+                  label: "Orient",
+                },
+                {
+                  value: "4",
+                  label: "Hublot",
+                },
+              ]}
+            />
+          </div>
+          <div className="filter-items">
+            <Select
+              showSearch
+              style={{
+                width: 150,
+                fontWeight: "bold",
+              }}
+              placeholder="Chose Brand"
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? "").includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? "")
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? "").toLowerCase())
+              }
+              options={[
+                {
+                  value: "1",
+                  label: "Rolex",
+                },
+                {
+                  value: "2",
+                  label: "Channel",
+                },
+                {
+                  value: "3",
+                  label: "Orient",
+                },
+                {
+                  value: "4",
+                  label: "Hublot",
+                },
+              ]}
+            />
+          </div>
+        </div>
+
+        <div style={{ padding: 20 }}>
+          <h4 style={{ fontWeight: "bold" }}>Watches For You!</h4>
+        </div>
+        <Card>
           {filteredProducts.map((watchItem) => (
             <Card.Grid style={gridStyle} key={watchItem.Id}>
               <Image
@@ -303,7 +347,7 @@ const ShopPage = () => {
           onChange={(page) => onChangePage(page)}
         />
       </div>
-    </>
+    </div>
   );
 };
 

@@ -158,10 +158,14 @@ img {
   height: 100%;
 }
 
+.Similar-Product-container {
+  background-color: #fff;
+}
+
 .App {
   width: 70%;
   margin: 0 auto;
-  margin-top: 50px;
+  /* margin-top: 50px; */
 }
 
 .slick-slide > div {
@@ -198,21 +202,16 @@ img {
   margin: 10px 20px;
 }
 
-/* .category {
-  position: relative;
-}
-.category::before {
-  content: '';
-  background: rgb(255, 61, 61);
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 0;
-  right: 0;
-  height: 2px;
-} */
-
 .slick-prev:before,
 .slick-next:before {
   color: black;
   font-size: 30px;
+}
+
+/* container-tab-detail */
+.container-tab-detail {
+  display: flex;
+}
+.container-tab-detail .container-left {
+  width: 50%;
 }

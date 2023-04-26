@@ -2,7 +2,6 @@
   float: left;
   overflow: hidden;
 }
-
 /* For downButton to work as menu */
 .downMenu .downBtn {
   padding: 15px 15px;
@@ -48,13 +47,19 @@
 .menuCol a:hover {
   background-color: rgb(223, 223, 223);
 }
-
-.search-global-input {
-  display: flex;
-  width: 220px;
-  justify-content: center;
+.ant-menu-title-content {
+  font-weight: bold;
 }
-
+.ant-input-group {
+  margin: 25px 0;
+  height: 25px;
+}
+.ant-btn {
+  margin-left: 0px;
+}
+.ant-btn:hover {
+  background-color: #ffffff;
+}
 header {
   display: flex;
   align-items: center;
@@ -63,10 +68,6 @@ header {
 .ant-menu-overflow {
   display: flex;
   flex: 1;
-}
-.User-icon-global {
-  font-size: 20px;
-  margin: 25px 25px;
 }
 
 .ant-badge {
@@ -95,7 +96,9 @@ header {
 }
 
 .card-content {
-  padding: 1.2em;
+  padding: 0.5em;
+  height: 100%;
+  background-color: #ffffff;
 }
 
 .card-content h2 {
@@ -107,12 +110,13 @@ header {
 
 .cards {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 .card-content-items {
-  max-height: 280px;
+  max-height: 400px;
   overflow: auto;
+  background-color: #ffffff;
 }
 
 .card-content ::-webkit-scrollbar {

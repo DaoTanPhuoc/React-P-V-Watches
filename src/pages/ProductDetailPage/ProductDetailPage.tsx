@@ -1,6 +1,14 @@
 // import React from "react";
 
-import { Descriptions, Input, ListProps, Tabs, TabsProps } from "antd";
+import {
+  Card,
+  Descriptions,
+  Input,
+  ListProps,
+  Space,
+  Tabs,
+  TabsProps,
+} from "antd";
 import { useEffect, useState } from "react";
 import { Col, Row } from "antd";
 import ReactPlayer from "react-player";
@@ -12,7 +20,14 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { ProductModel } from "../../models/ProductModel";
 import { Content } from "antd/es/layout/layout";
-
+import TabPane from "antd/es/tabs/TabPane";
+import {
+  TagsOutlined,
+  GoldOutlined,
+  SketchOutlined,
+  SafetyCertificateOutlined,
+  ApartmentOutlined,
+} from "@ant-design/icons";
 const images = [
   {
     id: 1,
@@ -66,6 +81,11 @@ const images = [
 // ];
 
 // carousel
+
+const gridStyle: React.CSSProperties = {
+  width: "25%",
+  textAlign: "center",
+};
 const settings = {
   dots: true,
   infinite: false,
@@ -139,44 +159,142 @@ const Details = () => {
   }, [id]);
 
   return (
-    <Row>
-      <Col span={13}>
-        <Descriptions
-          style={{ padding: 30, width: 800 }}
-          bordered
-          column={1}
-          size="small"
-        >
-          <Descriptions.Item label="Mã:">{product?.Code}</Descriptions.Item>
-          <Descriptions.Item label="Tình Trạng">New</Descriptions.Item>
-          <Descriptions.Item label="Xuất xứ:">Thụy Sĩ</Descriptions.Item>
-          <Descriptions.Item label="Kích thước:">
-            {product?.CaseSize}
-          </Descriptions.Item>
-          <Descriptions.Item label="Kính:">Sapphire</Descriptions.Item>
-          <Descriptions.Item label="Mặt số:">Khảm trai</Descriptions.Item>
-          <Descriptions.Item label="Bộ máy:">
-            {product?.Movement}
-          </Descriptions.Item>
-          <Descriptions.Item label="Dự trữ năng lượng: ">
-            55 giờ
-          </Descriptions.Item>
-          <Descriptions.Item label="Chức năng: ">
-            Giờ, Phút, Giây, Ngày
-          </Descriptions.Item>
-          <Descriptions.Item label="Chất liệu: ">
-            Vàng hồng 18k
-          </Descriptions.Item>
-          <Descriptions.Item label="Bezel: ">Nạm kim cương</Descriptions.Item>
-          <Descriptions.Item label="dây đeo: ">
-            President, liên kết ba mảnh hình bán nguyệt
-          </Descriptions.Item>
-          <Descriptions.Item label="Chất liệu dây đeo: ">
-            Vàng hồng 18k
-          </Descriptions.Item>
-        </Descriptions>
-      </Col>
-    </Row>
+    <div className="container-tab-detail">
+      <div className="container-right">
+        <Col span={13}>
+          <Descriptions
+            style={{ padding: 30, width: 800 }}
+            bordered
+            column={1}
+            size="small"
+          >
+            <Descriptions.Item label="Mã:">{product?.Code}</Descriptions.Item>
+            <Descriptions.Item label="Tình Trạng">New</Descriptions.Item>
+            <Descriptions.Item label="Xuất xứ:">Thụy Sĩ</Descriptions.Item>
+            <Descriptions.Item label="Kích thước:">
+              {product?.CaseSize}
+            </Descriptions.Item>
+            <Descriptions.Item label="Kính:">Sapphire</Descriptions.Item>
+            <Descriptions.Item label="Mặt số:">Khảm trai</Descriptions.Item>
+            <Descriptions.Item label="Bộ máy:">
+              {product?.Movement}
+            </Descriptions.Item>
+            <Descriptions.Item label="Dự trữ năng lượng: ">
+              55 giờ
+            </Descriptions.Item>
+            <Descriptions.Item label="Chức năng: ">
+              Giờ, Phút, Giây, Ngày
+            </Descriptions.Item>
+            <Descriptions.Item label="Chất liệu: ">
+              Vàng hồng 18k
+            </Descriptions.Item>
+            <Descriptions.Item label="Bezel: ">Nạm kim cương</Descriptions.Item>
+            <Descriptions.Item label="dây đeo: ">
+              President, liên kết ba mảnh hình bán nguyệt
+            </Descriptions.Item>
+            <Descriptions.Item label="Chất liệu dây đeo: ">
+              Vàng hồng 18k
+            </Descriptions.Item>
+          </Descriptions>
+        </Col>
+      </div>
+      <div className="container-left">
+        <div style={{ padding: 18 }}>
+          <h4 style={{ textTransform: "uppercase", fontWeight: "bold" }}>
+            Tại sao quý khách nên chọn P-watches
+          </h4>
+          <Col span={14}>
+            <Descriptions.Item style={{ display: "block" }} label="Config Info">
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 8,
+                  paddingTop: 15,
+                }}
+              >
+                <div>
+                  <SafetyCertificateOutlined style={{ fontSize: 32 }} />
+                </div>
+                <h4 style={{ fontSize: 16 }}>
+                  Dịch vụ hậu mãi và sửa chữa hàng đầu theo tiêu chuẩn Thụy Sĩ
+                </h4>
+              </div>
+              <br />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 8,
+                  paddingTop: 15,
+                }}
+              >
+                <div>
+                  <SketchOutlined style={{ fontSize: 32 }} />
+                </div>
+                <h4 style={{ fontSize: 16 }}>
+                  Luôn luôn cập nhật những sản phẩm mới phù hợp với lứa tuổi
+                </h4>
+              </div>
+              <br />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 8,
+                  paddingTop: 15,
+                }}
+              >
+                <div>
+                  <ApartmentOutlined style={{ fontSize: 32 }} />
+                </div>
+                <h4 style={{ fontSize: 16 }}>
+                  Dịch vụ hậu mãi và sửa chữa hàng đầu theo tiêu chuẩn Thụy Sĩ
+                </h4>
+              </div>
+              <br />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 8,
+                  paddingTop: 15,
+                }}
+              >
+                <div>
+                  <TagsOutlined style={{ fontSize: 32 }} />
+                </div>
+                <h4 style={{ fontSize: 16 }}>
+                  Dịch vụ hậu mãi và sửa chữa hàng đầu theo tiêu chuẩn Thụy Sĩ
+                </h4>
+              </div>
+              <br />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 8,
+                  paddingTop: 15,
+                }}
+              >
+                <div>
+                  <GoldOutlined style={{ fontSize: 32 }} />
+                </div>
+                <h4 style={{ fontSize: 16 }}>
+                  Dịch vụ hậu mãi và sửa chữa hàng đầu theo tiêu chuẩn Thụy Sĩ
+                </h4>
+              </div>
+              <br />
+            </Descriptions.Item>
+          </Col>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -305,28 +423,125 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
+      <div
+        style={{
+          width: "100%",
+          height: 150,
+          backgroundColor: "black",
+        }}
+        className="banner-row-container"
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 30,
+          }}
+        >
+          <Card.Grid style={gridStyle}>
+            <div className="card-banner-items-image">
+              <img
+                style={{
+                  width: 60,
+                  height: 60,
+                }}
+                src="https://donghotantan.vn/images/strengths/original/stg21_1659589070.png"
+                alt=""
+              />
+            </div>
+            <div className="card-banner-items-content">
+              <h4 style={{ fontWeight: 700, padding: 10, color: "#fff" }}>
+                Đồng hồ chính hảng
+              </h4>
+            </div>
+          </Card.Grid>
+          <Card.Grid style={gridStyle}>
+            <div className="card-banner-items-image">
+              <img
+                style={{
+                  width: 60,
+                  height: 60,
+                }}
+                src="https://donghotantan.vn/images/strengths/original/stg22_1659589113.png"
+                alt=""
+              />
+            </div>
+            <div className="card-banner-items-content">
+              <h4 style={{ fontWeight: 700, padding: 10, color: "#fff" }}>
+                Nhà Phân Phối Chính Thức
+              </h4>
+            </div>
+          </Card.Grid>
+          <Card.Grid style={gridStyle}>
+            <div className="card-banner-items-image">
+              <img
+                style={{
+                  width: 60,
+                  height: 60,
+                }}
+                src="https://donghotantan.vn/images/strengths/original/stg24_1659589157.png"
+                alt=""
+              />
+            </div>
+            <div className="card-banner-items-content">
+              <h4 style={{ fontWeight: 700, padding: 10, color: "#fff" }}>
+                Nhiều Mẫu Mã
+              </h4>
+            </div>
+          </Card.Grid>
+          <Card.Grid style={gridStyle}>
+            <div className="card-banner-items-image">
+              <img
+                style={{
+                  width: 60,
+                  height: 60,
+                }}
+                src="https://donghotantan.vn/images/strengths/original/stg23_1659589133.png"
+                alt=""
+              />
+            </div>
+            <div className="card-banner-items-content">
+              <h4 style={{ fontWeight: 700, padding: 10, color: "#fff" }}>
+                Ủy quyền bảo hành
+              </h4>
+            </div>
+          </Card.Grid>
+        </div>
+      </div>
+
       <Tabs
-        size="small"
-        style={{ background: "white", paddingLeft: 90 }}
+        size="large"
+        style={{
+          background: "white",
+          paddingLeft: 90,
+          paddingBottom: 20,
+        }}
         defaultActiveKey="1"
         items={items}
         onChange={onChange}
       />
 
-      <div className="App">
-        <h2 style={{ textAlign: "center", padding: 20 }}>Similar Product</h2>
-        <Slider {...settings}>
-          {similarProducts.map((similarProduct) => (
-            <div key={similarProduct.Id}>
-              <img
-                style={{ height: 350, width: "100%", objectFit: "cover" }}
-                src={similarProduct.Image}
-                alt={similarProduct.Name}
-              />
-              <h3 style={{ padding: 15 }}>{similarProduct.Name}</h3>
-            </div>
-          ))}
-        </Slider>
+      <div className="Similar-Product-container">
+        <div className="App">
+          <h2 style={{ textAlign: "center", padding: 20 }}>
+            SẢN PHẨM LIÊN QUAN
+          </h2>
+          <Slider {...settings}>
+            {similarProducts.map((similarProduct) => (
+              <div key={similarProduct.Id}>
+                <img
+                  style={{ height: 300, width: "100%", objectFit: "cover" }}
+                  src={similarProduct.Image}
+                  alt={similarProduct.Name}
+                />
+                <h3 style={{ padding: 15, fontSize: 17, fontWeight: 700 }}>
+                  {similarProduct.Name}
+                </h3>
+              </div>
+            ))}
+          </Slider>
+        </div>
       </div>
     </div>
   );

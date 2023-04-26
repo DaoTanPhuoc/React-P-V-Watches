@@ -1,22 +1,11 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import {
-  AppstoreOutlined,
-  BarChartOutlined,
-  CloudOutlined,
   ShopOutlined,
-  TeamOutlined,
-  UploadOutlined,
   UserOutlined,
-  VideoCameraOutlined,
-  HomeOutlined,
-  InfoCircleOutlined,
-  FolderOpenOutlined,
-  TagsOutlined,
-  TagOutlined,
-  MenuOutlined,
-  BookOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
+  BellOutlined,
+  FormOutlined,
+  SearchOutlined,
+  FileTextOutlined,
   PoweroffOutlined,
 } from "@ant-design/icons";
 import {
@@ -48,25 +37,13 @@ import path from "path";
 import "./DashboardPage.css";
 import Item from "antd/es/list/Item";
 import { useParams } from "react-router";
-import HomeDas from "./HomeDashboard";
+import HomeDas from "./HomeDashboard/HomeDashboard";
 import News from "../NewsPage/NewsPage";
+import ProductsDashboard from "./ProductsDashboard/ProductsDashboard";
+import PostDashboard from "./PostDashboard/PostDashboard";
+import BillingDashboard from "./BillingDashboard/BillingDashboard";
 
 const { Header, Content, Footer, Sider } = Layout;
-
-// const items: MenuProps["items"] = [
-//   UserOutlined,
-//   VideoCameraOutlined,
-//   UploadOutlined,
-//   BarChartOutlined,
-//   CloudOutlined,
-//   AppstoreOutlined,
-//   TeamOutlined,
-//   ShopOutlined,
-// ].map((icon, index) => ({
-//   key: String(index + 1),
-//   icon: React.createElement(icon),
-//   label: `nav ${index + 1}`,
-// }));
 
 interface ChartModel {
   x: string;
@@ -227,43 +204,56 @@ const Dashboard: React.FC = () => {
   // }
   const menuItems = [
     { key: 1, icon: <UserOutlined />, label: "Home", compoment: <HomeDas /> },
-    { key: 2, icon: <UserOutlined />, label: "Home", compoment: <News /> },
+    {
+      key: 2,
+      icon: <ShopOutlined />,
+      label: "Products",
+      compoment: <ProductsDashboard />,
+    },
+    {
+      key: 3,
+      icon: <FormOutlined />,
+      label: "Post",
+      compoment: <PostDashboard />,
+    },
+    {
+      key: 4,
+      icon: <FileTextOutlined />,
+      label: "Billing",
+      compoment: <BillingDashboard />,
+    },
   ];
   const [render, SetRender] = useState(<HomeDas />);
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          items={menuItems.map((i) => ({
-            key: i.key,
-            icon: i.icon,
-            label: i.label,
-            onClick: () => {
-              SetRender(i.compoment);
-            },
-          }))}
-          //[
-          //   {
-          //     key: "1",
-          //     icon: <UserOutlined />,
-          //     label: "Home",
-          //   },
-          //   {
-          //     key: "2",
-          //     icon: <VideoCameraOutlined />,
-          //     label: <Link to="/hi" />,
-          //   },
-          //   {
-          //     key: "3",
-          //     icon: <UploadOutlined />,
-          //     label: "nav 3",
-          //   },
-          // ]}
-        />
+        <div className="slider-menu">
+          <div className="logo" />
+          <img
+            style={{
+              backgroundColor: "white",
+              width: 200,
+              height: 54,
+              objectFit: "cover",
+            }}
+            src="https://i1.sndcdn.com/artworks-000638521540-rcn15j-t500x500.jpg"
+            alt=""
+          />
+          <Menu
+            style={{ height: "100%" }}
+            theme="dark"
+            mode="inline"
+            defaultSelectedKeys={["1"]}
+            items={menuItems.map((i) => ({
+              key: i.key,
+              icon: i.icon,
+              label: i.label,
+              onClick: () => {
+                SetRender(i.compoment);
+              },
+            }))}
+          />
+        </div>
       </Sider>
       <Layout className="site-layout">
         <Header
@@ -277,23 +267,26 @@ const Dashboard: React.FC = () => {
           }}
         >
           <div style={{ width: "100%" }}>
-            {React.createElement(
+            {/* {React.createElement(
               collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
               {
                 className: "trigger",
                 onClick: () => setCollapsed(!collapsed),
               }
-            )}
+            )} */}
+            <div style={{ fontSize: "22px" }}>
+              <SearchOutlined />
+            </div>
           </div>
 
-          <Search
+          {/* <Search
             className="search-global-input"
             placeholder="input search text"
             onSearch={(value) => console.log(value)}
             style={{ width: 200 }}
-          />
+          /> */}
           <a>
-            <UserOutlined className="User-icon-global" />
+            <BellOutlined className="User-icon-global" />
           </a>
           <Button
             // style={{ position: "absolute", top: 0, right: 0 }}
@@ -301,11 +294,16 @@ const Dashboard: React.FC = () => {
             type="primary"
             icon={<PoweroffOutlined />}
           ></Button>
+          <Space style={{ paddingLeft: 20 }} size={16} wrap>
+            <Avatar
+              size={40}
+              src={"https://i.ytimg.com/vi/y-Tut29zvPE/maxresdefault.jpg"}
+            />
+          </Space>
         </Header>
 
         <Content
           style={{
-            margin: "24px 16px",
             padding: 24,
             minHeight: 280,
             background: colorBgContainer,
