@@ -30,6 +30,7 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 import { useParams } from "react-router";
+import { log } from "console";
 const onChange = (value: number) => {
   console.log("changed", value);
 };
@@ -140,7 +141,10 @@ const CartPage = () => {
     orderProduct.TotalPrice = quantity * orderProduct.Price;
     onChangeCartOrders(productsTmp);
   };
-
+  const deleteItem = (index: number) => {
+    console.log(index);
+    const newCart = cartOrders.splice(index, 1);
+  };
   const columns: ColumnsType<any> = [
     {
       title: "Image",
@@ -197,10 +201,10 @@ const CartPage = () => {
       title: "Action",
       dataIndex: "Action",
       key: "Action",
-      render: () => (
-        <a>
+      render: (value, product, index) => (
+        <button onClick={() => deleteItem(index)}>
           <DeleteOutlined style={{ fontSize: 20 }} />
-        </a>
+        </button>
       ),
     },
   ];

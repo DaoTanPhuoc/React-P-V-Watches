@@ -24,6 +24,7 @@ import {
   SettingOutlined,
   UserOutlined,
   ShoppingCartOutlined,
+  SearchOutlined,
 } from "@ant-design/icons";
 import { Header, Content, Footer } from "antd/es/layout/layout";
 import { useContext, useEffect, useMemo, useState } from "react";
@@ -73,97 +74,6 @@ const UserLayout = (props: Props) => {
     }
   }, [path]);
 
-  function dropdownMan() {
-    <>
-      <div className="Container-Man">
-        <li className="nav-item">
-          <a href="#" className="desktop-item shadow_one">
-            Services
-          </a>
-          <input type="checkbox" id="showMega" />
-          <label htmlFor="showMega" className="mobile-item">
-            Services
-          </label>
-          <div className="mega-box">
-            <div className="content"></div>
-            <div className="row">
-              <h4>
-                <a href="{{route('frontend.leadgeneration')}}">
-                  Lead Generation
-                </a>
-              </h4>
-              <ul className="mega-links">
-                <li>
-                  <a href="#">B2B lead Generation</a>
-                </li>
-                <li>
-                  <a href="#">PPC Lead Generation</a>
-                </li>
-                <li>
-                  <a href="#">B2B lead Generation</a>
-                </li>
-                <li>
-                  <a href="#">PPC Lead Generation</a>
-                </li>
-              </ul>
-            </div>
-            <div className="row">
-              <h4>Web Development</h4>
-              <ul className="mega-links">
-                <li>
-                  <a href="#">WordPress Development</a>
-                </li>
-                <li>
-                  <a href="#">MERN Development</a>
-                </li>
-                <li>
-                  <a href="#">Web Application</a>
-                </li>
-                <li>
-                  <a href="#">Custom Website</a>
-                </li>
-              </ul>
-            </div>
-            <div className="row">
-              <h4>Email Services</h4>
-              <ul className="mega-links">
-                <li>
-                  <a href="#">Email Template</a>
-                </li>
-                <li>
-                  <a href="#">Email Marketing</a>
-                </li>
-                <li>
-                  <a href="#">Mailchimp</a>
-                </li>
-                <li>
-                  <a href="#">Campain</a>
-                </li>
-              </ul>
-            </div>
-            <div className="row">
-              <h4>Graphics Services</h4>
-              <ul className="mega-links">
-                <li>
-                  <a href="#">Photo Retoucing</a>
-                </li>
-                <li>
-                  <a href="#">Background Removal</a>
-                </li>
-                <li>
-                  <a href="#">Photo Manipulation</a>
-                </li>
-                <li>
-                  <a href="#">Banner Design</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </li>
-      </div>
-    </>;
-  }
-
   const renderMenuDropdown = () => {
     switch (hoverMenu) {
       case 1:
@@ -178,15 +88,15 @@ const UserLayout = (props: Props) => {
                 <div className="card">
                   <a href="#">
                     <div className="card-content">
-                      <h2>Caliber</h2>
+                      <h2>What's new</h2>
                       <div className="card-content-items">
+                        <img
+                          style={{ width: 172, height: 80, objectFit: "cover" }}
+                          src="https://luxuo.vn/wp-content/uploads/2020/11/https___hypebeast.com_image_2020_11_rolex-a-z-modern-rolex-watch-guide-01-930x620.jpg"
+                          alt=""
+                        />
                         <p>Automatic</p>
                         <p>Quartz</p>
-                        <p>Manual winding machine</p>
-                        <p> In-house</p>
-                        <p>Ronda</p>
-                        <p>Sellita</p>
-                        <p>ETA</p>
                       </div>
                     </div>
                   </a>
@@ -195,7 +105,12 @@ const UserLayout = (props: Props) => {
                 <div className="card">
                   <a href="#">
                     <div className="card-content">
-                      <h2>Strap</h2>
+                      <h2>Man watches</h2>
+                      <img
+                        style={{ width: 172, height: 80, objectFit: "cover" }}
+                        src="https://watchmydiamonds.com/media/catalog/product/cache/1/thumbnail/1280x/040ec09b1e35df139433887a97daa66f/5/2/527a7533.jpg"
+                        alt=""
+                      />
                       <p>Leather Strap</p>
                       <p>Metal Strap</p>
                       <p>Mother-Of-Pearl Dial</p>
@@ -203,10 +118,31 @@ const UserLayout = (props: Props) => {
                   </a>
                 </div>
 
+                {/* <div className="card">
+                  <a href="#">
+                    <div className="card-content">
+                      <h2>Woman watches</h2>
+                      <img
+                        style={{ width: 172, height: 80, objectFit: "cover" }}
+                        src="https://www.themanual.com/wp-content/uploads/sites/9/2022/05/best-watches-for-men.jpg?resize=1200%2C630&p=1"
+                        alt=""
+                      />
+                      <p>Men</p>
+                      <p>Women</p>
+                      <p>Couple</p>
+                    </div>
+                  </a>
+                </div> */}
+
                 <div className="card">
                   <a href="#">
                     <div className="card-content">
-                      <h2>Classify</h2>
+                      <h2>Woman watches</h2>
+                      <img
+                        style={{ width: 172, height: 80, objectFit: "cover" }}
+                        src="https://www.themanual.com/wp-content/uploads/sites/9/2022/05/best-watches-for-men.jpg?resize=1200%2C630&p=1"
+                        alt=""
+                      />
                       <p>Men</p>
                       <p>Women</p>
                       <p>Couple</p>
@@ -217,25 +153,17 @@ const UserLayout = (props: Props) => {
                 <div className="card">
                   <a href="#">
                     <div className="card-content">
-                      <h2>Diameter</h2>
-                      <p>29MM</p>
-                      <p>29MM - 33MM</p>
-                      <p>33MM - 37MM</p>
-                      <p>37MM - 40MM</p>
-                    </div>
-                  </a>
-                </div>
-
-                <div className="card">
-                  <a href="#">
-                    <div className="card-content">
                       <div className="card-content-items">
                         <h2>Watch segment</h2>
+                        <img
+                          style={{ width: 172, height: 80, objectFit: "cover" }}
+                          src="https://i.ytimg.com/vi/PGl7f2zd9vM/maxresdefault.jpg"
+                          alt=""
+                        />
                         <p>Dưới 200 triệu</p>
                         <p>Từ 200 triệu đến 500 triệu</p>
                         <p>Từ 500 triệu đến 1 tỷ</p>
-                        <p>Từ 1 tỷ đến 2 tỷ</p>
-                        <p>Từ 2 tỷ trờ lên</p>
+                        <p>Từ 1 tỷ trở lên</p>
                       </div>
                     </div>
                   </a>
@@ -254,6 +182,7 @@ const UserLayout = (props: Props) => {
       <Header
         style={{
           position: "sticky",
+          height: "79px",
           top: 0,
           zIndex: 1000,
           width: "100%",
@@ -264,8 +193,8 @@ const UserLayout = (props: Props) => {
           src="https://benhviendongho.com/wp-content/uploads/2019/05/744px-Rolex_logo.svg.png"
           style={{
             float: "left",
-            width: 120,
-            height: 31,
+            width: 240,
+            height: 48,
             margin: "16px 24px 16px 0",
             objectFit: "contain",
           }}
@@ -276,19 +205,29 @@ const UserLayout = (props: Props) => {
           defaultSelectedKeys={[activeMenu]}
           items={[
             {
-              key: "1",
-              label: "Home",
+              key: 1,
+              label: "Trang chủ",
               onClick: () => window.location.replace("/"),
             },
             {
-              key: "2",
-              label: "Shop",
+              key: 2,
+              label: "Sản phẩm",
               onClick: () => window.location.replace("/shop"),
             },
 
             {
+              key: 3,
+              label: "Đồng hồ Nam",
+              onMouseEnter: () => {
+                setHoverMenu(3);
+              },
+              onMouseLeave: () => {
+                setHoverMenu(0);
+              },
+            },
+            {
               key: 4,
-              label: "Brand",
+              label: "Đồng hồ Nữ",
               onMouseEnter: () => {
                 setHoverMenu(3);
               },
@@ -298,30 +237,42 @@ const UserLayout = (props: Props) => {
             },
             {
               key: 5,
-              label: "News",
+              label: "Đồng hồ Đôi",
+              onMouseEnter: () => {
+                setHoverMenu(3);
+              },
+              onMouseLeave: () => {
+                setHoverMenu(0);
+              },
+            },
+            {
+              key: 6,
+              label: "Tin tức",
               onClick: () => window.location.replace("/news"),
             },
           ]}
         />
+        <Space size={"large"}>
+          {/* <Search
+            placeholder="Nhập tên sản phẩm"
+            allowClear
+            enterButton={<SearchOutlined />}
+            size="large"
+            onSearch={onSearch}
+          /> */}
+          <Search placeholder="Nhập sản phẩm" />
 
-        <Search
-          className="search-global-input"
-          placeholder="input search text"
-          onSearch={(value) => console.log(value)}
-          style={{ width: 200 }}
-        />
+          <a href="/cart">
+            <Badge count={cartOrders.length}>
+              {/* <Avatar shape="square" size="large" /> */}
+              <ShoppingCartOutlined style={{ fontSize: 28 }} />
+            </Badge>
+          </a>
 
-        <a href="/login">
-          <UserOutlined className="User-icon-global" />
-        </a>
-
-        <a href="/cart">
-          <Badge count={cartOrders.length}>
-            {/* <Avatar shape="square" size="large" /> */}
-            <ShoppingCartOutlined style={{ fontSize: 30 }} />
-          </Badge>
-        </a>
-
+          <a href="/login">
+            <UserOutlined style={{ fontSize: 24, margin: "25px 0" }} />
+          </a>
+        </Space>
         <div
           className={"main-dropdown-menu" + (hoverMenu > 0 ? " show" : "")}
           onMouseEnter={() => {
@@ -336,70 +287,6 @@ const UserLayout = (props: Props) => {
       </Header>
 
       <Content className="site-layout">{children}</Content>
-      {/* <footer className="footer-distributed">
-      <Footer style={{ textAlign: "center" }}>
-          <div className="footer-left">
-            <h3>
-              Rolex <span>Watches</span>
-            </h3>
-
-            <p className="footer-links">
-              <a href="#">Home</a>|<a href="#">About</a>|<a href="#">Contact</a>
-            </p>
-            <p className="footer-company-name">
-              Coppyright 2023 <strong>Rolex</strong> all rights @2023
-            </p>
-          </div>
-          <div className="footer-center">
-            <i>
-              <EnvironmentOutlined />
-            </i>
-            <p>
-              <span>TP Ho Chi Minh</span>Q.1
-            </p>
-            <div>
-              <i>
-                <SettingOutlined />
-              </i>
-
-              <p>0909970879</p>
-            </div>
-            <div>
-              <i>
-                <MailOutlined />
-              </i>
-
-              <p>
-                <a href="#">doatanphuco@gmail.com</a>
-              </p>
-            </div>
-          </div>
-          <div className="footer-right">
-            <p className="footer-company-about">
-              <span>about the company</span>
-              <span>Rolex - by Dao Tan Phuoc</span> is a YouTube channel where
-              you can find watch
-            </p>
-          </div>
-          <div className="footer-icon">
-            <i>
-              <CrownOutlined />
-            </i>
-            <i>
-              <CloudOutlined />
-            </i>
-            <i>
-              <HeartOutlined />
-            </i>
-            <i>
-              <CoffeeOutlined />
-            </i>
-          </div>
-          Ant Design ©2023 Created by Ant UED
-        </Footer>
-      </footer>
-      
-      , */}
 
       <footer className="footer">
         <div className="container">

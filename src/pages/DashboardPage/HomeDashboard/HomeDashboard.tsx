@@ -1,9 +1,11 @@
 import { Column, TinyLine } from "@ant-design/charts";
-import { Card, Col, Row, Space, Table, Tag } from "antd";
+import { Card, Col, Row, Space, Table, Tag, Timeline } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { ColumnsType } from "antd/es/table";
 import React from "react";
+import { ClockCircleOutlined, SmileOutlined } from "@ant-design/icons";
 
+import "./HomeDashboard.css";
 const HomeDas = () => {
   interface DataType {
     key: string;
@@ -125,12 +127,30 @@ const HomeDas = () => {
     <>
       <Content
         style={{
-          margin: "24px 16px",
-          padding: 24,
+          padding: 10,
           minHeight: 280,
           background: "white",
         }}
       >
+        <div className="banner-das-home">
+          <div className="background-container">
+            {" "}
+            <span className="background-overlay"></span>
+            <div className="background-cover container">
+              <div className="line-heading">
+                <div className="line-heading-left">
+                  <h2>Say hello to us</h2>
+                  <h4>Talk to us</h4>
+                </div>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                  Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
+                  natoque penatibus et magnis dis parturient montes
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
         {/* Content */}
         <div
           style={{
@@ -323,28 +343,62 @@ const HomeDas = () => {
         </div>
         {/* chart */}
         <div className="chart">
-          <Card
-            className="left-chart"
-            title={
-              <span
-                style={{
-                  textTransform: "uppercase",
-                  fontSize: 16,
-                  fontWeight: 700,
-                  color: "#8c8c8c",
-                }}
-              >
-                revenue
-              </span>
-            }
-            extra={<p style={{ fontSize: 18, fontWeight: 700 }}>$70000</p>}
-            bordered={false}
-          >
-            <TinyLine style={{ width: "90%" }} {...config} />
-
-            {/* <p>Card content</p>
-    <p>Card content</p> */}
-          </Card>
+          <Timeline
+            items={[
+              {
+                color: "green",
+                children: "Create a services site 2015-09-01",
+              },
+              {
+                color: "green",
+                children: "Create a services site 2015-09-01",
+              },
+              {
+                color: "red",
+                children: (
+                  <>
+                    <p>Solve initial network problems 1</p>
+                    <p>Solve initial network problems 2</p>
+                    <p>Solve initial network problems 3 2015-09-01</p>
+                  </>
+                ),
+              },
+              {
+                children: (
+                  <>
+                    <p>Technical testing 1</p>
+                    <p>Technical testing 2</p>
+                    <p>Technical testing 3 2015-09-01</p>
+                  </>
+                ),
+              },
+              {
+                color: "gray",
+                children: (
+                  <>
+                    <p>Technical testing 1</p>
+                    <p>Technical testing 2</p>
+                    <p>Technical testing 3 2015-09-01</p>
+                  </>
+                ),
+              },
+              {
+                color: "gray",
+                children: (
+                  <>
+                    <p>Technical testing 1</p>
+                    <p>Technical testing 2</p>
+                    <p>Technical testing 3 2015-09-01</p>
+                  </>
+                ),
+              },
+              {
+                color: "#00CCFF",
+                dot: <SmileOutlined />,
+                children: <p>Custom color testing</p>,
+              },
+            ]}
+          />
           {/* <div>
     <Card
       style={{

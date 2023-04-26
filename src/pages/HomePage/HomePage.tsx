@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "./HomePage.css";
 import Logo from "../../assets/image/brand/brHublot.jpg";
-import { Card, Carousel, Col, Dropdown, Row, Tabs, TabsProps } from "antd";
+import {
+  Avatar,
+  Card,
+  Carousel,
+  Col,
+  Dropdown,
+  List,
+  Row,
+  Space,
+  Tabs,
+  TabsProps,
+} from "antd";
 import ScrollContainer from "react-indiana-drag-scroll";
 import "react-indiana-drag-scroll/dist/style.css";
 import { StarOutlined, StarFilled, StarTwoTone } from "@ant-design/icons";
@@ -113,15 +124,24 @@ const images = [
 ];
 
 const brandImages = [
-  "https://globalboutique.com/wp-content/uploads/2022/07/brand-patek-phillipe.svg",
-  "https://globalboutique.com/wp-content/uploads/2022/09/brand-richard-mille.svg",
-  "https://globalboutique.com/wp-content/uploads/2022/09/brand-franck-muller.svg",
-  "https://globalboutique.com/wp-content/uploads/2022/07/brand-audemars-piguet.svg",
-  "https://globalboutique.com/wp-content/uploads/2022/07/brand-panieri.svg",
-  "https://globalboutique.com/wp-content/uploads/2022/07/brand-audemars-piguet.svg",
-  "https://globalboutique.com/wp-content/uploads/2022/07/brand-cartier.svg",
-  "https://globalboutique.com/wp-content/uploads/2022/07/brand-rolex.svg",
+  "https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-hublot.png",
+  "https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-patek.png",
+  "https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-rolex.png",
+  "https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-iwc.png",
+  "https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-longines.png",
+  "https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-breitling.png",
+  "https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-cartier.png",
+  "https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-omega.png",
+  "https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-gucci.png",
+  "https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-michael-kors.png",
+  "https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-yoko-london.png",
+  "https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-swarovski.png",
 ];
+
+const gridStyle: React.CSSProperties = {
+  width: "25%",
+  textAlign: "center",
+};
 
 const HomePage = () => {
   // product Gallery
@@ -188,7 +208,32 @@ const HomePage = () => {
         </Slider>
       </div>
 
-      <section id="brand" className="container">
+      {/* Brand */}
+      <div className="brand-container-grid">
+        <div style={{ marginBottom: 20, marginTop: 40 }}>
+          <h2
+            style={{
+              textAlign: "center",
+              padding: 10,
+              textTransform: "uppercase",
+            }}
+          >
+            Thương hiệu nổi bật
+          </h2>
+          <hr />
+        </div>
+        <div className="main-container">
+          <ul className="grid-wrapper">
+            {brandImages.map((brandImage) => (
+              <li>
+                <img src={brandImage} alt="" />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* <section id="brand" className="container">
         <ScrollContainer>
           <div className="img-brand">
             {brandImages.map((brandImage) => (
@@ -196,14 +241,8 @@ const HomePage = () => {
             ))}
           </div>
         </ScrollContainer>
-        {/* <div style={{ padding: 50, textAlign: "center", gap: 40 }}>
-          <Slider {...setting2}>
-            {brandImages.map((brandImage) => (
-              <img style={{ margin: "0 1em" }} src={brandImage} alt="" />
-            ))}
-          </Slider>
-        </div> */}
-      </section>
+        
+      </section> */}
 
       <section id="new" className="our-featured">
         <div
@@ -244,44 +283,6 @@ const HomePage = () => {
 
       {/* banner */}
 
-      {/* <div className="container1">
-        <div className="flex-container1">
-          <div className="text">
-            <span className="avoid-break">
-              Mighty <span className="orange">Thor,</span>
-            </span>
-            <br />
-            <span className="avoid-break">
-              Scarlet <span className="orange">Witch</span> &{" "}
-            </span>
-            <br />
-            <span className="avoid-break">
-              Black <span className="orange">Widow </span>{" "}
-            </span>
-            <br />
-          </div>
-          <div className="collage-container">
-            <div className="collage">
-              <img
-                src="https://estaticos-cdn.sport.es/clip/76d5c74a-111d-4482-896f-4910500d901b_media-libre-aspect-ratio_default_0.jpg"
-                className="collage-image1"
-                alt="thor"
-              />
-              <img
-                src="https://variety.com/wp-content/uploads/2022/05/SRV-12030_R.jpg"
-                className="collage-image2"
-                alt="wanda"
-              />
-              <img
-                src="https://free4kwallpapers.com/uploads/originals/2017/01/30/agent-natasha-romanoff-wallpaper.jpg"
-                className="collage-image3"
-                alt="natasha"
-              />
-            </div>
-          </div>
-        </div>
-      </div> */}
-
       <div className="row-banner">
         <div className="container-section">
           <div className="card">
@@ -319,58 +320,16 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="banner-card">
-        <section id="video-banner">
-          {/* <div className="content-video">
-          <h3>Explore the ocean</h3>
-          <h1>Seiko ORANGE SAMURAI</h1>
-          <button className="text-uppercase">Shop Now</button>
-        </div> */}
-
-          <video
-            src="https://content.rolex.com/dam/homepage/video-banner/rolex-org/one-ocean-foundation/homepage-rolex-org-ppi-one-ocean-foundation.mp4"
-            itemType="video/mp4"
-            autoPlay
-            playsInline
-            loop
-            preload="auto"
-            width="100%"
-            height="100%"
-            muted
-          ></video>
-        </section>
-        <div className="banner-text">
-          <h1>
-            SEIKO PROSPEX <br />
-            <span style={{ color: "orange" }}> ORANGE SAMURAI</span>
-          </h1>
-          <button className="btn-video">Tìm hiểu hơn</button>
-        </div>
-      </div>
-
       <div className="galleryWrapper">
         <div>
           <h2 style={{ textAlign: "center", textTransform: "uppercase" }}>
-            available in store
+            FEATURE
           </h2>
           <hr />
           <div className="multi-button">
             <button onClick={() => setGender("male")}>Nam</button>
             <button onClick={() => setGender("female")}>Nu</button>
           </div>
-
-          {/* <button
-            onClick={() => setGender("male")}
-            style={{ marginRight: 30, background: "red", padding: "1em" }}
-          >
-            Nam
-          </button>
-          <button
-            onClick={() => setGender("female")}
-            style={{ marginRight: 30, background: "blue", padding: "1em" }}
-          >
-            Nu
-          </button> */}
         </div>
         <div className="galleryContainer">
           {data.map((item) => (
@@ -384,299 +343,8 @@ const HomePage = () => {
           ))}
         </div>
       </div>
-      <div className="App">
-        <div style={{ marginBottom: 50 }}>
-          <h2 style={{ textAlign: "center", padding: 5 }}>ROLEX</h2>
-          <hr />
-        </div>
-        <Slider {...settings}>
-          {/* {similarProducts.map((similarProduct) => (
-            <div key={similarProduct.Id}>
-              <img
-                style={{ height: 350, width: "100%", objectFit: "cover" }}
-                src={similarProduct.Image}
-                alt={similarProduct.Name}
-              />
-              <h3 style={{ padding: 15 }}>{similarProduct.Name}</h3>
-            </div>
-          ))} */}
-          <div>
-            <img
-              style={{ height: 300, width: "100%", objectFit: "cover" }}
-              src="https://bossluxurywatch.vn/uploads/san-pham/franck-muller/thumbs/645x0/franck-muller-vanguard-lady-v-32-sc-at-fo-d-cd-bl.png"
-              alt=""
-            />
-            <h4 style={{ padding: 10, color: "#CDC04C" }}>FRANCK MULLER</h4>
-            <h4 style={{ color: "#D2D2D2", fontSize: 14 }}>
-              V 32 SC AT FO D CD (BL)
-            </h4>
-            <h4>FRANCK MULLER VANGUARD LADY MOONPHASE</h4>
-            <h4 style={{ color: "#CDC04C" }}>515000000 đ</h4>
-          </div>
 
-          <div>
-            <img
-              style={{ height: 300, width: "100%", objectFit: "cover" }}
-              src="https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/complications/thumbs/418x0/patek-philippe-complications-7130g-016.png"
-              alt=""
-            />
-          </div>
-
-          <div>
-            <img
-              style={{ height: 300, width: "100%", objectFit: "cover" }}
-              src="https://bossluxurywatch.vn/uploads/san-pham/rolex/datejust-36/thumbs/418x0/rolex-datejust-36-126284rbr-0029.png"
-              alt=""
-            />
-          </div>
-          <div>
-            <img
-              style={{ height: 300, width: "100%", objectFit: "cover" }}
-              src="https://bossluxurywatch.vn/uploads/san-pham/vacheron-constantin/thumbs/418x0/historiques-cornes-de-vache-1955-5000h-000p-b058-38mm.png"
-              alt=""
-            />
-          </div>
-
-          <div>
-            <img
-              style={{ height: 300, width: "100%", objectFit: "cover" }}
-              src="https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/thumbs/418x0/5961p-001.png"
-              alt=""
-            />
-          </div>
-          <div>
-            <img
-              style={{ height: 300, width: "100%", objectFit: "cover" }}
-              src="https://bossluxurywatch.vn/uploads/san-pham/franck-muller/thumbs/418x0/vanguard-lady-moonphase-v-32-sc-fo-l-d-cd-1p-cold.png"
-              alt=""
-            />
-          </div>
-        </Slider>
-      </div>
-      <div className="App">
-        <div style={{ marginBottom: 50 }}>
-          <h2
-            style={{
-              textAlign: "center",
-              padding: 10,
-              textTransform: "uppercase",
-            }}
-          >
-            vacheron constantin
-          </h2>
-          <hr />
-        </div>
-
-        <Slider {...settings}>
-          {/* {similarProducts.map((similarProduct) => (
-            <div key={similarProduct.Id}>
-              <img
-                style={{ height: 350, width: "100%", objectFit: "cover" }}
-                src={similarProduct.Image}
-                alt={similarProduct.Name}
-              />
-              <h3 style={{ padding: 15 }}>{similarProduct.Name}</h3>
-            </div>
-          ))} */}
-          <div>
-            <img
-              style={{ height: 300, width: "100%", objectFit: "cover" }}
-              src="https://bossluxurywatch.vn/uploads/san-pham/franck-muller/thumbs/645x0/franck-muller-vanguard-lady-v-32-sc-at-fo-d-cd-bl.png"
-              alt=""
-            />
-            <h4 style={{ padding: 10, color: "#CDC04C" }}>FRANCK MULLER</h4>
-            <h4 style={{ color: "#D2D2D2", fontSize: 14 }}>
-              V 32 SC AT FO D CD (BL)
-            </h4>
-            <h4>FRANCK MULLER VANGUARD LADY MOONPHASE</h4>
-            <h4 style={{ color: "#CDC04C" }}>515000000 đ</h4>
-          </div>
-
-          <div>
-            <img
-              style={{ height: 300, width: "100%", objectFit: "cover" }}
-              src="https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/complications/thumbs/418x0/patek-philippe-complications-7130g-016.png"
-              alt=""
-            />
-          </div>
-
-          <div>
-            <img
-              style={{ height: 300, width: "100%", objectFit: "cover" }}
-              src="https://bossluxurywatch.vn/uploads/san-pham/rolex/datejust-36/thumbs/418x0/rolex-datejust-36-126284rbr-0029.png"
-              alt=""
-            />
-          </div>
-          <div>
-            <img
-              style={{ height: 300, width: "100%", objectFit: "cover" }}
-              src="https://bossluxurywatch.vn/uploads/san-pham/vacheron-constantin/thumbs/418x0/historiques-cornes-de-vache-1955-5000h-000p-b058-38mm.png"
-              alt=""
-            />
-          </div>
-
-          <div>
-            <img
-              style={{ height: 300, width: "100%", objectFit: "cover" }}
-              src="https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/thumbs/418x0/5961p-001.png"
-              alt=""
-            />
-          </div>
-          <div>
-            <img
-              style={{ height: 300, width: "100%", objectFit: "cover" }}
-              src="https://bossluxurywatch.vn/uploads/san-pham/franck-muller/thumbs/418x0/vanguard-lady-moonphase-v-32-sc-fo-l-d-cd-1p-cold.png"
-              alt=""
-            />
-          </div>
-        </Slider>
-      </div>
-      <div className="App">
-        <div style={{ marginBottom: 50 }}>
-          <h2
-            style={{
-              textAlign: "center",
-              padding: 10,
-              textTransform: "uppercase",
-            }}
-          >
-            FRANCK MULLER
-          </h2>
-          <hr />
-        </div>
-        <Slider {...settings}>
-          {/* {similarProducts.map((similarProduct) => (
-            <div key={similarProduct.Id}>
-              <img
-                style={{ height: 350, width: "100%", objectFit: "cover" }}
-                src={similarProduct.Image}
-                alt={similarProduct.Name}
-              />
-              <h3 style={{ padding: 15 }}>{similarProduct.Name}</h3>
-            </div>
-          ))} */}
-          <div>
-            <img
-              style={{ height: 300, width: "100%", objectFit: "cover" }}
-              src="https://bossluxurywatch.vn/uploads/san-pham/franck-muller/thumbs/645x0/franck-muller-vanguard-lady-v-32-sc-at-fo-d-cd-bl.png"
-              alt=""
-            />
-            <h4 style={{ padding: 10, color: "#CDC04C" }}>FRANCK MULLER</h4>
-            <h4 style={{ color: "#D2D2D2", fontSize: 14 }}>
-              V 32 SC AT FO D CD (BL)
-            </h4>
-            <h4>FRANCK MULLER VANGUARD LADY MOONPHASE</h4>
-            <h4 style={{ color: "#CDC04C" }}>515000000 đ</h4>
-          </div>
-
-          <div>
-            <img
-              style={{ height: 300, width: "100%", objectFit: "cover" }}
-              src="https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/complications/thumbs/418x0/patek-philippe-complications-7130g-016.png"
-              alt=""
-            />
-          </div>
-
-          <div>
-            <img
-              style={{ height: 300, width: "100%", objectFit: "cover" }}
-              src="https://bossluxurywatch.vn/uploads/san-pham/rolex/datejust-36/thumbs/418x0/rolex-datejust-36-126284rbr-0029.png"
-              alt=""
-            />
-          </div>
-          <div>
-            <img
-              style={{ height: 300, width: "100%", objectFit: "cover" }}
-              src="https://bossluxurywatch.vn/uploads/san-pham/vacheron-constantin/thumbs/418x0/historiques-cornes-de-vache-1955-5000h-000p-b058-38mm.png"
-              alt=""
-            />
-          </div>
-
-          <div>
-            <img
-              style={{ height: 300, width: "100%", objectFit: "cover" }}
-              src="https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/thumbs/418x0/5961p-001.png"
-              alt=""
-            />
-          </div>
-          <div>
-            <img
-              style={{ height: 300, width: "100%", objectFit: "cover" }}
-              src="https://bossluxurywatch.vn/uploads/san-pham/franck-muller/thumbs/418x0/vanguard-lady-moonphase-v-32-sc-fo-l-d-cd-1p-cold.png"
-              alt=""
-            />
-          </div>
-        </Slider>
-      </div>
-
-      {/* Our Log */}
-      {/* <div className="our-log">
-        <div className="container">
-          <div className="row">
-            <div className="header">
-              <h1>Our Blog</h1>
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem
-                ipsum dolor sit amet consectetur adipisicing elit. Ipsam,
-                necessitatibus ea?
-              </p>
-            </div>
-            <div className="content">
-              <div className="Card">
-                <img
-                  style={{
-                    height: 250,
-                    objectFit: "cover",
-                  }}
-                  src="https://i.pinimg.com/originals/02/7f/ac/027fac6edcd23f411efaa897507f8c0b.jpg"
-                  alt=""
-                />
-                <h4>Sunset ipsum dolor sit amet consectetur, adipisicing</h4>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Temporibus fuga ex sequi eaque ea. Reiciendis recusandae
-                  repudiandae delectus deleniti ratione tempora, ullam fuga,
-                  consequuntur vitae dolor est, veritatis reprehenderit animi.
-                </p>
-              </div>
-
-              <div className="Card">
-                <img
-                  style={{
-                    height: 250,
-                    objectFit: "cover",
-                  }}
-                  src="https://i.pinimg.com/originals/d1/bb/23/d1bb230b8205c9312e3ba9ada98fddbc.jpg"
-                  alt=""
-                />
-                <h4>Sunset ipsum dolor sit amet consectetur, adipisicing</h4>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Temporibus fuga ex sequi eaque ea. Reiciendis recusandae
-                  repudiandae delectus deleniti ratione tempora, ullam fuga,
-                  consequuntur vitae dolor est, veritatis reprehenderit animi.
-                </p>
-              </div>
-              <div className="Card">
-                <img
-                  style={{
-                    height: 250,
-                    objectFit: "cover",
-                  }}
-                  src="https://i.pinimg.com/originals/b4/59/d2/b459d27c8ceee7d2a76d8cd6056dfe03.jpg"
-                  alt=""
-                />
-                <h4>Sunset ipsum dolor sit amet consectetur, adipisicing</h4>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Temporibus fuga ex sequi eaque ea. Reiciendis recusandae
-                  repudiandae delectus deleniti ratione tempora, ullam fuga,
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
+      {/* blog  */}
       <div className="blog-section">
         <div className="section-content">
           <div className="title">
@@ -685,7 +353,7 @@ const HomePage = () => {
               style={{
                 display: "block",
                 margin: "auto",
-                width: 50,
+                width: 100,
                 height: 3,
                 backgroundColor: "#169010",
               }}
@@ -774,6 +442,152 @@ const HomePage = () => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* banner freeship */}
+
+      <div
+        style={{
+          width: "100%",
+          height: 150,
+          backgroundColor: "black",
+        }}
+        className="banner-row-container"
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 30,
+          }}
+        >
+          <Card.Grid style={gridStyle}>
+            <div className="card-banner-items-image">
+              <img
+                style={{
+                  width: 60,
+                  height: 60,
+                }}
+                src="https://donghotantan.vn/images/strengths/original/stg21_1659589070.png"
+                alt=""
+              />
+            </div>
+            <div className="card-banner-items-content">
+              <h4 style={{ fontWeight: 700, padding: 10, color: "#fff" }}>
+                Đồng hồ chính hảng
+              </h4>
+            </div>
+          </Card.Grid>
+          <Card.Grid style={gridStyle}>
+            <div className="card-banner-items-image">
+              <img
+                style={{
+                  width: 60,
+                  height: 60,
+                }}
+                src="https://donghotantan.vn/images/strengths/original/stg22_1659589113.png"
+                alt=""
+              />
+            </div>
+            <div className="card-banner-items-content">
+              <h4 style={{ fontWeight: 700, padding: 10, color: "#fff" }}>
+                Nhà Phân Phối Chính Thức
+              </h4>
+            </div>
+          </Card.Grid>
+          <Card.Grid style={gridStyle}>
+            <div className="card-banner-items-image">
+              <img
+                style={{
+                  width: 60,
+                  height: 60,
+                }}
+                src="https://donghotantan.vn/images/strengths/original/stg24_1659589157.png"
+                alt=""
+              />
+            </div>
+            <div className="card-banner-items-content">
+              <h4 style={{ fontWeight: 700, padding: 10, color: "#fff" }}>
+                Nhiều Mẫu Mã
+              </h4>
+            </div>
+          </Card.Grid>
+          <Card.Grid style={gridStyle}>
+            <div className="card-banner-items-image">
+              <img
+                style={{
+                  width: 60,
+                  height: 60,
+                }}
+                src="https://donghotantan.vn/images/strengths/original/stg24_1659589157.png"
+                alt=""
+              />
+            </div>
+            <div className="card-banner-items-content">
+              <h4 style={{ fontWeight: 700, padding: 10, color: "#fff" }}>
+                Nhiều Mẫu Mã
+              </h4>
+            </div>
+          </Card.Grid>
+        </div>
+      </div>
+
+      {/* comment */}
+      <div className="comments">
+        <h2 style={{ textAlign: "center", textTransform: "uppercase" }}>
+          Đánh Giá Của Khách Hàng
+        </h2>
+        <hr />
+
+        <div className="comment-container">
+          <figure className="snip1204">
+            <blockquote>
+              Calvin: Sometimes when I'm talking to other people, my words can't
+              keep up with my thoughts. I wonder why we think faster than we
+              speak. Hobbes: Probably so we can think twice.{" "}
+            </blockquote>
+            <div className="author">
+              <img
+                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sq-sample7.jpg"
+                alt="sq-sample7"
+              />
+              <h5>Pelican Steve</h5>
+              <span>LittleSnippets</span>
+            </div>
+          </figure>
+          <figure className="snip1204 hover">
+            <blockquote>
+              Thank you. before I begin, I'd like everyone to notice that my
+              report is in a professional, clear plastic binder...When a report
+              looks this good, you know it'll get an A. That's a tip kids. Write
+              it down.
+            </blockquote>
+            <div className="author">
+              <img
+                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sq-sample10.jpg"
+                alt="sq-sample10"
+              />
+              <h5>Max Conversion</h5>
+              <span>LittleSnippets</span>
+            </div>
+          </figure>
+          <figure className="snip1204">
+            <blockquote>
+              My behaviour is addictive functioning in a disease process of
+              toxic co-dependency. I need holistic healing and wellness before
+              I'll accept any responsibility for my actions.
+            </blockquote>
+            <div className="author">
+              <img
+                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sq-sample12.jpg"
+                alt="sq-sample12"
+              />
+              <h5>Eleanor Faint</h5>
+              <span>LittleSnippets</span>
+            </div>
+          </figure>
         </div>
       </div>
     </div>
