@@ -133,6 +133,14 @@ const CartPage = () => {
       });
   };
 
+  const removeOrderProduct = (index: number)=>{
+    const productsTmp = [...cartOrders]
+    productsTmp.splice(index,1) // Remove item by index
+    console.log(productsTmp);
+    
+    onChangeCartOrders(productsTmp)
+  }
+
   const onChangeQuantity = (quantity: number, index: number) => {
     const productsTmp = [...cartOrders];
 
@@ -200,14 +208,13 @@ const CartPage = () => {
       dataIndex: "Action",
       key: "Action",
       render: (value, product, index) => (
-        <DeleteOutlined style={{ fontSize: 20 }} />
+        <DeleteOutlined style={{ fontSize: 20 }} onClick={()=>removeOrderProduct(index)} />
       ),
     },
   ];
 
   const totalProductsprice = cartOrders.reduce(
     (preVal: any, currentVal: any) => {
-      console.log(preVal, currentVal);
       return preVal + (currentVal.TotalPrice ?? 0);
     },
     0
