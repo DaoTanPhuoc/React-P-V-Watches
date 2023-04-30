@@ -28,6 +28,16 @@ import {
   SafetyCertificateOutlined,
   ApartmentOutlined,
 } from "@ant-design/icons";
+
+const moneyFormatter = new Intl.NumberFormat("vi", {
+  style: "currency",
+  currency: "VND",
+
+  // These options are needed to round to whole numbers if that's what you want.
+  //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+  maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+});
+
 const images = [
   {
     id: 1,
@@ -122,13 +132,13 @@ const settings = {
 };
 //
 
-interface ListingProps {
-  products: ProductModel[];
-}
+// interface ListingProps {
+//   products: ProductModel[];
+// }
 
-const ListingComponents = ({ products }: ListingProps) => {
-  return;
-};
+// const ListingComponents = ({ products }: ListingProps) => {
+//   return;
+// };
 
 const contentStyle: React.CSSProperties = {
   height: "160px",
@@ -396,8 +406,10 @@ const ProductDetail = () => {
             </div>
             <div className="product-div-right">
               <span className="product-name">{productDetail?.Name}</span>
-              <span className="product-price">{productDetail?.Price} vnd</span>
-
+              <span className="product-price">
+                {" "}
+                {moneyFormatter.format(Number(productDetail?.Price))}
+              </span>
               <p className="product-description">
                 {productDetail?.Description}
               </p>
@@ -423,6 +435,19 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
+
+      <Tabs
+        size="large"
+        style={{
+          background: "white",
+          paddingLeft: 90,
+          paddingBottom: 20,
+        }}
+        defaultActiveKey="1"
+        items={items}
+        onChange={onChange}
+      />
+
       <div
         style={{
           width: "100%",
@@ -510,21 +535,9 @@ const ProductDetail = () => {
         </div>
       </div>
 
-      <Tabs
-        size="large"
-        style={{
-          background: "white",
-          paddingLeft: 90,
-          paddingBottom: 20,
-        }}
-        defaultActiveKey="1"
-        items={items}
-        onChange={onChange}
-      />
-
       <div className="Similar-Product-container">
         <div className="App">
-          <h2 style={{ textAlign: "center", padding: 20 }}>
+          <h2 style={{ textAlign: "center", padding: 70 }}>
             SẢN PHẨM LIÊN QUAN
           </h2>
           <Slider {...settings}>
@@ -535,9 +548,18 @@ const ProductDetail = () => {
                   src={similarProduct.Image}
                   alt={similarProduct.Name}
                 />
-                <h3 style={{ padding: 15, fontSize: 17, fontWeight: 700 }}>
-                  {similarProduct.Name}
-                </h3>
+                <div style={{ padding: 20, textAlign: "center" }}>
+                  <h4 style={{ color: "#888888" }}>
+                    MSP {similarProduct.Code}
+                  </h4>
+                  <h4 style={{ fontWeight: 650, whiteSpace: "nowrap" }}>
+                    {similarProduct.Name}
+                  </h4>
+
+                  <h4 style={{ color: "#ecbf37" }}>
+                    {moneyFormatter.format(similarProduct.Price)}
+                  </h4>
+                </div>
               </div>
             ))}
           </Slider>

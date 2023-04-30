@@ -83,92 +83,32 @@ const UserLayout = (props: Props) => {
       case 3:
         return (
           <>
-            <div className="centered">
-              <section className="cards">
-                <div className="card">
-                  <a href="#">
-                    <div className="card-content">
-                      <h2>What's new</h2>
-                      <div className="card-content-items">
-                        <img
-                          style={{ width: 172, height: 80, objectFit: "cover" }}
-                          src="https://luxuo.vn/wp-content/uploads/2020/11/https___hypebeast.com_image_2020_11_rolex-a-z-modern-rolex-watch-guide-01-930x620.jpg"
-                          alt=""
-                        />
-                        <p>Automatic</p>
-                        <p>Quartz</p>
-                      </div>
-                    </div>
-                  </a>
+            <div className="container-submenu">
+              <div className="grid grid--reverse">
+                <div className="grid__item">
+                  <h3>Phân khúc</h3>
+                  <p>100 triệu đến 200 triệu</p>
+                  <p>200 triệu đến 500 triệu</p>
+                  <p>500 triệu đến 1 tỷ</p>
+                  <p>Trên 1 tỷ</p>
                 </div>
-
-                <div className="card">
-                  <a href="#">
-                    <div className="card-content">
-                      <h2>Man watches</h2>
-                      <img
-                        style={{ width: 172, height: 80, objectFit: "cover" }}
-                        src="https://watchmydiamonds.com/media/catalog/product/cache/1/thumbnail/1280x/040ec09b1e35df139433887a97daa66f/5/2/527a7533.jpg"
-                        alt=""
-                      />
-                      <p>Leather Strap</p>
-                      <p>Metal Strap</p>
-                      <p>Mother-Of-Pearl Dial</p>
-                    </div>
-                  </a>
+                <div className="grid__item">
+                  <h3>Sản phẩm mới</h3>
+                  <p>Automatic</p>
+                  <p>Quartz</p>
                 </div>
-
-                {/* <div className="card">
-                  <a href="#">
-                    <div className="card-content">
-                      <h2>Woman watches</h2>
-                      <img
-                        style={{ width: 172, height: 80, objectFit: "cover" }}
-                        src="https://www.themanual.com/wp-content/uploads/sites/9/2022/05/best-watches-for-men.jpg?resize=1200%2C630&p=1"
-                        alt=""
-                      />
-                      <p>Men</p>
-                      <p>Women</p>
-                      <p>Couple</p>
-                    </div>
-                  </a>
-                </div> */}
-
-                <div className="card">
-                  <a href="#">
-                    <div className="card-content">
-                      <h2>Woman watches</h2>
-                      <img
-                        style={{ width: 172, height: 80, objectFit: "cover" }}
-                        src="https://www.themanual.com/wp-content/uploads/sites/9/2022/05/best-watches-for-men.jpg?resize=1200%2C630&p=1"
-                        alt=""
-                      />
-                      <p>Men</p>
-                      <p>Women</p>
-                      <p>Couple</p>
-                    </div>
-                  </a>
+                <div className="grid__item">
+                  <h3>Chăm sóc & Dịch vụ</h3>
+                  <p>Phân biệt thật giả</p>
+                  <p>Hỗ trợ tư vấn</p>
                 </div>
-
-                <div className="card">
-                  <a href="#">
-                    <div className="card-content">
-                      <div className="card-content-items">
-                        <h2>Watch segment</h2>
-                        <img
-                          style={{ width: 172, height: 80, objectFit: "cover" }}
-                          src="https://i.ytimg.com/vi/PGl7f2zd9vM/maxresdefault.jpg"
-                          alt=""
-                        />
-                        <p>Dưới 200 triệu</p>
-                        <p>Từ 200 triệu đến 500 triệu</p>
-                        <p>Từ 500 triệu đến 1 tỷ</p>
-                        <p>Từ 1 tỷ trở lên</p>
-                      </div>
-                    </div>
-                  </a>
+                <div className="grid__item">
+                  <h3>Sản phẩm nổi bật</h3>
+                  <p>Tin tức & Thương hiệu</p>
+                  <p>Tư vấn</p>
+                  <p>Chính sách</p>
                 </div>
-              </section>
+              </div>
             </div>
           </>
         );
@@ -182,11 +122,11 @@ const UserLayout = (props: Props) => {
       <Header
         style={{
           position: "sticky",
-          height: "79px",
+          height: 90,
           top: 0,
           zIndex: 1000,
           width: "100%",
-          background: "#fff",
+          background: "#000",
         }}
       >
         <img
@@ -200,24 +140,25 @@ const UserLayout = (props: Props) => {
           }}
         />
         <Menu
-          theme="light"
+          // theme="light"
+          style={{ backgroundColor: "#000" }}
           mode="horizontal"
           defaultSelectedKeys={[activeMenu]}
           items={[
             {
               key: 1,
-              label: "Trang chủ",
+              label: <span style={{ color: "#fff" }}>TRANG CHỦ</span>,
               onClick: () => window.location.replace("/"),
             },
             {
               key: 2,
-              label: "Sản phẩm",
+              label: <span style={{ color: "#fff" }}>SẢN PHẨM</span>,
               onClick: () => window.location.replace("/shop"),
             },
 
             {
               key: 3,
-              label: "Đồng hồ Nam",
+              label: <span style={{ color: "#fff" }}>ĐỒNG HỒ NAM</span>,
               onMouseEnter: () => {
                 setHoverMenu(3);
               },
@@ -227,7 +168,7 @@ const UserLayout = (props: Props) => {
             },
             {
               key: 4,
-              label: "Đồng hồ Nữ",
+              label: <span style={{ color: "#fff" }}>ĐỒNG HỒ NỮ</span>,
               onMouseEnter: () => {
                 setHoverMenu(3);
               },
@@ -237,7 +178,7 @@ const UserLayout = (props: Props) => {
             },
             {
               key: 5,
-              label: "Đồng hồ Đôi",
+              label: <span style={{ color: "#fff" }}>ĐỒNG HỒ ĐÔI</span>,
               onMouseEnter: () => {
                 setHoverMenu(3);
               },
@@ -247,7 +188,12 @@ const UserLayout = (props: Props) => {
             },
             {
               key: 6,
-              label: "Tin tức",
+              label: <span style={{ color: "#fff" }}>TIN TỨC</span>,
+              onClick: () => window.location.replace("/news"),
+            },
+            {
+              key: 7,
+              label: <span style={{ color: "#fff" }}>GIỚI THIỆU</span>,
               onClick: () => window.location.replace("/news"),
             },
           ]}
@@ -265,15 +211,24 @@ const UserLayout = (props: Props) => {
           <a href="/cart">
             <Badge count={cartOrders.length}>
               {/* <Avatar shape="square" size="large" /> */}
-              <ShoppingCartOutlined style={{ fontSize: 28 }} />
+              <ShoppingCartOutlined style={{ fontSize: 28, color: "#fff" }} />
             </Badge>
           </a>
 
           <a href="/login">
-            <UserOutlined style={{ fontSize: 24, margin: "25px 0" }} />
+            <UserOutlined
+              style={{ fontSize: 24, margin: "25px 0", color: "#fff" }}
+            />
           </a>
         </Space>
+        {/* submenu */}
         <div
+          style={{
+            marginTop: 13,
+            width: "100%",
+            textAlign: "center",
+            backgroundColor: "#2d2d2dbf",
+          }}
           className={"main-dropdown-menu" + (hoverMenu > 0 ? " show" : "")}
           onMouseEnter={() => {
             setHoverMenu(hoverMenu);

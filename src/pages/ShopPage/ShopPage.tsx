@@ -57,6 +57,14 @@ const initialList = {
 };
 
 //
+const moneyFormatter = new Intl.NumberFormat("vi", {
+  style: "currency",
+  currency: "VND",
+
+  // These options are needed to round to whole numbers if that's what you want.
+  //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+  maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+});
 
 const ShopContent = [
   "https://donghotantan.vn/images/products/manufactories//resized/tissot_1663842811.jpg.webp",
@@ -310,13 +318,17 @@ const ShopPage = () => {
               >
                 Add to cart
               </Button> */}
-              <Meta style={{ padding: 10 }} title={watchItem.Name} />
-              <Meta style={{ padding: 10 }} title={watchItem.Price} />
+              <h4 style={{ color: "#888888" }}>MSP {watchItem.Code}</h4>
+              <h4>{watchItem.Name}</h4>
+              <h4 style={{ color: "#dbaf56" }}>
+                {moneyFormatter.format(watchItem.Price)}{" "}
+              </h4>
+
               <Meta
                 style={{ padding: 10 }}
-                title={watchItem.Stock == 0 ? "het hang" : <br />}
+                title={watchItem.Stock == 0 ? "Hết Hàng" : <br />}
               />
-              {/* <div>het hang</div> */}
+
               <Context.Provider value={contextValue}>
                 {contextHolder}
                 {watchItem.Stock != 0 ? (

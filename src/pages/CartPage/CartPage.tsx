@@ -31,13 +31,14 @@ import {
 } from "@ant-design/icons";
 import { useParams } from "react-router";
 import { log } from "console";
+import { json } from "stream/consumers";
 const onChange = (value: number) => {
   console.log("changed", value);
 };
 
-const moneyFormatter = new Intl.NumberFormat("en-US", {
+const moneyFormatter = new Intl.NumberFormat("vi", {
   style: "currency",
-  currency: "USD",
+  currency: "VND",
 
   // These options are needed to round to whole numbers if that's what you want.
   //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
@@ -141,10 +142,7 @@ const CartPage = () => {
     orderProduct.TotalPrice = quantity * orderProduct.Price;
     onChangeCartOrders(productsTmp);
   };
-  const deleteItem = (index: number) => {
-    console.log(index);
-    const newCart = cartOrders.splice(index, 1);
-  };
+
   const columns: ColumnsType<any> = [
     {
       title: "Image",
@@ -202,9 +200,7 @@ const CartPage = () => {
       dataIndex: "Action",
       key: "Action",
       render: (value, product, index) => (
-        <button onClick={() => deleteItem(index)}>
-          <DeleteOutlined style={{ fontSize: 20 }} />
-        </button>
+        <DeleteOutlined style={{ fontSize: 20 }} />
       ),
     },
   ];

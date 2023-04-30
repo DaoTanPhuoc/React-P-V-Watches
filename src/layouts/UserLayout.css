@@ -98,7 +98,7 @@ header {
 .card-content {
   padding: 0.5em;
   height: 100%;
-  background-color: #ffffff;
+  background-color: none;
 }
 
 .card-content h2 {
@@ -205,4 +205,40 @@ ul {
   .footer-col {
     width: 100%;
   }
+}
+
+/* submenu content */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.grid--reverse {
+  direction: rtl;
+}
+
+.grid--reverse > * {
+  /* Select all child elements */
+  direction: ltr;
+}
+
+.container-submenu {
+  margin: 1rem auto;
+  max-width: 1300px;
+}
+
+.grid__item {
+  text-align: left;
+}
+
+.grid__item h3 {
+  margin: 0;
+  /* color: #ecbf37; */
+  color: #ffffff;
+}
+
+.grid__item p {
+  color: #dbaf56;
+  font-size: 18px;
 }

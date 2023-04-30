@@ -350,7 +350,6 @@ hr {
   flex: 10;
   margin: 20px 20px;
   box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.2);
-
   padding: 0;
 }
 
@@ -359,6 +358,17 @@ hr {
   bottom: 8px;
   left: 16px;
 }
+
+/* @media screen and (max-width: 992px) {
+  .row-banner .container-section .card {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (max-width: 768px) {
+  .row-banner .container-section .card {
+    grid-template-columns: 1fr;
+  }
+} */
 
 /* our log */
 .blog-section {
@@ -377,7 +387,7 @@ hr {
 }
 
 .blog-section .section-content .title h2 {
-  font-size: 40px;
+  /* font-size: 40px; */
   color: #1d1d1d;
   text-transform: uppercase;
 }

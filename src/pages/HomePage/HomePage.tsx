@@ -254,15 +254,29 @@ const HomePage = () => {
           </div>
           <Slider {...setting2}>
             {ImageOurFeatured.map((brandImage) => (
-              <img
-                style={{
-                  height: 300,
-                  width: "100%",
-                  objectFit: "cover",
-                }}
-                src={brandImage}
-                alt=""
-              />
+              <div>
+                <div>
+                  <img
+                    style={{
+                      height: 300,
+                      width: "100%",
+                      objectFit: "cover",
+                    }}
+                    src={brandImage}
+                    alt=""
+                  />
+                </div>
+                <div
+                  style={{
+                    padding: 20,
+                    textAlign: "center",
+                  }}
+                >
+                  <h4 style={{ color: "#888888" }}>MSP: 7130G-016</h4>
+                  <h4>PATEK PHILIPPE COMPLICATIONS</h4>
+                  <h4 style={{ color: "#dbaf56" }}>998.000.000 đ</h4>
+                </div>
+              </div>
             ))}
           </Slider>
         </div>
@@ -335,9 +349,19 @@ const HomePage = () => {
           {data.map((item) => (
             <div className="galleryItem">
               <img src={item.image} key={item.id} alt="" />
-              <h3 style={{ textAlign: "center", padding: 10 }}>{item.name}</h3>
+              {/* <h3 style={{ textAlign: "center", padding: 10 }}>{item.name}</h3> */}
               <div className="btn-inStore">
-                <button className="btn-item">Buy Now</button>
+                {/* <button className="btn-item">Buy Now</button> */}
+                <div
+                  style={{
+                    padding: 20,
+                    textAlign: "center",
+                  }}
+                >
+                  <h4 style={{ color: "#888888" }}>MSP: 7130G-016</h4>
+                  <h4>PATEK PHILIPPE COMPLICATIONS</h4>
+                  <h4 style={{ color: "#dbaf56" }}>998.000.000 đ</h4>
+                </div>
               </div>
             </div>
           ))}
@@ -348,7 +372,7 @@ const HomePage = () => {
       <div className="blog-section">
         <div className="section-content">
           <div className="title">
-            <h2>Blog & News</h2>
+            <h2>Tin Tức</h2>
             <hr
               style={{
                 display: "block",
@@ -476,7 +500,7 @@ const HomePage = () => {
             </div>
             <div className="card-banner-items-content">
               <h4 style={{ fontWeight: 700, padding: 10, color: "#fff" }}>
-                Đồng hồ chính hảng
+                Đồng hồ chánh hảng
               </h4>
             </div>
           </Card.Grid>
@@ -493,7 +517,7 @@ const HomePage = () => {
             </div>
             <div className="card-banner-items-content">
               <h4 style={{ fontWeight: 700, padding: 10, color: "#fff" }}>
-                Nhà Phân Phối Chính Thức
+                Nhà phân phối chính thức
               </h4>
             </div>
           </Card.Grid>
@@ -510,7 +534,7 @@ const HomePage = () => {
             </div>
             <div className="card-banner-items-content">
               <h4 style={{ fontWeight: 700, padding: 10, color: "#fff" }}>
-                Nhiều Mẫu Mã
+                Đa dạng mẫu mã
               </h4>
             </div>
           </Card.Grid>
@@ -521,13 +545,13 @@ const HomePage = () => {
                   width: 60,
                   height: 60,
                 }}
-                src="https://donghotantan.vn/images/strengths/original/stg24_1659589157.png"
+                src="https://donghotantan.vn/images/strengths/original/stg23_1659589133.png"
                 alt=""
               />
             </div>
             <div className="card-banner-items-content">
               <h4 style={{ fontWeight: 700, padding: 10, color: "#fff" }}>
-                Nhiều Mẫu Mã
+                Chính sách bảo hành
               </h4>
             </div>
           </Card.Grid>
@@ -537,7 +561,7 @@ const HomePage = () => {
       {/* comment */}
       <div className="comments">
         <h2 style={{ textAlign: "center", textTransform: "uppercase" }}>
-          Đánh Giá Của Khách Hàng
+          Đánh Giá
         </h2>
         <hr />
 
