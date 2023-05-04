@@ -105,14 +105,13 @@ hr {
 .our-featured h2 {
   text-align: center;
   color: black;
-  font-weight: bold;
   padding: 4px;
 }
 .our-featured hr {
   display: block;
   margin: auto;
-  width: 80px;
-  height: 3px;
+  width: 180px;
+  height: 2px;
   background-color: #169010;
 }
 
@@ -210,8 +209,8 @@ hr {
 .galleryWrapper hr {
   display: block;
   margin: auto;
-  width: 80px;
-  height: 3px;
+  width: 180px;
+  height: 2px;
   background-color: #169010;
 }
 
@@ -351,6 +350,11 @@ hr {
   margin: 20px 20px;
   box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.2);
   padding: 0;
+}
+
+.container-section .card:hover {
+  transition: all 0.5s ease;
+  transform: scale(1.1);
 }
 
 .bottom-left {
@@ -494,11 +498,14 @@ hr {
 .brand-container-grid hr {
   display: block;
   margin: auto;
-  width: 100px;
+  width: 220px;
   height: 3px;
   background-color: #169010;
 }
 
+.brand-container-grid h2:hover {
+  color: #dbaf56;
+}
 /* preview */
 .preview-section {
   justify-content: center;

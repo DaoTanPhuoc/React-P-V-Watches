@@ -139,9 +139,12 @@ const UserLayout = (props: Props) => {
             objectFit: "contain",
           }}
         />
+
         <Menu
           // theme="light"
-          style={{ backgroundColor: "#000" }}
+          style={{
+            backgroundColor: "#000",
+          }}
           mode="horizontal"
           defaultSelectedKeys={[activeMenu]}
           items={[
@@ -247,73 +250,83 @@ const UserLayout = (props: Props) => {
         <div className="container">
           <div className="row">
             <div className="footer-col">
-              <h4>company</h4>
+              <h4>Cửa hàng chúng tôi</h4>
               <ul>
                 <li>
-                  <a href="#">about us</a>
+                  <a href="#">Hotline tư vấn- hỗ trợ: 0909970879</a>
                 </li>
                 <li>
-                  <a href="#">our services</a>
+                  <a href="#">Hotline khiếu nại: 0908970879</a>
                 </li>
                 <li>
-                  <a href="#">privacy policy</a>
+                  <a href="#">
+                    Địa chỉ: Số 5, Nguyễn Trung Ngạn, Phường Bến Nghé, Quận 1,
+                    Thành Phố Hồ Chí Minh
+                  </a>
                 </li>
                 <li>
-                  <a href="#">affiliate program</a>
+                  <a href="#">Email: 0306201063@caothang.edu.vn</a>
                 </li>
               </ul>
             </div>
             <div className="footer-col">
-              <h4>get help</h4>
+              <h4>V-P Watches</h4>
               <ul>
                 <li>
-                  <a href="#">FAQ</a>
+                  <a href="#">Trang chủ</a>
                 </li>
                 <li>
-                  <a href="#">shipping</a>
+                  <a href="#">Sản phẩm</a>
                 </li>
                 <li>
-                  <a href="#">returns</a>
-                </li>
-                <li>
-                  <a href="#">order status</a>
-                </li>
-                <li>
-                  <a href="#">payment options</a>
+                  <a href="#">Tin tức</a>
                 </li>
               </ul>
             </div>
             <div className="footer-col">
-              <h4>online shop</h4>
+              <h4>Liên kết với các hãng</h4>
               <ul>
                 <li>
-                  <a href="#">watch</a>
+                  <a href="#">Rolex</a>
                 </li>
                 <li>
-                  <a href="#">bag</a>
+                  <a href="#">Hublot</a>
                 </li>
                 <li>
-                  <a href="#">shoes</a>
+                  <a href="#">Channel</a>
                 </li>
                 <li>
-                  <a href="#">dress</a>
+                  <a href="#">Orient</a>
                 </li>
               </ul>
             </div>
             <div className="footer-col">
-              <h4>follow us</h4>
+              <h4>Theo dõi & Liên hệ</h4>
               <div className="social-links">
                 <a href="#">
-                  <i className="fab fa-facebook-f"></i>
+                  <i className="fab fa-facebook-f">
+                    <img
+                      src="https://donghotantan.vn/images/config/zalo.png"
+                      alt=""
+                    />
+                  </i>
                 </a>
                 <a href="#">
-                  <i className="fab fa-twitter"></i>
+                  <i className="fab fa-twitter">
+                    <img
+                      src="https://donghotantan.vn/images/config/message.png"
+                      alt=""
+                    />
+                  </i>
                 </a>
+
                 <a href="#">
-                  <i className="fab fa-instagram"></i>
-                </a>
-                <a href="#">
-                  <i className="fab fa-linkedin-in"></i>
+                  <i className="fab fa-linkedin-in">
+                    <img
+                      src="https://ssr-resource-prod.gosell.vn/images/icon/instagram-icon.png"
+                      alt=""
+                    />
+                  </i>
                 </a>
               </div>
             </div>

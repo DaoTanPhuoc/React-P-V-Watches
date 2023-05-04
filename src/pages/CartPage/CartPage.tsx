@@ -133,13 +133,13 @@ const CartPage = () => {
       });
   };
 
-  const removeOrderProduct = (index: number)=>{
-    const productsTmp = [...cartOrders]
-    productsTmp.splice(index,1) // Remove item by index
+  const removeOrderProduct = (index: number) => {
+    const productsTmp = [...cartOrders];
+    productsTmp.splice(index, 1); // Remove item by index
     console.log(productsTmp);
-    
-    onChangeCartOrders(productsTmp)
-  }
+
+    onChangeCartOrders(productsTmp);
+  };
 
   const onChangeQuantity = (quantity: number, index: number) => {
     const productsTmp = [...cartOrders];
@@ -208,7 +208,10 @@ const CartPage = () => {
       dataIndex: "Action",
       key: "Action",
       render: (value, product, index) => (
-        <DeleteOutlined style={{ fontSize: 20 }} onClick={()=>removeOrderProduct(index)} />
+        <DeleteOutlined
+          style={{ fontSize: 20 }}
+          onClick={() => removeOrderProduct(index)}
+        />
       ),
     },
   ];
@@ -262,7 +265,17 @@ const CartPage = () => {
               <br />
               <div style={{ position: "relative" }}>
                 <span style={{ position: "absolute", top: 0, right: 0 }}>
-                  <button onClick={() => setShowInfoCard(true)}>Buy Now</button>
+                  <Button
+                    style={{
+                      color: "white",
+                      backgroundColor: "black",
+                      fontWeight: "bold",
+                    }}
+                    disabled={cartOrders.length == 0 ? true : false}
+                    onClick={() => setShowInfoCard(true)}
+                  >
+                    Buy Now
+                  </Button>
                 </span>
               </div>
               <br />
@@ -315,6 +328,7 @@ const CartPage = () => {
                             }}
                             type="primary"
                             htmlType="submit"
+                            disabled={cartOrders.length > 0 ? false : true}
                           >
                             BUY NOW
                           </Button>

@@ -242,3 +242,15 @@ ul {
   color: #dbaf56;
   font-size: 18px;
 }
+
+.ant-menu-item:hover::after {
+  border-bottom: none !important;
+}
+
+.ant-menu-item::after {
+  border-bottom: none !important;
+}
+
+.ant-menu-title-content span:hover {
+  color: #dbaf56 !important;
+}

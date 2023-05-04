@@ -203,23 +203,28 @@ const Dashboard: React.FC = () => {
   //   setSelectedMenu(e.key)
   // }
   const menuItems = [
-    { key: 1, icon: <UserOutlined />, label: "Home", compoment: <HomeDas /> },
+    {
+      key: 1,
+      icon: <UserOutlined />,
+      label: <span style={{ color: "#000000" }}>Home</span>,
+      compoment: <HomeDas />,
+    },
     {
       key: 2,
       icon: <ShopOutlined />,
-      label: "Products",
+      label: <span style={{ color: "#000000" }}>Products</span>,
       compoment: <ProductsDashboard />,
     },
     {
       key: 3,
       icon: <FormOutlined />,
-      label: "Post",
+      label: <span style={{ color: "#000000" }}>Post</span>,
       compoment: <PostDashboard />,
     },
     {
       key: 4,
       icon: <FileTextOutlined />,
-      label: "Billing",
+      label: <span style={{ color: "#000000" }}>Billing</span>,
       compoment: <BillingDashboard />,
     },
   ];
@@ -233,15 +238,15 @@ const Dashboard: React.FC = () => {
             style={{
               backgroundColor: "white",
               width: 200,
-              height: 54,
+              height: 64,
               objectFit: "cover",
             }}
             src="https://i1.sndcdn.com/artworks-000638521540-rcn15j-t500x500.jpg"
             alt=""
           />
           <Menu
-            style={{ height: "100%" }}
-            theme="dark"
+            style={{ height: "100%", backgroundColor: "#fff" }}
+            // theme="dark"
             mode="inline"
             defaultSelectedKeys={["1"]}
             items={menuItems.map((i) => ({
@@ -263,7 +268,7 @@ const Dashboard: React.FC = () => {
             top: 0,
             zIndex: 1000,
             width: "100%",
-            background: "#fff",
+            background: "#000000",
           }}
         >
           <div style={{ width: "100%" }}>
@@ -275,18 +280,15 @@ const Dashboard: React.FC = () => {
               }
             )} */}
             <div style={{ fontSize: "22px" }}>
-              <SearchOutlined />
+              <SearchOutlined style={{ color: "#fff" }} />
             </div>
           </div>
 
-          {/* <Search
-            className="search-global-input"
-            placeholder="input search text"
-            onSearch={(value) => console.log(value)}
-            style={{ width: 200 }}
-          /> */}
           <a>
-            <BellOutlined className="User-icon-global" />
+            <BellOutlined
+              style={{ color: "#fff" }}
+              className="User-icon-global"
+            />
           </a>
           <Button
             // style={{ position: "absolute", top: 0, right: 0 }}
