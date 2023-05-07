@@ -2,6 +2,7 @@ import {
   Alert,
   Button,
   Col,
+  Descriptions,
   Form,
   Input,
   InputNumber,
@@ -10,6 +11,9 @@ import {
   Row,
   Space,
   Table,
+  Tabs,
+  TabsProps,
+  Tag,
 } from "antd";
 import Item from "antd/es/list/Item";
 import { ColumnsType } from "antd/es/table";
@@ -29,9 +33,8 @@ import {
   InfoCircleOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import { useParams } from "react-router";
-import { log } from "console";
-import { json } from "stream/consumers";
+import FormItem from "antd/es/form/FormItem";
+
 const onChange = (value: number) => {
   console.log("changed", value);
 };
@@ -85,6 +88,366 @@ const CartPage = () => {
   const { cartOrders, onChangeCartOrders } = useContext(AppContext);
   const [messageApi, contextHolder] = message.useMessage();
 
+  // order status (modal antd)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  // close order status
+
+  // tab order status
+  const onChange = (key: string) => {
+    console.log(key);
+  };
+
+  // staus đặt hàng
+  const ConfirmOrder = () => {
+    const stausOrder = 1;
+    // 1: chờ đặt hàng
+    // 2: đã xác nhận
+    // 3: đã hủy
+    return (
+      <div className="confirm-order-container">
+        <div
+          style={{ backgroundColor: "#E8EAE9", border: "1px solid #BAC0BD" }}
+          className="order-id"
+        >
+          ID Đơn Hàng: #32131
+        </div>
+        <div
+          style={{
+            display: "flex",
+            paddingBottom: 20,
+            border: "1px solid #000000",
+            paddingTop: 30,
+          }}
+          className="confirm-order"
+        >
+          <img
+            style={{ width: 100, height: 100, objectFit: "cover" }}
+            src="https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/complications/thumbs/418x0/patek-philippe-complications-5930g-010.png"
+            alt=""
+          />
+          <div
+            style={{
+              // whiteSpace: "nowrap",
+              // overflow: "hidden",
+              textOverflow: "ellipsis",
+              width: 110,
+            }}
+          >
+            <Descriptions.Item>
+              PATEK PHILIPPE COMPLICATIONS 5930G-010s
+            </Descriptions.Item>
+          </div>
+          <p style={{ paddingLeft: 20 }}>
+            <span style={{ color: "#6f6e77" }}>Số lượng: </span>1
+          </p>
+          <div>
+            <Space style={{ paddingLeft: 30 }} size={[0, 2]} wrap>
+              {" "}
+              <Tag color={stausOrder == 1 ? "processing" : "success"}>
+                Chờ xác nhận
+              </Tag>
+            </Space>
+          </div>
+          <div
+            style={{
+              textOverflow: "ellipsis",
+              width: 150,
+              paddingLeft: 20,
+              color: "#33CC33",
+            }}
+          >
+            Nhận hàng vào <Descriptions.Item>2018-04-24</Descriptions.Item>
+          </div>
+          <div
+            style={{
+              textOverflow: "ellipsis",
+              width: 150,
+            }}
+          >
+            <Descriptions.Item>
+              Số 06, Đường Cao Bát Quát, Phường Bến Nghé, Quận 1, Thành Phố Hồ
+              Chí Minh
+            </Descriptions.Item>
+          </div>
+          <div style={{ paddingLeft: 20, width: 125 }}>1.140.000.000 ₫</div>
+          <div>
+            <Button
+              style={{
+                color: "white",
+                backgroundColor: "black",
+                fontWeight: "bold",
+                marginLeft: 30,
+              }}
+            >
+              Hủy Đơn
+            </Button>
+          </div>
+        </div>
+
+        {/* 2 */}
+        <div
+          style={{
+            backgroundColor: "#E8EAE9",
+            border: "1px solid #BAC0BD",
+            marginTop: 30,
+          }}
+          className="order-id"
+        >
+          ID Đơn Hàng: #32131
+        </div>
+        <div
+          style={{
+            display: "flex",
+            border: "1px solid #000000",
+            paddingTop: 30,
+          }}
+          className="confirm-order"
+        >
+          <img
+            style={{ width: 100, height: 100, objectFit: "cover" }}
+            src="https://bossluxurywatch.vn/uploads/san-pham/rolex/day-date-1/thumbs/418x0/rolex-day-date-40mm-228235-0045.png"
+            alt=""
+          />
+          <div
+            style={{
+              // whiteSpace: "nowrap",
+              // overflow: "hidden",
+              textOverflow: "ellipsis",
+              width: 110,
+            }}
+          >
+            <Descriptions.Item>
+              PATEK PHILIPPE COMPLICATIONS 5930G-010s
+            </Descriptions.Item>
+          </div>
+          <p style={{ paddingLeft: 20 }}>
+            <span style={{ color: "#6f6e77" }}>Số lượng: </span>1
+          </p>
+          <div>
+            <Space style={{ paddingLeft: 30 }} size={[0, 8]} wrap>
+              {" "}
+              <Tag color="success">Đã xác nhận</Tag>
+            </Space>
+          </div>
+          <div
+            style={{
+              textOverflow: "ellipsis",
+              width: 150,
+              paddingLeft: 20,
+              color: "#33CC33",
+            }}
+          >
+            Nhận hàng vào <Descriptions.Item>2018-04-24</Descriptions.Item>
+          </div>
+          <div
+            style={{
+              textOverflow: "ellipsis",
+              width: 150,
+            }}
+          >
+            <Descriptions.Item>
+              Số 5, Đường Nguyễn Trung Ngạn, Phường Bến Nghé, Quận 1, Thành Phố
+              Hồ Chí Minh
+            </Descriptions.Item>
+          </div>
+          <div style={{ paddingLeft: 20, width: 130 }}>360.000.000 đ</div>
+          <div>
+            <Button
+              style={{
+                color: "white",
+                backgroundColor: "black",
+                fontWeight: "bold",
+                marginLeft: 30,
+              }}
+            >
+              Hủy Đơn
+            </Button>
+          </div>
+        </div>
+        {/* 3 */}
+        <div
+          style={{
+            backgroundColor: "#E8EAE9",
+            border: "1px solid #BAC0BD",
+            marginTop: 30,
+          }}
+          className="order-id"
+        >
+          ID Đơn Hàng: #32131
+        </div>
+        <div
+          style={{
+            display: "flex",
+            border: "1px solid #000000",
+            paddingTop: 30,
+          }}
+          className="confirm-order"
+        >
+          <img
+            style={{ width: 100, height: 100, objectFit: "cover" }}
+            src="https://bossluxurywatch.vn/uploads/san-pham/rolex/day-date-1/thumbs/418x0/rolex-day-date-40mm-228235-0045.png"
+            alt=""
+          />
+          <div
+            style={{
+              // whiteSpace: "nowrap",
+              // overflow: "hidden",
+              textOverflow: "ellipsis",
+              width: 110,
+            }}
+          >
+            <Descriptions.Item>
+              PATEK PHILIPPE COMPLICATIONS 5930G-010s
+            </Descriptions.Item>
+          </div>
+          <p style={{ paddingLeft: 20 }}>
+            <span style={{ color: "#6f6e77" }}>Số lượng: </span>1
+          </p>
+          <div>
+            <Space style={{ paddingLeft: 30 }} size={[0, 8]} wrap>
+              {" "}
+              <Tag color="success">Đã xác nhận</Tag>
+            </Space>
+          </div>
+          <div
+            style={{
+              textOverflow: "ellipsis",
+              width: 150,
+              paddingLeft: 20,
+              color: "#33CC33",
+            }}
+          >
+            Nhận hàng vào <Descriptions.Item>2018-04-24</Descriptions.Item>
+          </div>
+          <div
+            style={{
+              textOverflow: "ellipsis",
+              width: 150,
+            }}
+          >
+            <Descriptions.Item>
+              Số 5, Đường Nguyễn Trung Ngạn, Phường Bến Nghé, Quận 1, Thành Phố
+              Hồ Chí Minh
+            </Descriptions.Item>
+          </div>
+          <div style={{ paddingLeft: 20, width: 130 }}>360.000.000 đ</div>
+          <div>
+            <Button
+              style={{
+                color: "white",
+                backgroundColor: "black",
+                fontWeight: "bold",
+                marginLeft: 30,
+              }}
+            >
+              Hủy Đơn
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // status đơn đã hủy
+  const ExitOrder = () => {
+    return (
+      <>
+        <div
+          style={{
+            backgroundColor: "#E8EAE9",
+            border: "1px solid #BAC0BD",
+            marginTop: 30,
+          }}
+          className="order-id"
+        >
+          ID Đơn Hàng: #32131
+        </div>
+        <div
+          style={{
+            display: "flex",
+            border: "1px solid #000000",
+            paddingTop: 30,
+          }}
+          className="confirm-order"
+        >
+          <img
+            style={{ width: 100, height: 100, objectFit: "cover" }}
+            src="https://bossluxurywatch.vn/uploads/san-pham/rolex/day-date-1/thumbs/418x0/rolex-day-date-40mm-228235-0045.png"
+            alt=""
+          />
+          <div
+            style={{
+              // whiteSpace: "nowrap",
+              // overflow: "hidden",
+              textOverflow: "ellipsis",
+              width: 110,
+            }}
+          >
+            <Descriptions.Item>
+              PATEK PHILIPPE COMPLICATIONS 5930G-010s
+            </Descriptions.Item>
+          </div>
+          <p style={{ paddingLeft: 20 }}>
+            <span style={{ color: "#6f6e77" }}>Số lượng: </span>1
+          </p>
+          <div>
+            <Space style={{ paddingLeft: 30 }} size={[0, 8]} wrap>
+              {" "}
+              <Tag color="error">Đã xác nhận</Tag>
+            </Space>
+          </div>
+          <div
+            style={{
+              textOverflow: "ellipsis",
+              width: 150,
+              paddingLeft: 20,
+              color: "#33CC33",
+            }}
+          >
+            Nhận hàng vào <Descriptions.Item>2018-04-24</Descriptions.Item>
+          </div>
+          <div
+            style={{
+              textOverflow: "ellipsis",
+              width: 150,
+            }}
+          >
+            <Descriptions.Item>
+              Số 5, Đường Nguyễn Trung Ngạn, Phường Bến Nghé, Quận 1, Thành Phố
+              Hồ Chí Minh
+            </Descriptions.Item>
+          </div>
+          <div style={{ paddingLeft: 20, width: 130 }}>360.000.000 đ</div>
+        </div>
+      </>
+    );
+  };
+
+  const items: TabsProps["items"] = [
+    {
+      key: "1",
+      label: `Chờ xác nhận`,
+      children: <ConfirmOrder />,
+    },
+    {
+      key: "2",
+      label: `Đã Hủy`,
+      children: <ExitOrder />,
+    },
+  ];
+  // close
   const formRef = useRef<FormInstance<any>>(null);
   // clear form
   // const [deleteCard, setDeleteCard] = useState();
@@ -274,10 +637,75 @@ const CartPage = () => {
                     disabled={cartOrders.length == 0 ? true : false}
                     onClick={() => setShowInfoCard(true)}
                   >
-                    Buy Now
+                    Mua Hàng
                   </Button>
                 </span>
+                <span style={{ position: "absolute", top: 0, right: 120 }}>
+                  <Button
+                    style={{
+                      color: "white",
+                      backgroundColor: "black",
+                      fontWeight: "bold",
+                    }}
+                    type="primary"
+                    onClick={showModal}
+                  >
+                    Xem Đơn
+                  </Button>
+                  <Modal
+                    title="Chi tiết đơn hàng"
+                    open={isModalOpen}
+                    onOk={handleOk}
+                    onCancel={handleCancel}
+                    footer={null}
+                  >
+                    <Form>
+                      <Row>
+                        <Col flex={16}>
+                          <Form.Item
+                            name="phoneNumber"
+                            label="Số điện thoại:"
+                            rules={[
+                              {
+                                pattern: new RegExp(
+                                  "^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$"
+                                ),
+                                message: "Số điện thoại không hợp lệ",
+                              },
+                              {
+                                required: true,
+                                message: "Vui lòng nhập số điện thoại",
+                              },
+                            ]}
+                          >
+                            <Input style={{ marginLeft: 20 }} />
+                          </Form.Item>
+                        </Col>
+                        <Col flex={1}>
+                          <FormItem>
+                            <Button
+                              style={{
+                                marginLeft: 60,
+                                backgroundColor: "#000000",
+                                color: "#fff",
+                              }}
+                            >
+                              Tìm Kiếm
+                            </Button>
+                          </FormItem>
+                        </Col>
+                      </Row>
+                    </Form>
+
+                    <Tabs
+                      defaultActiveKey="1"
+                      items={items}
+                      onChange={onChange}
+                    />
+                  </Modal>
+                </span>
               </div>
+              <br />
               <br />
               <br />
               {showInfoCard && (
@@ -312,7 +740,22 @@ const CartPage = () => {
                           <Input />
                         </Form.Item>
 
-                        <Form.Item name="phone" label="Phone">
+                        <Form.Item
+                          name="phone"
+                          label="Phone"
+                          rules={[
+                            {
+                              pattern: new RegExp(
+                                "^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$"
+                              ),
+                              message: "Số điện thoại không hợp lệ",
+                            },
+                            {
+                              required: true,
+                              message: "Vui lòng nhập số điện thoại",
+                            },
+                          ]}
+                        >
                           <Input />
                         </Form.Item>
 
@@ -330,7 +773,7 @@ const CartPage = () => {
                             htmlType="submit"
                             disabled={cartOrders.length > 0 ? false : true}
                           >
-                            BUY NOW
+                            Mua Hàng
                           </Button>
 
                           <Button
@@ -344,7 +787,7 @@ const CartPage = () => {
                             type="primary"
                             htmlType="submit"
                           >
-                            CANCEL
+                            Thoát
                           </Button>
                         </Form.Item>
                       </Form>

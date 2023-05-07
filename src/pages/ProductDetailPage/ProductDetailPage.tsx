@@ -492,6 +492,8 @@ const ProductDetail = () => {
 
   const { brandId, caseSize } = useParams();
 
+  // so lan click đặt hàng
+
   useEffect(() => {
     axios
       .get(
@@ -536,7 +538,8 @@ const ProductDetail = () => {
         (order: any) => order.Id === orderProduct.Id
       );
       if (cartOrder) {
-        cartOrder.Quantity += 1;
+        // cartOrder.Quantity += 1;
+
         cartOrder.TotalPrice = cartOrder.Quantity * cartOrder.Price;
       } else {
         orderProduct.Quantity = 1;
@@ -610,7 +613,7 @@ const ProductDetail = () => {
                       }}
                     >
                       <ShoppingCartOutlined
-                        style={{ paddingRight: 5, fontSize: 35 }}
+                        style={{ paddingRight: 10, fontSize: 30 }}
                       />{" "}
                       Mua Hàng
                     </span>

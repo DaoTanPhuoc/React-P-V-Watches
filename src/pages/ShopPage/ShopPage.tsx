@@ -178,7 +178,7 @@ const ShopPage = () => {
         (order: any) => order.Id === orderProduct.Id
       );
       if (cartOrder) {
-        cartOrder.Quantity += 1;
+        // cartOrder.Quantity += 1;
         cartOrder.TotalPrice = cartOrder.Quantity * cartOrder.Price;
       } else {
         orderProduct.Quantity = 1;
