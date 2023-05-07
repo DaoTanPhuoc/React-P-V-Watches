@@ -145,45 +145,19 @@ const gridStyle: React.CSSProperties = {
 
 const HomePage = () => {
   // product Gallery
-  const [data, setData] = useState<any[]>([]);
+  const [newstProducts, setNewstProducts] = useState<any[]>([]);
   const [collection, setCollection] = useState<any[]>([]);
   const [gender, setGender] = useState<"male" | "female">("male");
 
-  useEffect(() => {
-    // setCollection([... new Set(Category.map((item)=>item.name))])
-  });
-
-  //
-  //BRAND PRODUCTS
-  const [similarProducts, setSimilarProducts] = useState<ProductModel[]>([]);
-
-  const { brandId } = useParams();
-
-  useEffect(() => {
-    axios
-      .get(`https://localhost:7182/api/Products/BrandProduct=${brandId}`)
-      .then((result) => {
-        const similarProduct = result.data;
-        setSimilarProducts(similarProduct);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [brandId]);
-
-  // CLOSE BRAND PRODUCTS
-
-  const onChange = (currentSlide: number) => {
-    console.log(currentSlide);
-  };
-
-  useEffect(() => {
-    console.log(gender);
-    const filteredData = categoryData.filter(
-      (cData) => cData.Gender === gender
-    );
-    setData(filteredData);
-  }, [gender]);
+  const fetchNewstProducts = async (categoryId :number)=>{
+    const res = await axios.get('https://localhost:7182/api/Products/GetNewestProduct',{params: {category: categoryId}})
+    if(res.status == 200){
+      setNewstProducts(res.data.data)
+    }
+  }
+  useEffect(()=>{
+    fetchNewstProducts(0)
+  },[])
 
   return (
     <div>
@@ -341,14 +315,14 @@ const HomePage = () => {
           </h2>
           <hr />
           <div className="multi-button">
-            <button onClick={() => setGender("male")}>Nam</button>
-            <button onClick={() => setGender("female")}>Nu</button>
+            <button onClick={() => fetchNewstProducts(0)}>Nam</button>
+            <button onClick={() => fetchNewstProducts(1)}>Nu</button>
           </div>
         </div>
         <div className="galleryContainer">
-          {data.map((item) => (
+          {newstProducts.map((item) => (
             <div className="galleryItem">
-              <img src={item.image} key={item.id} alt="" />
+              <img src={item.Image} key={item.id} alt="" />
               {/* <h3 style={{ textAlign: "center", padding: 10 }}>{item.name}</h3> */}
               <div className="btn-inStore">
                 {/* <button className="btn-item">Buy Now</button> */}
@@ -358,9 +332,9 @@ const HomePage = () => {
                     textAlign: "center",
                   }}
                 >
-                  <h4 style={{ color: "#888888" }}>MSP: 7130G-016</h4>
-                  <h4>PATEK PHILIPPE COMPLICATIONS</h4>
-                  <h4 style={{ color: "#dbaf56" }}>998.000.000 đ</h4>
+                  <h4 style={{ color: "#888888" }}>MSP: {item.Code}</h4>
+                  <h4>{item.Name}</h4>
+                  <h4 style={{ color: "#dbaf56" }}>{item.Price} đ</h4>
                 </div>
               </div>
             </div>
