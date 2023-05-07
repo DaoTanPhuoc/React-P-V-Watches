@@ -1,6 +1,7 @@
 // import React from "react";
 
 import {
+  Button,
   Card,
   Descriptions,
   Input,
@@ -9,7 +10,7 @@ import {
   Tabs,
   TabsProps,
 } from "antd";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Col, Row } from "antd";
 import ReactPlayer from "react-player";
 import Slider from "react-slick";
@@ -27,7 +28,11 @@ import {
   SketchOutlined,
   SafetyCertificateOutlined,
   ApartmentOutlined,
+  ShoppingCartOutlined,
+  PhoneOutlined,
 } from "@ant-design/icons";
+import Meta from "antd/es/card/Meta";
+import { AppContext } from "../../App";
 
 const moneyFormatter = new Intl.NumberFormat("vi", {
   style: "currency",
@@ -210,7 +215,12 @@ const Details = () => {
       </div>
       <div className="container-left">
         <div style={{ padding: 18 }}>
-          <h4 style={{ textTransform: "uppercase", fontWeight: "bold" }}>
+          <h4
+            style={{
+              textTransform: "uppercase",
+              fontWeight: "bold",
+            }}
+          >
             Tại sao quý khách nên chọn P-watches
           </h4>
           <Col span={14}>
@@ -308,20 +318,158 @@ const Details = () => {
   );
 };
 
+const PostProducts = () => {
+  return (
+    <section id="blog">
+      <div className="blog-box">
+        <div className="blog-image">
+          <img
+            src="https://images.pexels.com/photos/247204/pexels-photo-247204.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            alt="Blog"
+          />
+        </div>
+        <div className="blog-details">
+          <h4>Good as Gold Blog</h4>
+          <p>
+            A lot of the time when lists like this are put together, the
+            emphasis is usually placed on small business blogs that talk about
+            how to run and manage a business. And while such lists are certainly
+            useful, I thought it would be a good idea to put together a list of
+            blogs actually created and managed by retail store owners. Lorem
+            ipsum dolor sit amet consectetur adipisicing elit. Cumque ipsam
+            magnam quaerat reprehenderit dolores, nisi atque itaque enim nihil
+            eius nam veritatis animi maiores! Autem nesciunt voluptatibus
+            doloribus aut nisi.
+          </p>
+          <a href="#">Continue reading</a>
+        </div>
+        <h1>01/22</h1>
+      </div>
+      <div className="blog-box">
+        <div className="blog-image">
+          <img
+            src="https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            alt="Blog"
+          />
+        </div>
+        <div className="blog-details">
+          <h4>10 Menswear Blogs Every Guy Should Know</h4>
+          <p>
+            A decade ago, you could count the number of men’s style bloggers on
+            one hand. Clearly those days are long gone. Today, sifting through
+            all of them would take an eternity. So we’ve gathered 10 that
+            inspire us so you can bookmark them and get inspired too. Lorem
+            ipsum dolor, sit amet consectetur adipisicing elit. Est cumque
+            adipisci dolorem officia, beatae modi aspernatur hic rem iure
+            mollitia placeat cupiditate eum corporis ullam expedita, non ipsam
+            et fugit!
+          </p>
+          <a href="#">Continue reading</a>
+        </div>
+        <h1>01/19</h1>
+      </div>
+      <div className="blog-box">
+        <div className="blog-image">
+          <img
+            src="https://images.pexels.com/photos/972995/pexels-photo-972995.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            alt="Blog"
+          />
+        </div>
+        <div className="blog-details">
+          <h4>8 Beauty bloggers you should be following</h4>
+          <p>
+            {" "}
+            On the weekend (or whenever—who are we kidding?), we love nothing
+            more than checking out what our favorite influencers are posting,
+            from the products they're raving about or the makeup tutorials
+            they're loving. While makeup and skincare blogs launch all the time,
+            we continue to go back to certain experts over and over again Lorem
+            ipsum dolor sit amet consectetur, adipisicing elit. Obcaecati,
+            perspiciatis est ipsum aliquid itaque earum omnis quo at atque
+            rerum. Harum dolor officiis impedit, cupiditate laborum vitae
+            corrupti sapiente quas....
+          </p>
+          <a href="#">Continue reading</a>
+        </div>
+        <h1>10/22</h1>
+      </div>
+      <div className="blog-box">
+        <div className="blog-image">
+          <img
+            src="https://images.pexels.com/photos/833052/pexels-photo-833052.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            alt="Blog"
+          />
+        </div>
+        <div className="blog-details">
+          <h4>Good, Better, Best</h4>
+          <p>
+            Learning how to choose what kind of t-shirt to use for your craft or
+            screen-printing project depends on your crafting or screen-printing
+            business needs. Some fabric and screen-printing choices make more
+            sense for your bottom line than others. Or perhaps you’re looking
+            for a different kind of t-shirt for your business due to changing
+            needs. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Dolorum necessitatibus ex commodi assumenda praesentium, ea iste
+            perspiciatis aperiam explicabo exercitationem odit inventore qui
+            rerum voluptatum est nesciunt, cum eaque? Quod.
+          </p>
+          <a href="#">Continue reading</a>
+        </div>
+        <h1>09/15</h1>
+      </div>
+      <div className="blog-box">
+        <div className="blog-image">
+          <img
+            src="https://images.pexels.com/photos/1266139/pexels-photo-1266139.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            alt="Blog"
+          />
+        </div>
+        <div className="blog-details">
+          <h4>3 keys to healthy grocery shopping</h4>
+          <p>
+            With the New Year a few months behind us now, hectic schedules and
+            daily distractions have gotten in the way of our most well intended
+            resolutions. If you are still looking to work on being healthier
+            this year, eating healthier is a good option that may be easier than
+            it seems. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Fugit dolorum obcaecati blanditiis id quidem sequi esse non,
+            molestiae sunt reiciendis natus error pariatur odit rem sapiente
+            facere? Distinctio, autem ex.
+          </p>
+          <a href="#">Continue reading</a>
+        </div>
+        <h1>08/21</h1>
+      </div>
+    </section>
+  );
+};
+
+// const [products, setProducts] = useState<ProductModel[]>([]);
+// useEffect(() => {
+//   axios
+//     .get(`https://localhost:7182/api/Products`)
+//     .then((result) => {
+//       setProducts(result.data);
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// }, []);
+
 const items: TabsProps["items"] = [
   {
     key: "1",
-    label: `Details`,
+    label: `Chi tiết sản phẩm`,
     children: <Details />,
   },
   {
     key: "2",
-    label: `Policy`,
-    children: `Content of Tab Pane 2`,
+    label: `Bài viết liên quan`,
+    children: <PostProducts />,
   },
   {
     key: "3",
-    label: `Tab 3`,
+    label: `Chính sách`,
     children: `Content of Tab Pane 3`,
   },
 ];
@@ -343,6 +491,8 @@ const ProductDetail = () => {
   const [similarProducts, setSimilarProducts] = useState<ProductModel[]>([]);
 
   const { brandId, caseSize } = useParams();
+
+  // so lan click đặt hàng
 
   useEffect(() => {
     axios
@@ -378,6 +528,32 @@ const ProductDetail = () => {
       });
   }, [id]);
 
+  // add cart
+  const { cartOrders = [], onChangeCartOrders } = useContext(AppContext);
+  function addToCart(orderProduct: any) {
+    try {
+      const cartOrdersTmp = [...cartOrders];
+
+      const cartOrder = cartOrdersTmp.find(
+        (order: any) => order.Id === orderProduct.Id
+      );
+      if (cartOrder) {
+        // cartOrder.Quantity += 1;
+
+        cartOrder.TotalPrice = cartOrder.Quantity * cartOrder.Price;
+      } else {
+        orderProduct.Quantity = 1;
+        orderProduct.TotalPrice = orderProduct.Price;
+        cartOrdersTmp.push(orderProduct);
+      }
+
+      onChangeCartOrders(cartOrdersTmp);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  // close
+
   return (
     <div>
       <div className="main-wrapper">
@@ -405,7 +581,9 @@ const ProductDetail = () => {
               </div>
             </div>
             <div className="product-div-right">
-              <span className="product-name">{productDetail?.Name}</span>
+              <span style={{ color: "#dbaf56" }} className="product-name">
+                {productDetail?.Name}
+              </span>
               <span className="product-price">
                 {" "}
                 {moneyFormatter.format(Number(productDetail?.Price))}
@@ -414,9 +592,43 @@ const ProductDetail = () => {
                 {productDetail?.Description}
               </p>
               <div className="btn-groups">
-                <button type="button" className="add-cart-btn">
+                {productDetail?.Stock != 0 ? (
+                  <button
+                    onClick={() => {
+                      addToCart(productDetail);
+                    }}
+                    style={{
+                      marginTop: 10,
+                      marginBottom: 15,
+                      textTransform: "uppercase",
+                    }}
+                    type="button"
+                    className="add-cart-btn"
+                  >
+                    <span
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <ShoppingCartOutlined
+                        style={{ paddingRight: 10, fontSize: 30 }}
+                      />{" "}
+                      Mua Hàng
+                    </span>
+                  </button>
+                ) : (
+                  <Meta
+                    className="btn-out-stock"
+                    style={{ padding: 10, textTransform: "uppercase" }}
+                    title={productDetail?.Stock == 0 ? "Hết Hàng" : <br />}
+                  />
+                )}
+
+                {/* <button type="button" className="add-cart-btn">
                   Add to cart
-                </button>
+                </button> */}
               </div>
 
               {/* TabContainer */}
@@ -537,8 +749,14 @@ const ProductDetail = () => {
 
       <div className="Similar-Product-container">
         <div className="App">
-          <h2 style={{ textAlign: "center", padding: 70 }}>
-            SẢN PHẨM LIÊN QUAN
+          <h2
+            style={{
+              textAlign: "center",
+              padding: 70,
+              textTransform: "uppercase",
+            }}
+          >
+            Sản Phẩm Tương tự
           </h2>
           <Slider {...settings}>
             {similarProducts.map((similarProduct) => (
@@ -552,7 +770,7 @@ const ProductDetail = () => {
                   <h4 style={{ color: "#888888" }}>
                     MSP {similarProduct.Code}
                   </h4>
-                  <h4 style={{ fontWeight: 650, whiteSpace: "nowrap" }}>
+                  <h4 style={{ fontWeight: 600, whiteSpace: "nowrap" }}>
                     {similarProduct.Name}
                   </h4>
 

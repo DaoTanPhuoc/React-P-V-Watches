@@ -141,3 +141,12 @@
   flex: 1;
   max-width: 450px;
 }
+/* modal design */
+.ant-modal {
+  width: 68% !important;
+}
+
+/* .ant-modal-footer .ant-btn {
+  color: #fff !important;
+  background-color: #00000000 !important;
+} */

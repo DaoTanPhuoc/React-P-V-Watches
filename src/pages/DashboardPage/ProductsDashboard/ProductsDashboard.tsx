@@ -221,12 +221,12 @@ const config = {
 const ProductsDashboard = () => {
   return (
     <>
-      <div className="banner-products">
+      {/* <div className="banner-products">
         <div className="content-banner-products">
           <h1>Welcome to Dashboard !</h1>
           <button>Get Started</button>
         </div>
-      </div>
+      </div> */}
       <div className="title-chart-das">Thống Kê Doanh Thu</div>
 
       {/* chart */}
@@ -267,7 +267,7 @@ const ProductsDashboard = () => {
         </div>
       </div>
       <div className="table-das-container">
-        <div className="title-das-products">Products Table</div>
+        <div className="title-das-products">Danh sách sản phẩm</div>
         <Table
           columns={columns}
           dataSource={data}

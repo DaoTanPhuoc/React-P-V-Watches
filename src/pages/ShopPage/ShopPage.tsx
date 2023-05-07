@@ -178,7 +178,7 @@ const ShopPage = () => {
         (order: any) => order.Id === orderProduct.Id
       );
       if (cartOrder) {
-        cartOrder.Quantity += 1;
+        // cartOrder.Quantity += 1;
         cartOrder.TotalPrice = cartOrder.Quantity * cartOrder.Price;
       } else {
         orderProduct.Quantity = 1;
@@ -197,7 +197,11 @@ const ShopPage = () => {
       <section className="ban_sec">
         <div className="container-ban">
           <div className="ban_img">
-            <img src="https://i.ibb.co/NVjsGWG/banner.jpg" alt="banner" />
+            <img
+              style={{ height: 580, objectFit: "cover" }}
+              src="https://theme.hstatic.net/200000596685/1000963076/14/home-banner-three-image.png?v=145"
+              alt="banner"
+            />
             <div className="ban_text">
               <strong>
                 <span>Meeting current</span>
@@ -319,13 +323,13 @@ const ShopPage = () => {
                 Add to cart
               </Button> */}
               <h4 style={{ color: "#888888" }}>MSP {watchItem.Code}</h4>
-              <h4>{watchItem.Name}</h4>
+              <h4 style={{ fontWeight: 600 }}>{watchItem.Name}</h4>
               <h4 style={{ color: "#dbaf56" }}>
                 {moneyFormatter.format(watchItem.Price)}{" "}
               </h4>
 
               <Meta
-                style={{ padding: 10 }}
+                style={{ padding: 10, textTransform: "uppercase" }}
                 title={watchItem.Stock == 0 ? "Hết Hàng" : <br />}
               />
 
@@ -341,7 +345,7 @@ const ShopPage = () => {
                       addToCart(watchItem);
                     }}
                   >
-                    Add to cart
+                    Thêm vào giỏ hàng
                     {/* `/cart/${watchItem.Id}/${watchItem.BrandId}/${watchItem.CaseSize}` */}
                   </Button>
                 ) : (

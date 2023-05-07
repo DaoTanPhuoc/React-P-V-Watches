@@ -105,14 +105,13 @@ hr {
 .our-featured h2 {
   text-align: center;
   color: black;
-  font-weight: bold;
   padding: 4px;
 }
 .our-featured hr {
   display: block;
   margin: auto;
-  width: 80px;
-  height: 3px;
+  width: 180px;
+  height: 2px;
   background-color: #169010;
 }
 
@@ -205,13 +204,14 @@ hr {
   display: grid;
   justify-content: center;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 20px;
+  gap: 10px;
 }
+
 .galleryWrapper hr {
   display: block;
   margin: auto;
-  width: 80px;
-  height: 3px;
+  width: 180px;
+  height: 2px;
   background-color: #169010;
 }
 
@@ -340,6 +340,7 @@ hr {
 }
 .container-section {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -353,6 +354,11 @@ hr {
   padding: 0;
 }
 
+.container-section .card:hover {
+  transition: all 0.5s ease;
+  transform: scale(1.1);
+}
+
 .bottom-left {
   position: absolute;
   bottom: 8px;
@@ -363,12 +369,18 @@ hr {
   .row-banner .container-section .card {
     grid-template-columns: repeat(2, 1fr);
   }
-}
-@media screen and (max-width: 768px) {
-  .row-banner .container-section .card {
-    grid-template-columns: 1fr;
-  }
 } */
+@media screen and (max-width: 900px) {
+  .row-banner .container-section {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .row-banner .container-section .card {
+    width: 100%;
+  }
+}
 
 /* our log */
 .blog-section {
@@ -494,11 +506,14 @@ hr {
 .brand-container-grid hr {
   display: block;
   margin: auto;
-  width: 100px;
+  width: 220px;
   height: 3px;
   background-color: #169010;
 }
 
+.brand-container-grid h2:hover {
+  color: #dbaf56;
+}
 /* preview */
 .preview-section {
   justify-content: center;
@@ -722,3 +737,14 @@ figure.snip1204 .author span {
   color: #ffffff;
   top: 50%;
 }
+
+/* @media screen and (max-width: 992px) {
+  .row-banner .container-section .card {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (max-width: 768px) {
+  .row-banner .container-section .card {
+    grid-template-columns: 1fr;
+  }
+} */
