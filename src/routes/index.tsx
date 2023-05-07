@@ -16,6 +16,7 @@ import DetailNews from "../pages/DetailNewsPage/DetailNews";
 import ProductsDashboard from "../pages/DashboardPage/ProductsDashboard/ProductsDashboard";
 import PostDashboard from "../pages/DashboardPage/PostDashboard/PostDashboard";
 import BillingDashboard from "../pages/DashboardPage/BillingDashboard/BillingDashboard";
+import MyAccountPage from "../pages/MyAccountPage/MyAccountPage";
 
 export const routes = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ export const routes = createBrowserRouter([
   {
     path: "/dasBilling",
     element: <BillingDashboard />,
+  },
+  {
+    path: "/myAccount",
+    element: <MyAccountPage />,
   },
 ]);
 

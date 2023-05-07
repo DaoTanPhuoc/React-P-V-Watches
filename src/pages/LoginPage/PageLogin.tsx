@@ -163,7 +163,7 @@ const PageLogin = () => {
         </Form.Item>
         <FormItem>
           <span style={{ color: "#fff", marginLeft: 15 }}>
-            Nếu như bạn chưa có tài khoản? <a href="/register">Đăng Ký</a>
+            Nếu như bạn chưa có tài khoản? <a href="#">Đăng Ký</a>{" "}
           </span>{" "}
         </FormItem>
       </Form>
