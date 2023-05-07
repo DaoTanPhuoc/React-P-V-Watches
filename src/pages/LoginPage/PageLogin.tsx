@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, Tabs, TabsProps } from "antd";
 import { useContext, useMemo, useState } from "react";
 import { Layout } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
@@ -163,7 +163,7 @@ const PageLogin = () => {
         </Form.Item>
         <FormItem>
           <span style={{ color: "#fff", marginLeft: 15 }}>
-            Nếu như bạn chưa có tài khoản? <a href="#">Đăng Ký</a>
+            Nếu như bạn chưa có tài khoản? <a href="/register">Đăng Ký</a>
           </span>{" "}
         </FormItem>
       </Form>
