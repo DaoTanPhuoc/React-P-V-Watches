@@ -337,23 +337,4 @@ const UserLayout = (props: Props) => {
   );
 };
 
-function MegaMenu() {
-  return (
-    <div>
-      <Card title="Card Title">
-        <Card.Grid style={gridStyle}>Rolex</Card.Grid>
-
-        <Card.Grid style={gridStyle}>Hublot</Card.Grid>
-        <Card.Grid style={gridStyle}>Citizen</Card.Grid>
-        <Card.Grid style={gridStyle}>Orient</Card.Grid>
-
-        <Card.Grid style={gridStyle}>Omega</Card.Grid>
-        <Card.Grid style={gridStyle}>Tissot</Card.Grid>
-        <Card.Grid style={gridStyle}>Mido</Card.Grid>
-        <Card.Grid style={gridStyle}>Chanel</Card.Grid>
-      </Card>
-    </div>
-  );
-}
-
 export default UserLayout;
