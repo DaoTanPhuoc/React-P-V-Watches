@@ -9,6 +9,7 @@ import {
   Dropdown,
   FloatButton,
   List,
+  Result,
   Row,
   Space,
   Tabs,
@@ -29,6 +30,15 @@ import "slick-carousel/slick/slick-theme.css";
 import Meta from "antd/es/card/Meta";
 import { MessageOutlined } from "@ant-design/icons";
 import { AppContext } from "../../App";
+
+const moneyFormatter = new Intl.NumberFormat("vi", {
+  style: "currency",
+  currency: "VND",
+
+  // These options are needed to round to whole numbers if that's what you want.
+  //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+  maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+});
 
 const setting2 = {
   infinite: true,
@@ -147,10 +157,31 @@ const gridStyle: React.CSSProperties = {
 };
 
 const HomePage = () => {
+  // GetAvailableProducts
+  const [GetAvailableProducts, setGetAvailableProducts] = useState<any[]>([]);
   // product Gallery
   const [newstProducts, setNewstProducts] = useState<any[]>([]);
   const [collection, setCollection] = useState<any[]>([]);
   const [gender, setGender] = useState<"male" | "female">("male");
+  const [getProductsByCategory, setGetProductsByCategory] = useState<1 | 2>(1);
+
+  //avaliableProducts
+  useEffect(() => {
+    axios
+      .get(`https://localhost:7182/api/Products/GetAvailableProducts`)
+      .then((Result) => {
+        const avaliableProducts = Result.data;
+        setGetAvailableProducts(avaliableProducts);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+  //avaliableProducts close
+
+  //getProductsByCategory
+
+  //getProductsByCategory close
   const fetchNewstProducts = async (categoryId: number) => {
     axios.get('https://localhost:7182/api/Products/GetNewestProduct', { params: { category: categoryId } }).then((res) => {
       if (res.status == 200) {
@@ -158,6 +189,24 @@ const HomePage = () => {
       }
     }).catch(error => {
       console.log(error.message);
+
+      //avaliableProducts
+      useEffect(() => {
+        axios
+          .get(`https://localhost:7182/api/Products/GetAvailableProducts`)
+          .then((Result) => {
+            const avaliableProducts = Result.data;
+            setGetAvailableProducts(avaliableProducts);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+      //avaliableProducts close
+
+      //getProductsByCategory
+
+      //getProductsByCategory close
 
     })
   }
@@ -235,7 +284,7 @@ const HomePage = () => {
               <hr />
             </div>
             <Slider {...setting2}>
-              {ImageOurFeatured.map((brandImage) => (
+              {GetAvailableProducts.map((brandImage) => (
                 <div>
                   <div>
                     <img
@@ -244,7 +293,7 @@ const HomePage = () => {
                         width: "100%",
                         objectFit: "cover",
                       }}
-                      src={brandImage}
+                      src={brandImage.Image}
                       alt=""
                     />
                   </div>
@@ -254,11 +303,11 @@ const HomePage = () => {
                       textAlign: "center",
                     }}
                   >
-                    <h4 style={{ color: "#888888" }}>MSP: 7130G-016</h4>
-                    <h4 style={{ fontWeight: 600 }}>
-                      PATEK PHILIPPE COMPLICATIONS
+                    <h4 style={{ color: "#888888" }}>{brandImage.Code}</h4>
+                    <h4 style={{ fontWeight: 600 }}>{brandImage.Name}</h4>
+                    <h4 style={{ color: "#dbaf56" }}>
+                      {moneyFormatter.format(brandImage.Price)}
                     </h4>
-                    <h4 style={{ color: "#dbaf56" }}>998.000.000 đ</h4>
                   </div>
                 </div>
               ))}

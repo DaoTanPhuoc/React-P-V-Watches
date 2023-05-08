@@ -511,9 +511,9 @@ hr {
   background-color: #169010;
 }
 
-.brand-container-grid h2:hover {
+/* .brand-container-grid h2:hover {
   color: #dbaf56;
-}
+} */
 /* preview */
 .preview-section {
   justify-content: center;
@@ -638,6 +638,12 @@ article ul li {
   justify-content: center;
   align-items: center;
   padding-top: 20px;
+  flex-direction: row;
+}
+@media (max-width: 800px) {
+  .comment-container {
+    flex-direction: column;
+  }
 }
 
 .comments {

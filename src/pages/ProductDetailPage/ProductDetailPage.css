@@ -108,13 +108,13 @@ img {
   margin-right: 8px;
 }
 .add-cart-btn {
-  background-color: #fd7e14;
+  background-color: #000000;
   margin-right: 10px;
   border-radius: 5px;
 }
 .add-cart-btn:hover {
   opacity: 0.8;
-  background-color: #fd7e14;
+  background-color: #272727;
   transition: all 0.2s ease-in-out;
 }
 

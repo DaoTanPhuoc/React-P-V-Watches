@@ -227,7 +227,7 @@ const ShopPage = () => {
                 width: 150,
                 fontWeight: "bold",
               }}
-              placeholder="Chose Brand"
+              placeholder="Thương Hiệu"
               optionFilterProp="children"
               filterOption={(input, option) =>
                 (option?.label ?? "").includes(input)
@@ -264,7 +264,7 @@ const ShopPage = () => {
                 width: 150,
                 fontWeight: "bold",
               }}
-              placeholder="Chose Brand"
+              placeholder="Sắp xếp"
               optionFilterProp="children"
               filterOption={(input, option) =>
                 (option?.label ?? "").includes(input)
@@ -277,19 +277,15 @@ const ShopPage = () => {
               options={[
                 {
                   value: "1",
-                  label: "Rolex",
+                  label: "Tất cả",
                 },
                 {
                   value: "2",
-                  label: "Channel",
+                  label: "Giảm dần",
                 },
                 {
                   value: "3",
-                  label: "Orient",
-                },
-                {
-                  value: "4",
-                  label: "Hublot",
+                  label: "Tăng dần",
                 },
               ]}
             />
@@ -338,8 +334,12 @@ const ShopPage = () => {
                 {watchItem.Stock != 0 ? (
                   <Button
                     className="btn-shopping"
-                    icon={<ShoppingCartOutlined />}
-                    style={{ margin: 25 }}
+                    icon={<ShoppingCartOutlined style={{ color: "#fff" }} />}
+                    style={{
+                      margin: 25,
+                      color: "#fff",
+                      backgroundColor: "#000000",
+                    }}
                     size={"large"}
                     onClick={() => {
                       addToCart(watchItem);
