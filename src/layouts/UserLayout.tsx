@@ -33,7 +33,7 @@ import { TypeFlags } from "typescript";
 import "./UserLayout.css";
 import ColumnGroup from "antd/es/table/ColumnGroup";
 import Column from "antd/es/table/Column";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { AppContext } from "../App";
 
 const { Search } = Input;
@@ -47,10 +47,9 @@ const gridStyle: React.CSSProperties = {
   textAlign: "center",
 };
 
-const UserLayout = (props: Props) => {
-  const { children } = props;
+const UserLayout = () => {
   const { cartOrders, setCartOrders } = useContext(AppContext);
-
+  const { currentUser, setCurrentUser } = useContext(AppContext)
   const [hoverMenu, setHoverMenu] = useState(0);
 
   const {
@@ -218,11 +217,19 @@ const UserLayout = (props: Props) => {
             </Badge>
           </a>
 
-          <a href="/login">
-            <UserOutlined
-              style={{ fontSize: 24, margin: "25px 0", color: "#fff" }}
-            />
-          </a>
+          {
+            currentUser.avatar ?
+              <a href="/info">
+                <Avatar src={currentUser.avatar} shape="circle" />
+              </a>
+              :
+              <a href="/login">
+                <UserOutlined
+                  style={{ fontSize: 24, margin: "25px 0", color: "#fff" }}
+                />
+              </a>
+
+          }
         </Space>
         {/* submenu */}
         <div
@@ -244,7 +251,7 @@ const UserLayout = (props: Props) => {
         </div>
       </Header>
 
-      <Content className="site-layout">{children}</Content>
+      <Content className="site-layout"><Outlet /></Content>
 
       <footer className="footer">
         <div className="container">

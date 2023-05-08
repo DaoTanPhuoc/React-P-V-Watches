@@ -1,12 +1,15 @@
 #components-form-demo-normal-login .login-form {
   max-width: 300px;
 }
+
 #components-form-demo-normal-login .login-form-forgot {
   float: right;
 }
+
 #components-form-demo-normal-login .ant-col-rtl .login-form-forgot {
   float: left;
 }
+
 #components-form-demo-normal-login .login-form-button {
   width: 100%;
 }
@@ -16,6 +19,7 @@
   left: -80px;
   top: -80px;
 }
+
 .shape:last-child {
   background: linear-gradient(to right, #ff512f, #f09819);
   right: -30px;
@@ -29,6 +33,7 @@ body {
 .login-form-button {
   margin-top: 10px;
   width: 100%;
+  height: 100%;
   background-color: #ffffff;
   color: #080710;
   padding: 15px 0;
@@ -36,4 +41,12 @@ body {
   font-weight: 600;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.ant-form-item-label>label {
+  display: "block";
+  margin-top: 18;
+  font-size: 16;
+  font-weight: 500;
+  color: "#fff",
 }

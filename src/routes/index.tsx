@@ -17,66 +17,68 @@ import ProductsDashboard from "../pages/DashboardPage/ProductsDashboard/Products
 import PostDashboard from "../pages/DashboardPage/PostDashboard/PostDashboard";
 import BillingDashboard from "../pages/DashboardPage/BillingDashboard/BillingDashboard";
 import MyAccountPage from "../pages/MyAccountPage/MyAccountPage";
+import UserLayout from "../layouts/UserLayout";
 
-export const routes = createBrowserRouter([
+export const userRoutes = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: <UserLayout />,
+    children: [
+      {
+        path: "/",
+        element: <HomePage />,
+      },
+      {
+        path: "/shop",
+        element: <ShopPage />,
+      },
+      {
+        path: "/ProductDetail/:id/:brandId/:caseSize",
+        element: <ProductDetail />,
+      },
+      {
+        path: "/cart",
+        element: <CartPage />,
+      },
+      {
+        path: "/news",
+        element: <News />,
+      },
+      {
+        path: "/dasHome",
+        element: <HomeDas />,
+      },
+      {
+        path: "/dasProducts",
+        element: <ProductsDashboard />,
+      },
+      {
+        path: "/detailNews",
+        element: <DetailNews />,
+      },
+      {
+        path: "/dasProducts",
+        element: <ProductsDashboard />,
+      },
+      {
+        path: "/dasPost",
+        element: <PostDashboard />,
+      },
+      {
+        path: "/dasBilling",
+        element: <BillingDashboard />,
+      },
+      {
+        path: "/myAccount",
+        element: <MyAccountPage />,
+      },
+    ]
   },
   {
-    path: "/shop",
-    element: <ShopPage />,
-  },
-  {
-    path: "/ProductDetail/:id/:brandId/:caseSize",
-    element: <ProductDetail />,
-  },
-  {
-    path: "/cart",
-    element: <CartPage />,
-  },
-  {
-    path: "/news",
-    element: <News />,
-  },
-  {
-    path: "/dasHome",
-    element: <HomeDas />,
-  },
-  {
-    path: "/dasProducts",
-    element: <ProductsDashboard />,
-  },
-  {
-    path: "/detailNews",
-    element: <DetailNews />,
-  },
-  {
-    path: "/dasProducts",
-    element: <ProductsDashboard />,
-  },
-  {
-    path: "/dasPost",
-    element: <PostDashboard />,
-  },
-  {
-    path: "/dasBilling",
-    element: <BillingDashboard />,
-  },
-  {
-    path: "/myAccount",
-    element: <MyAccountPage />,
-  },
-]);
-
-export const adminRoutes = createBrowserRouter([
-  {
-    path: "/HomeDashboard",
+    path: "/admin",
     element: <Dashboard />,
+    children: []
   },
-]);
-
-export const authRoutes = createBrowserRouter([
   {
     path: "/login",
     element: <PageLogin />,

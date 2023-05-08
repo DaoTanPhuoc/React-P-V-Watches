@@ -1,30 +1,29 @@
+import jwtDecode from "jwt-decode";
 import React, { createContext, useEffect, useState } from "react";
-import { Route, RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import "./App.css";
-import UserLayout from "./layouts/UserLayout";
-import { adminRoutes, authRoutes, routes } from "./routes";
-import PageLogin from "./pages/LoginPage/PageLogin";
-import Dashboard from "./pages/DashboardPage/DashboardPage";
+import { userRoutes } from "./routes";
 
 export const AppContext = createContext<any>(null);
 
 function App() {
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
-  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+  const [isAuthenticatedAdmin, setIsAuthenticatedAdmin] = useState(false);
+  const [currentUser, setCurrentUser] = useState<any>({});
   const [cartOrders, setCartOrders] = useState<any[]>([]);
-  // Check is AdminPage
-  const pathname = window.location.pathname.split("/")[1];
-  const isAdminPage = pathname === "admin" || pathname === "login";
-  // check is UserPage
-
   useEffect(() => {
-    const userString = localStorage.getItem("adminInfo");
-    if (userString) {
-      const user = JSON.parse(userString);
-      if (user) {
-        setIsAdminAuthenticated(true);
+    console.log(currentUser);
+
+    (async () => {
+      const token = localStorage.getItem("userToken")
+      if (token) {
+        const userInfo: any = await jwtDecode(token);
+        setCurrentUser({
+          name: userInfo.Name,
+          email: userInfo.Email,
+          avatar: userInfo.Avatar
+        })
       }
-    }
+    })()
 
     const cartOrdersString = localStorage.getItem("cartOrders");
     if (cartOrdersString) {
@@ -33,12 +32,6 @@ function App() {
     }
   }, []);
   // Auth
-  useEffect(() => {
-    if (pathname === "login" && isAdminAuthenticated) {
-      window.location.replace("/admin");
-    }
-  }, [pathname, isAdminAuthenticated]);
-
   const onChangeCartOrders = (orders: any[]) => {
     const cartOrdersString = JSON.stringify(orders);
     localStorage.setItem("cartOrders", cartOrdersString);
@@ -49,38 +42,19 @@ function App() {
   return (
     <AppContext.Provider
       value={{
-        isAdminAuthenticated,
-        setIsAdminAuthenticated,
+        currentUser,
+        setCurrentUser,
+        isAuthenticatedAdmin,
+        setIsAuthenticatedAdmin,
         cartOrders,
         onChangeCartOrders,
       }}
     >
-      {isAdminPage ? (
-        isAdminAuthenticated ? (
-          <AdminLayout>
-            {/* <AdminRoutes /> */}
-            <RouterProvider router={adminRoutes} />
-          </AdminLayout>
-        ) : (
-          <BlankLayout>
-            <RouterProvider router={authRoutes} />
-          </BlankLayout>
-        )
-      ) : (
-        <UserLayout>
-          <RouterProvider router={routes} />
-        </UserLayout>
-      )}
+      {
+        <RouterProvider router={userRoutes} />
+      }
     </AppContext.Provider>
   );
 }
-
-const AdminLayout = ({ children }: { children: React.ReactNode }) => {
-  return <Dashboard />;
-};
-
-const BlankLayout = ({ children }: { children: React.ReactNode }) => {
-  return <PageLogin />;
-};
 
 export default App;

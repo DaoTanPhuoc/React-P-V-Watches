@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./HomePage.css";
 import Logo from "../../assets/image/brand/brHublot.jpg";
 import {
@@ -28,6 +28,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Meta from "antd/es/card/Meta";
 import { MessageOutlined } from "@ant-design/icons";
+import { AppContext } from "../../App";
 
 const setting2 = {
   infinite: true,
@@ -150,16 +151,19 @@ const HomePage = () => {
   const [newstProducts, setNewstProducts] = useState<any[]>([]);
   const [collection, setCollection] = useState<any[]>([]);
   const [gender, setGender] = useState<"male" | "female">("male");
+  const fetchNewstProducts = async (categoryId: number) => {
+    axios.get('https://localhost:7182/api/Products/GetNewestProduct', { params: { category: categoryId } }).then((res) => {
+      if (res.status == 200) {
+        setNewstProducts(res.data.data)
+      }
+    }).catch(error => {
+      console.log(error.message);
 
-  const fetchNewstProducts = async (categoryId :number)=>{
-    const res = await axios.get('https://localhost:7182/api/Products/GetNewestProduct',{params: {category: categoryId}})
-    if(res.status == 200){
-      setNewstProducts(res.data.data)
-    }
+    })
   }
-  useEffect(()=>{
+  useEffect(() => {
     fetchNewstProducts(0)
-  },[])
+  }, [])
 
   return (
     <>
@@ -317,39 +321,39 @@ const HomePage = () => {
           </div>
         </div>
 
-      <div className="galleryWrapper">
-        <div>
-          <h2 style={{ textAlign: "center", textTransform: "uppercase" }}>
-          Sản phẩm mới nhất
-          </h2>
-          <hr />
-          <div className="multi-button">
-            <button onClick={() => fetchNewstProducts(0)}>Nam</button>
-            <button onClick={() => fetchNewstProducts(1)}>Nu</button>
+        <div className="galleryWrapper">
+          <div>
+            <h2 style={{ textAlign: "center", textTransform: "uppercase" }}>
+              Sản phẩm mới nhất
+            </h2>
+            <hr />
+            <div className="multi-button">
+              <button onClick={() => fetchNewstProducts(0)}>Nam</button>
+              <button onClick={() => fetchNewstProducts(1)}>Nu</button>
+            </div>
           </div>
-        </div>
-        <div className="galleryContainer">
-          {newstProducts.map((item) => (
-            <div className="galleryItem">
-              <img src={item.Image} key={item.id} alt="" />
-              {/* <h3 style={{ textAlign: "center", padding: 10 }}>{item.name}</h3> */}
-              <div className="btn-inStore">
-                {/* <button className="btn-item">Buy Now</button> */}
-                <div
-                  style={{
-                    padding: 20,
-                    textAlign: "center",
-                  }}
-                >
-                  <h4 style={{ color: "#888888" }}>MSP: {item.Code}</h4>
-                  <h4>{item.Name}</h4>
-                  <h4 style={{ color: "#dbaf56" }}>{item.Price} đ</h4>
+          <div className="galleryContainer">
+            {newstProducts.map((item) => (
+              <div className="galleryItem">
+                <img src={item.Image} key={item.id} alt="" />
+                {/* <h3 style={{ textAlign: "center", padding: 10 }}>{item.name}</h3> */}
+                <div className="btn-inStore">
+                  {/* <button className="btn-item">Buy Now</button> */}
+                  <div
+                    style={{
+                      padding: 20,
+                      textAlign: "center",
+                    }}
+                  >
+                    <h4 style={{ color: "#888888" }}>MSP: {item.Code}</h4>
+                    <h4>{item.Name}</h4>
+                    <h4 style={{ color: "#dbaf56" }}>{item.Price} đ</h4>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
 
         {/* blog  */}
         <div className="blog-section">

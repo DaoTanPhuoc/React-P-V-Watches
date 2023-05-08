@@ -18,6 +18,7 @@ import {
   Divider,
   Input,
   MenuProps,
+  Result,
   Row,
   Space,
   Table,
@@ -42,7 +43,7 @@ import News from "../NewsPage/NewsPage";
 import ProductsDashboard from "./ProductsDashboard/ProductsDashboard";
 import PostDashboard from "./PostDashboard/PostDashboard";
 import BillingDashboard from "./BillingDashboard/BillingDashboard";
-
+import { useNavigate } from "react-router-dom";
 const { Header, Content, Footer, Sider } = Layout;
 
 interface ChartModel {
@@ -66,6 +67,7 @@ interface ChartModel {
 // ];
 
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
   interface DataType {
     key: string;
     name: string;
@@ -185,12 +187,12 @@ const Dashboard: React.FC = () => {
 
   const { Meta } = Card;
   const { Search } = Input;
-  const { isAdminAuthenticated, setIsAdminAuthenticated } =
+  const { isAuthenticatedAdmin, setIsAuthenticatedAdmin } =
     useContext(AppContext);
   const handleLogout = () => {
-    //localStorage.clear();
-    localStorage.removeItem("adminInfo");
-    setIsAdminAuthenticated(false);
+    localStorage.removeItem("userToken");
+    setIsAuthenticatedAdmin(false);
+    navigate('/')
   };
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -230,7 +232,7 @@ const Dashboard: React.FC = () => {
   ];
   const [render, SetRender] = useState(<HomeDas />);
   return (
-    <Layout>
+    isAuthenticatedAdmin ? (<Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="slider-menu">
           <div className="logo" />
@@ -314,7 +316,11 @@ const Dashboard: React.FC = () => {
           {render}
         </Content>
       </Layout>
-    </Layout>
+    </Layout>) : <Result
+      status="404"
+      title="404"
+      subTitle="Sorry, the page you visited does not exist."
+      extra={<Button type="primary" onClick={() => navigate('/')}>Back Home</Button>} />
   );
 };
 

@@ -1,29 +1,21 @@
-import { Button, Checkbox, Form, Input, Tabs, TabsProps } from "antd";
+import { Button, Checkbox, Form, Input, message, Tabs, TabsProps } from "antd";
 import { useContext, useMemo, useState } from "react";
-import { Layout } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { AppContext } from "../../App";
 import axios from "axios";
-import { url } from "inspector";
 import FormItem from "antd/es/form/FormItem";
 import "./PageLogin.css";
-const { Header, Footer, Sider, Content } = Layout;
+import { useNavigate } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 
 const PageLogin = () => {
-  const { isAdminAuthenticated, setIsAdminAuthenticated } =
-    useContext(AppContext);
+  const navigate = useNavigate()
+  const { currentUser, setCurrentUser } = useContext(AppContext);
+  const {isAuthenticatedAdmin, setIsAuthenticatedAdmin} = useContext(AppContext);
 
   const onFinish = async (values: any) => {
-    // if (values.username === "hau" && values.password === "hau") {
-    //   const user = {
-    //     username: "hau",
-    //   };
-    //   console.log(user);
-    //   localStorage.setItem("user", JSON.stringify(user));
-    //   setIsAuth(true);
-    // }
-
-    const res = await axios.post(
+    message.open({type:'loading', content:'Đang đăng nhập...', key: 'login'})
+    axios.post(
       "https://localhost:7182/api/Accounts/Login",
       JSON.stringify(values),
       {
@@ -31,25 +23,24 @@ const PageLogin = () => {
           "Content-Type": "application/json",
         },
       }
-    );
-    if (res.status === 200) {
-      localStorage.setItem("adminInfo", JSON.stringify(res.data));
-      // window.location.reload();
-      // setIsAdminAuthenticated(true);
-      window.location.href = "/admin";
-    }
-
-    // const loginResult = await axios.post('/login', values);
-    // if(loginResult.status === 200){
-    //   localStorage.setItem("user", JSON.stringify(loginResult.data));
-    //   setIsAuth(true);
-    // }
+    ).then(async (res: any)=>{
+      if(res.status === 200){
+        localStorage.setItem("userToken", res.data.token);
+        message.open({type:'success', content:'Đăng nhập thành công!', key: 'login'})
+        const userInfo: any = await jwtDecode(res.data.token);
+        const role = userInfo["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
+        if(role ==="User"){
+          navigate('/');
+        }
+        else if(role === "Admin"){
+          setIsAuthenticatedAdmin(true)
+          navigate('/admin')
+        }
+      }
+    }).catch(error=>{
+      message.open({type:'error', content:'Đăng nhập thất bại: '+error.message, key: 'login'})
+    })
   };
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-  };
-
   return (
     <div className="container">
       <div
@@ -100,6 +91,7 @@ const PageLogin = () => {
         }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
+        layout = "vertical"
       >
         <h3
           style={{
@@ -113,41 +105,21 @@ const PageLogin = () => {
           Đăng Nhập
         </h3>
         <Form.Item
-          name="Email"
-          rules={[{ required: true, message: "Please input your Username!" }]}
+          name="email"
+          rules={[{ required: true, message: "Please input your Email!" }, {type:'email', message: "Please input valid Email!"}]}
+          label="Email"
         >
-          <label
-            style={{
-              display: "block",
-              marginTop: 20,
-              fontSize: 16,
-              fontWeight: 500,
-              color: "#fff",
-            }}
-          >
-            Email
-          </label>
           <Input
             type="email"
             prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Username"
+            placeholder="Email"
           />
         </Form.Item>
         <Form.Item
           name="password"
+          label="Mật Khẩu"
           rules={[{ required: true, message: "Please input your Password!" }]}
         >
-          <label
-            style={{
-              display: "block",
-              marginTop: 18,
-              fontSize: 16,
-              fontWeight: 500,
-              color: "#fff",
-            }}
-          >
-            Mật Khẩu
-          </label>
           <Input
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
@@ -155,11 +127,10 @@ const PageLogin = () => {
           />
         </Form.Item>
 
-        <Form.Item>
-          {/* <Button htmlType="submit" className="login-form-button">
-            Log in
-          </Button> */}
-          <button className="login-form-button">Đăng Nhập</button>
+        <Form.Item
+          name='button'
+        >
+          <Button htmlType="submit" className="login-form-button">Đăng Nhập</Button>
         </Form.Item>
         <FormItem>
           <span style={{ color: "#fff", marginLeft: 15 }}>
@@ -170,4 +141,4 @@ const PageLogin = () => {
     </div>
   );
 };
-export default PageLogin;
+export default PageLogin
