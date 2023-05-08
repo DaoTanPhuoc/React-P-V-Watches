@@ -189,7 +189,9 @@ const Details = () => {
             <Descriptions.Item label="Kích thước:">
               {product?.CaseSize}
             </Descriptions.Item>
-            <Descriptions.Item label="Kính:">Sapphire</Descriptions.Item>
+            <Descriptions.Item label="Kính:">
+              {product?.GlassMaterial}
+            </Descriptions.Item>
             <Descriptions.Item label="Mặt số:">Khảm trai</Descriptions.Item>
             <Descriptions.Item label="Bộ máy:">
               {product?.Movement}
@@ -201,14 +203,14 @@ const Details = () => {
               Giờ, Phút, Giây, Ngày
             </Descriptions.Item>
             <Descriptions.Item label="Chất liệu: ">
-              Vàng hồng 18k
+              {product?.CaseMeterial}
             </Descriptions.Item>
             <Descriptions.Item label="Bezel: ">Nạm kim cương</Descriptions.Item>
             <Descriptions.Item label="dây đeo: ">
               President, liên kết ba mảnh hình bán nguyệt
             </Descriptions.Item>
             <Descriptions.Item label="Chất liệu dây đeo: ">
-              Vàng hồng 18k
+              {product?.Color}
             </Descriptions.Item>
           </Descriptions>
         </Col>
@@ -613,7 +615,11 @@ const ProductDetail = () => {
                       }}
                     >
                       <ShoppingCartOutlined
-                        style={{ paddingRight: 10, fontSize: 30 }}
+                        style={{
+                          paddingRight: 10,
+                          fontSize: 30,
+                          color: "#fff",
+                        }}
                       />{" "}
                       Mua Hàng
                     </span>
@@ -638,7 +644,7 @@ const ProductDetail = () => {
                   controls
                   muted
                   autoplay={false}
-                  url="https://www.youtube.com/watch?v=18XnJ2J-NsI&pp=ugMICgJ2aRABGAE%3D"
+                  url="https://www.youtube.com/watch?v=GGFUgyWwW20"
                   width="100%"
                   height="100%"
                 />
