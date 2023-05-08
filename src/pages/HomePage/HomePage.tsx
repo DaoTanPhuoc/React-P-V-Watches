@@ -176,12 +176,8 @@ const HomePage = () => {
       .catch((error) => {
         console.log(error);
       });
-  });
-  //avaliableProducts close
+  }, []);
 
-  //getProductsByCategory
-
-  //getProductsByCategory close
   const fetchNewstProducts = async (categoryId: number) => {
     axios.get('https://localhost:7182/api/Products/GetNewestProduct', { params: { category: categoryId } }).then((res) => {
       if (res.status == 200) {
@@ -189,25 +185,6 @@ const HomePage = () => {
       }
     }).catch(error => {
       console.log(error.message);
-
-      //avaliableProducts
-      useEffect(() => {
-        axios
-          .get(`https://localhost:7182/api/Products/GetAvailableProducts`)
-          .then((Result) => {
-            const avaliableProducts = Result.data;
-            setGetAvailableProducts(avaliableProducts);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
-      //avaliableProducts close
-
-      //getProductsByCategory
-
-      //getProductsByCategory close
-
     })
   }
   useEffect(() => {
