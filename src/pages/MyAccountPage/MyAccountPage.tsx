@@ -12,6 +12,7 @@ import {
   Modal,
   Radio,
   RadioChangeEvent,
+  Result,
   Row,
   Select,
   Space,
@@ -21,7 +22,7 @@ import {
   Tag,
   TreeSelect,
 } from "antd";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   MenuUnfoldOutlined,
   AimOutlined,
@@ -33,6 +34,8 @@ import Upload, { RcFile, UploadFile, UploadProps } from "antd/es/upload";
 import ImgCrop from "antd-img-crop";
 import "./MyAccountPage.css";
 import { SizeType } from "antd/es/config-provider/SizeContext";
+import { AppContext } from "../../App";
+import { useNavigate } from "react-router-dom";
 
 const onChangee = (key: string) => {
   console.log(key);
@@ -476,9 +479,10 @@ const items: TabsProps["items"] = [
 
 const MyAccountPage = () => {
   const [file, setFile] = useState("");
-
+  const { currentUser, setCurrentUser } = useContext(AppContext)
+  const navigate = useNavigate()
   return (
-    <>
+    currentUser ? <>
       <div style={{ marginLeft: "13%", padding: 20 }}>
         <Avatar
           size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
@@ -501,6 +505,13 @@ const MyAccountPage = () => {
         onChange={onChangee}
       />
     </>
+      :
+      <Result
+        status="403"
+        title="403"
+        subTitle="Sorry, you are not authorized to access this page."
+        extra={<Button type="primary" onClick={() => navigate('/login')}>LOGIN</Button>}
+      />
   );
 };
 

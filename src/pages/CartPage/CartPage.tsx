@@ -8,6 +8,7 @@ import {
   InputNumber,
   message,
   Modal,
+  Result,
   Row,
   Space,
   Table,
@@ -34,6 +35,7 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
+import { useNavigate } from "react-router-dom";
 
 const onChange = (value: number) => {
   console.log("changed", value);
@@ -86,8 +88,9 @@ const validateMessages = {
 const CartPage = () => {
   const [showInfoCard, setShowInfoCard] = useState(false);
   const { cartOrders, onChangeCartOrders } = useContext(AppContext);
+  const { currentUser, setCurrentUser } = useContext(AppContext)
   const [messageApi, contextHolder] = message.useMessage();
-
+  const navigate = useNavigate()
   // order status (modal antd)
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -95,13 +98,7 @@ const CartPage = () => {
     setIsModalOpen(true);
   };
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+  const toggleModal = () => setIsModalOpen(!isModalOpen)
   // close order status
 
   // tab order status
@@ -635,80 +632,32 @@ const CartPage = () => {
                       fontWeight: "bold",
                     }}
                     disabled={cartOrders.length == 0 ? true : false}
-                    onClick={() => setShowInfoCard(true)}
+                    onClick={() => {
+                      currentUser ? setShowInfoCard(true) : toggleModal()
+                    }}
                   >
                     Mua Hàng
                   </Button>
                 </span>
-                <span style={{ position: "absolute", top: 0, right: 120 }}>
-                  <Button
-                    style={{
-                      color: "white",
-                      backgroundColor: "black",
-                      fontWeight: "bold",
-                    }}
-                    type="primary"
-                    onClick={showModal}
-                  >
-                    Xem Đơn
-                  </Button>
-                  <Modal
-                    title="Chi tiết đơn hàng"
-                    open={isModalOpen}
-                    onOk={handleOk}
-                    onCancel={handleCancel}
-                    footer={null}
-                  >
-                    <Form>
-                      <Row>
-                        <Col flex={16}>
-                          <Form.Item
-                            name="phoneNumber"
-                            label="Số điện thoại:"
-                            rules={[
-                              {
-                                pattern: new RegExp(
-                                  "^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$"
-                                ),
-                                message: "Số điện thoại không hợp lệ",
-                              },
-                              {
-                                required: true,
-                                message: "Vui lòng nhập số điện thoại",
-                              },
-                            ]}
-                          >
-                            <Input style={{ marginLeft: 20 }} />
-                          </Form.Item>
-                        </Col>
-                        <Col flex={1}>
-                          <FormItem>
-                            <Button
-                              style={{
-                                marginLeft: 60,
-                                backgroundColor: "#000000",
-                                color: "#fff",
-                              }}
-                            >
-                              Tìm Kiếm
-                            </Button>
-                          </FormItem>
-                        </Col>
-                      </Row>
-                    </Form>
-
-                    <Tabs
-                      defaultActiveKey="1"
-                      items={items}
-                      onChange={onChange}
-                    />
-                  </Modal>
-                </span>
               </div>
+              <Modal
+                open={isModalOpen}
+                onCancel={toggleModal}
+                footer={null}
+              >
+                <Result
+                  style={{ maxWidth: '30wv' }}
+                  title="Bạn chưa đăng nhập vào hệ thống!"
+                  subTitle="Vui lòng đăng nhập để tiếp tục"
+                  extra={
+                    <Button type="primary" onClick={() => navigate("/login")}>Đăng Nhập</Button>
+                  }
+                />
+              </Modal>
               <br />
               <br />
               <br />
-              {showInfoCard && (
+              {currentUser && showInfoCard && (
                 <>
                   <Row>
                     <Col span={12}>

@@ -216,8 +216,7 @@ const UserLayout = () => {
               <ShoppingCartOutlined style={{ fontSize: 28, color: "#fff" }} />
             </Badge>
           </a>
-
-          {currentUser.avatar ? (
+          {currentUser ? (
             <a href="/myAccount">
               <Avatar src={currentUser.avatar} shape="circle" />
             </a>

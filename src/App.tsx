@@ -8,7 +8,7 @@ export const AppContext = createContext<any>(null);
 
 function App() {
   const [isAuthenticatedAdmin, setIsAuthenticatedAdmin] = useState(false);
-  const [currentUser, setCurrentUser] = useState<any>({});
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const [cartOrders, setCartOrders] = useState<any[]>([]);
   useEffect(() => {
     (async () => {
@@ -19,9 +19,8 @@ function App() {
           name: userInfo.Name,
           email: userInfo.Email,
           avatar:
-            "https://www.facebook.com/photo/?fbid=2838561319801692&set=a.2030018630655969",
+            "https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png",
         });
-        console.log(currentUser);
       }
     })();
 
