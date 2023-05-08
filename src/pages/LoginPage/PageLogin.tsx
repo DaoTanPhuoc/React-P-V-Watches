@@ -11,10 +11,10 @@ import jwtDecode from "jwt-decode";
 const PageLogin = () => {
   const navigate = useNavigate()
   const { currentUser, setCurrentUser } = useContext(AppContext);
-  const {isAuthenticatedAdmin, setIsAuthenticatedAdmin} = useContext(AppContext);
+  const { isAuthenticatedAdmin, setIsAuthenticatedAdmin } = useContext(AppContext);
 
   const onFinish = async (values: any) => {
-    message.open({type:'loading', content:'Đang đăng nhập...', key: 'login'})
+    message.open({ type: 'loading', content: 'Đang đăng nhập...', key: 'login' })
     axios.post(
       "https://localhost:7182/api/Accounts/Login",
       JSON.stringify(values),
@@ -23,22 +23,22 @@ const PageLogin = () => {
           "Content-Type": "application/json",
         },
       }
-    ).then(async (res: any)=>{
-      if(res.status === 200){
+    ).then(async (res: any) => {
+      if (res.status === 200) {
         localStorage.setItem("userToken", res.data.token);
-        message.open({type:'success', content:'Đăng nhập thành công!', key: 'login'})
+        message.open({ type: 'success', content: 'Đăng nhập thành công!', key: 'login' })
         const userInfo: any = await jwtDecode(res.data.token);
         const role = userInfo["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
-        if(role ==="User"){
+        if (role === "User") {
           navigate('/');
         }
-        else if(role === "Admin"){
+        else if (role === "Admin") {
           setIsAuthenticatedAdmin(true)
           navigate('/admin')
         }
       }
-    }).catch(error=>{
-      message.open({type:'error', content:'Đăng nhập thất bại: '+error.message, key: 'login'})
+    }).catch(error => {
+      message.open({ type: 'error', content: 'Đăng nhập thất bại: ' + error.message, key: 'login' })
     })
   };
   return (
@@ -91,7 +91,7 @@ const PageLogin = () => {
         }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
-        layout = "vertical"
+        layout="vertical"
       >
         <h3
           style={{
@@ -106,7 +106,7 @@ const PageLogin = () => {
         </h3>
         <Form.Item
           name="email"
-          rules={[{ required: true, message: "Please input your Email!" }, {type:'email', message: "Please input valid Email!"}]}
+          rules={[{ required: true, message: "Please input your Email!" }, { type: 'email', message: "Please input valid Email!" }]}
           label="Email"
         >
           <Input
