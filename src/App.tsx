@@ -11,19 +11,19 @@ function App() {
   const [currentUser, setCurrentUser] = useState<any>({});
   const [cartOrders, setCartOrders] = useState<any[]>([]);
   useEffect(() => {
-    console.log(currentUser);
-
     (async () => {
-      const token = localStorage.getItem("userToken")
+      const token = localStorage.getItem("userToken");
       if (token) {
         const userInfo: any = await jwtDecode(token);
         setCurrentUser({
           name: userInfo.Name,
           email: userInfo.Email,
-          avatar: userInfo.Avatar
-        })
+          avatar:
+            "https://www.facebook.com/photo/?fbid=2838561319801692&set=a.2030018630655969",
+        });
+        console.log(currentUser);
       }
-    })()
+    })();
 
     const cartOrdersString = localStorage.getItem("cartOrders");
     if (cartOrdersString) {
@@ -50,9 +50,7 @@ function App() {
         onChangeCartOrders,
       }}
     >
-      {
-        <RouterProvider router={userRoutes} />
-      }
+      {<RouterProvider router={userRoutes} />}
     </AppContext.Provider>
   );
 }

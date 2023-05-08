@@ -49,7 +49,7 @@ const gridStyle: React.CSSProperties = {
 
 const UserLayout = () => {
   const { cartOrders, setCartOrders } = useContext(AppContext);
-  const { currentUser, setCurrentUser } = useContext(AppContext)
+  const { currentUser, setCurrentUser } = useContext(AppContext);
   const [hoverMenu, setHoverMenu] = useState(0);
 
   const {
@@ -217,19 +217,17 @@ const UserLayout = () => {
             </Badge>
           </a>
 
-          {
-            currentUser.avatar ?
-              <a href="/info">
-                <Avatar src={currentUser.avatar} shape="circle" />
-              </a>
-              :
-              <a href="/login">
-                <UserOutlined
-                  style={{ fontSize: 24, margin: "25px 0", color: "#fff" }}
-                />
-              </a>
-
-          }
+          {currentUser.avatar ? (
+            <a href="/myAccount">
+              <Avatar src={currentUser.avatar} shape="circle" />
+            </a>
+          ) : (
+            <a href="/login">
+              <UserOutlined
+                style={{ fontSize: 24, margin: "25px 0", color: "#fff" }}
+              />
+            </a>
+          )}
         </Space>
         {/* submenu */}
         <div
@@ -251,7 +249,9 @@ const UserLayout = () => {
         </div>
       </Header>
 
-      <Content className="site-layout"><Outlet /></Content>
+      <Content className="site-layout">
+        <Outlet />
+      </Content>
 
       <footer className="footer">
         <div className="container">
