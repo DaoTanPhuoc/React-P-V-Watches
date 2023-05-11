@@ -10,10 +10,12 @@ import jwtDecode from "jwt-decode";
 
 const PageLogin = () => {
   const navigate = useNavigate()
-  const { currentUser, setCurrentUser } = useContext(AppContext);
-  const { isAuthenticatedAdmin, setIsAuthenticatedAdmin } = useContext(AppContext);
+  const { setIsAuthenticatedAdmin } = useContext(AppContext);
+  const { setCurrentToken } = useContext(AppContext);
 
   const onFinish = async (values: any) => {
+    console.log(values);
+
     message.open({ type: 'loading', content: 'Đang đăng nhập...', key: 'login' })
     axios.post(
       "https://localhost:7182/api/Accounts/Login",
@@ -25,9 +27,15 @@ const PageLogin = () => {
       }
     ).then(async (res: any) => {
       if (res.status === 200) {
-        localStorage.setItem("userToken", res.data.token);
+        const token = await res.data.token
+        if (values['remember'] === true) {
+          localStorage.setItem("userToken", token);
+          setCurrentToken(token)
+        } else {
+          setCurrentToken(token)
+        }
         message.open({ type: 'success', content: 'Đăng nhập thành công!', key: 'login' })
-        const userInfo: any = await jwtDecode(res.data.token);
+        const userInfo: any = await jwtDecode(token);
         const role = userInfo["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
         if (role === "User") {
           navigate('/');
@@ -125,11 +133,11 @@ const PageLogin = () => {
             type="password"
             placeholder="Password"
           />
+        </Form.Item >
+        <Form.Item name="remember" valuePropName="checked">
+          <Checkbox>Lưu đăng nhập?</Checkbox>
         </Form.Item>
-
-        <Form.Item
-          name='button'
-        >
+        <Form.Item>
           <Button htmlType="submit" className="login-form-button">Đăng Nhập</Button>
         </Form.Item>
         <FormItem>
