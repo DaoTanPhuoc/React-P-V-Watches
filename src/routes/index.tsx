@@ -46,14 +46,7 @@ export const userRoutes = createBrowserRouter([
         path: "/news",
         element: <News />,
       },
-      {
-        path: "/dasHome",
-        element: <HomeDas />,
-      },
-      {
-        path: "/dasProducts",
-        element: <ProductsDashboard />,
-      },
+
       {
         path: "/detailNews",
         element: <DetailNews />,
@@ -81,9 +74,18 @@ export const userRoutes = createBrowserRouter([
     ],
   },
   {
-    path: "/admin",
+    path: "/admin/*",
     element: <Dashboard />,
-    children: [],
+    children: [
+      {
+        path: "admin/dasHome",
+        element: <HomeDas />,
+      },
+      {
+        path: "admin/dasProducts",
+        element: <ProductsDashboard />,
+      },
+    ],
   },
   {
     path: "/login",
