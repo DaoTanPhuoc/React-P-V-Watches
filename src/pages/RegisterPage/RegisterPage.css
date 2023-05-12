@@ -27,14 +27,18 @@ body {
   cursor: pointer;
 }
 
-.ant-form-item-label > label {
+.ant-form-item-label>label {
   display: "block";
-  margin-top: 18;
+  margin-top: 8;
   font-size: 20;
   font-weight: 500;
 }
 
-.ant-form-item .ant-form-item-label > label {
+.ant-form-item .ant-form-item-label>label {
   color: #fff;
   font-size: 20;
+}
+
+.ant-picker-panel-container {
+  max-height: 475px;
 }

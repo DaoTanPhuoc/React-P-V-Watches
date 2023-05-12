@@ -1,8 +1,7 @@
+/* eslint-disable no-template-curly-in-string */
 import {
-  Alert,
   Button,
   Col,
-  Descriptions,
   Form,
   Input,
   InputNumber,
@@ -10,36 +9,19 @@ import {
   Modal,
   Result,
   Row,
-  Space,
   Table,
-  Tabs,
-  TabsProps,
-  Tag,
 } from "antd";
-import Item from "antd/es/list/Item";
 import { ColumnsType } from "antd/es/table";
-import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
-import { ProductModel } from "../../models/ProductModel";
+import { useContext, useRef, useState } from "react";
 import "./CartPage.css";
-import { AiFillCloseCircle } from "react-icons/ai";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import ShoppingCart from "./components/ShoppingCart";
 import { AppContext } from "../../App";
 import axios from "axios";
-import { type } from "os";
-import form, { FormInstance } from "antd/es/form";
+import { FormInstance } from "antd/es/form";
 import {
-  ShoppingCartOutlined,
-  FilterFilled,
-  InfoCircleOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import FormItem from "antd/es/form/FormItem";
 import { useNavigate } from "react-router-dom";
 
-const onChange = (value: number) => {
-  console.log("changed", value);
-};
 
 const moneyFormatter = new Intl.NumberFormat("vi", {
   style: "currency",
@@ -50,24 +32,6 @@ const moneyFormatter = new Intl.NumberFormat("vi", {
   maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
 });
 
-const cartProductsDumpData = [
-  {
-    id: 1,
-    price: 125000,
-    productName: "Product 1",
-    quantity: 1,
-    productThumbnailUrl:
-      "https://bossluxurywatch.vn/uploads/san-pham/rolex/datejust-31/thumbs/418x0/rolex-datejust-31-278285rbr-0005.png",
-  },
-  {
-    id: 2,
-    price: 25000,
-    productName: "Product 2",
-    quantity: 1,
-    productThumbnailUrl:
-      "https://bossluxurywatch.vn/uploads/san-pham/rolex/datejust-31/thumbs/418x0/rolex-datejust-31-278285rbr-0005.png",
-  },
-];
 
 const layout = {
   labelCol: { span: 8 },
@@ -87,363 +51,13 @@ const validateMessages = {
 
 const CartPage = () => {
   const [showInfoCard, setShowInfoCard] = useState(false);
-  const { cartOrders, onChangeCartOrders } = useContext(AppContext);
-  const { currentUser, setCurrentUser } = useContext(AppContext)
+  const { cartOrders, onChangeCartOrders, baseApi } = useContext(AppContext);
+  const { currentUser } = useContext(AppContext)
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate()
   // order status (modal antd)
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
   const toggleModal = () => setIsModalOpen(!isModalOpen)
-  // close order status
-
-  // tab order status
-  const onChange = (key: string) => {
-    console.log(key);
-  };
-
-  // staus đặt hàng
-  const ConfirmOrder = () => {
-    const stausOrder = 1;
-    // 1: chờ đặt hàng
-    // 2: đã xác nhận
-    // 3: đã hủy
-    return (
-      <div className="confirm-order-container">
-        <div
-          style={{ backgroundColor: "#E8EAE9", border: "1px solid #BAC0BD" }}
-          className="order-id"
-        >
-          ID Đơn Hàng: #32131
-        </div>
-        <div
-          style={{
-            display: "flex",
-            paddingBottom: 20,
-            border: "1px solid #000000",
-            paddingTop: 30,
-          }}
-          className="confirm-order"
-        >
-          <img
-            style={{ width: 100, height: 100, objectFit: "cover" }}
-            src="https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/complications/thumbs/418x0/patek-philippe-complications-5930g-010.png"
-            alt=""
-          />
-          <div
-            style={{
-              // whiteSpace: "nowrap",
-              // overflow: "hidden",
-              textOverflow: "ellipsis",
-              width: 110,
-            }}
-          >
-            <Descriptions.Item>
-              PATEK PHILIPPE COMPLICATIONS 5930G-010s
-            </Descriptions.Item>
-          </div>
-          <p style={{ paddingLeft: 20 }}>
-            <span style={{ color: "#6f6e77" }}>Số lượng: </span>1
-          </p>
-          <div>
-            <Space style={{ paddingLeft: 30 }} size={[0, 2]} wrap>
-              {" "}
-              <Tag color={stausOrder == 1 ? "processing" : "success"}>
-                Chờ xác nhận
-              </Tag>
-            </Space>
-          </div>
-          <div
-            style={{
-              textOverflow: "ellipsis",
-              width: 150,
-              paddingLeft: 20,
-              color: "#33CC33",
-            }}
-          >
-            Nhận hàng vào <Descriptions.Item>2018-04-24</Descriptions.Item>
-          </div>
-          <div
-            style={{
-              textOverflow: "ellipsis",
-              width: 150,
-            }}
-          >
-            <Descriptions.Item>
-              Số 06, Đường Cao Bát Quát, Phường Bến Nghé, Quận 1, Thành Phố Hồ
-              Chí Minh
-            </Descriptions.Item>
-          </div>
-          <div style={{ paddingLeft: 20, width: 125 }}>1.140.000.000 ₫</div>
-          <div>
-            <Button
-              style={{
-                color: "white",
-                backgroundColor: "black",
-                fontWeight: "bold",
-                marginLeft: 30,
-              }}
-            >
-              Hủy Đơn
-            </Button>
-          </div>
-        </div>
-
-        {/* 2 */}
-        <div
-          style={{
-            backgroundColor: "#E8EAE9",
-            border: "1px solid #BAC0BD",
-            marginTop: 30,
-          }}
-          className="order-id"
-        >
-          ID Đơn Hàng: #32131
-        </div>
-        <div
-          style={{
-            display: "flex",
-            border: "1px solid #000000",
-            paddingTop: 30,
-          }}
-          className="confirm-order"
-        >
-          <img
-            style={{ width: 100, height: 100, objectFit: "cover" }}
-            src="https://bossluxurywatch.vn/uploads/san-pham/rolex/day-date-1/thumbs/418x0/rolex-day-date-40mm-228235-0045.png"
-            alt=""
-          />
-          <div
-            style={{
-              // whiteSpace: "nowrap",
-              // overflow: "hidden",
-              textOverflow: "ellipsis",
-              width: 110,
-            }}
-          >
-            <Descriptions.Item>
-              PATEK PHILIPPE COMPLICATIONS 5930G-010s
-            </Descriptions.Item>
-          </div>
-          <p style={{ paddingLeft: 20 }}>
-            <span style={{ color: "#6f6e77" }}>Số lượng: </span>1
-          </p>
-          <div>
-            <Space style={{ paddingLeft: 30 }} size={[0, 8]} wrap>
-              {" "}
-              <Tag color="success">Đã xác nhận</Tag>
-            </Space>
-          </div>
-          <div
-            style={{
-              textOverflow: "ellipsis",
-              width: 150,
-              paddingLeft: 20,
-              color: "#33CC33",
-            }}
-          >
-            Nhận hàng vào <Descriptions.Item>2018-04-24</Descriptions.Item>
-          </div>
-          <div
-            style={{
-              textOverflow: "ellipsis",
-              width: 150,
-            }}
-          >
-            <Descriptions.Item>
-              Số 5, Đường Nguyễn Trung Ngạn, Phường Bến Nghé, Quận 1, Thành Phố
-              Hồ Chí Minh
-            </Descriptions.Item>
-          </div>
-          <div style={{ paddingLeft: 20, width: 130 }}>360.000.000 đ</div>
-          <div>
-            <Button
-              style={{
-                color: "white",
-                backgroundColor: "black",
-                fontWeight: "bold",
-                marginLeft: 30,
-              }}
-            >
-              Hủy Đơn
-            </Button>
-          </div>
-        </div>
-        {/* 3 */}
-        <div
-          style={{
-            backgroundColor: "#E8EAE9",
-            border: "1px solid #BAC0BD",
-            marginTop: 30,
-          }}
-          className="order-id"
-        >
-          ID Đơn Hàng: #32131
-        </div>
-        <div
-          style={{
-            display: "flex",
-            border: "1px solid #000000",
-            paddingTop: 30,
-          }}
-          className="confirm-order"
-        >
-          <img
-            style={{ width: 100, height: 100, objectFit: "cover" }}
-            src="https://bossluxurywatch.vn/uploads/san-pham/rolex/day-date-1/thumbs/418x0/rolex-day-date-40mm-228235-0045.png"
-            alt=""
-          />
-          <div
-            style={{
-              // whiteSpace: "nowrap",
-              // overflow: "hidden",
-              textOverflow: "ellipsis",
-              width: 110,
-            }}
-          >
-            <Descriptions.Item>
-              PATEK PHILIPPE COMPLICATIONS 5930G-010s
-            </Descriptions.Item>
-          </div>
-          <p style={{ paddingLeft: 20 }}>
-            <span style={{ color: "#6f6e77" }}>Số lượng: </span>1
-          </p>
-          <div>
-            <Space style={{ paddingLeft: 30 }} size={[0, 8]} wrap>
-              {" "}
-              <Tag color="success">Đã xác nhận</Tag>
-            </Space>
-          </div>
-          <div
-            style={{
-              textOverflow: "ellipsis",
-              width: 150,
-              paddingLeft: 20,
-              color: "#33CC33",
-            }}
-          >
-            Nhận hàng vào <Descriptions.Item>2018-04-24</Descriptions.Item>
-          </div>
-          <div
-            style={{
-              textOverflow: "ellipsis",
-              width: 150,
-            }}
-          >
-            <Descriptions.Item>
-              Số 5, Đường Nguyễn Trung Ngạn, Phường Bến Nghé, Quận 1, Thành Phố
-              Hồ Chí Minh
-            </Descriptions.Item>
-          </div>
-          <div style={{ paddingLeft: 20, width: 130 }}>360.000.000 đ</div>
-          <div>
-            <Button
-              style={{
-                color: "white",
-                backgroundColor: "black",
-                fontWeight: "bold",
-                marginLeft: 30,
-              }}
-            >
-              Hủy Đơn
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  // status đơn đã hủy
-  const ExitOrder = () => {
-    return (
-      <>
-        <div
-          style={{
-            backgroundColor: "#E8EAE9",
-            border: "1px solid #BAC0BD",
-            marginTop: 30,
-          }}
-          className="order-id"
-        >
-          ID Đơn Hàng: #32131
-        </div>
-        <div
-          style={{
-            display: "flex",
-            border: "1px solid #000000",
-            paddingTop: 30,
-          }}
-          className="confirm-order"
-        >
-          <img
-            style={{ width: 100, height: 100, objectFit: "cover" }}
-            src="https://bossluxurywatch.vn/uploads/san-pham/rolex/day-date-1/thumbs/418x0/rolex-day-date-40mm-228235-0045.png"
-            alt=""
-          />
-          <div
-            style={{
-              // whiteSpace: "nowrap",
-              // overflow: "hidden",
-              textOverflow: "ellipsis",
-              width: 110,
-            }}
-          >
-            <Descriptions.Item>
-              PATEK PHILIPPE COMPLICATIONS 5930G-010s
-            </Descriptions.Item>
-          </div>
-          <p style={{ paddingLeft: 20 }}>
-            <span style={{ color: "#6f6e77" }}>Số lượng: </span>1
-          </p>
-          <div>
-            <Space style={{ paddingLeft: 30 }} size={[0, 8]} wrap>
-              {" "}
-              <Tag color="error">Đã xác nhận</Tag>
-            </Space>
-          </div>
-          <div
-            style={{
-              textOverflow: "ellipsis",
-              width: 150,
-              paddingLeft: 20,
-              color: "#33CC33",
-            }}
-          >
-            Nhận hàng vào <Descriptions.Item>2018-04-24</Descriptions.Item>
-          </div>
-          <div
-            style={{
-              textOverflow: "ellipsis",
-              width: 150,
-            }}
-          >
-            <Descriptions.Item>
-              Số 5, Đường Nguyễn Trung Ngạn, Phường Bến Nghé, Quận 1, Thành Phố
-              Hồ Chí Minh
-            </Descriptions.Item>
-          </div>
-          <div style={{ paddingLeft: 20, width: 130 }}>360.000.000 đ</div>
-        </div>
-      </>
-    );
-  };
-
-  const items: TabsProps["items"] = [
-    {
-      key: "1",
-      label: `Chờ xác nhận`,
-      children: <ConfirmOrder />,
-    },
-    {
-      key: "2",
-      label: `Đã Hủy`,
-      children: <ExitOrder />,
-    },
-  ];
   // close
   const formRef = useRef<FormInstance<any>>(null);
   // clear form
@@ -479,7 +93,7 @@ const CartPage = () => {
       orderProducts: orderProducts,
     };
     axios
-      .post("https://localhost:7182/api/Orders/CreateOrder", dataToPost)
+      .post(`${baseApi}/Orders/CreateOrder`, dataToPost)
       .then((result) => {
         console.log(result);
 
@@ -561,7 +175,7 @@ const CartPage = () => {
       title: "Total Price",
       dataIndex: "Price",
       key: "Price",
-      render: (totallPrice, record) => moneyFormatter.format(totallPrice),
+      render: (totallPrice) => moneyFormatter.format(totallPrice),
     },
     {
       title: "Action",
@@ -631,7 +245,7 @@ const CartPage = () => {
                       backgroundColor: "black",
                       fontWeight: "bold",
                     }}
-                    disabled={cartOrders.length == 0 ? true : false}
+                    disabled={cartOrders.length === 0 ? true : false}
                     onClick={() => {
                       currentUser ? setShowInfoCard(true) : toggleModal()
                     }}
