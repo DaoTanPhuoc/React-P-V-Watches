@@ -49,7 +49,7 @@ import News from "../NewsPage/NewsPage";
 import ProductsDashboard from "./ProductsDashboard/ProductsDashboard";
 import PostDashboard from "./PostDashboard/PostDashboard";
 import BillingDashboard from "./BillingDashboard/BillingDashboard";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import SubMenu from "antd/es/menu/SubMenu";
 import StatisticalPage from "./Statistical/StatisticalPage";
 const { Header, Content, Footer, Sider } = Layout;
@@ -239,6 +239,55 @@ const Dashboard: React.FC = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  const location = useLocation();
+  const navigator = useNavigate();
+  const MenuClickHandle = (e: any) => {
+    navigator("/admin" + e.key);
+  };
+
+  type MenuItem = Required<MenuProps>["items"][number];
+
+  function getItem(
+    label: React.ReactNode,
+    key: React.Key,
+    icon?: React.ReactNode,
+    children?: MenuItem[]
+  ): MenuItem {
+    return {
+      key,
+      icon,
+      children,
+      label,
+    } as MenuItem;
+  }
+
+  const items: MenuItem[] = [
+    getItem(<a href="/admin">Dashboard</a>, "1", <FormOutlined />),
+    getItem(<a href="/admin/dasProducts">Dashboard</a>, "2", <FormOutlined />),
+    getItem("Sản Phẩm", "sub1", <FormOutlined />, [
+      getItem("Danh sách Sản Phẩm", "3"),
+      getItem("Option 4", "4"),
+      getItem("Submenu", "sub1-2", null, [
+        getItem("Option 5", "5"),
+        getItem("Option 6", "6"),
+      ]),
+    ]),
+    getItem("Navigation Three", "sub2", <FormOutlined />, [
+      getItem("Option 7", "7"),
+      getItem("Option 8", "8"),
+      getItem("Option 9", "9"),
+      getItem("Option 10", "10"),
+    ]),
+    getItem(
+      <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
+        Ant Design
+      </a>,
+      "link",
+      <FormOutlined />
+    ),
+  ];
+
   return isAuthenticatedAdmin ? (
     <Layout>
       <Sider
@@ -279,6 +328,7 @@ const Dashboard: React.FC = () => {
             }))}
           />
         </div> */}
+
         <div className="logo" />
         <img
           style={{
@@ -290,7 +340,7 @@ const Dashboard: React.FC = () => {
           src="https://i1.sndcdn.com/artworks-000638521540-rcn15j-t500x500.jpg"
           alt=""
         />
-        <Menu
+        {/* <Menu
           style={{ height: "100%", backgroundColor: "#fff" }}
           // theme="dark"
           mode="inline"
@@ -303,6 +353,12 @@ const Dashboard: React.FC = () => {
               SetRender(i.compoment);
             },
           }))}
+        /> */}
+        <Menu
+          theme="dark"
+          defaultSelectedKeys={["1"]}
+          mode="inline"
+          items={items}
         />
       </Sider>
       <Layout className="site-layout">
@@ -346,7 +402,7 @@ const Dashboard: React.FC = () => {
             minHeight: 280,
           }}
         >
-          {render}
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
