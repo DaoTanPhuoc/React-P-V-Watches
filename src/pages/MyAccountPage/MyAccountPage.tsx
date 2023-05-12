@@ -37,7 +37,7 @@ import "./MyAccountPage.css";
 import { SizeType } from "antd/es/config-provider/SizeContext";
 import { AppContext } from "../../App";
 import { useNavigate } from "react-router-dom";
-import moment from 'moment'
+import moment from "moment";
 import axios from "axios";
 
 const onChangee = (key: string) => {
@@ -242,77 +242,98 @@ const MyOrder = () => {
 };
 
 const AddressOrder = () => {
-  const { currentToken, currentUser } = useContext(AppContext)
+  const { currentToken, currentUser } = useContext(AppContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [provices, setProvices] = useState<any[]>([])
-  const [districts, setDistricts] = useState<any[]>([])
-  const [wards, setWards] = useState<any[]>([])
-  const [addressForm] = Form.useForm()
-  const base_api = "https://provinces.open-api.vn/api"
+  const [provices, setProvices] = useState<any[]>([]);
+  const [districts, setDistricts] = useState<any[]>([]);
+  const [wards, setWards] = useState<any[]>([]);
+  const [addressForm] = Form.useForm();
+  const base_api = "https://provinces.open-api.vn/api";
 
   function markRequireAll(query: string) {
-    const words = query.split(/\s+/)
-    return words.map(w => `+${w}`).join(' ')
+    const words = query.split(/\s+/);
+    return words.map((w) => `+${w}`).join(" ");
   }
   const showModal = () => {
     setIsModalOpen(true);
   };
   const saveAddress = async (values: any) => {
-    const userAddress = `${values['address']} ${values['ward']} ${values['district']} ${values['provice']}`
-    axios.post("https://localhost:7182/api/Accounts/UpdateUserInfo",
-      { ...currentUser, Address: userAddress }
-      , {
-        headers: {
-          "Access-Control-Allow-Origin": '*',
-          'Authorization': `Bearer ${currentToken}`
+    const userAddress = `${values["address"]} ${values["ward"]} ${values["district"]} ${values["provice"]}`;
+    axios
+      .post(
+        "https://localhost:7182/api/Accounts/UpdateUserInfo",
+        { ...currentUser, Address: userAddress },
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${currentToken}`,
+          },
         }
-      }).then(res => {
+      )
+      .then((res) => {
         switch (res.status) {
           case 204:
-            message.open({ 'key': 'save', content: "Cập nhật thành công", type: 'success' })
+            message.open({
+              key: "save",
+              content: "Cập nhật thành công",
+              type: "success",
+            });
             break;
           case 400:
-            message.open({ 'key': 'save', content: "Cập nhật không thành công: " + res.data, type: 'error' })
+            message.open({
+              key: "save",
+              content: "Cập nhật không thành công: " + res.data,
+              type: "error",
+            });
             break;
           default:
             break;
         }
         addressForm.resetFields();
-        setIsModalOpen(false)
-      }).catch(err => console.log(err))
-  }
+        setIsModalOpen(false);
+      })
+      .catch((err) => console.log(err));
+  };
   const handleCancel = () => {
     setIsModalOpen(false);
   };
   const fetchProvices = async () => {
-    const res = await axios.get(`${base_api}/p`)
-    setProvices(res.data)
-  }
+    const res = await axios.get(`${base_api}/p`);
+    setProvices(res.data);
+  };
 
   const searchProvice = async (name: string) => {
-    addressForm.resetFields(["district", "ward"])
-    const res = await axios.get(`${base_api}/p/search/`, { params: { q: markRequireAll(name) } })
-    const district = await res.data[0].code
-    await fetchDistricts(district)
-  }
+    addressForm.resetFields(["district", "ward"]);
+    const res = await axios.get(`${base_api}/p/search/`, {
+      params: { q: markRequireAll(name) },
+    });
+    const district = await res.data[0].code;
+    await fetchDistricts(district);
+  };
   const searchDistrict = async (name: string) => {
-    addressForm.resetFields(["ward"])
-    const res = await axios.get(`${base_api}/d/search/`, { params: { q: markRequireAll(name) } })
-    const district = await res.data[0].code
-    await fetchWards(district)
-  }
+    addressForm.resetFields(["ward"]);
+    const res = await axios.get(`${base_api}/d/search/`, {
+      params: { q: markRequireAll(name) },
+    });
+    const district = await res.data[0].code;
+    await fetchWards(district);
+  };
 
   const fetchDistricts = async (value: number) => {
-    const res = await axios.get(`${base_api}/p/${value}`, { params: { depth: 2 } })
-    setDistricts(res.data.districts)
-  }
+    const res = await axios.get(`${base_api}/p/${value}`, {
+      params: { depth: 2 },
+    });
+    setDistricts(res.data.districts);
+  };
   const fetchWards = async (value: number) => {
-    const res = await axios.get(`${base_api}/d/${value}`, { params: { depth: 2 } })
-    setWards(res.data.wards)
-  }
+    const res = await axios.get(`${base_api}/d/${value}`, {
+      params: { depth: 2 },
+    });
+    setWards(res.data.wards);
+  };
   useEffect(() => {
-    fetchProvices()
-  }, [])
+    fetchProvices();
+  }, []);
   return (
     <>
       <div
@@ -352,28 +373,53 @@ const AddressOrder = () => {
                 form={addressForm}
                 onFinish={saveAddress}
               >
-                <Form.Item name='provice' label="Tỉnh/ Thành phố" rules={[{ required: true, message: "Vui lòng chọn dữ liệu" }]}>
+                <Form.Item
+                  name="provice"
+                  label="Tỉnh/ Thành phố"
+                  rules={[{ required: true, message: "Vui lòng chọn dữ liệu" }]}
+                >
                   <Select placeholder="Tỉnh..." onChange={searchProvice}>
-                    {provices && provices.map((p: any) => (
-                      <Select.Option key={p.code} value={p.name}>{p.name}</Select.Option>
-                    ))}
+                    {provices &&
+                      provices.map((p: any) => (
+                        <Select.Option key={p.code} value={p.name}>
+                          {p.name}
+                        </Select.Option>
+                      ))}
                   </Select>
                 </Form.Item>
-                <Form.Item name="district" label="Quận/ Huyện" rules={[{ required: true, message: "Vui lòng chọn dữ liệu" }]}>
+                <Form.Item
+                  name="district"
+                  label="Quận/ Huyện"
+                  rules={[{ required: true, message: "Vui lòng chọn dữ liệu" }]}
+                >
                   <Select placeholder="Huyện..." onChange={searchDistrict}>
-                    {districts && districts.map((p: any) => (
-                      <Select.Option key={p.code} value={p.name}>{p.name}</Select.Option>
-                    ))}
+                    {districts &&
+                      districts.map((p: any) => (
+                        <Select.Option key={p.code} value={p.name}>
+                          {p.name}
+                        </Select.Option>
+                      ))}
                   </Select>
                 </Form.Item>
-                <Form.Item name="ward" label="Xã" rules={[{ required: true, message: "Vui lòng chọn dữ liệu" }]}>
+                <Form.Item
+                  name="ward"
+                  label="Xã"
+                  rules={[{ required: true, message: "Vui lòng chọn dữ liệu" }]}
+                >
                   <Select placeholder="Xã...">
-                    {wards && wards.map((p: any) => (
-                      <Select.Option key={p.code} value={p.name}>{p.name}</Select.Option>
-                    ))}
+                    {wards &&
+                      wards.map((p: any) => (
+                        <Select.Option key={p.code} value={p.name}>
+                          {p.name}
+                        </Select.Option>
+                      ))}
                   </Select>
                 </Form.Item>
-                <Form.Item name="address" label="Địa chỉ" rules={[{ required: true, message: "Vui lòng nhập dữ liệu" }]}>
+                <Form.Item
+                  name="address"
+                  label="Địa chỉ"
+                  rules={[{ required: true, message: "Vui lòng nhập dữ liệu" }]}
+                >
                   <Input placeholder="Số nhà, Tên đường" />
                 </Form.Item>
                 <Form.Item>
@@ -393,9 +439,7 @@ const AddressOrder = () => {
           </div>
           <br />
           <div>
-            <p>
-              {currentUser.Address}
-            </p>
+            <p>{currentUser.Address}</p>
           </div>
         </Descriptions>
       </div>
@@ -407,78 +451,103 @@ const { TextArea } = Input;
 
 const InfoAccount = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { currentUser, setCurrentUser } = useContext(AppContext)
-  const { currentToken, setCurrentToken } = useContext(AppContext)
-  const [infoForm] = Form.useForm()
-  const [passwordForm] = Form.useForm()
-  const navigate = useNavigate()
+  const { currentUser, setCurrentUser } = useContext(AppContext);
+  const { currentToken, setCurrentToken } = useContext(AppContext);
+  const [infoForm] = Form.useForm();
+  const [passwordForm] = Form.useForm();
+  const navigate = useNavigate();
   useEffect(() => {
     infoForm.setFieldsValue({
       name: currentUser.FullName,
       email: currentUser.Email,
       dob: moment(currentUser.DateOfBirth),
-      phone: currentUser.Phone
-    })
-  }, [])
+      phone: currentUser.Phone,
+    });
+  }, []);
   const saveProfile = async (values: any) => {
-    message.open({ 'key': 'save', content: "Saving...", type: 'loading' })
+    message.open({ key: "save", content: "Saving...", type: "loading" });
     const dataPost = {
       Id: currentUser.Id,
       Address: currentUser.Address,
       Avatar: currentUser.Avatar,
-      FullName: values['name'],
-      Email: values['email'],
-      DateOfBirth: moment(values['dob']).format("YYYY-MM-DD"),
-      Phone: values['phone'],
-    }
-    axios.post("https://localhost:7182/api/Accounts/UpdateUserInfo", dataPost, {
-      headers: {
-        "Access-Control-Allow-Origin": '*',
-        'Authorization': `Bearer ${currentToken}`
-      }
-    }).then(res => {
-      switch (res.status) {
-        case 204:
-          message.open({ 'key': 'save', content: "Cập nhật thành công", type: 'success' })
-          break;
-        case 400:
-          message.open({ 'key': 'save', content: "Cập nhật không thành công: " + res.data, type: 'error' })
-          break;
-        default:
-          break;
-      }
-    }).catch(err => console.log(err))
-  }
+      FullName: values["name"],
+      Email: values["email"],
+      DateOfBirth: moment(values["dob"]).format("YYYY-MM-DD"),
+      Phone: values["phone"],
+    };
+    axios
+      .post("https://localhost:7182/api/Accounts/UpdateUserInfo", dataPost, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${currentToken}`,
+        },
+      })
+      .then((res) => {
+        switch (res.status) {
+          case 204:
+            message.open({
+              key: "save",
+              content: "Cập nhật thành công",
+              type: "success",
+            });
+            break;
+          case 400:
+            message.open({
+              key: "save",
+              content: "Cập nhật không thành công: " + res.data,
+              type: "error",
+            });
+            break;
+          default:
+            break;
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   const changePassword = async (values: any) => {
-    message.open({ 'key': 'change', content: "Changing...", type: 'loading' })
-    axios.post("https://localhost:7182/api/Accounts/Changepassword",
-      {
-        Id: currentUser.Id,
-        Password: values['oldPassword'],
-        NewPassword: values['newPassword']
-      }, {
-      headers: {
-        "Access-Control-Allow-Origin": '*',
-        'Authorization': `Bearer ${currentToken}`
-      }
-    }).then(res => {
-      switch (res.status) {
-        case 204:
-          message.open({ 'key': 'change', content: "Cập nhật thành công. Vui lòng đăng nhập lại", type: 'success' })
-          passwordForm.resetFields()
-          setCurrentUser(null)
-          setCurrentToken(null)
-          localStorage.removeItem("userToken")
-          navigate('/login')
-          break;
-        case 400:
-          message.open({ 'key': 'change', content: "Cập nhật không thành công: " + res.data, type: 'error' })
-          break;
-        default:
-          break;
-      }
-    }).catch(err => { })
-  }
+    message.open({ key: "change", content: "Changing...", type: "loading" });
+    axios
+      .post(
+        "https://localhost:7182/api/Accounts/Changepassword",
+        {
+          Id: currentUser.Id,
+          Password: values["oldPassword"],
+          NewPassword: values["newPassword"],
+        },
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${currentToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        switch (res.status) {
+          case 204:
+            message.open({
+              key: "change",
+              content: "Cập nhật thành công. Vui lòng đăng nhập lại",
+              type: "success",
+            });
+            passwordForm.resetFields();
+            setCurrentUser(null);
+            setCurrentToken(null);
+            localStorage.removeItem("userToken");
+            navigate("/login");
+            break;
+          case 400:
+            message.open({
+              key: "change",
+              content: "Cập nhật không thành công: " + res.data,
+              type: "error",
+            });
+            break;
+          default:
+            break;
+        }
+      })
+      .catch((err) => {});
+  };
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -515,21 +584,36 @@ const InfoAccount = () => {
               style={{ maxWidth: 600 }}
               onFinish={saveProfile}
             >
-              <Form.Item label="Họ và Tên" name="name">
+              <Form.Item
+                style={{ color: "#000000" }}
+                label={<span style={{ color: "#000000" }}>Họ và Tên:</span>}
+                name="name"
+              >
                 <Input />
               </Form.Item>
-              <Form.Item label="Địa chỉ Email" name="email">
+              <Form.Item
+                label={<span style={{ color: "#000000" }}>Địa chỉ mail:</span>}
+                name="email"
+              >
                 <Input type="email" />
               </Form.Item>
 
-              <Form.Item label="Ngày Sinh" name="dob">
+              <Form.Item
+                label={<span style={{ color: "#000000" }}>Ngày Sinh:</span>}
+                name="dob"
+              >
                 <DatePicker />
               </Form.Item>
 
-              <Form.Item label="Sô điện thoại" name="phone">
+              <Form.Item
+                label={<span style={{ color: "#000000" }}>Số điện thoại:</span>}
+                name="phone"
+              >
                 <Input />
               </Form.Item>
-              <Form.Item label="Ghi chú">
+              <Form.Item
+                label={<span style={{ color: "#000000" }}>Ghi chú:</span>}
+              >
                 <TextArea rows={4} />
               </Form.Item>
               <Button
@@ -581,20 +665,51 @@ const InfoAccount = () => {
               layout="horizontal"
               style={{ maxWidth: 1200 }}
             >
-              <Form.Item label="Mật khẩu cũ " name="oldPassword" rules={[{ required: true, message: "Vui lòng nhập mật khẩu cũ" }, { pattern: new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,32}$/), message: "Vui lòng nhập đúng yêu cầu" }]}>
+              <Form.Item
+                label="Mật khẩu cũ "
+                name="oldPassword"
+                rules={[
+                  { required: true, message: "Vui lòng nhập mật khẩu cũ" },
+                  {
+                    pattern: new RegExp(
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,32}$/
+                    ),
+                    message: "Vui lòng nhập đúng yêu cầu",
+                  },
+                ]}
+              >
                 <Input.Password type="password" />
               </Form.Item>
-              <Form.Item label="Mật khẩu mới" name='newPassword' rules={[{ required: true, message: "Vui lòng nhập mật khẩu mới" }, { pattern: new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,32}$/), message: "Vui lòng nhập đúng yêu cầu" }]}>
+              <Form.Item
+                label="Mật khẩu mới"
+                name="newPassword"
+                rules={[
+                  { required: true, message: "Vui lòng nhập mật khẩu mới" },
+                  {
+                    pattern: new RegExp(
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,32}$/
+                    ),
+                    message: "Vui lòng nhập đúng yêu cầu",
+                  },
+                ]}
+              >
                 <Input.Password type="password" />
               </Form.Item>
-              <Form.Item label="Nhập lại mật khẩu" name="confirmPassword" rules={[{ required: true, message: "Vui lòng nhập lại mật khẩu" }, ({ getFieldValue }) => ({
-                validator(rule, value) {
-                  if (!value || getFieldValue('newPassword') === value) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject('Không trùng với mật khẩu mới');
-                },
-              }),]}>
+              <Form.Item
+                label="Nhập lại mật khẩu"
+                name="confirmPassword"
+                rules={[
+                  { required: true, message: "Vui lòng nhập lại mật khẩu" },
+                  ({ getFieldValue }) => ({
+                    validator(rule, value) {
+                      if (!value || getFieldValue("newPassword") === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject("Không trùng với mật khẩu mới");
+                    },
+                  }),
+                ]}
+              >
                 <Input.Password type="password" />
               </Form.Item>
               <Button
@@ -648,10 +763,10 @@ const items: TabsProps["items"] = [
 
 const MyAccountPage = () => {
   const [file, setFile] = useState("");
-  const { currentUser, setCurrentUser } = useContext(AppContext)
-  const navigate = useNavigate()
-  return (
-    currentUser ? <>
+  const { currentUser, setCurrentUser } = useContext(AppContext);
+  const navigate = useNavigate();
+  return currentUser ? (
+    <>
       <div style={{ marginLeft: "13%", padding: 20 }}>
         <Avatar
           size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
@@ -674,13 +789,17 @@ const MyAccountPage = () => {
         onChange={onChangee}
       />
     </>
-      :
-      <Result
-        status="403"
-        title="403"
-        subTitle="Sorry, you are not authorized to access this page."
-        extra={<Button type="primary" onClick={() => navigate('/login')}>LOGIN</Button>}
-      />
+  ) : (
+    <Result
+      status="403"
+      title="403"
+      subTitle="Sorry, you are not authorized to access this page."
+      extra={
+        <Button type="primary" onClick={() => navigate("/login")}>
+          LOGIN
+        </Button>
+      }
+    />
   );
 };
 

@@ -93,6 +93,17 @@ const data: DataType[] = [
     phone: "0901605535",
     tag: "processing",
   },
+  {
+    key: "7",
+    name: "Jim yellow",
+    image:
+      "https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/complications/thumbs/418x0/patek-philippe-complications-5905p-001.png",
+    nameProduct: "PATEK PHILIPPE COMPLICATIONS",
+    Price: 3550000000,
+    address: "Thành Phố Hồ Chí Minh, Quận 1",
+    phone: "0901605535",
+    tag: "processing",
+  },
 ];
 
 const BillingDashboard = () => {
@@ -203,7 +214,7 @@ const BillingDashboard = () => {
       title: "Họ Tên",
       dataIndex: "name",
       key: "name",
-      width: "18%",
+      width: "20%",
       ...getColumnSearchProps("name"),
     },
     {
@@ -282,8 +293,8 @@ const BillingDashboard = () => {
             style={{
               fontWeight: 700,
               fontSize: 20,
-              paddingTop: 20,
-              paddingLeft: 10,
+              paddingTop: 0,
+              paddingLeft: 0,
             }}
           >
             Danh sách hóa đơn
