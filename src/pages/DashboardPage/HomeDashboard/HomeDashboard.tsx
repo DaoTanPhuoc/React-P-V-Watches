@@ -105,7 +105,7 @@ const HomeDas = () => {
         style={{
           padding: 10,
           minHeight: 280,
-          background: "white",
+          // background: "white",
         }}
       >
         {/* Content */}

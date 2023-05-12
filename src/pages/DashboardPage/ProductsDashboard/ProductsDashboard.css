@@ -10,106 +10,14 @@
   padding: 20px 20px;
 }
 
-.chart-das-container {
-  width: 100%;
-  display: flex;
-  margin-bottom: 40px;
-  background-color: #ffffff;
-}
-
-.chart-das-container .left-chart {
-  width: 70%;
-  box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);
-}
-
-.chart-das-container .right-chart {
-  width: 35%;
-  box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);
-}
-
-.title-chart-das {
-  font-size: 19px;
-  font-weight: 750;
-  padding: 20px 20px;
-}
-
-/* banner */
-img {
-  display: block;
-}
-
-/* End Reset */
-
-.nowrap {
-  white-space: nowrap;
-}
-
-.dowrap {
-  white-space: nowrap;
-  color: #348ada;
-}
-
-.offscreen {
-  position: absolute;
-  left: -10000px;
-}
-
-.life {
-  border-bottom: 2px solid #000;
-  padding: 20px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 30px;
-  background-color: #546a7b;
-  background-image: url(https://raw.githubusercontent.com/CiurescuP/Banner/main/background-pic.jpg);
-  background-repeat: round;
-}
-
 .h1 {
   font-size: 270%;
   color: #fff;
   text-shadow: 1px 1px 2px pink;
 }
 
-.profile-pic {
-  width: 35%;
-}
-
-.profile-pic img {
-  width: 100%;
-  height: auto;
-  min-width: 100px;
-  border: 5px double #76bcf5;
-  border-image: linear-gradient(#97b8e4, #013a70) 30;
-}
-
-.left-chart .chart-products {
-  margin: 20px;
-}
-
-.right-chart .container-right {
-  padding: 0.5em;
-  margin: 2.2em;
-}
-
-.banner-products {
-  position: relative;
-  padding: 20px;
-  width: 100%;
-  height: 18%;
-  box-shadow: 0px 0px 4px 0px;
-  background-image: linear-gradient(
-      to top right,
-      rgba(228, 221, 221, 0.5) 10%,
-      rgba(49, 47, 47, 0.8) 60%
-    ),
-    url("https://images.ctfassets.net/hrltx12pl8hq/6QpKgim9qMgGK8QG2a6gaC/2de28b955c0cf902004fecd1a1e62bee/sub-category-1.jpg?fit=fill&w=368&h=207");
-}
-.banner-products .content-banner-products {
-  color: #fff;
-  position: absolute;
-  width: 100%;
-  top: 20%;
-  text-align: center;
+img {
+  width: 90px;
+  height: 90px;
+  object-fit: "cover";
 }

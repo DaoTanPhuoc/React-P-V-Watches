@@ -19,6 +19,7 @@ import BillingDashboard from "../pages/DashboardPage/BillingDashboard/BillingDas
 import MyAccountPage from "../pages/MyAccountPage/MyAccountPage";
 import UserLayout from "../layouts/UserLayout";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
+import StatisticalPage from "../pages/DashboardPage/Statistical/StatisticalPage";
 
 export const userRoutes = createBrowserRouter([
   {
@@ -68,6 +69,10 @@ export const userRoutes = createBrowserRouter([
       {
         path: "/dasBilling",
         element: <BillingDashboard />,
+      },
+      {
+        path: "/statistical",
+        element: <StatisticalPage />,
       },
       {
         path: "/myAccount",

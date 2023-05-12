@@ -51,6 +51,7 @@ import PostDashboard from "./PostDashboard/PostDashboard";
 import BillingDashboard from "./BillingDashboard/BillingDashboard";
 import { useNavigate } from "react-router-dom";
 import SubMenu from "antd/es/menu/SubMenu";
+import StatisticalPage from "./Statistical/StatisticalPage";
 const { Header, Content, Footer, Sider } = Layout;
 
 interface ChartModel {
@@ -206,26 +207,32 @@ const Dashboard: React.FC = () => {
     {
       key: 1,
       icon: <UserOutlined />,
-      label: <span style={{ color: "#000000" }}>Home</span>,
+      label: <span style={{ color: "#000000" }}>Dashboard</span>,
       compoment: <HomeDas />,
     },
     {
       key: 2,
       icon: <ShopOutlined />,
-      label: <span style={{ color: "#000000" }}>Products</span>,
+      label: <span style={{ color: "#000000" }}>Sản phẩm</span>,
       compoment: <ProductsDashboard />,
     },
     {
       key: 3,
       icon: <FormOutlined />,
-      label: <span style={{ color: "#000000" }}>Post</span>,
+      label: <span style={{ color: "#000000" }}>Bài viết</span>,
       compoment: <PostDashboard />,
     },
     {
       key: 4,
       icon: <FileTextOutlined />,
-      label: <span style={{ color: "#000000" }}>Billing</span>,
+      label: <span style={{ color: "#000000" }}>Hóa đơn</span>,
       compoment: <BillingDashboard />,
+    },
+    {
+      key: 5,
+      icon: <FileTextOutlined />,
+      label: <span style={{ color: "#000000" }}>Thống kê</span>,
+      compoment: <StatisticalPage />,
     },
   ];
   const [render, SetRender] = useState(<HomeDas />);
@@ -236,13 +243,14 @@ const Dashboard: React.FC = () => {
     <Layout>
       <Sider
         breakpoint="lg"
-        collapsedWidth="0"
+        collapsedWidth="100"
         onBreakpoint={(broken) => {
           console.log(broken);
         }}
         onCollapse={(collapsed, type) => {
           console.log(collapsed, type);
         }}
+        className="slider-menu"
       >
         {/* <div className="slider-menu">
           <div className="logo" />
@@ -334,7 +342,7 @@ const Dashboard: React.FC = () => {
 
         <Content
           style={{
-            padding: 24,
+            padding: 10,
             minHeight: 280,
           }}
         >
