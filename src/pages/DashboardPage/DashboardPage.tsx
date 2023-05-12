@@ -192,18 +192,9 @@ const Dashboard: React.FC = () => {
   const handleLogout = () => {
     localStorage.removeItem("userToken");
     setIsAuthenticatedAdmin(false);
-    navigate('/')
+    navigate("/");
   };
-  const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
 
-  // menu
-  // const [selectedMenu, setSelectedMenu] =useState('menu1');
-  // const handleMenuClick = (e:any) =>{
-  //   setSelectedMenu(e.key)
-  // }
   const menuItems = [
     {
       key: 1,
@@ -231,10 +222,22 @@ const Dashboard: React.FC = () => {
     },
   ];
   const [render, SetRender] = useState(<HomeDas />);
-  return (
-    isAuthenticatedAdmin ? (<Layout>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="slider-menu">
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
+  return isAuthenticatedAdmin ? (
+    <Layout>
+      <Sider
+        breakpoint="lg"
+        collapsedWidth="0"
+        onBreakpoint={(broken) => {
+          console.log(broken);
+        }}
+        onCollapse={(collapsed, type) => {
+          console.log(collapsed, type);
+        }}
+      >
+        {/* <div className="slider-menu">
           <div className="logo" />
           <img
             style={{
@@ -260,11 +263,35 @@ const Dashboard: React.FC = () => {
               },
             }))}
           />
-        </div>
+        </div> */}
+        <div className="logo" />
+        <img
+          style={{
+            backgroundColor: "white",
+            width: 200,
+            height: 64,
+            objectFit: "cover",
+          }}
+          src="https://i1.sndcdn.com/artworks-000638521540-rcn15j-t500x500.jpg"
+          alt=""
+        />
+        <Menu
+          style={{ height: "100%", backgroundColor: "#fff" }}
+          // theme="dark"
+          mode="inline"
+          defaultSelectedKeys={["1"]}
+          items={menuItems.map((i) => ({
+            key: i.key,
+            icon: i.icon,
+            label: i.label,
+            onClick: () => {
+              SetRender(i.compoment);
+            },
+          }))}
+        />
       </Sider>
       <Layout className="site-layout">
         <Header
-          // style={{ padding: 0, background: colorBgContainer }}
           style={{
             position: "sticky",
             top: 0,
@@ -274,13 +301,6 @@ const Dashboard: React.FC = () => {
           }}
         >
           <div style={{ width: "100%" }}>
-            {/* {React.createElement(
-              collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-              {
-                className: "trigger",
-                onClick: () => setCollapsed(!collapsed),
-              }
-            )} */}
             <div style={{ fontSize: "22px" }}>
               <SearchOutlined style={{ color: "#fff" }} />
             </div>
@@ -293,7 +313,6 @@ const Dashboard: React.FC = () => {
             />
           </a>
           <Button
-            // style={{ position: "absolute", top: 0, right: 0 }}
             onClick={() => handleLogout()}
             type="primary"
             icon={<PoweroffOutlined />}
@@ -310,17 +329,23 @@ const Dashboard: React.FC = () => {
           style={{
             padding: 24,
             minHeight: 280,
-            background: colorBgContainer,
           }}
         >
           {render}
         </Content>
       </Layout>
-    </Layout>) : <Result
+    </Layout>
+  ) : (
+    <Result
       status="404"
       title="404"
       subTitle="Sorry, the page you visited does not exist."
-      extra={<Button type="primary" onClick={() => navigate('/')}>Back Home</Button>} />
+      extra={
+        <Button type="primary" onClick={() => navigate("/")}>
+          Back Home
+        </Button>
+      }
+    />
   );
 };
 

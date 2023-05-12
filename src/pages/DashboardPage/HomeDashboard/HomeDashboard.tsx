@@ -1,10 +1,19 @@
-import { Column, TinyLine } from "@ant-design/charts";
-import { Card, Col, Row, Space, Table, Tag, Timeline } from "antd";
+import { Column, Progress, TinyColumn, TinyLine } from "@ant-design/charts";
+import {
+  Card,
+  Col,
+  Descriptions,
+  Row,
+  Space,
+  Table,
+  Tag,
+  Timeline,
+} from "antd";
 import { Content } from "antd/es/layout/layout";
 import { ColumnsType } from "antd/es/table";
 import React from "react";
 import { ClockCircleOutlined, SmileOutlined } from "@ant-design/icons";
-
+import { TinyArea } from "@ant-design/plots";
 import "./HomeDashboard.css";
 const HomeDas = () => {
   interface DataType {
@@ -15,92 +24,59 @@ const HomeDas = () => {
     tags: string[];
   }
 
-  const columns: ColumnsType<DataType> = [
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      render: (text) => <a>{text}</a>,
-    },
-    {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-    },
-    {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
-    },
-    {
-      title: "Tags",
-      key: "tags",
-      dataIndex: "tags",
-      render: (_, { tags }) => (
-        <>
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? "geekblue" : "green";
-            if (tag === "loser") {
-              color = "volcano";
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
-    },
-    {
-      title: "Action",
-      key: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <a>Invite {record.name}</a>
-          <a>Delete</a>
-        </Space>
-      ),
-    },
+  const dataToadaySales = [
+    264, 417, 438, 887, 309, 397, 550, 575, 563, 430, 525, 592,
   ];
+  const configToadaySale = {
+    height: 60,
+    autoFit: false,
+    dataToadaySales,
+    smooth: true,
+    color: "#AA61B0",
+    // areaStyle: {
+    //   fill: "#AA61B0",
+    // },
+  };
 
-  const data1: DataType[] = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: 32,
-      address: "New York No. 1 Lake Park",
-      tags: ["nice", "developer"],
+  const dataCl2 = [274, 337, 81, 497, 666, 219, 269];
+  const configCl2 = {
+    height: 64,
+    autoFit: false,
+    dataCl2,
+    tooltip: {
+      customContent: function (x: any, dataCl2: any) {
+        return `NO.${x}: ${dataCl2[0]?.dataCl2?.y.toFixed(2)}`;
+      },
     },
-    {
-      key: "2",
-      name: "Jim Green",
-      age: 42,
-      address: "London No. 1 Lake Park",
-      tags: ["loser"],
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-      age: 32,
-      address: "Sydney No. 1 Lake Park",
-      tags: ["cool", "teacher"],
-    },
+  };
+
+  const configCl3 = {
+    height: 100,
+    width: 300,
+    autoFit: false,
+    percent: 0.7,
+    color: ["#31C66B", "#E8EDF3"],
+  };
+
+  const dataTinyAreaCl4 = [
+    264, 417, 438, 887, 309, 397, 550, 575, 563, 430, 525, 592, 492, 467, 513,
+    546, 983, 340, 539, 243, 226, 192,
   ];
+  const configCl4 = {
+    height: 60,
+    autoFit: false,
+    dataTinyAreaCl4,
+    smooth: true,
+    areaStyle: {
+      fill: "#d6e3fd",
+    },
+  };
 
   const data = [
     264, 417, 438, 887, 309, 397, 550, 575, 563, 430, 525, 592, 492, 467, 513,
     546, 983, 340, 539, 243, 226, 192,
   ];
   //data chart
-
-  const config = {
-    height: 60,
-    autoFit: false,
-    data,
-    smooth: true,
-  };
-  //Chart
 
   const data2 = [
     { year: "1991", value: 3 },
@@ -132,25 +108,6 @@ const HomeDas = () => {
           background: "white",
         }}
       >
-        <div className="banner-das-home">
-          <div className="background-container">
-            {" "}
-            <span className="background-overlay"></span>
-            <div className="background-cover container">
-              <div className="line-heading">
-                <div className="line-heading-left">
-                  <h2>Say hello to us</h2>
-                  <h4>Talk to us</h4>
-                </div>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                  Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                  natoque penatibus et magnis dis parturient montes
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
         {/* Content */}
         <div
           style={{
@@ -203,6 +160,15 @@ const HomeDas = () => {
                           fill="white"
                         />
                       </svg>
+                    </div>
+                  </Col>
+                  <Col>
+                    <div>
+                      <TinyLine
+                        className="TinyLineCl1"
+                        data={dataToadaySales}
+                        {...configToadaySale}
+                      />
                     </div>
                   </Col>
                 </Row>
@@ -258,6 +224,15 @@ const HomeDas = () => {
                       </svg>
                     </div>
                   </Col>
+                  <Col>
+                    <div>
+                      <TinyColumn
+                        className="TinyColumnCl2"
+                        data={dataCl2}
+                        {...configCl2}
+                      />
+                    </div>
+                  </Col>
                 </Row>
               </Card>
             </Col>
@@ -278,7 +253,7 @@ const HomeDas = () => {
                       flex={1}
                       style={{ fontWeight: 700, fontSize: 30, lineHeight: 2 }}
                     >
-                      2000
+                      75%
                     </Col>
                   </Col>
                   <Col flex={1}>
@@ -296,6 +271,9 @@ const HomeDas = () => {
                         />
                       </svg>
                     </div>
+                  </Col>
+                  <Col>
+                    <Progress className="ProgressCl3" {...configCl3} />
                   </Col>
                 </Row>
               </Card>
@@ -336,6 +314,13 @@ const HomeDas = () => {
                       </svg>
                     </div>
                   </Col>
+                  <Col>
+                    <TinyArea
+                      className="TinyAreaCl4"
+                      data={dataTinyAreaCl4}
+                      {...configCl4}
+                    />
+                  </Col>
                 </Row>
               </Card>
             </Col>
@@ -343,107 +328,51 @@ const HomeDas = () => {
         </div>
         {/* chart */}
         <div className="chart">
-          <Timeline
-            items={[
-              {
-                color: "green",
-                children: "Create a services site 2015-09-01",
-              },
-              {
-                color: "green",
-                children: "Create a services site 2015-09-01",
-              },
-              {
-                color: "red",
-                children: (
-                  <>
-                    <p>Solve initial network problems 1</p>
-                    <p>Solve initial network problems 2</p>
-                    <p>Solve initial network problems 3 2015-09-01</p>
-                  </>
-                ),
-              },
-              {
-                children: (
-                  <>
-                    <p>Technical testing 1</p>
-                    <p>Technical testing 2</p>
-                    <p>Technical testing 3 2015-09-01</p>
-                  </>
-                ),
-              },
-              {
-                color: "gray",
-                children: (
-                  <>
-                    <p>Technical testing 1</p>
-                    <p>Technical testing 2</p>
-                    <p>Technical testing 3 2015-09-01</p>
-                  </>
-                ),
-              },
-              {
-                color: "gray",
-                children: (
-                  <>
-                    <p>Technical testing 1</p>
-                    <p>Technical testing 2</p>
-                    <p>Technical testing 3 2015-09-01</p>
-                  </>
-                ),
-              },
-              {
-                color: "#00CCFF",
-                dot: <SmileOutlined />,
-                children: <p>Custom color testing</p>,
-              },
-            ]}
-          />
-          {/* <div>
-    <Card
-      style={{
-        width: 290,
-        borderRadius: 12,
-        boxShadow: "0 5px 10px rgba(0,0,0,.12)",
-      }}
-    >
-      <Row>
-        <Col flex={3}>
-          <Col style={{ fontWeight: 600, color: "#8c8c8c" }} flex={1}>
-            Products
-          </Col>
-          <Col
-            flex={1}
-            style={{ fontWeight: 700, fontSize: 30, lineHeight: 2 }}
-          >
-            2000
-          </Col>
-        </Col>
-        <Col flex={1}>
-          <div className="icon-money">
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M17.35,2.219h-5.934c-0.115,0-0.225,0.045-0.307,0.128l-8.762,8.762c-0.171,0.168-0.171,0.443,0,0.611l5.933,5.934c0.167,0.171,0.443,0.169,0.612,0l8.762-8.763c0.083-0.083,0.128-0.192,0.128-0.307V2.651C17.781,2.414,17.587,2.219,17.35,2.219M16.916,8.405l-8.332,8.332l-5.321-5.321l8.333-8.332h5.32V8.405z M13.891,4.367c-0.957,0-1.729,0.772-1.729,1.729c0,0.957,0.771,1.729,1.729,1.729s1.729-0.772,1.729-1.729C15.619,5.14,14.848,4.367,13.891,4.367 M14.502,6.708c-0.326,0.326-0.896,0.326-1.223,0c-0.338-0.342-0.338-0.882,0-1.224c0.342-0.337,0.881-0.337,1.223,0C14.84,5.826,14.84,6.366,14.502,6.708"
-                fill="white"
-              />
-            </svg>
+          <div className="left-chart">
+            <div id="header-left-chart">
+              <h1>Top sản phẩm</h1>
+            </div>
+            <div id="leaderboard">
+              <div className="ribbon"></div>
+              <table className="table-left-chart">
+                <tr className="tr-left-chart">
+                  <td className="number">1</td>
+                  <td className="name">ROLEX DATEJUST 36</td>
+                  <td className="points">
+                    258.244{" "}
+                    <img
+                      className="gold-medal"
+                      src="https://github.com/malunaridev/Challenges-iCodeThis/blob/master/4-leaderboard/assets/gold-medal.png?raw=true"
+                      alt="gold medal"
+                    />
+                  </td>
+                </tr>
+                <tr className="tr-left-chart">
+                  <td className="number">2</td>
+                  <td className="name">HUBLOT BIG BANG STEEL</td>
+                  <td className="points">258.242</td>
+                </tr>
+                <tr className="tr-left-chart">
+                  <td className="number">3</td>
+                  <td className="name">
+                    FRANCK MULLER VANGUARD LADY MOONPHASE
+                  </td>
+                  <td className="points">258.223</td>
+                </tr>
+                <tr className="tr-left-chart">
+                  <td className="number">4</td>
+                  <td className="name">PATEK PHILIPPE COMPLICATIONS</td>
+                  <td className="points">258.212</td>
+                </tr>
+              </table>
+            </div>
           </div>
-        </Col>
-      </Row>
-    </Card>
-  </div> */}
+
           <div className="right-chart">
-            <Column data={data2} {...config1} />
+            <Column className="right-chart-table" data={data2} {...config1} />
           </div>
         </div>
         {/* TABLE */}
-        <Table columns={columns} dataSource={data1} />
       </Content>
     </>
   );

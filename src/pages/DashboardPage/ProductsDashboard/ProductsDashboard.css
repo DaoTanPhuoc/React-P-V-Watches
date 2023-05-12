@@ -1,6 +1,7 @@
 .table-das-container {
-  box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
+  /* box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff; */
+  width: 100%;
 }
 
 .table-das-container .title-das-products {
@@ -89,7 +90,7 @@ img {
 
 .right-chart .container-right {
   padding: 0.5em;
-  margin: 4.5em;
+  margin: 2.2em;
 }
 
 .banner-products {

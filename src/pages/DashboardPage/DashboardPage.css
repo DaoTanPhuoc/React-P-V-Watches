@@ -42,7 +42,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
   height: 100%;
-  width: 30%;
+  width: 36%;
   margin-top: 20px;
 }
 .right-chart {
@@ -50,7 +50,7 @@
   height: 100%;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
-  width: 70%;
+  width: 66%;
   margin-left: 20px;
   margin-top: 20px;
 }
@@ -60,4 +60,10 @@
   box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.15);
   overflow: auto;
   position: fixed;
+}
+
+#components-layout-demo-responsive .logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.2);
 }

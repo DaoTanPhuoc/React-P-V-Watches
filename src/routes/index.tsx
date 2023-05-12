@@ -18,6 +18,7 @@ import PostDashboard from "../pages/DashboardPage/PostDashboard/PostDashboard";
 import BillingDashboard from "../pages/DashboardPage/BillingDashboard/BillingDashboard";
 import MyAccountPage from "../pages/MyAccountPage/MyAccountPage";
 import UserLayout from "../layouts/UserLayout";
+import RegisterPage from "../pages/RegisterPage/RegisterPage";
 
 export const userRoutes = createBrowserRouter([
   {
@@ -72,15 +73,19 @@ export const userRoutes = createBrowserRouter([
         path: "/myAccount",
         element: <MyAccountPage />,
       },
-    ]
+    ],
   },
   {
     path: "/admin",
     element: <Dashboard />,
-    children: []
+    children: [],
   },
   {
     path: "/login",
     element: <PageLogin />,
+  },
+  {
+    path: "/register",
+    element: <RegisterPage />,
   },
 ]);

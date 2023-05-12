@@ -261,7 +261,7 @@ const AddressOrder = () => {
         className="confirm-order"
       >
         <Descriptions title="Địa chỉ của tôi">
-          <div style={{ width: "87%" }}>
+          <div style={{ width: "70%" }}>
             {" "}
             <p>Đào Tấn Phước</p>
             <div
@@ -406,7 +406,7 @@ const InfoAccount = () => {
           <Modal
             className="change-password"
             footer={null}
-            title="Basic Modal"
+            title="Thay đổi mật khẩu"
             open={isModalOpen}
             onOk={handleOk}
             onCancel={handleCancel}

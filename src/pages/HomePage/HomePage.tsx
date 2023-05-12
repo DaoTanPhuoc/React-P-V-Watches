@@ -179,17 +179,22 @@ const HomePage = () => {
   }, []);
 
   const fetchNewstProducts = async (categoryId: number) => {
-    axios.get('https://localhost:7182/api/Products/GetNewestProduct', { params: { category: categoryId } }).then((res) => {
-      if (res.status == 200) {
-        setNewstProducts(res.data.data)
-      }
-    }).catch(error => {
-      console.log(error.message);
-    })
-  }
+    axios
+      .get("https://localhost:7182/api/Products/GetNewestProduct", {
+        params: { category: categoryId },
+      })
+      .then((res) => {
+        if (res.status == 200) {
+          setNewstProducts(res.data.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
   useEffect(() => {
-    fetchNewstProducts(0)
-  }, [])
+    fetchNewstProducts(1);
+  }, []);
 
   return (
     <>
@@ -354,8 +359,8 @@ const HomePage = () => {
             </h2>
             <hr />
             <div className="multi-button">
-              <button onClick={() => fetchNewstProducts(0)}>Nam</button>
-              <button onClick={() => fetchNewstProducts(1)}>Nu</button>
+              <button onClick={() => fetchNewstProducts(1)}>Nam</button>
+              <button onClick={() => fetchNewstProducts(2)}>Nu</button>
             </div>
           </div>
           <div className="galleryContainer">

@@ -3,7 +3,7 @@ import Table, { ColumnsType } from "antd/es/table";
 import React from "react";
 import "./ProductsDashboard.css";
 import { Line, Pie } from "@ant-design/charts";
-import { LikeOutlined } from "@ant-design/icons";
+import { ShopOutlined, DollarOutlined } from "@ant-design/icons";
 import { text } from "stream/consumers";
 import { render } from "@testing-library/react";
 interface DataType {
@@ -116,21 +116,41 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
+// const data: DataType[] = [];
+// for (let i = 0; i < 46; i++) {
+//   data.push({
+//     key: data[i].key,
+//     name: data[i].name,
+//     image: data[i].image,
+//     price: data[i].price,
+//     stock: data[i].stock,
+//     color: data[i].color,
+//     CaseMeterial: data[i].CaseMeterial,
+//     CaseSize: data[i].CaseSize,
+//     GlassMaterial: data[i].GlassMaterial,
+//     Movement: data[i].Movement,
+//     WaterResistant: data[i].WaterResistant,
+//     Description: data[i].Description,
+//     Warranty: data[i].Warranty,
+//     tags: data[i].tags,
+//   });
+// }
+
 const data: DataType[] = [
   {
     key: "1",
     name: "Rolex",
     image:
       "https://bossluxurywatch.vn/uploads/san-pham/rolex/day-date/thumbs/645x0/rolex-day-date-40mm-228235-0025.png",
-    price: 23,
+    price: 1620000000,
     stock: 4,
     color: "vàng",
-    CaseMeterial: "dsa",
+    CaseMeterial: "Vàng vàng 18k",
     CaseSize: 40,
-    GlassMaterial: "fssdf",
-    Movement: "dsad",
+    GlassMaterial: "Sapphire",
+    Movement: " Automatic - Caliber 3255",
     WaterResistant: "10",
-    Description: "fdsaf",
+    Description: "Đồng hồ Rolex Day-Date 40 228238-0059 thuộc bộ sưu tập...",
     Warranty: 21,
     tags: ["nice", "developer"],
   },
@@ -142,10 +162,10 @@ const data: DataType[] = [
     price: 29,
     stock: 9,
     color: "role",
-    CaseMeterial: "dsa",
+    CaseMeterial: "nạm kim cương",
     CaseSize: 39,
-    GlassMaterial: "fdssdf",
-    Movement: "dsadd",
+    GlassMaterial: "Sapphire",
+    Movement: " Automatic - Caliber 3255",
     WaterResistant: "10",
     Description: "fdsadf",
     Warranty: 5,
@@ -153,6 +173,23 @@ const data: DataType[] = [
   },
   {
     key: "3",
+    name: "Channel",
+    image:
+      "https://bossluxurywatch.vn/uploads/san-pham/rolex/daytona/thumbs/645x0/116505-0008.png",
+    price: 98,
+    stock: 10,
+    color: "role",
+    CaseMeterial: "dsadsad",
+    CaseSize: 40,
+    GlassMaterial: "dsfdssdf",
+    Movement: "dsadsdd",
+    WaterResistant: "10",
+    Description: "fdsadsdf",
+    Warranty: 2,
+    tags: ["cool", "teacher"],
+  },
+  {
+    key: "4",
     name: "Channel",
     image:
       "https://bossluxurywatch.vn/uploads/san-pham/rolex/daytona/thumbs/645x0/116505-0008.png",
@@ -221,15 +258,8 @@ const config = {
 const ProductsDashboard = () => {
   return (
     <>
-      {/* <div className="banner-products">
-        <div className="content-banner-products">
-          <h1>Welcome to Dashboard !</h1>
-          <button>Get Started</button>
-        </div>
-      </div> */}
       <div className="title-chart-das">Thống Kê Doanh Thu</div>
 
-      {/* chart */}
       <div className="chart-das-container">
         <div className="left-chart">
           <div className="chart-products">
@@ -247,6 +277,9 @@ const ProductsDashboard = () => {
           </div>
         </div>
         <div className="right-chart">
+          <div style={{ fontWeight: 600, fontSize: 19, padding: "20px 20px" }}>
+            Thống kê số lượng tồn kho
+          </div>
           <div className="chart-brand">
             <Pie data={RoundChartData} {...config} />
           </div>
@@ -254,13 +287,17 @@ const ProductsDashboard = () => {
             <Row gutter={16}>
               <Col span={12}>
                 <Statistic
-                  title="Feedback"
-                  value={1128}
-                  prefix={<LikeOutlined />}
+                  title="Tổng sản phẩm bán"
+                  value={128}
+                  prefix={<ShopOutlined />}
                 />
               </Col>
               <Col span={12}>
-                <Statistic title="Unmerged" value={93} suffix="/ 100" />
+                <Statistic
+                  title="Doanh thu tháng"
+                  value={1121393}
+                  prefix={<DollarOutlined />}
+                />
               </Col>
             </Row>
           </div>
@@ -271,7 +308,8 @@ const ProductsDashboard = () => {
         <Table
           columns={columns}
           dataSource={data}
-          scroll={{ x: 1790, y: 300 }}
+          scroll={{ x: 1900, y: 1900 }}
+          pagination={{ pageSize: 2 }}
         />
       </div>
     </>

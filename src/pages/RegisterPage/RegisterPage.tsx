@@ -1,70 +1,16 @@
+import React from "react";
 import { Button, Checkbox, Form, Input, message, Tabs, TabsProps } from "antd";
-import { useContext, useMemo, useState } from "react";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { AppContext } from "../../App";
-import axios from "axios";
 import FormItem from "antd/es/form/FormItem";
-import "./PageLogin.css";
-import { useNavigate } from "react-router-dom";
-import jwtDecode from "jwt-decode";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import "./RegisterPage.css";
 
-const PageLogin = () => {
-  const navigate = useNavigate();
-  const { currentUser, setCurrentUser } = useContext(AppContext);
-  const { isAuthenticatedAdmin, setIsAuthenticatedAdmin } =
-    useContext(AppContext);
-
-  const onFinish = async (values: any) => {
-    message.open({
-      type: "loading",
-      content: "Đang đăng nhập...",
-      key: "login",
-    });
-    axios
-      .post(
-        "https://localhost:7182/api/Accounts/Login",
-        JSON.stringify(values),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then(async (res: any) => {
-        if (res.status === 200) {
-          localStorage.setItem("userToken", res.data.token);
-          message.open({
-            type: "success",
-            content: "Đăng nhập thành công!",
-            key: "login",
-          });
-          const userInfo: any = await jwtDecode(res.data.token);
-          const role =
-            userInfo[
-              "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
-            ];
-          if (role === "User") {
-            navigate("/");
-          } else if (role === "Admin") {
-            setIsAuthenticatedAdmin(true);
-            navigate("/admin");
-          }
-        }
-      })
-      .catch((error) => {
-        message.open({
-          type: "error",
-          content: "Đăng nhập thất bại: " + error.message,
-          key: "login",
-        });
-      });
-  };
+const RegisterPage = () => {
   return (
     <div className="container">
       <div
         style={{
-          width: 430,
-          height: 520,
+          width: 630,
+          height: 650,
           position: "absolute",
           transform: "Translate(-50%,-50%)",
           top: "50%",
@@ -92,10 +38,9 @@ const PageLogin = () => {
         ></div>
       </div>
       <Form
-        name="normal_login"
         style={{
-          width: 400,
-          height: 520,
+          width: 550,
+          height: 700,
           backgroundColor: "rgba(255,255,255,0.13)",
           position: "absolute",
           transform: "Translate(-50%,-50%)",
@@ -105,22 +50,22 @@ const PageLogin = () => {
           backdropFilter: "blur(10)",
           border: "2px solid rgba(255,255,255,0.1)",
           boxShadow: "0 0 40px rgba(8,7,16,0.6)",
-          padding: "50px 35px",
+          padding: "0px 30px",
         }}
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
+        // initialValues={{ remember: true }}
+        // onFinish={onFinish}
         layout="vertical"
       >
         <h3
           style={{
             fontSize: 32,
             fontWeight: 500,
-            lineHeight: 3,
+            lineHeight: 2,
             textAlign: "center",
             color: "#fff",
           }}
         >
-          Đăng Nhập
+          Đăng Ký
         </h3>
         <Form.Item
           name="email"
@@ -147,19 +92,50 @@ const PageLogin = () => {
             placeholder="Password"
           />
         </Form.Item>
+        <Form.Item
+          name="password"
+          label="Nhập mật Khẩu"
+          rules={[{ required: true, message: "Please input your Password!" }]}
+        >
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="password"
+            placeholder="Nhập lại Password"
+          />
+        </Form.Item>
+
+        <FormItem name="FullName" label="Họ Tên">
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="text"
+            placeholder="Nhập họ tên"
+          />
+        </FormItem>
+
+        <FormItem name="Address" label="Địa chỉ">
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="text"
+            placeholder="Nhập địa chỉ"
+          />
+        </FormItem>
+
+        <FormItem name="Phone" label="Số điện thoại">
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="text"
+            placeholder="Nhập địa chỉ"
+          />
+        </FormItem>
 
         <Form.Item name="button">
           <Button htmlType="submit" className="login-form-button">
-            Đăng Nhập
+            Đăng Ký
           </Button>
         </Form.Item>
-        <FormItem>
-          <span style={{ color: "#fff", marginLeft: 15 }}>
-            Nếu như bạn chưa có tài khoản? <a href="/register">Đăng Ký</a>{" "}
-          </span>{" "}
-        </FormItem>
       </Form>
     </div>
   );
 };
-export default PageLogin;
+
+export default RegisterPage;
