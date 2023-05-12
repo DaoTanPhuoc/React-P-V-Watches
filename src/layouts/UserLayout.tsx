@@ -49,7 +49,7 @@ const gridStyle: React.CSSProperties = {
 
 const UserLayout = () => {
   const { cartOrders, setCartOrders } = useContext(AppContext);
-  const { currentUser, setCurrentUser } = useContext(AppContext);
+  const { currentUser, currentToken } = useContext(AppContext);
   const [hoverMenu, setHoverMenu] = useState(0);
 
   const {
@@ -216,8 +216,7 @@ const UserLayout = () => {
               <ShoppingCartOutlined style={{ fontSize: 28, color: "#fff" }} />
             </Badge>
           </a>
-
-          {currentUser.avatar ? (
+          {currentToken && currentUser ? (
             <a href="/myAccount">
               <Avatar src={currentUser.avatar} shape="circle" />
             </a>

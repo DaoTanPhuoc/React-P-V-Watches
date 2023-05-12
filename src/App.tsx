@@ -1,3 +1,5 @@
+import { Skeleton } from "antd";
+import axios from "axios";
 import jwtDecode from "jwt-decode";
 import React, { createContext, useEffect, useState } from "react";
 import { RouterProvider } from "react-router-dom";
@@ -8,21 +10,33 @@ export const AppContext = createContext<any>(null);
 
 function App() {
   const [isAuthenticatedAdmin, setIsAuthenticatedAdmin] = useState(false);
-  const [currentUser, setCurrentUser] = useState<any>({});
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [currentToken, setCurrentToken] = useState<any>(null);
   const [cartOrders, setCartOrders] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true)
+
+  const loadUser = async () => {
+    const token = localStorage.getItem("userToken")
+    if (currentToken === null && token) {
+      setCurrentToken(token)
+    }
+    if (currentToken || token) {
+      axios.get('https://localhost:7182/api/Accounts/GetCurrentUserInfo', {
+        headers: {
+          "Access-Control-Allow-Origin": '*',
+          "Authorization": `Bearer ${currentToken ? currentToken : token}`
+        }
+      }).then(async res => {
+        const data = await res.data
+        setCurrentUser(data);
+      }).catch(err => {
+        console.error("Lỗi: " + err);
+      })
+    }
+  }
   useEffect(() => {
     (async () => {
-      const token = localStorage.getItem("userToken");
-      if (token) {
-        const userInfo: any = await jwtDecode(token);
-        setCurrentUser({
-          name: userInfo.Name,
-          email: userInfo.Email,
-          avatar:
-            "https://www.facebook.com/photo/?fbid=2838561319801692&set=a.2030018630655969",
-        });
-        console.log(currentUser);
-      }
+      await loadUser()
     })();
 
     const cartOrdersString = localStorage.getItem("cartOrders");
@@ -30,18 +44,20 @@ function App() {
       const cartOrdersTmp = JSON.parse(cartOrdersString);
       setCartOrders(cartOrdersTmp);
     }
+    setLoading(false)
   }, []);
   // Auth
   const onChangeCartOrders = (orders: any[]) => {
     const cartOrdersString = JSON.stringify(orders);
     localStorage.setItem("cartOrders", cartOrdersString);
-
     setCartOrders(orders);
   };
 
   return (
     <AppContext.Provider
       value={{
+        currentToken,
+        setCurrentToken,
         currentUser,
         setCurrentUser,
         isAuthenticatedAdmin,
@@ -50,7 +66,7 @@ function App() {
         onChangeCartOrders,
       }}
     >
-      {<RouterProvider router={userRoutes} />}
+      {loading ? <Skeleton active /> : <RouterProvider router={userRoutes} />}
     </AppContext.Provider>
   );
 }
