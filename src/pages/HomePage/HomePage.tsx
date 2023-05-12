@@ -1,33 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import "./HomePage.css";
-import Logo from "../../assets/image/brand/brHublot.jpg";
 import {
-  Avatar,
   Card,
-  Carousel,
-  Col,
-  Dropdown,
   FloatButton,
-  List,
-  Result,
-  Row,
-  Space,
-  Tabs,
-  TabsProps,
 } from "antd";
-import ScrollContainer from "react-indiana-drag-scroll";
 import "react-indiana-drag-scroll/dist/style.css";
-import { StarOutlined, StarFilled, StarTwoTone } from "@ant-design/icons";
-import { clearScreenDown } from "readline";
-import { GalleryData } from "./ProductsData";
-import categoryData from "./CategoryData.json";
-import { ProductModel } from "../../models/ProductModel";
-import { useParams } from "react-router";
 import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Meta from "antd/es/card/Meta";
 import { MessageOutlined } from "@ant-design/icons";
 import { AppContext } from "../../App";
 
@@ -58,48 +40,6 @@ const settings1 = {
 };
 
 // slider
-const settings = {
-  dots: false,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 4,
-  slidesToScroll: 4,
-  initialSlide: 0,
-  autoplay: true,
-  autoplaySpeed: 3000,
-  responsive: [
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-        infinite: true,
-        dots: true,
-        autoplay: true,
-        autoplaySpeed: 3000,
-      },
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-        initialSlide: 2,
-        autoplay: true,
-        autoplaySpeed: 3000,
-      },
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3000,
-      },
-    },
-  ],
-};
 
 const contentStyle: React.CSSProperties = {
   margin: 0,
@@ -111,23 +51,7 @@ const contentStyle: React.CSSProperties = {
   background: "#364d79",
 };
 
-const brandStyle: React.CSSProperties = {
-  margin: 0,
-  height: "260px",
-  color: "#fff",
-  lineHeight: "160px",
-  textAlign: "center",
-  background: "#364d79",
-};
 
-const ImageOurFeatured = [
-  "https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/thumbs/418x0/5961p-001.png",
-  "https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/complications/thumbs/418x0/patek-philippe-complications-5930g-010.png",
-  "https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/complications/thumbs/418x0/patek-philippe-complications-7130g-016.png",
-  "https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/complications/thumbs/418x0/patek-philippe-complications-7130r-013.png",
-  "https://bossluxurywatch.vn/uploads/san-pham/rolex/datejust-36/thumbs/418x0/rolex-datejust-36-126284rbr-0029.png",
-  "https://bossluxurywatch.vn/uploads/san-pham/franck-muller/thumbs/418x0/vanguard-lady-moonphase-v-32-sc-fo-l-d-cd-1p-cold.png",
-];
 
 const images = [
   "https://images.squarespace-cdn.com/content/v1/56a9e12ac647ad08eb4453c7/1680528697402-97ENGSTFJ78886WRXP1Q/Banner+nouvelties+home+page.jpg?format=2500w",
@@ -157,18 +81,15 @@ const gridStyle: React.CSSProperties = {
 };
 
 const HomePage = () => {
+  const { baseApi } = useContext(AppContext)
   // GetAvailableProducts
   const [GetAvailableProducts, setGetAvailableProducts] = useState<any[]>([]);
   // product Gallery
   const [newstProducts, setNewstProducts] = useState<any[]>([]);
-  const [collection, setCollection] = useState<any[]>([]);
-  const [gender, setGender] = useState<"male" | "female">("male");
-  const [getProductsByCategory, setGetProductsByCategory] = useState<1 | 2>(1);
-
   //avaliableProducts
   useEffect(() => {
     axios
-      .get(`https://localhost:7182/api/Products/GetAvailableProducts`)
+      .get(`${baseApi}/Products/GetAvailableProducts`)
       .then((Result) => {
         const avaliableProducts = Result.data;
         setGetAvailableProducts(avaliableProducts);
@@ -176,15 +97,15 @@ const HomePage = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [baseApi]);
 
   const fetchNewstProducts = async (categoryId: number) => {
     axios
-      .get("https://localhost:7182/api/Products/GetNewestProduct", {
+      .get(`${baseApi}/Products/GetNewestProduct`, {
         params: { category: categoryId },
       })
       .then((res) => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           setNewstProducts(res.data.data);
         }
       })

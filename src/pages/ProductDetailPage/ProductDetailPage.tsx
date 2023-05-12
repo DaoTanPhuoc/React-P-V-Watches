@@ -158,12 +158,13 @@ const onChange = (key: string) => {
 };
 
 const Details = () => {
+  const { baseApi } = useContext(AppContext)
   const [product, setProduct] = useState<ProductModel>();
   const { id } = useParams();
   const params = useParams();
   useEffect(() => {
     axios
-      .get<ProductModel>(`https://localhost:7182/api/Products/${params.id}`)
+      .get<ProductModel>(`${baseApi}/Products/${params.id}`)
       .then((result) => {
         const product = result.data;
         setProduct(product);
@@ -485,10 +486,9 @@ const items: TabsProps["items"] = [
 
 const ProductDetail = () => {
   const [currentPreviewIndex, setCurrentPreviewIndex] = useState(0);
-  const [defaultImage, setDefaultImage] = useState({});
   const [productDetail, setProductDetail] = useState<ProductModel>();
   const [previewImages, setPreviewImages] = useState<string[]>([]);
-
+  const { baseApi } = useContext(AppContext)
   // SimilarProduct
   const [similarProducts, setSimilarProducts] = useState<ProductModel[]>([]);
 
@@ -499,7 +499,7 @@ const ProductDetail = () => {
   useEffect(() => {
     axios
       .get(
-        `https://localhost:7182/api/Products/SimilarProduct?brandId=${brandId}&caseSize=${caseSize}`
+        `${baseApi}/Products/SimilarProduct?brandId=${brandId}&caseSize=${caseSize}`
       )
       .then((result) => {
         const similarProduct = result.data;
@@ -508,7 +508,7 @@ const ProductDetail = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [brandId, caseSize]);
+  }, [brandId, caseSize, baseApi]);
   //
 
   const { id } = useParams();
@@ -518,7 +518,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
     axios
-      .get<ProductModel>(`https://localhost:7182/api/Products/${params.id}`)
+      .get<ProductModel>(`${baseApi}/Products/${params.id}`)
       .then((result) => {
         const product = result.data;
         setProductDetail(product);
@@ -528,7 +528,7 @@ const ProductDetail = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [id]);
+  }, [params.id, baseApi]);
 
   // add cart
   const { cartOrders = [], onChangeCartOrders } = useContext(AppContext);
@@ -573,9 +573,8 @@ const ProductDetail = () => {
                   <div
                     key={index}
                     onClick={() => setCurrentPreviewIndex(index)}
-                    className={`img-item${
-                      currentPreviewIndex === index ? " active" : ""
-                    }`}
+                    className={`img-item${currentPreviewIndex === index ? " active" : ""
+                      }`}
                   >
                     <img src={previewItem} alt="" />
                   </div>

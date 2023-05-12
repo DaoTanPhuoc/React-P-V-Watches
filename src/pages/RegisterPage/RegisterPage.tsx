@@ -1,5 +1,4 @@
-import React from "react";
-import { Button, Checkbox, Form, Input, message, Tabs, TabsProps } from "antd";
+import { Button, Form, Input } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import "./RegisterPage.css";
