@@ -1,10 +1,4 @@
-import React, {
-  Children,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { useContext, useState } from "react";
 import {
   ShopOutlined,
   UserOutlined,
@@ -15,37 +9,20 @@ import {
   PoweroffOutlined,
 } from "@ant-design/icons";
 import {
-  Anchor,
   Avatar,
   Button,
   Card,
-  Col,
-  Descriptions,
-  Divider,
   Input,
   MenuProps,
   Result,
-  Row,
   Space,
-  Table,
   Tag,
-  Typography,
 } from "antd";
 import { Layout, Menu, theme } from "antd";
 import { AppContext } from "../../App";
-import { spaceChildren } from "antd/es/button";
 import { ColumnsType } from "antd/es/table";
-import { Column, Line, TinyLine, XFlowAppProvider } from "@ant-design/charts";
-import axios from "axios";
-import { inflate } from "zlib";
-import { ProductModel } from "../../models/ProductModel";
-import ProductDetail from "../ProductDetailPage/ProductDetailPage";
-import path from "path";
 import "./DashboardPage.css";
-import Item from "antd/es/list/Item";
-import { useParams } from "react-router";
 import HomeDas from "./HomeDashboard/HomeDashboard";
-import News from "../NewsPage/NewsPage";
 import ProductsDashboard from "./ProductsDashboard/ProductsDashboard";
 import PostDashboard from "./PostDashboard/PostDashboard";
 import BillingDashboard from "./BillingDashboard/BillingDashboard";
@@ -195,11 +172,10 @@ const Dashboard: React.FC = () => {
 
   const { Meta } = Card;
   const { Search } = Input;
-  const { isAuthenticatedAdmin, setIsAuthenticatedAdmin } =
-    useContext(AppContext);
+  const { currentAdmin, setCurrentAdmin } = useContext(AppContext);
   const handleLogout = () => {
     localStorage.removeItem("userToken");
-    setIsAuthenticatedAdmin(false);
+    setCurrentAdmin(null);
     navigate("/");
   };
 
@@ -288,7 +264,7 @@ const Dashboard: React.FC = () => {
     ),
   ];
 
-  return isAuthenticatedAdmin ? (
+  return currentAdmin ? (
     <Layout>
       <Sider
         breakpoint="lg"

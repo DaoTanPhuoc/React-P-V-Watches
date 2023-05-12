@@ -10,8 +10,7 @@ import jwtDecode from "jwt-decode";
 
 const PageLogin = () => {
   const navigate = useNavigate();
-  const { setIsAuthenticatedAdmin } = useContext(AppContext);
-  const { setCurrentToken } = useContext(AppContext);
+  const { setCurrentToken, baseApi } = useContext(AppContext);
 
   const onFinish = async (values: any) => {
     console.log(values);
@@ -23,7 +22,7 @@ const PageLogin = () => {
     });
     axios
       .post(
-        "https://localhost:7182/api/Accounts/Login",
+        `${baseApi}/Accounts/Login`,
         JSON.stringify(values),
         {
           headers: {
@@ -48,15 +47,11 @@ const PageLogin = () => {
           const userInfo: any = await jwtDecode(token);
           const role =
             userInfo[
-              "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+            "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
             ];
           if (role === "User") {
             navigate("/");
-          }
-          if (role === "User") {
-            navigate("/");
           } else if (role === "Admin") {
-            setIsAuthenticatedAdmin(true);
             navigate("/admin");
           }
         }

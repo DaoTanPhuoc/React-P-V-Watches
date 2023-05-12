@@ -1,39 +1,21 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import {
   Layout,
   Menu,
-  Breadcrumb,
   theme,
   Space,
-  Typography,
-  Tag,
   Badge,
   Avatar,
   Input,
-  Row,
-  Col,
-  Descriptions,
-  Button,
-  RadioChangeEvent,
-  Divider,
-  message,
 } from "antd";
 import {
-  CoffeeOutlined,
-  HeartOutlined,
-  MailOutlined,
-  SettingOutlined,
   UserOutlined,
   ShoppingCartOutlined,
-  SearchOutlined,
 } from "@ant-design/icons";
-import { Header, Content, Footer } from "antd/es/layout/layout";
-import { useContext, useEffect, useMemo, useState } from "react";
-import { Card } from "antd";
-import { TypeFlags } from "typescript";
+import { Header, Content } from "antd/es/layout/layout";
+import { useContext, useMemo, useState } from "react";
 import "./UserLayout.css";
-import ColumnGroup from "antd/es/table/ColumnGroup";
-import Column from "antd/es/table/Column";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { AppContext } from "../App";
 
 const { Search } = Input;
