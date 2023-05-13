@@ -1,29 +1,24 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import {
   Avatar,
   Button,
   Card,
-  Checkbox,
   Col,
   DatePicker,
   Descriptions,
   Form,
   Input,
-  InputNumber,
   message,
   Modal,
-  Radio,
-  RadioChangeEvent,
   Result,
   Row,
   Select,
   Space,
-  Switch,
   Tabs,
   TabsProps,
   Tag,
-  TreeSelect,
 } from "antd";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   MenuUnfoldOutlined,
   AimOutlined,
@@ -31,18 +26,11 @@ import {
   AntDesignOutlined,
   KeyOutlined,
 } from "@ant-design/icons";
-import Upload, { RcFile, UploadFile, UploadProps } from "antd/es/upload";
-import ImgCrop from "antd-img-crop";
 import "./MyAccountPage.css";
-import { SizeType } from "antd/es/config-provider/SizeContext";
 import { AppContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import axios from "axios";
-
-const onChangee = (key: string) => {
-  console.log(key);
-};
 
 const MyOrder = () => {
   const OrderAll = () => {
@@ -242,7 +230,7 @@ const MyOrder = () => {
 };
 
 const AddressOrder = () => {
-  const { currentToken, currentUser } = useContext(AppContext);
+  const { currentToken, currentUser, baseApi } = useContext(AppContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [provices, setProvices] = useState<any[]>([]);
   const [districts, setDistricts] = useState<any[]>([]);
@@ -261,7 +249,7 @@ const AddressOrder = () => {
     const userAddress = `${values["address"]} ${values["ward"]} ${values["district"]} ${values["provice"]}`;
     axios
       .post(
-        "https://localhost:7182/api/Accounts/UpdateUserInfo",
+        `${baseApi}/Accounts/UpdateUserInfo`,
         { ...currentUser, Address: userAddress },
         {
           headers: {
@@ -271,28 +259,17 @@ const AddressOrder = () => {
         }
       )
       .then((res) => {
-        switch (res.status) {
-          case 204:
-            message.open({
-              key: "save",
-              content: "Cập nhật thành công",
-              type: "success",
-            });
-            break;
-          case 400:
-            message.open({
-              key: "save",
-              content: "Cập nhật không thành công: " + res.data,
-              type: "error",
-            });
-            break;
-          default:
-            break;
+        if (res.status === 204) {
+          message.open({
+            key: "save",
+            content: "Cập nhật thành công",
+            type: "success",
+          });
+          addressForm.resetFields();
+          setIsModalOpen(false);
         }
-        addressForm.resetFields();
-        setIsModalOpen(false);
       })
-      .catch((err) => console.log(err));
+      .catch((error) => message.open({ key: 'save', content: "Lỗi: " + error.response.data, type: 'error' }));
   };
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -451,7 +428,7 @@ const { TextArea } = Input;
 
 const InfoAccount = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { currentUser, setCurrentUser } = useContext(AppContext);
+  const { currentUser, setCurrentUser, baseApi } = useContext(AppContext);
   const { currentToken, setCurrentToken } = useContext(AppContext);
   const [infoForm] = Form.useForm();
   const [passwordForm] = Form.useForm();
@@ -463,7 +440,7 @@ const InfoAccount = () => {
       dob: moment(currentUser.DateOfBirth),
       phone: currentUser.Phone,
     });
-  }, []);
+  }, [currentUser.DateOfBirth, currentUser.Email, currentUser.FullName, currentUser.Phone, infoForm]);
   const saveProfile = async (values: any) => {
     message.open({ key: "save", content: "Saving...", type: "loading" });
     const dataPost = {
@@ -476,39 +453,28 @@ const InfoAccount = () => {
       Phone: values["phone"],
     };
     axios
-      .post("https://localhost:7182/api/Accounts/UpdateUserInfo", dataPost, {
+      .post(`${baseApi}/Accounts/UpdateUserInfo`, dataPost, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           Authorization: `Bearer ${currentToken}`,
         },
       })
       .then((res) => {
-        switch (res.status) {
-          case 204:
-            message.open({
-              key: "save",
-              content: "Cập nhật thành công",
-              type: "success",
-            });
-            break;
-          case 400:
-            message.open({
-              key: "save",
-              content: "Cập nhật không thành công: " + res.data,
-              type: "error",
-            });
-            break;
-          default:
-            break;
+        if (res.status === 204) {
+          message.open({
+            key: "save",
+            content: "Cập nhật thành công",
+            type: "success",
+          });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((error) => message.open({ key: 'save', content: "Lỗi: " + error.response.data, type: 'error' }));
   };
   const changePassword = async (values: any) => {
     message.open({ key: "change", content: "Changing...", type: "loading" });
     axios
       .post(
-        "https://localhost:7182/api/Accounts/Changepassword",
+        `${baseApi}/Accounts/Changepassword`,
         {
           Id: currentUser.Id,
           Password: values["oldPassword"],
@@ -522,39 +488,25 @@ const InfoAccount = () => {
         }
       )
       .then((res) => {
-        switch (res.status) {
-          case 204:
-            message.open({
-              key: "change",
-              content: "Cập nhật thành công. Vui lòng đăng nhập lại",
-              type: "success",
-            });
-            passwordForm.resetFields();
-            setCurrentUser(null);
-            setCurrentToken(null);
-            localStorage.removeItem("userToken");
-            navigate("/login");
-            break;
-          case 400:
-            message.open({
-              key: "change",
-              content: "Cập nhật không thành công: " + res.data,
-              type: "error",
-            });
-            break;
-          default:
-            break;
+        if (res.status === 204) {
+          message.open({
+            key: "change",
+            content: "Cập nhật thành công. Vui lòng đăng nhập lại",
+            type: "success",
+          });
+          passwordForm.resetFields();
+          setCurrentUser(null);
+          setCurrentToken(null);
+          localStorage.removeItem("userToken");
+          navigate("/login");
         }
       })
-      .catch((err) => {});
+      .catch((error) => { message.open({ key: 'change', content: "Lỗi: " + error.response.data, type: 'error' }) });
   };
   const showModal = () => {
     setIsModalOpen(true);
   };
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -702,7 +654,7 @@ const InfoAccount = () => {
                 rules={[
                   { required: true, message: "Vui lòng nhập lại mật khẩu" },
                   ({ getFieldValue }) => ({
-                    validator(rule, value) {
+                    validator(value) {
                       if (!value || getFieldValue("newPassword") === value) {
                         return Promise.resolve();
                       }
@@ -794,7 +746,7 @@ const MyAccountPage = () => {
   };
 
   const [file, setFile] = useState("");
-  const { currentUser, setCurrentUser } = useContext(AppContext);
+  const { currentUser } = useContext(AppContext);
   const navigate = useNavigate();
   return currentUser ? (
     <>
@@ -827,7 +779,6 @@ const MyAccountPage = () => {
         defaultActiveKey="1"
         size="large"
         items={items}
-        onChange={onChangee}
       />
     </>
   ) : (

@@ -54,7 +54,7 @@ function App() {
       const cartOrdersTmp = JSON.parse(cartOrdersString);
       setCartOrders(cartOrdersTmp);
     }
-  }, []);
+  }, [currentToken]);
   // Auth
   const onChangeCartOrders = (orders: any[]) => {
     const cartOrdersString = JSON.stringify(orders);

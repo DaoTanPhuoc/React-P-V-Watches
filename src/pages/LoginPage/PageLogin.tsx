@@ -1,5 +1,5 @@
-import { Button, Checkbox, Form, Input, message, Tabs, TabsProps } from "antd";
-import { useContext, useMemo, useState } from "react";
+import { Button, Checkbox, Form, Input, message } from "antd";
+import { useContext } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { AppContext } from "../../App";
 import axios from "axios";
@@ -13,8 +13,6 @@ const PageLogin = () => {
   const { setCurrentToken, baseApi } = useContext(AppContext);
 
   const onFinish = async (values: any) => {
-    console.log(values);
-
     message.open({
       type: "loading",
       content: "Đang đăng nhập...",
@@ -32,7 +30,7 @@ const PageLogin = () => {
       )
       .then(async (res: any) => {
         if (res.status === 200) {
-          const token = await res.data.token;
+          const token = await res.data;
           if (values["remember"] === true) {
             localStorage.setItem("userToken", token);
             setCurrentToken(token);
@@ -60,7 +58,7 @@ const PageLogin = () => {
       .catch((error) => {
         message.open({
           type: "error",
-          content: "Đăng nhập thất bại: " + error.message,
+          content: "Đăng nhập thất bại: " + error.response.data,
           key: "login",
         });
       });
