@@ -559,6 +559,7 @@ const InfoAccount = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
   return (
     <Card style={{ width: "100%" }}>
       <div
@@ -762,16 +763,56 @@ const items: TabsProps["items"] = [
 // image
 
 const MyAccountPage = () => {
+  // anh avartar upload
+  const [fileList, setFileList] = useState<UploadFile[]>([
+    {
+      uid: "1",
+      name: "xxx.png",
+      status: "done",
+      response: "Server Error 500", // custom error message to show
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+  ]);
+
+  const onChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
+
+  const onPreview = async (file: UploadFile) => {
+    let src = file.url as string;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj as RcFile);
+        reader.onload = () => resolve(reader.result as string);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
+
   const [file, setFile] = useState("");
   const { currentUser, setCurrentUser } = useContext(AppContext);
   const navigate = useNavigate();
   return currentUser ? (
     <>
       <div style={{ marginLeft: "13%", padding: 20 }}>
-        <Avatar
-          size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-          icon={<AntDesignOutlined />}
-        />
+        <Upload
+          accept="image/png"
+          beforeUpload={(file) => {
+            console.log(file);
+            return false;
+          }}
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          listType="picture-card"
+          fileList={fileList}
+          onChange={onChange}
+          onPreview={onPreview}
+        >
+          {fileList.length < 1 && "+ Upload"}
+        </Upload>
         <h2>Đào Tấn Phước</h2>
       </div>
 

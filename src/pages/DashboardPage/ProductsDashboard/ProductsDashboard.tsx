@@ -1,11 +1,29 @@
-import { Button, Col, Row, Space, Statistic, Tag } from "antd";
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  Row,
+  Select,
+  Space,
+  Statistic,
+  Switch,
+  Tag,
+  Upload,
+  UploadFile,
+  UploadProps,
+} from "antd";
 import Table, { ColumnsType } from "antd/es/table";
-import React from "react";
+import React, { useState } from "react";
 import "./ProductsDashboard.css";
 import { Line, Pie } from "@ant-design/charts";
 import { ShopOutlined, DollarOutlined } from "@ant-design/icons";
 import { text } from "stream/consumers";
 import { render } from "@testing-library/react";
+import { RcFile } from "antd/es/upload";
+import ImgCrop from "antd-img-crop";
 interface DataType {
   key: string;
   name: string;
@@ -166,6 +184,50 @@ const data: DataType[] = [
 ];
 
 const ProductsDashboard = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  // them san pham (them anh)
+  const [fileList, setFileList] = useState<UploadFile[]>([
+    {
+      uid: "1",
+      name: "xxx.png",
+      status: "done",
+      response: "Server Error 500", // custom error message to show
+      url: "http://www.baidu.com/xxx.png",
+    },
+  ]);
+
+  const onChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
+
+  const onPreview = async (file: UploadFile) => {
+    let src = file.url as string;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj as RcFile);
+        reader.onload = () => resolve(reader.result as string);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
+
   return (
     <>
       <div
@@ -178,9 +240,86 @@ const ProductsDashboard = () => {
       >
         <div className="title-das-products">Danh sách sản phẩm</div>
         <div>
-          <Button style={{ color: "#fff", backgroundColor: "#000000" }}>
+          <Button
+            onClick={showModal}
+            style={{ color: "#fff", backgroundColor: "#000000" }}
+          >
             Thêm sản phẩm
           </Button>
+          <Modal
+            title="Thêm sản phẩm"
+            open={isModalOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
+            footer={null}
+          >
+            <Form
+              labelCol={{ span: 4 }}
+              wrapperCol={{ span: 14 }}
+              layout="horizontal"
+              style={{ maxWidth: 600 }}
+            >
+              <Form.Item
+                label={<span style={{ color: "#000000" }}>Mã sản phẩm:</span>}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={<span style={{ color: "#000000" }}>Tên sản phẩm:</span>}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={<span style={{ color: "#000000" }}>Giá tiền:</span>}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={<span style={{ color: "#000000" }}>Số lượng:</span>}
+              >
+                <InputNumber />
+              </Form.Item>
+              <Form.Item
+                label={<span style={{ color: "#000000" }}>Hình ảnh:</span>}
+              >
+                <ImgCrop rotationSlider>
+                  <Upload
+                    accept="image/png"
+                    beforeUpload={(file) => {
+                      console.log(file);
+                      return false;
+                    }}
+                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    listType="picture-card"
+                    fileList={fileList}
+                    onChange={onChange}
+                    onPreview={onPreview}
+                  >
+                    {fileList.length < 1 && "+ Upload"}
+                  </Upload>
+                </ImgCrop>
+              </Form.Item>
+              <Form.Item
+                label={<span style={{ color: "#000000" }}>Màu sắc:</span>}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item label="Select">
+                <Select>
+                  <Select.Option value="demo">Demo</Select.Option>
+                </Select>
+              </Form.Item>
+              <Form.Item label="InputNumber">
+                <Input />
+              </Form.Item>
+              <Form.Item label="Switch" valuePropName="checked">
+                <Switch />
+              </Form.Item>
+              <Form.Item label="Button">
+                <Button>Thêm sản phẩm</Button>
+              </Form.Item>
+            </Form>
+          </Modal>
         </div>
       </div>
       <Table columns={columns} dataSource={data} pagination={{ pageSize: 5 }} />
