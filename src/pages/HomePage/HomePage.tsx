@@ -82,10 +82,13 @@ const gridStyle: React.CSSProperties = {
 
 const HomePage = () => {
   const { baseApi } = useContext(AppContext)
-  // GetAvailableProducts
   const [GetAvailableProducts, setGetAvailableProducts] = useState<any[]>([]);
-  // product Gallery
   const [newstProducts, setNewstProducts] = useState<any[]>([]);
+  const moneyFormatter = new Intl.NumberFormat("vi", {
+    style: "currency",
+    currency: "VND",
+    maximumFractionDigits: 0,
+  });
   //avaliableProducts
   useEffect(() => {
     axios
@@ -101,19 +104,21 @@ const HomePage = () => {
 
   const fetchNewstProducts = async (categoryId: number) => {
     axios
-      .get(`${baseApi}/Products/GetNewestProduct`, {
+      .get(`https://localhost:7182/api/Products/GetNewestProduct`, {
         params: { category: categoryId },
       })
       .then((res) => {
         if (res.status === 200) {
-          setNewstProducts(res.data.data);
+          setNewstProducts(res.data);
         }
       })
       .catch((error) => {
         console.log(error.message);
       });
   };
+
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
     fetchNewstProducts(1);
   }, []);
 
@@ -159,7 +164,7 @@ const HomePage = () => {
           <div className="main-container">
             <ul className="grid-wrapper">
               {brandImages.map((brandImage) => (
-                <li>
+                <li style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                   <img src={brandImage} alt="" />
                 </li>
               ))}
@@ -285,7 +290,7 @@ const HomePage = () => {
             </div>
           </div>
           <div className="galleryContainer">
-            {newstProducts.map((item) => (
+            {newstProducts && newstProducts.map((item) => (
               <div className="galleryItem">
                 <img src={item.Image} key={item.id} alt="" />
                 {/* <h3 style={{ textAlign: "center", padding: 10 }}>{item.name}</h3> */}
@@ -299,7 +304,7 @@ const HomePage = () => {
                   >
                     <h4 style={{ color: "#888888" }}>MSP: {item.Code}</h4>
                     <h4>{item.Name}</h4>
-                    <h4 style={{ color: "#dbaf56" }}>{item.Price} đ</h4>
+                    <h4 style={{ color: "#dbaf56" }}>{moneyFormatter.format(item.Price)}</h4>
                   </div>
                 </div>
               </div>
@@ -441,7 +446,7 @@ const HomePage = () => {
               </div>
               <div className="card-banner-items-content">
                 <h4 style={{ fontWeight: 700, padding: 10, color: "#fff" }}>
-                  Đồng hồ chánh hảng
+                  Đồng hồ chính hảng
                 </h4>
               </div>
             </Card.Grid>

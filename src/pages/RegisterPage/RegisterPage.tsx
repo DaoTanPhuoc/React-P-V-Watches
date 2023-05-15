@@ -14,13 +14,16 @@ const RegisterPage = () => {
   const navigate = useNavigate()
 
   const Register = async (values: any) => {
+    console.log(values);
     message.open({ key: 'register', content: "Đang đăng ký...", type: 'loading' })
     axios.post(`${baseApi}/accounts/register`, {
-      ...values
+      ...values, DateOfBirth: moment(values['DateOfBirth']).toDate()
     }).then(() => {
       message.open({ key: 'register', content: "Đăng ký thành công!", type: 'success' })
       navigate('/login')
     }).catch(error => {
+      console.log(error);
+
       message.open({ key: 'register', content: "Lỗi: " + error.response.data, type: 'error' })
     })
   }
@@ -100,7 +103,7 @@ const RegisterPage = () => {
             placeholder="Email"
           />
         </Form.Item>
-        <Form.Item name="FullName" label="Họ Tên" rules={[{ required: true, message: "Vui lòng nhập họ tên" }, { pattern: new RegExp(/^[a-zA-Z ]+$/), message: "Tên không hợp lệ" }]}>
+        <Form.Item name="FullName" label="Họ Tên" rules={[{ required: true, message: "Vui lòng nhập họ tên" }, { pattern: new RegExp(/[^a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]/u), message: "Tên không hợp lệ" }]}>
           <Input
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="text"
@@ -125,7 +128,7 @@ const RegisterPage = () => {
           />
         </Form.Item>
         <Form.Item
-          name="ComfirmPassword"
+          name="ConfirmPassword"
           label="Nhập lại mật Khẩu"
           rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }, ({ getFieldValue }) => ({
             validator(rule, value) {

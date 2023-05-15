@@ -1,30 +1,20 @@
 import {
-  Alert,
   Button,
   Card,
-  Checkbox,
   notification,
   Pagination,
   Select,
-  Slider,
-  Space,
-  Tag,
 } from "antd";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import "./ShopPage.css";
-import { Col, Row } from "antd";
 import { Image } from "antd";
 import {
   ShoppingCartOutlined,
-  FilterFilled,
-  InfoCircleOutlined,
-  DeleteOutlined,
 } from "@ant-design/icons";
 import type { DrawerProps, RadioChangeEvent } from "antd";
-import { Drawer } from "antd";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { SliderMarks } from "antd/es/slider";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ProductModel } from "../../models/ProductModel";
 import { NotificationPlacement } from "antd/es/notification/interface";
@@ -124,6 +114,7 @@ const ShopPage = () => {
 
   // (chuyen trang)
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
     axios
       .get(`https://localhost:7182/api/Products`)
       .then((result) => {
@@ -239,19 +230,19 @@ const ShopPage = () => {
               }
               options={[
                 {
-                  value: "1",
+                  value: 1,
                   label: "Rolex",
                 },
                 {
-                  value: "2",
+                  value: 2,
                   label: "Channel",
                 },
                 {
-                  value: "3",
+                  value: 3,
                   label: "Orient",
                 },
                 {
-                  value: "4",
+                  value: 4,
                   label: "Hublot",
                 },
               ]}
@@ -276,15 +267,15 @@ const ShopPage = () => {
               }
               options={[
                 {
-                  value: "1",
+                  value: 1,
                   label: "Tất cả",
                 },
                 {
-                  value: "2",
+                  value: 2,
                   label: "Giảm dần",
                 },
                 {
-                  value: "3",
+                  value: 3,
                   label: "Tăng dần",
                 },
               ]}
@@ -298,19 +289,16 @@ const ShopPage = () => {
         <Card>
           {filteredProducts.map((watchItem) => (
             <Card.Grid style={gridStyle} key={watchItem.Id}>
-              <Image
-                onClick={() =>
-                  navigate(
-                    `/productdetail/${watchItem.Id}/${watchItem.BrandId}/${watchItem.CaseSize}`
-                  )
-                }
-                style={{ height: 250, cursor: "pointer" }}
-                rootClassName="card-item-image"
-                width={250}
-                src={watchItem.Image}
-                alt="Rolex Datejust"
-                preview={false}
-              />
+              <Link to={`/ProductDetail/${watchItem.BrandId}/${watchItem.Code}`}>
+                <Image
+                  style={{ height: 250, cursor: "pointer" }}
+                  rootClassName="card-item-image"
+                  width={250}
+                  src={watchItem.Image}
+                  alt="Rolex Datejust"
+                  preview={false}
+                />
+              </Link>
               {/* <Button
                 icon={<ShoppingCartOutlined />}
                 style={{ margin: 20 }}
@@ -326,12 +314,12 @@ const ShopPage = () => {
 
               <Meta
                 style={{ padding: 10, textTransform: "uppercase" }}
-                title={watchItem.Stock == 0 ? "Hết Hàng" : <br />}
+                title={watchItem.Stock === 0 ? "Hết Hàng" : <br />}
               />
 
               <Context.Provider value={contextValue}>
                 {contextHolder}
-                {watchItem.Stock != 0 ? (
+                {watchItem.Stock !== 0 ? (
                   <Button
                     className="btn-shopping"
                     icon={<ShoppingCartOutlined style={{ color: "#fff" }} />}
@@ -346,7 +334,6 @@ const ShopPage = () => {
                     }}
                   >
                     Thêm vào giỏ hàng
-                    {/* `/cart/${watchItem.Id}/${watchItem.BrandId}/${watchItem.CaseSize}` */}
                   </Button>
                 ) : (
                   ""

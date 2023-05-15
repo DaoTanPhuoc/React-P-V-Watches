@@ -717,14 +717,17 @@ const MyAccountPage = () => {
   const [file, setFile] = useState("");
   const { currentUser } = useContext(AppContext);
   const navigate = useNavigate();
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
   return currentUser ? (
     <>
       <div style={{ marginLeft: "13%", padding: 20 }}>
         <Avatar
           size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-          icon={<AntDesignOutlined />}
+          src={currentUser.Avatar}
         />
-        <h2>Đào Tấn Phước</h2>
+        <h2>{currentUser.FullName}</h2>
       </div>
 
       <Tabs

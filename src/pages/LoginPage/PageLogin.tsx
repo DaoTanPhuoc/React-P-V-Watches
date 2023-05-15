@@ -1,17 +1,19 @@
 import { Button, Checkbox, Form, Input, message } from "antd";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { AppContext } from "../../App";
 import axios from "axios";
 import FormItem from "antd/es/form/FormItem";
 import "./PageLogin.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
 const PageLogin = () => {
   const navigate = useNavigate();
   const { setCurrentToken, baseApi } = useContext(AppContext);
-
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
   const onFinish = async (values: any) => {
     message.open({
       type: "loading",
@@ -161,7 +163,7 @@ const PageLogin = () => {
         </Form.Item>
         <FormItem>
           <span style={{ color: "#fff", marginLeft: 15 }}>
-            Nếu như bạn chưa có tài khoản? <a href="/register">Đăng Ký</a>{" "}
+            Nếu như bạn chưa có tài khoản? <Link to="/register">Đăng Ký</Link>{" "}
           </span>{" "}
         </FormItem>
       </Form>

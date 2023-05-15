@@ -127,7 +127,7 @@ const CartPage = () => {
 
   const columns: ColumnsType<any> = [
     {
-      title: "Image",
+      title: "Hình ảnh",
       dataIndex: "Image",
       key: "Image",
       width: 100,
@@ -141,17 +141,17 @@ const CartPage = () => {
       ),
     },
     {
-      title: "Product Name",
+      title: "Tên sản phẩm",
       dataIndex: "Name",
       key: "Name",
-      render: (name, product) => (
+      render: (name) => (
         <div>
-          {name} ({product.Stock})
+          {name}
         </div>
       ),
     },
     {
-      title: "Quantity",
+      title: "Số lượng",
       dataIndex: "Quantity",
       key: "Quantity",
       render: (value, product, index) => {
@@ -166,19 +166,19 @@ const CartPage = () => {
       },
     },
     {
-      title: "Price",
+      title: "Đơn giá",
       dataIndex: "Price",
       key: "Price",
       render: (price) => moneyFormatter.format(price),
     },
     {
-      title: "Total Price",
+      title: "Tổng",
       dataIndex: "Price",
       key: "Price",
-      render: (totallPrice) => moneyFormatter.format(totallPrice),
+      render: (price) => moneyFormatter.format(price),
     },
     {
-      title: "Action",
+      title: "Chức năng",
       dataIndex: "Action",
       key: "Action",
       render: (value, product, index) => (
@@ -210,7 +210,7 @@ const CartPage = () => {
           footer={() => (
             <div style={{ fontWeight: "bold" }}>
               <div style={{ position: "relative" }}>
-                <span style={{ color: "grey" }}>Total Products Price: </span>{" "}
+                <span style={{ color: "grey" }}>Tổng tiền sản phẩm: </span>{" "}
                 <span style={{ position: "absolute", top: 0, right: 0 }}>
                   {moneyFormatter.format(totalProductsprice)}
                 </span>
@@ -219,7 +219,7 @@ const CartPage = () => {
               <br />
 
               <div style={{ position: "relative" }}>
-                <span style={{ color: "grey" }}>Ship: </span>
+                <span style={{ color: "grey" }}>Vận chuyển: </span>
                 <span style={{ position: "absolute", top: 0, right: 0 }}>
                   $0
                 </span>
@@ -230,7 +230,7 @@ const CartPage = () => {
               <br />
 
               <div style={{ position: "relative" }}>
-                <span style={{ color: "grey" }}>Total Price: </span>{" "}
+                <span style={{ color: "grey" }}>Tổng cộng: </span>{" "}
                 <span style={{ position: "absolute", top: 0, right: 0 }}>
                   {moneyFormatter.format(totalProductsprice)}
                 </span>
@@ -286,7 +286,7 @@ const CartPage = () => {
                       >
                         <Form.Item
                           name={"customerName"}
-                          label="CustomerName"
+                          label="Tên người nhận"
                           rules={[{ required: true }]}
                         >
                           <Input />
@@ -299,13 +299,13 @@ const CartPage = () => {
                           <Input />
                         </Form.Item>
 
-                        <Form.Item name={"address"} label="Address">
+                        <Form.Item name={"address"} label="Địa chỉ">
                           <Input />
                         </Form.Item>
 
                         <Form.Item
                           name="phone"
-                          label="Phone"
+                          label="Số điện thoại"
                           rules={[
                             {
                               pattern: new RegExp(

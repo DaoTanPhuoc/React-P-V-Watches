@@ -7,15 +7,18 @@ import {
   Badge,
   Avatar,
   Input,
+  Dropdown,
+  MenuProps,
 } from "antd";
 import {
   UserOutlined,
   ShoppingCartOutlined,
+  LogoutOutlined
 } from "@ant-design/icons";
 import { Header, Content } from "antd/es/layout/layout";
 import { useContext, useMemo, useState } from "react";
 import "./UserLayout.css";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
 
 const { Search } = Input;
@@ -31,9 +34,9 @@ const gridStyle: React.CSSProperties = {
 
 const UserLayout = () => {
   const { cartOrders, setCartOrders } = useContext(AppContext);
-  const { currentUser, currentToken } = useContext(AppContext);
+  const { currentUser, currentToken, setCurrentToken, setCurrentUser } = useContext(AppContext);
   const [hoverMenu, setHoverMenu] = useState(0);
-
+  const navigate = useNavigate()
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -54,7 +57,24 @@ const UserLayout = () => {
         return "1";
     }
   }, [path]);
-
+  const userItemMenu: MenuProps['items'] = [
+    {
+      key: '1',
+      label: <Link to="/myaccount">Tài Khoản</Link>,
+      icon: <UserOutlined />
+    },
+    {
+      key: '2',
+      label: <a>Đăng xuất</a>,
+      icon: <LogoutOutlined />,
+      onClick: () => {
+        setCurrentToken(null)
+        setCurrentUser(null)
+        localStorage.removeItem("userToken")
+        navigate("/")
+      }
+    }
+  ]
   const renderMenuDropdown = () => {
     switch (hoverMenu) {
       case 1:
@@ -131,13 +151,11 @@ const UserLayout = () => {
           items={[
             {
               key: 1,
-              label: <span style={{ color: "#fff" }}>TRANG CHỦ</span>,
-              onClick: () => window.location.replace("/"),
+              label: <Link to="/"><span style={{ color: "#fff" }}>TRANG CHỦ</span></Link>,
             },
             {
               key: 2,
-              label: <span style={{ color: "#fff" }}>SẢN PHẨM</span>,
-              onClick: () => window.location.replace("/shop"),
+              label: <Link to="/shop"><span style={{ color: "#fff" }}>SẢN PHẨM</span></Link>,
             },
 
             {
@@ -172,13 +190,11 @@ const UserLayout = () => {
             },
             {
               key: 6,
-              label: <span style={{ color: "#fff" }}>TIN TỨC</span>,
-              onClick: () => window.location.replace("/news"),
+              label: <Link to="/news"><span style={{ color: "#fff" }}>TIN TỨC</span></Link>,
             },
             {
               key: 7,
-              label: <span style={{ color: "#fff" }}>GIỚI THIỆU</span>,
-              onClick: () => window.location.replace("/news"),
+              label: <Link to="/news"><span style={{ color: "#fff" }}>GIỚI THIỆU</span></Link>,
             },
           ]}
         />
@@ -192,22 +208,22 @@ const UserLayout = () => {
           /> */}
           <Search placeholder="Nhập sản phẩm" />
 
-          <a href="/cart">
+          <Link to="/cart">
             <Badge count={cartOrders.length}>
               {/* <Avatar shape="square" size="large" /> */}
               <ShoppingCartOutlined style={{ fontSize: 28, color: "#fff" }} />
             </Badge>
-          </a>
+          </Link>
           {currentToken && currentUser ? (
-            <a href="/myAccount">
-              <Avatar src={currentUser.avatar} shape="circle" />
-            </a>
+            <Dropdown menu={{ items: userItemMenu }} >
+              <Avatar src={currentUser.Avatar} shape="circle" style={{ fontSize: 24, margin: "25px 0" }} />
+            </Dropdown>
           ) : (
-            <a href="/login">
+            <Link to="/login">
               <UserOutlined
                 style={{ fontSize: 24, margin: "25px 0", color: "#fff" }}
               />
-            </a>
+            </Link>
           )}
         </Space>
         {/* submenu */}
@@ -230,7 +246,7 @@ const UserLayout = () => {
         </div>
       </Header>
 
-      <Content className="site-layout">
+      <Content className="site-layout" style={{ overflow: 'hidden', maxWidth: '100vw' }}>
         <Outlet />
       </Content>
 
@@ -293,27 +309,15 @@ const UserLayout = () => {
               <div className="social-links">
                 <a href="#">
                   <i className="fab fa-facebook-f">
-                    <img
-                      src="https://donghotantan.vn/images/config/zalo.png"
-                      alt=""
-                    />
                   </i>
                 </a>
                 <a href="#">
                   <i className="fab fa-twitter">
-                    <img
-                      src="https://donghotantan.vn/images/config/message.png"
-                      alt=""
-                    />
                   </i>
                 </a>
 
                 <a href="#">
                   <i className="fab fa-linkedin-in">
-                    <img
-                      src="https://ssr-resource-prod.gosell.vn/images/icon/instagram-icon.png"
-                      alt=""
-                    />
                   </i>
                 </a>
               </div>

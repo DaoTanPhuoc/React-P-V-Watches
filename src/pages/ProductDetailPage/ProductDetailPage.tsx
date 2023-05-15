@@ -1,17 +1,13 @@
 // import React from "react";
 
 import {
-  Button,
   Card,
   Descriptions,
-  Input,
-  ListProps,
-  Space,
   Tabs,
   TabsProps,
 } from "antd";
-import { useContext, useEffect, useMemo, useState } from "react";
-import { Col, Row } from "antd";
+import { useContext, useEffect, useState } from "react";
+import { Col } from "antd";
 import ReactPlayer from "react-player";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -20,8 +16,6 @@ import "./ProductDetailPage.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { ProductModel } from "../../models/ProductModel";
-import { Content } from "antd/es/layout/layout";
-import TabPane from "antd/es/tabs/TabPane";
 import {
   TagsOutlined,
   GoldOutlined,
@@ -29,7 +23,6 @@ import {
   SafetyCertificateOutlined,
   ApartmentOutlined,
   ShoppingCartOutlined,
-  PhoneOutlined,
 } from "@ant-design/icons";
 import Meta from "antd/es/card/Meta";
 import { AppContext } from "../../App";
@@ -160,11 +153,11 @@ const onChange = (key: string) => {
 const Details = () => {
   const { baseApi } = useContext(AppContext)
   const [product, setProduct] = useState<ProductModel>();
-  const { id } = useParams();
-  const params = useParams();
+  const { code } = useParams();
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
     axios
-      .get<ProductModel>(`${baseApi}/Products/${params.id}`)
+      .get<ProductModel>(`${baseApi}/Products/${code}`)
       .then((result) => {
         const product = result.data;
         setProduct(product);
@@ -172,7 +165,7 @@ const Details = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [id]);
+  }, [baseApi, code]);
 
   return (
     <div className="container-tab-detail">
@@ -486,39 +479,17 @@ const items: TabsProps["items"] = [
 
 const ProductDetail = () => {
   const [currentPreviewIndex, setCurrentPreviewIndex] = useState(0);
-  const [productDetail, setProductDetail] = useState<ProductModel>();
+  const [productDetail, setProductDetail] = useState<any>();
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const { baseApi } = useContext(AppContext)
   // SimilarProduct
-  const [similarProducts, setSimilarProducts] = useState<ProductModel[]>([]);
+  const [similarProducts, setSimilarProducts] = useState<any[]>([]);
 
-  const { brandId, caseSize } = useParams();
-
-  // so lan click đặt hàng
+  const { code, brandId } = useParams();
 
   useEffect(() => {
     axios
-      .get(
-        `${baseApi}/Products/SimilarProduct?brandId=${brandId}&caseSize=${caseSize}`
-      )
-      .then((result) => {
-        const similarProduct = result.data;
-        setSimilarProducts(similarProduct);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [brandId, caseSize, baseApi]);
-  //
-
-  const { id } = useParams();
-
-  // get api (id)
-  const params = useParams();
-
-  useEffect(() => {
-    axios
-      .get<ProductModel>(`${baseApi}/Products/${params.id}`)
+      .get(`${baseApi}/Products/${code}`)
       .then((result) => {
         const product = result.data;
         setProductDetail(product);
@@ -528,7 +499,19 @@ const ProductDetail = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [params.id, baseApi]);
+
+    axios
+      .get(
+        `${baseApi}/Products/SimilarProduct/${brandId}`
+      )
+      .then((result) => {
+        const similarProduct = result.data;
+        setSimilarProducts(similarProduct);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [code, baseApi, brandId]);
 
   // add cart
   const { cartOrders = [], onChangeCartOrders } = useContext(AppContext);
@@ -593,7 +576,7 @@ const ProductDetail = () => {
                 {productDetail?.Description}
               </p>
               <div className="btn-groups">
-                {productDetail?.Stock != 0 ? (
+                {productDetail?.Stock !== 0 ? (
                   <button
                     onClick={() => {
                       addToCart(productDetail);
@@ -627,7 +610,7 @@ const ProductDetail = () => {
                   <Meta
                     className="btn-out-stock"
                     style={{ padding: 10, textTransform: "uppercase" }}
-                    title={productDetail?.Stock == 0 ? "Hết Hàng" : <br />}
+                    title={productDetail?.Stock === 0 ? "Hết Hàng" : <br />}
                   />
                 )}
 
