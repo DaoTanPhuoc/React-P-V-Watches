@@ -93,6 +93,8 @@ const HomePage = () => {
       .get(`${baseApi}/Products/GetAvailableProducts`)
       .then((Result) => {
         const avaliableProducts = Result.data;
+        console.log(Result.data);
+
         setGetAvailableProducts(avaliableProducts);
       })
       .catch((error) => {
