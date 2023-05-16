@@ -20,6 +20,8 @@ import MyAccountPage from "../pages/MyAccountPage/MyAccountPage";
 import UserLayout from "../layouts/UserLayout";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import StatisticalPage from "../pages/DashboardPage/Statistical/StatisticalPage";
+import RosPage from "../pages/DashboardPage/RosPage/RosPage";
+import BrandDashboardPage from "../pages/DashboardPage/BrandDashboard/BrandDashboardPage";
 
 export const userRoutes = createBrowserRouter([
   {
@@ -55,18 +57,7 @@ export const userRoutes = createBrowserRouter([
         path: "/dasProducts",
         element: <ProductsDashboard />,
       },
-      {
-        path: "/dasPost",
-        element: <PostDashboard />,
-      },
-      {
-        path: "/dasBilling",
-        element: <BillingDashboard />,
-      },
-      {
-        path: "/statistical",
-        element: <StatisticalPage />,
-      },
+
       {
         path: "/myAccount",
         element: <MyAccountPage />,
@@ -78,12 +69,32 @@ export const userRoutes = createBrowserRouter([
     element: <Dashboard />,
     children: [
       {
-        path: "admin/dasHome",
+        path: "",
         element: <HomeDas />,
       },
       {
-        path: "admin/dasProducts",
+        path: "dasProducts",
         element: <ProductsDashboard />,
+      },
+      {
+        path: "statistical",
+        element: <StatisticalPage />,
+      },
+      {
+        path: "dasBilling",
+        element: <BillingDashboard />,
+      },
+      {
+        path: "dasPost",
+        element: <PostDashboard />,
+      },
+      {
+        path: "ros",
+        element: <RosPage />,
+      },
+      {
+        path: "brandDash",
+        element: <BrandDashboardPage />,
       },
     ],
   },

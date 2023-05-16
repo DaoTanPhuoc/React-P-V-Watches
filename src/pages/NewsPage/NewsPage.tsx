@@ -156,8 +156,8 @@ const News = () => {
             <div className="Card">
               <img
                 style={{
-                  width: '100%',
                   height: 250,
+                  width: "100%",
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/tao/0-00000a/thumbs/418x0/screenshot-2.jpg"
@@ -236,8 +236,8 @@ const News = () => {
             <div className="Card">
               <img
                 style={{
-                  width: '100%',
                   height: 250,
+                  width: "100%",
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/tao/0-0e/thumbs/418x0/screenshot-12.jpg"
@@ -276,8 +276,8 @@ const News = () => {
             <div className="Card">
               <img
                 style={{
-                  width: '100%',
                   height: 250,
+                  width: "100%",
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/anh-muc-tin-tuc/thuy-linh/0-2023/thang-1/5/thumbs/418x0/dong-ho-hublot-lvmh-watch-week-2.jpg"
@@ -296,8 +296,8 @@ const News = () => {
             <div className="Card">
               <img
                 style={{
-                  width: '100%',
                   height: 250,
+                  width: "100%",
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/anh-muc-tin-tuc/thuy-linh/0-2023/thang-1/5/thumbs/418x0/dong-ho-hublot-lvmh-watch-week-2.jpg"
@@ -316,8 +316,8 @@ const News = () => {
             <div className="Card">
               <img
                 style={{
-                  width: '100%',
                   height: 250,
+                  width: "100%",
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/anh-muc-tin-tuc/thuy-linh/0-2023/thang-1/5/thumbs/418x0/dong-ho-hublot-lvmh-watch-week-2.jpg"

@@ -17,6 +17,9 @@ import {
   Tabs,
   TabsProps,
   Tag,
+  Upload,
+  UploadFile,
+  UploadProps,
 } from "antd";
 import { useContext, useEffect, useState } from "react";
 import {
@@ -31,6 +34,7 @@ import { AppContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import axios from "axios";
+import { RcFile } from "antd/es/upload";
 
 const MyOrder = () => {
   const OrderAll = () => {
@@ -269,7 +273,13 @@ const AddressOrder = () => {
           setIsModalOpen(false);
         }
       })
-      .catch((error) => message.open({ key: 'save', content: "Lỗi: " + error.response.data, type: 'error' }));
+      .catch((error) =>
+        message.open({
+          key: "save",
+          content: "Lỗi: " + error.response.data,
+          type: "error",
+        })
+      );
   };
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -440,7 +450,13 @@ const InfoAccount = () => {
       dob: moment(currentUser.DateOfBirth),
       phone: currentUser.Phone,
     });
-  }, [currentUser.DateOfBirth, currentUser.Email, currentUser.FullName, currentUser.Phone, infoForm]);
+  }, [
+    currentUser.DateOfBirth,
+    currentUser.Email,
+    currentUser.FullName,
+    currentUser.Phone,
+    infoForm,
+  ]);
   const saveProfile = async (values: any) => {
     message.open({ key: "save", content: "Saving...", type: "loading" });
     const dataPost = {
@@ -468,7 +484,13 @@ const InfoAccount = () => {
           });
         }
       })
-      .catch((error) => message.open({ key: 'save', content: "Lỗi: " + error.response.data, type: 'error' }));
+      .catch((error) =>
+        message.open({
+          key: "save",
+          content: "Lỗi: " + error.response.data,
+          type: "error",
+        })
+      );
   };
   const changePassword = async (values: any) => {
     message.open({ key: "change", content: "Changing...", type: "loading" });
@@ -501,16 +523,22 @@ const InfoAccount = () => {
           navigate("/login");
         }
       })
-      .catch((error) => { message.open({ key: 'change', content: "Lỗi: " + error.response.data, type: 'error' }) });
+      .catch((error) => {
+        message.open({
+          key: "change",
+          content: "Lỗi: " + error.response.data,
+          type: "error",
+        });
+      });
   };
   const showModal = () => {
     setIsModalOpen(true);
   };
 
-
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
   return (
     <Card style={{ width: "100%" }}>
       <div
@@ -612,13 +640,13 @@ const InfoAccount = () => {
             <Form
               form={passwordForm}
               onFinish={changePassword}
-              labelCol={{ span: 6 }}
-              wrapperCol={{ span: 14 }}
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
               layout="horizontal"
               style={{ maxWidth: 1200 }}
             >
               <Form.Item
-                label="Mật khẩu cũ "
+                label={<span style={{ color: "#000000" }}>Mật khẩu cũ:</span>}
                 name="oldPassword"
                 rules={[
                   { required: true, message: "Vui lòng nhập mật khẩu cũ" },
@@ -633,7 +661,7 @@ const InfoAccount = () => {
                 <Input.Password type="password" />
               </Form.Item>
               <Form.Item
-                label="Mật khẩu mới"
+                label={<span style={{ color: "#000000" }}>Mật khẩu mới:</span>}
                 name="newPassword"
                 rules={[
                   { required: true, message: "Vui lòng nhập mật khẩu mới" },
@@ -648,7 +676,9 @@ const InfoAccount = () => {
                 <Input.Password type="password" />
               </Form.Item>
               <Form.Item
-                label="Nhập lại mật khẩu"
+                label={
+                  <span style={{ color: "#000000" }}>Nhập lại mật khẩu:</span>
+                }
                 name="confirmPassword"
                 rules={[
                   { required: true, message: "Vui lòng nhập lại mật khẩu" },
@@ -669,7 +699,7 @@ const InfoAccount = () => {
                 style={{
                   color: "#fff",
                   backgroundColor: "#000000",
-                  marginLeft: 96,
+                  marginLeft: "40%",
                 }}
               >
                 Lưu thay đổi
@@ -714,7 +744,36 @@ const items: TabsProps["items"] = [
 // image
 
 const MyAccountPage = () => {
-  const [file, setFile] = useState("");
+  // anh avartar upload
+  const [fileList, setFileList] = useState<UploadFile[]>([
+    {
+      uid: "1",
+      name: "xxx.png",
+      status: "done",
+      response: "Server Error 500", // custom error message to show
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+  ]);
+
+  const onChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
+
+  const onPreview = async (file: UploadFile) => {
+    let src = file.url as string;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj as RcFile);
+        reader.onload = () => resolve(reader.result as string);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
+
   const { currentUser } = useContext(AppContext);
   const navigate = useNavigate();
   useEffect(() => {
@@ -723,10 +782,20 @@ const MyAccountPage = () => {
   return currentUser ? (
     <>
       <div style={{ marginLeft: "13%", padding: 20 }}>
-        <Avatar
-          size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-          src={currentUser.Avatar}
-        />
+        <Upload
+          accept="image/png"
+          beforeUpload={(file) => {
+            console.log(file);
+            return false;
+          }}
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          listType="picture-card"
+          fileList={fileList}
+          onChange={onChange}
+          onPreview={onPreview}
+        >
+          {fileList.length < 1 && "+ Upload"}
+        </Upload>
         <h2>{currentUser.FullName}</h2>
       </div>
 

@@ -7,6 +7,10 @@ import {
   SearchOutlined,
   FileTextOutlined,
   PoweroffOutlined,
+  DashboardOutlined,
+  WalletOutlined,
+  BookOutlined,
+  DollarOutlined,
 } from "@ant-design/icons";
 import {
   Avatar,
@@ -26,7 +30,8 @@ import HomeDas from "./HomeDashboard/HomeDashboard";
 import ProductsDashboard from "./ProductsDashboard/ProductsDashboard";
 import PostDashboard from "./PostDashboard/PostDashboard";
 import BillingDashboard from "./BillingDashboard/BillingDashboard";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import SubMenu from "antd/es/menu/SubMenu";
 import StatisticalPage from "./Statistical/StatisticalPage";
 const { Header, Content, Footer, Sider } = Layout;
@@ -179,38 +184,6 @@ const Dashboard: React.FC = () => {
     navigate("/");
   };
 
-  const menuItems = [
-    {
-      key: 1,
-      icon: <UserOutlined />,
-      label: <span style={{ color: "#000000" }}>Dashboard</span>,
-      compoment: <HomeDas />,
-    },
-    {
-      key: 2,
-      icon: <ShopOutlined />,
-      label: <span style={{ color: "#000000" }}>Sản phẩm</span>,
-      compoment: <ProductsDashboard />,
-    },
-    {
-      key: 3,
-      icon: <FormOutlined />,
-      label: <span style={{ color: "#000000" }}>Bài viết</span>,
-      compoment: <PostDashboard />,
-    },
-    {
-      key: 4,
-      icon: <FileTextOutlined />,
-      label: <span style={{ color: "#000000" }}>Hóa đơn</span>,
-      compoment: <BillingDashboard />,
-    },
-    {
-      key: 5,
-      icon: <FileTextOutlined />,
-      label: <span style={{ color: "#000000" }}>Thống kê</span>,
-      compoment: <StatisticalPage />,
-    },
-  ];
   const [render, SetRender] = useState(<HomeDas />);
   const {
     token: { colorBgContainer },
@@ -239,32 +212,43 @@ const Dashboard: React.FC = () => {
   }
 
   const items: MenuItem[] = [
-    getItem(<a href="/admin">Dashboard</a>, "1", <FormOutlined />),
-    getItem(<a href="/admin/dasProducts">Dashboard</a>, "2", <FormOutlined />),
-    getItem("Sản Phẩm", "sub1", <FormOutlined />, [
-      getItem("Danh sách Sản Phẩm", "3"),
-      getItem("Option 4", "4"),
-      getItem("Submenu", "sub1-2", null, [
-        getItem("Option 5", "5"),
-        getItem("Option 6", "6"),
-      ]),
+    getItem(<Link to="/admin">Dashboard</Link>, "1", <DashboardOutlined />),
+    getItem("Sản Phẩm", "sub1", <ShopOutlined />, [
+      getItem(
+        <Link to="/admin/dasProducts">Danh sách</Link>,
+        "2",
+        <BookOutlined />
+      ),
+      getItem(
+        <Link to="/admin/statistical">Tồn kho</Link>,
+        "3",
+        <WalletOutlined />
+      ),
+      getItem(
+        <Link to="/admin/brandDash">Loại sản phẩm</Link>,
+        "4",
+        <WalletOutlined />
+      ),
     ]),
-    getItem("Navigation Three", "sub2", <FormOutlined />, [
-      getItem("Option 7", "7"),
+    getItem("Hóa đơn", "sub2", <FormOutlined />, [
+      getItem(
+        <Link to="/admin/dasBilling">Danh sách</Link>,
+        "5",
+        <BookOutlined />
+      ),
       getItem("Option 8", "8"),
       getItem("Option 9", "9"),
       getItem("Option 10", "10"),
     ]),
     getItem(
-      <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-        Ant Design
-      </a>,
-      "link",
-      <FormOutlined />
+      <Link to="/admin/dasPost">Bài viết</Link>,
+      "6",
+      <DashboardOutlined />
     ),
+    getItem(<Link to="/admin/ros">Doanh thu</Link>, "7", <DollarOutlined />),
   ];
 
-  return currentAdmin ? (
+  return (
     <Layout>
       <Sider
         breakpoint="lg"
@@ -382,17 +366,6 @@ const Dashboard: React.FC = () => {
         </Content>
       </Layout>
     </Layout>
-  ) : (
-    <Result
-      status="404"
-      title="404"
-      subTitle="Sorry, the page you visited does not exist."
-      extra={
-        <Button type="primary" onClick={() => navigate("/")}>
-          Back Home
-        </Button>
-      }
-    />
   );
 };
 

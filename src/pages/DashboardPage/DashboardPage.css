@@ -61,3 +61,13 @@
   overflow: auto;
   position: fixed;
 }
+.ant-layout-sider-children {
+  position: fixed;
+}
+
+@media (max-width: 800px) {
+  .ant-layout-sider-children {
+    position: fixed;
+    width: 60px;
+  }
+}

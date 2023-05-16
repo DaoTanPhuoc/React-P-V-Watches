@@ -1,20 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {
-  Layout,
-  Menu,
-  theme,
-  Space,
-  Badge,
-  Avatar,
-  Input,
-  Dropdown,
-  MenuProps,
-} from "antd";
-import {
-  UserOutlined,
-  ShoppingCartOutlined,
-  LogoutOutlined
-} from "@ant-design/icons";
+import { Layout, Menu, theme, Space, Badge, Avatar, Input, MenuProps, Dropdown } from "antd";
+import { UserOutlined, ShoppingCartOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Header, Content } from "antd/es/layout/layout";
 import { useContext, useMemo, useState } from "react";
 import "./UserLayout.css";
@@ -65,7 +51,7 @@ const UserLayout = () => {
     },
     {
       key: '2',
-      label: <a>Đăng xuất</a>,
+      label: <a>Đăng Xuất</a>,
       icon: <LogoutOutlined />,
       onClick: () => {
         setCurrentToken(null)

@@ -21,3 +21,7 @@ img {
   height: 90px;
   object-fit: "cover";
 }
+
+.modal-add-products {
+  width: 50% !important;
+}
