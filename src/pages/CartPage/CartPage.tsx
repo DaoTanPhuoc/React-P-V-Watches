@@ -51,7 +51,7 @@ const validateMessages = {
 
 const CartPage = () => {
   const [showInfoCard, setShowInfoCard] = useState(false);
-  const { cartOrders, onChangeCartOrders, baseApi } = useContext(AppContext);
+  const { cartOrders, onChangeCartOrders, baseApi, currentToken } = useContext(AppContext);
   const { currentUser } = useContext(AppContext)
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate()
@@ -93,10 +93,12 @@ const CartPage = () => {
       orderProducts: orderProducts,
     };
     axios
-      .post(`${baseApi}/Orders/CreateOrder`, dataToPost)
+      .post(`${baseApi}/Orders/CreateOrder`, dataToPost, {
+        headers: {
+          'Authorization': `Bearer ${currentToken}`,
+        },
+      })
       .then((result) => {
-        console.log(result);
-
         if (result.status === 200) {
           formRef.current?.resetFields();
           onChangeCartOrders([]);
