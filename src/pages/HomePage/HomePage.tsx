@@ -9,7 +9,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { MessageOutlined } from "@ant-design/icons";
 import { AppContext } from "../../App";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const moneyFormatter = new Intl.NumberFormat("vi", {
   style: "currency",
@@ -193,7 +193,7 @@ const HomePage = () => {
               {GetAvailableProducts.map((brandImage) => (
                 <div>
                   <div>
-                    <Link to={`/ProductDetail/${watchItem.BrandId}/${watchItem.Code}`}>
+                    <Link to={`/ProductDetail/${brandImage.BrandId}/${brandImage.Code}`}>
                       <img
                         style={{
                           height: 300,
