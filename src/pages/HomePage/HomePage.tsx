@@ -203,7 +203,7 @@ const HomePage = () => {
                 <div>
                   <div>
                     <Link
-                      to={`/ProductDetail/${brandImage.BrandId}/${brandImage.Code}`}
+                      to={`/ProductDetail/${brandImage.BrandName}/${brandImage.Code}`}
                     >
                       <img
                         style={{
@@ -305,17 +305,12 @@ const HomePage = () => {
             {newstProducts &&
               newstProducts.map((item) => (
                 <div className="galleryItem">
-                  <Link to={`/ProductDetail/${item.BrandId}/${item.Code}`}>
+                  <Link to={`/ProductDetail/${item.BrandName}/${item.Code}`}>
                     <img
                       style={{ cursor: "pointer" }}
                       src={item.Image}
                       key={item.id}
                       alt=""
-                      onClick={() =>
-                        navigate(
-                          `/productdetail/${item.Id}/${item.BrandId}/${item.CaseSize}`
-                        )
-                      }
                     />
                   </Link>
                   {/* <h3 style={{ textAlign: "center", padding: 10 }}>{item.name}</h3> */}
