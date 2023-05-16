@@ -169,7 +169,9 @@ const HomePage = () => {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    width: 128,
+                    width: 155,
+                    height: 90,
+                    objectFit: "cover"
                   }}
                 >
                   <img src={brandImage} alt="" />
