@@ -9,6 +9,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { MessageOutlined } from "@ant-design/icons";
 import { AppContext } from "../../App";
+import { Link, useNavigate } from "react-router-dom";
 
 const moneyFormatter = new Intl.NumberFormat("vi", {
   style: "currency",
@@ -76,6 +77,7 @@ const gridStyle: React.CSSProperties = {
 };
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const { baseApi } = useContext(AppContext);
   // GetAvailableProducts
   const [GetAvailableProducts, setGetAvailableProducts] = useState<any[]>([]);
@@ -162,7 +164,14 @@ const HomePage = () => {
           <div className="main-container">
             <ul className="grid-wrapper">
               {brandImages.map((brandImage) => (
-                <li>
+                <li
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: 128,
+                  }}
+                >
                   <img src={brandImage} alt="" />
                 </li>
               ))}
@@ -193,15 +202,20 @@ const HomePage = () => {
               {GetAvailableProducts.map((brandImage) => (
                 <div>
                   <div>
-                    <img
-                      style={{
-                        height: 300,
-                        width: "100%",
-                        objectFit: "cover",
-                      }}
-                      src={brandImage.Image}
-                      alt=""
-                    />
+                    <Link
+                      to={`/ProductDetail/${brandImage.BrandId}/${brandImage.Code}`}
+                    >
+                      <img
+                        style={{
+                          height: 300,
+                          width: "100%",
+                          objectFit: "cover",
+                          cursor: "pointer",
+                        }}
+                        src={brandImage.Image}
+                        alt=""
+                      />
+                    </Link>
                   </div>
                   <div
                     style={{
@@ -291,7 +305,19 @@ const HomePage = () => {
             {newstProducts &&
               newstProducts.map((item) => (
                 <div className="galleryItem">
-                  <img src={item.Image} key={item.id} alt="" />
+                  <Link to={`/ProductDetail/${item.BrandId}/${item.Code}`}>
+                    <img
+                      style={{ cursor: "pointer" }}
+                      src={item.Image}
+                      key={item.id}
+                      alt=""
+                      onClick={() =>
+                        navigate(
+                          `/productdetail/${item.Id}/${item.BrandId}/${item.CaseSize}`
+                        )
+                      }
+                    />
+                  </Link>
                   {/* <h3 style={{ textAlign: "center", padding: 10 }}>{item.name}</h3> */}
                   <div className="btn-inStore">
                     {/* <button className="btn-item">Buy Now</button> */}

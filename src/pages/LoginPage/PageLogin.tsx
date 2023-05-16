@@ -7,13 +7,14 @@ import FormItem from "antd/es/form/FormItem";
 import "./PageLogin.css";
 import { Link, useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import { log } from "console";
 
 const PageLogin = () => {
   const navigate = useNavigate();
   const { setCurrentToken, baseApi } = useContext(AppContext);
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [])
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   const onFinish = async (values: any) => {
     message.open({
       type: "loading",
@@ -21,18 +22,15 @@ const PageLogin = () => {
       key: "login",
     });
     axios
-      .post(
-        `${baseApi}/Accounts/Login`,
-        JSON.stringify(values),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .post(`${baseApi}/Accounts/Login`, JSON.stringify(values), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
       .then(async (res: any) => {
         if (res.status === 200) {
           const token = await res.data;
+
           if (values["remember"] === true) {
             localStorage.setItem("userToken", token);
             setCurrentToken(token);
@@ -47,7 +45,7 @@ const PageLogin = () => {
           const userInfo: any = await jwtDecode(token);
           const role =
             userInfo[
-            "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+              "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
             ];
           if (role === "User") {
             navigate("/");

@@ -17,6 +17,8 @@ import {
   Tabs,
   TabsProps,
   Tag,
+  UploadFile,
+  UploadProps,
 } from "antd";
 import { useContext, useEffect, useState } from "react";
 import {
@@ -31,6 +33,7 @@ import { AppContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import axios from "axios";
+import Upload, { RcFile } from "antd/es/upload";
 
 const MyOrder = () => {
   const OrderAll = () => {
@@ -269,7 +272,13 @@ const AddressOrder = () => {
           setIsModalOpen(false);
         }
       })
-      .catch((error) => message.open({ key: 'save', content: "Lỗi: " + error.response.data, type: 'error' }));
+      .catch((error) =>
+        message.open({
+          key: "save",
+          content: "Lỗi: " + error.response.data,
+          type: "error",
+        })
+      );
   };
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -440,7 +449,13 @@ const InfoAccount = () => {
       dob: moment(currentUser.DateOfBirth),
       phone: currentUser.Phone,
     });
-  }, [currentUser.DateOfBirth, currentUser.Email, currentUser.FullName, currentUser.Phone, infoForm]);
+  }, [
+    currentUser.DateOfBirth,
+    currentUser.Email,
+    currentUser.FullName,
+    currentUser.Phone,
+    infoForm,
+  ]);
   const saveProfile = async (values: any) => {
     message.open({ key: "save", content: "Saving...", type: "loading" });
     const dataPost = {
@@ -468,7 +483,13 @@ const InfoAccount = () => {
           });
         }
       })
-      .catch((error) => message.open({ key: 'save', content: "Lỗi: " + error.response.data, type: 'error' }));
+      .catch((error) =>
+        message.open({
+          key: "save",
+          content: "Lỗi: " + error.response.data,
+          type: "error",
+        })
+      );
   };
   const changePassword = async (values: any) => {
     message.open({ key: "change", content: "Changing...", type: "loading" });
@@ -501,12 +522,17 @@ const InfoAccount = () => {
           navigate("/login");
         }
       })
-      .catch((error) => { message.open({ key: 'change', content: "Lỗi: " + error.response.data, type: 'error' }) });
+      .catch((error) => {
+        message.open({
+          key: "change",
+          content: "Lỗi: " + error.response.data,
+          type: "error",
+        });
+      });
   };
   const showModal = () => {
     setIsModalOpen(true);
   };
-
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -748,8 +774,8 @@ const MyAccountPage = () => {
   const { currentUser } = useContext(AppContext);
   const navigate = useNavigate();
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [])
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   return currentUser ? (
     <>
       <div style={{ marginLeft: "13%", padding: 20 }}>
