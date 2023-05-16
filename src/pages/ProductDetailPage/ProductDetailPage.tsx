@@ -1,11 +1,6 @@
 // import React from "react";
 
-import {
-  Card,
-  Descriptions,
-  Tabs,
-  TabsProps,
-} from "antd";
+import { Card, Descriptions, Tabs, TabsProps } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { Col } from "antd";
 import ReactPlayer from "react-player";
@@ -151,11 +146,11 @@ const onChange = (key: string) => {
 };
 
 const Details = () => {
-  const { baseApi } = useContext(AppContext)
+  const { baseApi } = useContext(AppContext);
   const [product, setProduct] = useState<ProductModel>();
   const { code } = useParams();
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    window.scrollTo({ top: 0, behavior: "smooth" });
     axios
       .get<ProductModel>(`${baseApi}/Products/${code}`)
       .then((result) => {
@@ -481,7 +476,7 @@ const ProductDetail = () => {
   const [currentPreviewIndex, setCurrentPreviewIndex] = useState(0);
   const [productDetail, setProductDetail] = useState<any>();
   const [previewImages, setPreviewImages] = useState<string[]>([]);
-  const { baseApi } = useContext(AppContext)
+  const { baseApi } = useContext(AppContext);
   // SimilarProduct
   const [similarProducts, setSimilarProducts] = useState<any[]>([]);
 
@@ -501,9 +496,7 @@ const ProductDetail = () => {
       });
 
     axios
-      .get(
-        `${baseApi}/Products/SimilarProduct/${brandId}`
-      )
+      .get(`https://localhost:7182/api/Products/SimilarProduct/${brandId}`)
       .then((result) => {
         const similarProduct = result.data;
         setSimilarProducts(similarProduct);
@@ -556,8 +549,9 @@ const ProductDetail = () => {
                   <div
                     key={index}
                     onClick={() => setCurrentPreviewIndex(index)}
-                    className={`img-item${currentPreviewIndex === index ? " active" : ""
-                      }`}
+                    className={`img-item${
+                      currentPreviewIndex === index ? " active" : ""
+                    }`}
                   >
                     <img src={previewItem} alt="" />
                   </div>
