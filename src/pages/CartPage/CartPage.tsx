@@ -12,7 +12,7 @@ import {
   Table,
 } from "antd";
 import { ColumnsType } from "antd/es/table";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "./CartPage.css";
 import { AppContext } from "../../App";
 import axios from "axios";
@@ -60,9 +60,14 @@ const CartPage = () => {
   const toggleModal = () => setIsModalOpen(!isModalOpen)
   // close
   const formRef = useRef<FormInstance<any>>(null);
-  // clear form
-  // const [deleteCard, setDeleteCard] = useState();
-
+  useEffect(() => {
+    formRef.current?.setFieldsValue({
+      customerName: currentUser.FullName,
+      email: currentUser.Email,
+      address: currentUser.Address,
+      phone: currentUser.Phone
+    })
+  }, [currentUser])
   const success = () => {
     messageApi.open({
       type: "success",
@@ -71,12 +76,6 @@ const CartPage = () => {
   };
 
   const onFinish = (values: any) => {
-    console.log(values);
-    console.log(cartOrders);
-    localStorage.removeItem("cartOrders");
-
-    formRef.current?.resetFields();
-
     const orderProducts = cartOrders.map((cardOrder: any) => {
       return {
         ProductId: cardOrder.Id,
@@ -301,7 +300,7 @@ const CartPage = () => {
                           <Input />
                         </Form.Item>
 
-                        <Form.Item name={"address"} label="Địa chỉ">
+                        <Form.Item name="address" label="Địa chỉ">
                           <Input />
                         </Form.Item>
 
