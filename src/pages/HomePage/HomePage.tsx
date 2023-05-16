@@ -162,7 +162,7 @@ const HomePage = () => {
           <div className="main-container">
             <ul className="grid-wrapper">
               {brandImages.map((brandImage) => (
-                <li style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',width: 128  }}>
+                <li style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: 128 }}>
                   <img src={brandImage} alt="" />
                 </li>
               ))}
@@ -193,21 +193,18 @@ const HomePage = () => {
               {GetAvailableProducts.map((brandImage) => (
                 <div>
                   <div>
-                    <img
-                      style={{
-                        height: 300,
-                        width: "100%",
-                        objectFit: "cover",
-                        cursor: "pointer",
-                      }}
-                      src={brandImage.Image}
-                      alt=""
-                      onClick={() =>
-                        navigate(
-                          `/productdetail/${brandImage.Id}/${brandImage.BrandId}/${brandImage.CaseSize}`
-                        )
-                      }
-                    />
+                    <Link to={`/ProductDetail/${watchItem.BrandId}/${watchItem.Code}`}>
+                      <img
+                        style={{
+                          height: 300,
+                          width: "100%",
+                          objectFit: "cover",
+                          cursor: "pointer",
+                        }}
+                        src={brandImage.Image}
+                        alt=""
+                      />
+                    </Link>
                   </div>
                   <div
                     style={{
