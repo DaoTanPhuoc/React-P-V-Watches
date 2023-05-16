@@ -206,6 +206,18 @@ table {
   margin-left: 1.5rem;
 }
 
+.ribbon {
+  width: 28rem;
+  height: 5.5rem;
+  top: -0.5rem;
+  /* background-color: #5c5be5; */
+  position: absolute;
+  left: -1rem;
+
+  /* -webkit-box-shadow: 0px 15px 11px -6px #7a7a7d;
+  box-shadow: 0px 15px 11px -6px #7a7a7d; */
+}
+
 .ribbon::before {
   content: "";
   height: 1.5rem;

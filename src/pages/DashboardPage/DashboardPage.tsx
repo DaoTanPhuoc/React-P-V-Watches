@@ -10,6 +10,7 @@ import {
   DashboardOutlined,
   WalletOutlined,
   BookOutlined,
+  DollarOutlined,
 } from "@ant-design/icons";
 import {
   Avatar,
@@ -223,11 +224,16 @@ const Dashboard: React.FC = () => {
         "3",
         <WalletOutlined />
       ),
+      getItem(
+        <Link to="/admin/brandDash">Loại sản phẩm</Link>,
+        "4",
+        <WalletOutlined />
+      ),
     ]),
     getItem("Hóa đơn", "sub2", <FormOutlined />, [
       getItem(
         <Link to="/admin/dasBilling">Danh sách</Link>,
-        "4",
+        "5",
         <BookOutlined />
       ),
       getItem("Option 8", "8"),
@@ -236,10 +242,10 @@ const Dashboard: React.FC = () => {
     ]),
     getItem(
       <Link to="/admin/dasPost">Bài viết</Link>,
-      "5",
+      "6",
       <DashboardOutlined />
     ),
-    getItem(<Link to="/admin/ros">Doanh thu</Link>, "6", <DashboardOutlined />),
+    getItem(<Link to="/admin/ros">Doanh thu</Link>, "7", <DollarOutlined />),
   ];
 
   return (

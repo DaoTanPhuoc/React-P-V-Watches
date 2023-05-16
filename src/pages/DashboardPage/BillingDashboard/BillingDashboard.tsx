@@ -1,10 +1,21 @@
-import { Button, Input, InputRef, Select, Space, Tag } from "antd";
+import {
+  Button,
+  Card,
+  Form,
+  Input,
+  InputRef,
+  Modal,
+  Select,
+  Space,
+  Tag,
+} from "antd";
 import React, { useRef, useState } from "react";
 import "./BillingDashboard.css";
 import Table, { ColumnType, ColumnsType } from "antd/es/table";
 import { FilterConfirmProps } from "antd/es/table/interface";
 
 import { SearchOutlined } from "@ant-design/icons";
+import { TinyArea, TinyColumn } from "@ant-design/charts";
 
 const onChange = (value: string) => {
   console.log(`selected ${value}`);
@@ -106,7 +117,61 @@ const data: DataType[] = [
   },
 ];
 
+// data tổng chốt đơn
+const dataSumBill = [274, 337, 81, 497, 666, 219, 269];
+const configClBill = {
+  height: 64,
+  autoFit: false,
+  dataSumBill,
+  tooltip: {
+    customContent: function (x: any, dataSumBill: any) {
+      return `Thứ.${x}: ${dataSumBill[0]?.dataSumBill?.y.toFixed(2)}`;
+    },
+  },
+};
+
+// data tổng hủy đơn
+const dataExitBill = [278, 337, 79, 407, 646, 279, 239];
+const configClExitBill = {
+  height: 64,
+  autoFit: false,
+  dataExitBill,
+  tooltip: {
+    customContent: function (x: any, dataExitBill: any) {
+      return `Thứ.${x}: ${dataExitBill[0]?.dataExitBill?.y.toFixed(2)}`;
+    },
+  },
+};
+
+// tổng tiền bán
+const dataTotalSales = [546, 983, 340, 539, 243, 226, 192];
+const configTotalSales = {
+  height: 60,
+  autoFit: false,
+  dataTotalSales,
+  smooth: true,
+  areaStyle: {
+    fill: "#d6e3fd",
+  },
+};
+
 const BillingDashboard = () => {
+  // moadal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  //
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
@@ -279,36 +344,128 @@ const BillingDashboard = () => {
       dataIndex: "action",
       render: () => (
         <Space>
-          <a href="#">Edit</a>
+          <a onClick={showModal}>Edit</a>
         </Space>
       ),
     },
   ];
 
   return (
-    <div className="container-bill">
-      <div className="body-container">
-        <div className="table-billing">
-          <h5
-            style={{
-              fontWeight: 700,
-              fontSize: 20,
-              paddingTop: 0,
-              paddingLeft: 0,
-            }}
+    <>
+      <Modal
+        // title="Basic Modal"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={null}
+        className="modal-bill-dash"
+      >
+        <Form
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 14 }}
+          layout="horizontal"
+          style={{ maxWidth: 600 }}
+        >
+          <Form.Item label={<span style={{ color: "#000000" }}>Họ tên: </span>}>
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label={<span style={{ color: "#000000" }}>Tên sản phẩm: </span>}
           >
-            Danh sách hóa đơn
-          </h5>
-          <div className="table-item">
-            <Table
-              pagination={{ pageSize: 5 }}
-              columns={columns}
-              dataSource={data}
-            />
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label={<span style={{ color: "#000000" }}>Địa chỉ: </span>}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label={<span style={{ color: "#000000" }}>Số điện thoại: </span>}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item label="Button">
+            <Button style={{ backgroundColor: "#000000", color: "#fff" }}>
+              Xác nhận
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+      <div className="container-bill">
+        <div className="body-container">
+          <div className="table-billing">
+            <h5
+              style={{
+                fontWeight: 700,
+                fontSize: 20,
+                paddingTop: 30,
+                paddingLeft: 10,
+                paddingBottom: 50,
+              }}
+            >
+              Danh sách hóa đơn
+            </h5>
+            <div style={{ textAlign: "center", paddingBottom: 50 }}>
+              <Space direction="horizontal" size={16}>
+                <Card
+                  style={{
+                    width: 300,
+                    borderRadius: 12,
+                    boxShadow: "0 5px 10px rgba(0,0,0,.12)",
+                  }}
+                >
+                  <h4 style={{ fontWeight: 600, color: "#8c8c8c" }}>
+                    Tổng chốt đơn
+                  </h4>
+                  <p style={{ fontWeight: 700, fontSize: 30, lineHeight: 2 }}>
+                    1200 đơn
+                  </p>
+                  <TinyColumn data={dataSumBill} {...configClBill} />
+                </Card>
+                <Card
+                  style={{
+                    width: 300,
+                    borderRadius: 12,
+                    boxShadow: "0 5px 10px rgba(0,0,0,.12)",
+                  }}
+                >
+                  <h4 style={{ fontWeight: 600, color: "#8c8c8c" }}>
+                    Tổng đơn đã hủy
+                  </h4>
+                  <p style={{ fontWeight: 700, fontSize: 30, lineHeight: 2 }}>
+                    100 đơn
+                  </p>
+                  <TinyColumn data={dataExitBill} {...configClExitBill} />
+                </Card>
+                <Card
+                  style={{
+                    width: 300,
+                    borderRadius: 12,
+                    boxShadow: "0 5px 10px rgba(0,0,0,.12)",
+                  }}
+                >
+                  <h4 style={{ fontWeight: 600, color: "#8c8c8c" }}>
+                    Tổng Tiền bán
+                  </h4>
+                  <p style={{ fontWeight: 700, fontSize: 30, lineHeight: 2 }}>
+                    1000000000 đ
+                  </p>
+                  <TinyArea data={dataTotalSales} {...configTotalSales} />
+                </Card>
+              </Space>
+            </div>
+            <div className="table-item">
+              <Table
+                pagination={{ pageSize: 5 }}
+                columns={columns}
+                dataSource={data}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
