@@ -774,9 +774,11 @@ const MyAccountPage = () => {
     imgWindow?.document.write(image.outerHTML);
   };
 
-  const [file, setFile] = useState("");
   const { currentUser } = useContext(AppContext);
   const navigate = useNavigate();
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
   return currentUser ? (
     <>
       <div style={{ marginLeft: "13%", padding: 20 }}>
@@ -794,7 +796,7 @@ const MyAccountPage = () => {
         >
           {fileList.length < 1 && "+ Upload"}
         </Upload>
-        <h2>Đào Tấn Phước</h2>
+        <h2>{currentUser.FullName}</h2>
       </div>
 
       <Tabs

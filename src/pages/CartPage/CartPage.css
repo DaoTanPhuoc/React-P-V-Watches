@@ -53,6 +53,10 @@
   color: var(--main-color);
 }
 
+.ant-table-cell {
+  font-size: 15px;
+}
+
 .empty-text {
   display: block;
   padding: 2rem;
@@ -106,6 +110,7 @@
   align-self: center;
   margin: 2rem 0;
 }
+
 .hide .order {
   height: 0;
 
@@ -114,9 +119,11 @@
   visibility: hidden;
   opacity: 0;
 }
+
 .hide {
   transition: all 0.3s;
 }
+
 .hide.show-div .order {
   height: 300px;
   /* visibility: visible; */
@@ -124,12 +131,14 @@
   visibility: visible;
   opacity: 1;
 }
+
 .order {
   display: flex;
   width: 100%;
   gap: 40px;
   justify-content: center;
 }
+
 .order .order__left {
   /* width: 60%; */
   flex: 1;
@@ -141,6 +150,7 @@
   flex: 1;
   max-width: 450px;
 }
+
 /* modal design */
 .ant-modal {
   width: 68% !important;

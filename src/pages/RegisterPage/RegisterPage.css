@@ -34,11 +34,6 @@ body {
   font-weight: 500;
 }
 
-.ant-form-item .ant-form-item-label>label {
-  color: #fff;
-  font-size: 20;
-}
-
 .ant-picker-panel-container {
   max-height: 475px;
 }

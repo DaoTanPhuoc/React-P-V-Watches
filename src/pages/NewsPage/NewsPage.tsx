@@ -19,6 +19,7 @@ const News = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
     axios
       .get(`https://localhost:7182/api/Products`)
       .then((result) => {
@@ -28,7 +29,7 @@ const News = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [currentPage]);
 
   const onChangePage = (page: number) => {
     setCurrentPage(page);
@@ -175,8 +176,8 @@ const News = () => {
             <div className="Card">
               <img
                 style={{
+                  width: '100%',
                   height: 250,
-                  width: "100%",
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/tao/0/thumbs/418x0/h20a4609.jpg"
@@ -195,8 +196,8 @@ const News = () => {
             <div className="Card">
               <img
                 style={{
+                  width: '100%',
                   height: 250,
-                  width: "100%",
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/tao/thumbs/418x0/platinumrolexdaytona.jpeg"
@@ -215,8 +216,8 @@ const News = () => {
             <div className="Card">
               <img
                 style={{
+                  width: '100%',
                   height: 250,
-                  width: "100%",
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/tao/0-0e/thumbs/418x0/curatedition-audemars-piguet-royal-oak-2.jpg"
@@ -255,8 +256,8 @@ const News = () => {
             <div className="Card">
               <img
                 style={{
+                  width: '100%',
                   height: 250,
-                  width: "100%",
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/tao/0-0e/thumbs/418x0/screenshot-2.jpg"
