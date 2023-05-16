@@ -1,10 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import "./HomePage.css";
-import {
-  Card,
-  FloatButton,
-} from "antd";
+import { Card, FloatButton } from "antd";
 import "react-indiana-drag-scroll/dist/style.css";
 import axios from "axios";
 import Slider from "react-slick";
@@ -12,6 +9,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { MessageOutlined } from "@ant-design/icons";
 import { AppContext } from "../../App";
+import { useNavigate } from "react-router-dom";
 
 const moneyFormatter = new Intl.NumberFormat("vi", {
   style: "currency",
@@ -51,8 +49,6 @@ const contentStyle: React.CSSProperties = {
   background: "#364d79",
 };
 
-
-
 const images = [
   "https://images.squarespace-cdn.com/content/v1/56a9e12ac647ad08eb4453c7/1680528697402-97ENGSTFJ78886WRXP1Q/Banner+nouvelties+home+page.jpg?format=2500w",
   "https://bossluxurywatch.vn/uploads/banner/anh-slide-3.jpg",
@@ -81,7 +77,8 @@ const gridStyle: React.CSSProperties = {
 };
 
 const HomePage = () => {
-  const { baseApi } = useContext(AppContext)
+  const navigate = useNavigate();
+  const { baseApi } = useContext(AppContext);
   // GetAvailableProducts
   const [GetAvailableProducts, setGetAvailableProducts] = useState<any[]>([]);
   // product Gallery
@@ -160,7 +157,7 @@ const HomePage = () => {
             <ul className="grid-wrapper">
               {brandImages.map((brandImage) => (
                 <li>
-                  <img src={brandImage} alt="" />
+                  <img style={{ width: 128 }} src={brandImage} alt="" />
                 </li>
               ))}
             </ul>
@@ -195,9 +192,15 @@ const HomePage = () => {
                         height: 300,
                         width: "100%",
                         objectFit: "cover",
+                        cursor: "pointer",
                       }}
                       src={brandImage.Image}
                       alt=""
+                      onClick={() =>
+                        navigate(
+                          `/productdetail/${brandImage.Id}/${brandImage.BrandId}/${brandImage.CaseSize}`
+                        )
+                      }
                     />
                   </div>
                   <div
@@ -287,7 +290,17 @@ const HomePage = () => {
           <div className="galleryContainer">
             {newstProducts.map((item) => (
               <div className="galleryItem">
-                <img src={item.Image} key={item.id} alt="" />
+                <img
+                  style={{ cursor: "pointer" }}
+                  src={item.Image}
+                  key={item.id}
+                  alt=""
+                  onClick={() =>
+                    navigate(
+                      `/productdetail/${item.Id}/${item.BrandId}/${item.CaseSize}`
+                    )
+                  }
+                />
                 {/* <h3 style={{ textAlign: "center", padding: 10 }}>{item.name}</h3> */}
                 <div className="btn-inStore">
                   {/* <button className="btn-item">Buy Now</button> */}

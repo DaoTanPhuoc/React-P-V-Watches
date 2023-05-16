@@ -17,6 +17,9 @@ import {
   Tabs,
   TabsProps,
   Tag,
+  Upload,
+  UploadFile,
+  UploadProps,
 } from "antd";
 import { useContext, useEffect, useState } from "react";
 import {
@@ -31,6 +34,7 @@ import { AppContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import axios from "axios";
+import { RcFile } from "antd/es/upload";
 
 const MyOrder = () => {
   const OrderAll = () => {
@@ -269,7 +273,13 @@ const AddressOrder = () => {
           setIsModalOpen(false);
         }
       })
-      .catch((error) => message.open({ key: 'save', content: "Lỗi: " + error.response.data, type: 'error' }));
+      .catch((error) =>
+        message.open({
+          key: "save",
+          content: "Lỗi: " + error.response.data,
+          type: "error",
+        })
+      );
   };
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -440,7 +450,13 @@ const InfoAccount = () => {
       dob: moment(currentUser.DateOfBirth),
       phone: currentUser.Phone,
     });
-  }, [currentUser.DateOfBirth, currentUser.Email, currentUser.FullName, currentUser.Phone, infoForm]);
+  }, [
+    currentUser.DateOfBirth,
+    currentUser.Email,
+    currentUser.FullName,
+    currentUser.Phone,
+    infoForm,
+  ]);
   const saveProfile = async (values: any) => {
     message.open({ key: "save", content: "Saving...", type: "loading" });
     const dataPost = {
@@ -468,7 +484,13 @@ const InfoAccount = () => {
           });
         }
       })
-      .catch((error) => message.open({ key: 'save', content: "Lỗi: " + error.response.data, type: 'error' }));
+      .catch((error) =>
+        message.open({
+          key: "save",
+          content: "Lỗi: " + error.response.data,
+          type: "error",
+        })
+      );
   };
   const changePassword = async (values: any) => {
     message.open({ key: "change", content: "Changing...", type: "loading" });
@@ -501,12 +523,17 @@ const InfoAccount = () => {
           navigate("/login");
         }
       })
-      .catch((error) => { message.open({ key: 'change', content: "Lỗi: " + error.response.data, type: 'error' }) });
+      .catch((error) => {
+        message.open({
+          key: "change",
+          content: "Lỗi: " + error.response.data,
+          type: "error",
+        });
+      });
   };
   const showModal = () => {
     setIsModalOpen(true);
   };
-
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -613,13 +640,13 @@ const InfoAccount = () => {
             <Form
               form={passwordForm}
               onFinish={changePassword}
-              labelCol={{ span: 6 }}
-              wrapperCol={{ span: 14 }}
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
               layout="horizontal"
               style={{ maxWidth: 1200 }}
             >
               <Form.Item
-                label="Mật khẩu cũ "
+                label={<span style={{ color: "#000000" }}>Mật khẩu cũ:</span>}
                 name="oldPassword"
                 rules={[
                   { required: true, message: "Vui lòng nhập mật khẩu cũ" },
@@ -634,7 +661,7 @@ const InfoAccount = () => {
                 <Input.Password type="password" />
               </Form.Item>
               <Form.Item
-                label="Mật khẩu mới"
+                label={<span style={{ color: "#000000" }}>Mật khẩu mới:</span>}
                 name="newPassword"
                 rules={[
                   { required: true, message: "Vui lòng nhập mật khẩu mới" },
@@ -649,7 +676,9 @@ const InfoAccount = () => {
                 <Input.Password type="password" />
               </Form.Item>
               <Form.Item
-                label="Nhập lại mật khẩu"
+                label={
+                  <span style={{ color: "#000000" }}>Nhập lại mật khẩu:</span>
+                }
                 name="confirmPassword"
                 rules={[
                   { required: true, message: "Vui lòng nhập lại mật khẩu" },
@@ -670,7 +699,7 @@ const InfoAccount = () => {
                 style={{
                   color: "#fff",
                   backgroundColor: "#000000",
-                  marginLeft: 96,
+                  marginLeft: "40%",
                 }}
               >
                 Lưu thay đổi

@@ -166,10 +166,10 @@ table {
 }
 
 .tr-left-chart:nth-child(1) {
-  color: #fff;
+  color: #000000;
 }
 
-td {
+.tr-left-chart td {
   height: 5rem;
   font-family: "Rubik", sans-serif;
   font-size: 1.1rem;
@@ -210,11 +210,12 @@ td {
   width: 28rem;
   height: 5.5rem;
   top: -0.5rem;
-  background-color: #5c5be5;
+  /* background-color: #5c5be5; */
   position: absolute;
   left: -1rem;
-  -webkit-box-shadow: 0px 15px 11px -6px #7a7a7d;
-  box-shadow: 0px 15px 11px -6px #7a7a7d;
+
+  /* -webkit-box-shadow: 0px 15px 11px -6px #7a7a7d;
+  box-shadow: 0px 15px 11px -6px #7a7a7d; */
 }
 
 .ribbon::before {

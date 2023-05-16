@@ -21,6 +21,7 @@ import UserLayout from "../layouts/UserLayout";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import StatisticalPage from "../pages/DashboardPage/Statistical/StatisticalPage";
 import RosPage from "../pages/DashboardPage/RosPage/RosPage";
+import BrandDashboardPage from "../pages/DashboardPage/BrandDashboard/BrandDashboardPage";
 
 export const userRoutes = createBrowserRouter([
   {
@@ -90,6 +91,10 @@ export const userRoutes = createBrowserRouter([
       {
         path: "ros",
         element: <RosPage />,
+      },
+      {
+        path: "brandDash",
+        element: <BrandDashboardPage />,
       },
     ],
   },

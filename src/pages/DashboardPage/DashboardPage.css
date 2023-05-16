@@ -59,5 +59,15 @@
   /* height: 100%; */
   box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.15);
   overflow: auto;
-  position: sticky;
+  position: fixed;
+}
+.ant-layout-sider-children {
+  position: fixed;
+}
+
+@media (max-width: 800px) {
+  .ant-layout-sider-children {
+    position: fixed;
+    width: 60px;
+  }
 }

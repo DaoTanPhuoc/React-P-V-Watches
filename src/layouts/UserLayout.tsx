@@ -1,17 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {
-  Layout,
-  Menu,
-  theme,
-  Space,
-  Badge,
-  Avatar,
-  Input,
-} from "antd";
-import {
-  UserOutlined,
-  ShoppingCartOutlined,
-} from "@ant-design/icons";
+import { Layout, Menu, theme, Space, Badge, Avatar, Input } from "antd";
+import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Header, Content } from "antd/es/layout/layout";
 import { useContext, useMemo, useState } from "react";
 import "./UserLayout.css";
@@ -292,29 +281,23 @@ const UserLayout = () => {
               <h4>Theo dõi & Liên hệ</h4>
               <div className="social-links">
                 <a href="#">
-                  <i className="fab fa-facebook-f">
-                    <img
-                      src="https://donghotantan.vn/images/config/zalo.png"
-                      alt=""
-                    />
-                  </i>
+                  <img
+                    src="https://donghotantan.vn/images/config/zalo.png"
+                    alt=""
+                  />
                 </a>
                 <a href="#">
-                  <i className="fab fa-twitter">
-                    <img
-                      src="https://donghotantan.vn/images/config/message.png"
-                      alt=""
-                    />
-                  </i>
+                  <img
+                    src="https://donghotantan.vn/images/config/message.png"
+                    alt=""
+                  />
                 </a>
 
                 <a href="#">
-                  <i className="fab fa-linkedin-in">
-                    <img
-                      src="https://ssr-resource-prod.gosell.vn/images/icon/instagram-icon.png"
-                      alt=""
-                    />
-                  </i>
+                  <img
+                    src="https://ssr-resource-prod.gosell.vn/images/icon/instagram-icon.png"
+                    alt=""
+                  />
                 </a>
               </div>
             </div>

@@ -1,0 +1,10 @@
+.Brand-Dash-container {
+  padding-top: 20px;
+  margin: 20px;
+}
+
+.header-Brand-dash-Items {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
