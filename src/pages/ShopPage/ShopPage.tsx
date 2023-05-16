@@ -16,6 +16,7 @@ import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { SliderMarks } from "antd/es/slider";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ProductModel } from "../../models/ProductModel";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import { AppContext } from "../../App";
 
@@ -107,8 +108,8 @@ const ShopPage = () => {
   const contextValue = useMemo(() => ({ name: "Ant Design" }), []);
   // list product
 
-  const [products, setProducts] = useState<any[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<ProductModel[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<ProductModel[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   // (chuyen trang)
@@ -144,9 +145,9 @@ const ShopPage = () => {
     filterData(page, products);
   };
 
-  const filterData = (page: number, data: any[]) => {
+  const filterData = (page: number, data: ProductModel[]) => {
     let count = 1;
-    const productsTmp: any[] = [];
+    const productsTmp: ProductModel[] = [];
     for (let i = (page - 1) * pageSize; i < data.length; i++) {
       if (count > pageSize || i === data.length) {
         break;
@@ -288,7 +289,7 @@ const ShopPage = () => {
         <Card>
           {filteredProducts.map((watchItem) => (
             <Card.Grid style={gridStyle} key={watchItem.Id}>
-              <Link to={`/ProductDetail/${watchItem.BrandName}/${watchItem.Code}`}>
+              <Link to={`/ProductDetail/${watchItem.BrandId}/${watchItem.Code}`}>
                 <Image
                   style={{ height: 250, cursor: "pointer" }}
                   rootClassName="card-item-image"
