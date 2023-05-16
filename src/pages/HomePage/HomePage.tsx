@@ -295,17 +295,19 @@ const HomePage = () => {
           <div className="galleryContainer">
             {newstProducts && newstProducts.map((item) => (
               <div className="galleryItem">
-                <img
-                  style={{ cursor: "pointer" }}
-                  src={item.Image}
-                  key={item.id}
-                  alt=""
-                  onClick={() =>
-                    navigate(
-                      `/productdetail/${item.Id}/${item.BrandId}/${item.CaseSize}`
-                    )
-                  }
-                />
+                <Link to={`/ProductDetail/${item.BrandId}/${item.Code}`}>
+                  <img
+                    style={{ cursor: "pointer" }}
+                    src={item.Image}
+                    key={item.id}
+                    alt=""
+                    onClick={() =>
+                      navigate(
+                        `/productdetail/${item.Id}/${item.BrandId}/${item.CaseSize}`
+                      )
+                    }
+                  />
+                </Link>
                 {/* <h3 style={{ textAlign: "center", padding: 10 }}>{item.name}</h3> */}
                 <div className="btn-inStore">
                   {/* <button className="btn-item">Buy Now</button> */}
