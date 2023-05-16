@@ -680,7 +680,7 @@ const InfoAccount = () => {
                 rules={[
                   { required: true, message: "Vui lòng nhập lại mật khẩu" },
                   ({ getFieldValue }) => ({
-                    validator(value) {
+                    validator(_, value) {
                       if (!value || getFieldValue("newPassword") === value) {
                         return Promise.resolve();
                       }
