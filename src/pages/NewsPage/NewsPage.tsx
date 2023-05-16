@@ -157,7 +157,6 @@ const News = () => {
               <img
                 style={{
                   height: 250,
-                  width: "100%",
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/tao/0-00000a/thumbs/418x0/screenshot-2.jpg"
@@ -235,11 +234,6 @@ const News = () => {
           <Card.Grid style={gridStyle}>
             <div className="Card">
               <img
-                style={{
-                  height: 250,
-                  width: "100%",
-                  objectFit: "cover",
-                }}
                 src="https://bossluxurywatch.vn/uploads/tao/0-0e/thumbs/418x0/screenshot-12.jpg"
                 alt=""
               />
@@ -277,7 +271,6 @@ const News = () => {
               <img
                 style={{
                   height: 250,
-                  width: "100%",
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/anh-muc-tin-tuc/thuy-linh/0-2023/thang-1/5/thumbs/418x0/dong-ho-hublot-lvmh-watch-week-2.jpg"
@@ -297,7 +290,6 @@ const News = () => {
               <img
                 style={{
                   height: 250,
-                  width: "100%",
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/anh-muc-tin-tuc/thuy-linh/0-2023/thang-1/5/thumbs/418x0/dong-ho-hublot-lvmh-watch-week-2.jpg"
@@ -317,7 +309,6 @@ const News = () => {
               <img
                 style={{
                   height: 250,
-                  width: "100%",
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/anh-muc-tin-tuc/thuy-linh/0-2023/thang-1/5/thumbs/418x0/dong-ho-hublot-lvmh-watch-week-2.jpg"

@@ -9,7 +9,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { MessageOutlined } from "@ant-design/icons";
 import { AppContext } from "../../App";
-import { Link, useNavigate } from "react-router-dom";
 
 const moneyFormatter = new Intl.NumberFormat("vi", {
   style: "currency",
@@ -77,7 +76,6 @@ const gridStyle: React.CSSProperties = {
 };
 
 const HomePage = () => {
-  const navigate = useNavigate();
   const { baseApi } = useContext(AppContext);
   // GetAvailableProducts
   const [GetAvailableProducts, setGetAvailableProducts] = useState<any[]>([]);
@@ -118,7 +116,7 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    window.scrollTo({ top: 0, behavior: "smooth" });
     fetchNewstProducts(1);
   }, []);
 
@@ -164,7 +162,7 @@ const HomePage = () => {
           <div className="main-container">
             <ul className="grid-wrapper">
               {brandImages.map((brandImage) => (
-                <li style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: 128 }}>
+                <li>
                   <img src={brandImage} alt="" />
                 </li>
               ))}
@@ -195,18 +193,15 @@ const HomePage = () => {
               {GetAvailableProducts.map((brandImage) => (
                 <div>
                   <div>
-                    <Link to={`/ProductDetail/${brandImage.BrandId}/${brandImage.Code}`}>
-                      <img
-                        style={{
-                          height: 300,
-                          width: "100%",
-                          objectFit: "cover",
-                          cursor: "pointer",
-                        }}
-                        src={brandImage.Image}
-                        alt=""
-                      />
-                    </Link>
+                    <img
+                      style={{
+                        height: 300,
+                        width: "100%",
+                        objectFit: "cover",
+                      }}
+                      src={brandImage.Image}
+                      alt=""
+                    />
                   </div>
                   <div
                     style={{
@@ -293,37 +288,28 @@ const HomePage = () => {
             </div>
           </div>
           <div className="galleryContainer">
-            {newstProducts && newstProducts.map((item) => (
-              <div className="galleryItem">
-                <Link to={`/ProductDetail/${item.BrandId}/${item.Code}`}>
-                  <img
-                    style={{ cursor: "pointer" }}
-                    src={item.Image}
-                    key={item.id}
-                    alt=""
-                    onClick={() =>
-                      navigate(
-                        `/productdetail/${item.Id}/${item.BrandId}/${item.CaseSize}`
-                      )
-                    }
-                  />
-                </Link>
-                {/* <h3 style={{ textAlign: "center", padding: 10 }}>{item.name}</h3> */}
-                <div className="btn-inStore">
-                  {/* <button className="btn-item">Buy Now</button> */}
-                  <div
-                    style={{
-                      padding: 20,
-                      textAlign: "center",
-                    }}
-                  >
-                    <h4 style={{ color: "#888888" }}>MSP: {item.Code}</h4>
-                    <h4>{item.Name}</h4>
-                    <h4 style={{ color: "#dbaf56" }}>{moneyFormatter.format(item.Price)}</h4>
+            {newstProducts &&
+              newstProducts.map((item) => (
+                <div className="galleryItem">
+                  <img src={item.Image} key={item.id} alt="" />
+                  {/* <h3 style={{ textAlign: "center", padding: 10 }}>{item.name}</h3> */}
+                  <div className="btn-inStore">
+                    {/* <button className="btn-item">Buy Now</button> */}
+                    <div
+                      style={{
+                        padding: 20,
+                        textAlign: "center",
+                      }}
+                    >
+                      <h4 style={{ color: "#888888" }}>MSP: {item.Code}</h4>
+                      <h4>{item.Name}</h4>
+                      <h4 style={{ color: "#dbaf56" }}>
+                        {moneyFormatter.format(item.Price)}
+                      </h4>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
 

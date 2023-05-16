@@ -1,6 +1,20 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Layout, Menu, theme, Space, Badge, Avatar, Input, MenuProps, Dropdown } from "antd";
-import { UserOutlined, ShoppingCartOutlined, LogoutOutlined } from "@ant-design/icons";
+import {
+  Layout,
+  Menu,
+  theme,
+  Space,
+  Badge,
+  Avatar,
+  Input,
+  Dropdown,
+  MenuProps,
+} from "antd";
+import {
+  UserOutlined,
+  ShoppingCartOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
 import { Header, Content } from "antd/es/layout/layout";
 import { useContext, useMemo, useState } from "react";
 import "./UserLayout.css";
@@ -20,9 +34,10 @@ const gridStyle: React.CSSProperties = {
 
 const UserLayout = () => {
   const { cartOrders, setCartOrders } = useContext(AppContext);
-  const { currentUser, currentToken, setCurrentToken, setCurrentUser } = useContext(AppContext);
+  const { currentUser, currentToken, setCurrentToken, setCurrentUser } =
+    useContext(AppContext);
   const [hoverMenu, setHoverMenu] = useState(0);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -43,24 +58,24 @@ const UserLayout = () => {
         return "1";
     }
   }, [path]);
-  const userItemMenu: MenuProps['items'] = [
+  const userItemMenu: MenuProps["items"] = [
     {
-      key: '1',
+      key: "1",
       label: <Link to="/myaccount">Tài Khoản</Link>,
-      icon: <UserOutlined />
+      icon: <UserOutlined />,
     },
     {
-      key: '2',
+      key: "2",
       label: <a>Đăng Xuất</a>,
       icon: <LogoutOutlined />,
       onClick: () => {
-        setCurrentToken(null)
-        setCurrentUser(null)
-        localStorage.removeItem("userToken")
-        navigate("/")
-      }
-    }
-  ]
+        setCurrentToken(null);
+        setCurrentUser(null);
+        localStorage.removeItem("userToken");
+        navigate("/");
+      },
+    },
+  ];
   const renderMenuDropdown = () => {
     switch (hoverMenu) {
       case 1:
@@ -137,11 +152,19 @@ const UserLayout = () => {
           items={[
             {
               key: 1,
-              label: <Link to="/"><span style={{ color: "#fff" }}>TRANG CHỦ</span></Link>,
+              label: (
+                <Link to="/">
+                  <span style={{ color: "#fff" }}>TRANG CHỦ</span>
+                </Link>
+              ),
             },
             {
               key: 2,
-              label: <Link to="/shop"><span style={{ color: "#fff" }}>SẢN PHẨM</span></Link>,
+              label: (
+                <Link to="/shop">
+                  <span style={{ color: "#fff" }}>SẢN PHẨM</span>
+                </Link>
+              ),
             },
 
             {
@@ -176,11 +199,19 @@ const UserLayout = () => {
             },
             {
               key: 6,
-              label: <Link to="/news"><span style={{ color: "#fff" }}>TIN TỨC</span></Link>,
+              label: (
+                <Link to="/news">
+                  <span style={{ color: "#fff" }}>TIN TỨC</span>
+                </Link>
+              ),
             },
             {
               key: 7,
-              label: <Link to="/news"><span style={{ color: "#fff" }}>GIỚI THIỆU</span></Link>,
+              label: (
+                <Link to="/news">
+                  <span style={{ color: "#fff" }}>GIỚI THIỆU</span>
+                </Link>
+              ),
             },
           ]}
         />
@@ -201,8 +232,12 @@ const UserLayout = () => {
             </Badge>
           </Link>
           {currentToken && currentUser ? (
-            <Dropdown menu={{ items: userItemMenu }} >
-              <Avatar src={currentUser.Avatar} shape="circle" style={{ fontSize: 24, margin: "25px 0" }} />
+            <Dropdown menu={{ items: userItemMenu }}>
+              <Avatar
+                src={currentUser.Avatar}
+                shape="circle"
+                style={{ fontSize: 24, margin: "25px 0" }}
+              />
             </Dropdown>
           ) : (
             <Link to="/login">
@@ -232,7 +267,10 @@ const UserLayout = () => {
         </div>
       </Header>
 
-      <Content className="site-layout" style={{ overflow: 'hidden', maxWidth: '100vw' }}>
+      <Content
+        className="site-layout"
+        style={{ overflow: "hidden", maxWidth: "100vw" }}
+      >
         <Outlet />
       </Content>
 
@@ -295,16 +333,26 @@ const UserLayout = () => {
               <div className="social-links">
                 <a href="#">
                   <i className="fab fa-facebook-f">
+                    <img
+                      src="https://donghotantan.vn/images/config/zalo.png"
+                      alt=""
+                    />
                   </i>
                 </a>
                 <a href="#">
                   <i className="fab fa-twitter">
+                    <img
+                      src="https://donghotantan.vn/images/config/message.png"
+                      alt=""
+                    />
                   </i>
                 </a>
 
                 <a href="#">
-                  <i className="fab fa-linkedin-in">
-                  </i>
+                  <img
+                    src="https://ssr-resource-prod.gosell.vn/images/icon/instagram-icon.png"
+                    alt=""
+                  />
                 </a>
               </div>
             </div>

@@ -194,12 +194,6 @@ ul {
   background-color: #ffffff;
 }
 
-.footer-col .social-links a img {
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-}
-
 /*responsive*/
 @media (max-width: 767px) {
   .footer-col {

@@ -42,10 +42,8 @@ img {
 }
 
 .img-container img {
-  width: 345px;
-  height: 300px;
+  width: 500px;
   margin: 0 auto;
-  object-fit: cover;
 }
 
 .hover-container {
@@ -53,12 +51,12 @@ img {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 32px;
 }
 
 .hover-container div {
   border: 2px solid #213122;
-  padding: 0.6rem;
+  padding: 1rem;
   border-radius: 3px;
   margin: 0 4px 8px 4px;
   display: flex;
@@ -76,9 +74,7 @@ img {
 }
 
 .hover-container div img {
-  width: 80px;
-  height: 90px;
-  object-fit: cover;
+  width: 50px;
   cursor: pointer;
 }
 

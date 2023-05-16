@@ -1,139 +1,8 @@
-import { Line, Pie, Stock } from "@ant-design/charts";
-import {
-  Button,
-  Col,
-  Input,
-  InputRef,
-  Result,
-  Row,
-  Space,
-  Statistic,
-  Table,
-  Tag,
-} from "antd";
-import React, { useEffect, useRef, useState } from "react";
+import { Line, Pie } from "@ant-design/charts";
+import { Col, Row, Statistic } from "antd";
+import React from "react";
 import { ShopOutlined, DollarOutlined } from "@ant-design/icons";
 import "./StatisticalPage.css";
-import {
-  ColumnType,
-  ColumnsType,
-  FilterConfirmProps,
-} from "antd/es/table/interface";
-import { SearchOutlined } from "@ant-design/icons";
-import axios from "axios";
-import { BrandModel } from "../../../models/BrandModel";
-import { useParams } from "react-router-dom";
-import Item from "antd/es/list/Item";
-import { error } from "console";
-import { type } from "os";
-
-const moneyFormatter = new Intl.NumberFormat("vi", {
-  style: "currency",
-  currency: "VND",
-
-  // These options are needed to round to whole numbers if that's what you want.
-  //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-  maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
-});
-
-// tabel
-
-const onChange = (value: string) => {
-  console.log(`selected ${value}`);
-};
-
-const onSearch = (value: string) => {
-  console.log("search:", value);
-};
-interface DataType {
-  key: string;
-  Name: string;
-  Code: string;
-  Image: string;
-  Stock: number;
-  Price: number;
-  BrandId: number;
-  tag: string;
-}
-type DataIndex = keyof DataType;
-
-// const data: DataType[] = [
-//   {
-//     key: "1",
-//     nameProduct: "ROLEX DAY-DATE 40MM",
-//     Code: "126284RBR-0029",
-//     image:
-//       "https://bossluxurywatch.vn/uploads/san-pham/rolex/day-date-1/thumbs/418x0/rolex-day-date-40mm-228235-0045.png",
-//     stock: 10,
-//     Price: 32,
-//     NameCategories: "male",
-
-//     tag: "success",
-//   },
-//   {
-//     key: "2",
-//     nameProduct: "PATEK PHILIPPE COMPLICATIONS",
-//     Code: "126284RBR-0028",
-//     image:
-//       "https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/complications/thumbs/418x0/patek-philippe-complications-7130g-016.png",
-//     stock: 10,
-//     Price: 42,
-//     NameCategories: "female",
-
-//     tag: "success",
-//   },
-//   {
-//     key: "3",
-//     nameProduct: "HUBLOT BIG BANG STEEL DIAMONDS",
-//     Code: "126284RBR-0027",
-//     image:
-//       "https://bossluxurywatch.vn/uploads/san-pham/hublot/big-bang/thumbs/418x0/hublot-big-bang-steel-diamonds-341-sx-130-rx-114.png",
-//     stock: 15,
-//     Price: 32,
-//     NameCategories: "male",
-
-//     tag: "error",
-//   },
-//   {
-//     key: "4",
-//     nameProduct: "FRANCK MULLER VANGUARD LADY MOONPHASE",
-//     Code: "126284RBR-0026",
-//     image:
-//       "https://bossluxurywatch.vn/uploads/san-pham/franck-muller/thumbs/418x0/vanguard-lady-moonphase-v-32-sc-fo-l-d-cd-1p-cold.png",
-//     stock: 20,
-//     Price: 32,
-//     NameCategories: "female",
-
-//     tag: "error",
-//   },
-//   {
-//     key: "5",
-//     nameProduct: "PATEK PHILIPPE COMPLICATIONS",
-//     Code: "126284RBR-0025",
-//     image:
-//       "https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/complications/thumbs/418x0/patek-philippe-complications-5905p-001.png",
-//     stock: 10,
-//     Price: 3550000000,
-//     NameCategories: "male",
-
-//     tag: "error",
-//   },
-//   {
-//     key: "6",
-//     nameProduct: "PATEK PHILIPPE COMPLICATIONS",
-//     Code: "126284RBR-0024",
-//     image:
-//       "https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/complications/thumbs/418x0/patek-philippe-complications-5905p-001.png",
-//     stock: 5,
-//     Price: 3550000000,
-//     NameCategories: "female",
-
-//     tag: "error",
-//   },
-// ];
-
-//
-
 const myData = [
   { x: "Thứ hai", y: 3 },
   { x: "Thứ Ba", y: 5 },
@@ -166,277 +35,41 @@ const RoundChartData = [
     value: 10,
   },
 ];
-
-// call api chart
+const config = {
+  appendPadding: 10,
+  RoundChartData,
+  angleField: "value",
+  colorField: "type",
+  radius: 0.8,
+  label: {
+    type: "outer",
+  },
+  interactions: [
+    {
+      type: "element-active",
+    },
+  ],
+};
 
 const StatisticalPage = () => {
-  //api brand
-  const [chartStock, setChartStock] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`https://localhost:7182/api/Brands/getBrands`)
-      .then((result) => {
-        const charPie = result.data;
-        setChartStock(charPie);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
-
-  // call api table tồn kho
-  const [state, setstate] = useState([]);
-  const [loading, setloading] = useState(true);
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
-    await axios.get("https://localhost:7182/api/Products").then((res) => {
-      setloading(false);
-      setstate(
-        res.data.map(
-          (row: {
-            Name: string;
-            Code: string;
-            Image: number;
-            Stock: number;
-            Price: string;
-            BrandId: number;
-          }) => ({
-            Name: row.Name,
-            Code: row.Code,
-            Image: row.Image,
-            Stock: row.Stock,
-            Price: row.Price,
-            BrandId: row.BrandId,
-          })
-        )
-      );
-    });
-  };
-
-  //
-
-  const config = {
-    appendPadding: 10,
-    RoundChartData,
-    angleField: "value",
-    colorField: "type",
-    radius: 0.8,
-    label: {
-      type: "outer",
-    },
-    interactions: [
-      {
-        type: "element-active",
-      },
-    ],
-  };
-
-  // close
-
-  // call api loại sản phẩm
-  // const { brandId } = useParams();
-
-  // const [brandProducts, setbrandProducts] = useState<BrandModel[]>([]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       `https://localhost:7182/api/Products/GetProductsByBrand?brandId=${brandId}`
-  //     )
-  //     .then((result) => {
-  //       setbrandProducts(result.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, [brandId]);
-
-  //close
-  const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState("");
-  const searchInput = useRef<InputRef>(null);
-
-  const handleSearch = (
-    selectedKeys: string[],
-    confirm: (param?: FilterConfirmProps) => void,
-    dataIndex: DataIndex
-  ) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
-
-  const handleReset = (clearFilters: () => void) => {
-    clearFilters();
-    setSearchText("");
-  };
-
-  const getColumnSearchProps = (
-    dataIndex: DataIndex
-  ): ColumnType<DataType> => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-      close,
-    }) => (
-      <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
-        <Input
-          ref={searchInput}
-          // placeholder={`Search ${dataIndex}`}
-          placeholder="Tìm kiếm"
-          value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() =>
-            handleSearch(selectedKeys as string[], confirm, dataIndex)
-          }
-          style={{ marginBottom: 8, display: "block" }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() =>
-              handleSearch(selectedKeys as string[], confirm, dataIndex)
-            }
-            icon={<SearchOutlined style={{ color: "#fff" }} />}
-            size="small"
-            style={{ width: 90, color: "#fff", backgroundColor: "#000000" }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
-            size="small"
-            style={{ width: 90, color: "#fff", backgroundColor: "#000000" }}
-          >
-            Reset
-          </Button>
-          <Button
-            style={{ color: "#fff", backgroundColor: "#000000" }}
-            type="link"
-            size="small"
-            onClick={() => {
-              confirm({ closeDropdown: false });
-              setSearchText((selectedKeys as string[])[0]);
-              setSearchedColumn(dataIndex);
-            }}
-          >
-            Filter
-          </Button>
-          <Button
-            style={{ color: "#fff", backgroundColor: "#000000" }}
-            type="link"
-            size="small"
-            onClick={() => {
-              close();
-            }}
-          >
-            close
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered: boolean) => (
-      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
-    ),
-    onFilter: (value, record) =>
-      record[dataIndex]
-        .toString()
-        .toLowerCase()
-        .includes((value as string).toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
-    },
-  });
-
-  const columns: ColumnsType<DataType> = [
-    {
-      title: "Tên sản phẩm",
-      dataIndex: "Name",
-      width: "25%",
-      ...getColumnSearchProps("Name"),
-    },
-    {
-      title: "Mã sản phẩm",
-      dataIndex: "Code",
-      width: "10%",
-      ...getColumnSearchProps("Code"),
-    },
-    {
-      title: "Sản phẩm",
-      dataIndex: "Image",
-      width: "10%",
-      render: (image: string) => (
-        <img
-          src={image}
-          style={{ width: 100, height: 100, objectFit: "cover" }}
-          alt=""
-        />
-      ),
-    },
-    {
-      title: "Tồn kho",
-      dataIndex: "Stock",
-      width: "10%",
-    },
-    {
-      title: "Giá Tiền",
-      dataIndex: "Price",
-      key: "Price",
-      render: (Price) => moneyFormatter.format(Price),
-      width: "10%",
-      // ...getColumnSearchProps("Price"),
-    },
-
-    {
-      title: "Thương hiệu",
-      dataIndex: "BrandId",
-      width: "15%",
-      //render: (BrandId) => brandProducts[BrandId].Name,
-      render: (BrandId) => BrandId,
-      ...getColumnSearchProps("BrandId"),
-    },
-    {
-      title: "Tình trạng",
-      dataIndex: "tag",
-      render: (tag: string) => (
-        <span>
-          <Tag color={tag}>
-            {tag === "success" ? "Còn kinh doanh" : "Dừng kinh doanh"}
-          </Tag>
-        </span>
-      ),
-      // ...getColumnSearchProps("tag"),
-    },
-    {
-      title: "Chức năng",
-      width: "15%",
-      dataIndex: "action",
-      render: () => (
-        <Space>
-          <a>Edit</a>
-        </Space>
-      ),
-    },
-  ];
   return (
     <div className="Container-StatisticalPage">
       <div className="title-chart-das">Thống Kê Doanh Thu</div>
       <div className="chart-das-container">
         <div className="left-chart">
-          <Table
-            pagination={{ pageSize: 5 }}
-            columns={columns}
-            dataSource={state}
-          />
+          <div className="chart-products">
+            <h4 style={{ fontWeight: 500, paddingBottom: 40 }}>
+              Tổng doanh thu: <span style={{ fontWeight: 400 }}>600000</span>
+            </h4>
+            <Line
+              data={myData}
+              height={500}
+              xField="x"
+              yField="y"
+              point={{ size: 5, shape: "diamon" }}
+              color="blue"
+            />
+          </div>
         </div>
         <div className="right-chart">
           <div style={{ fontWeight: 600, fontSize: 19, padding: "20px 20px" }}>
@@ -449,15 +82,15 @@ const StatisticalPage = () => {
             <Row gutter={16}>
               <Col span={12}>
                 <Statistic
-                  title="Tổng sản phẩm"
+                  title="Tổng sản phẩm bán"
                   value={128}
                   prefix={<ShopOutlined />}
                 />
               </Col>
               <Col span={12}>
                 <Statistic
-                  title="Tổng thương hiệu"
-                  value={10}
+                  title="Doanh thu tháng"
+                  value={1121393}
                   prefix={<DollarOutlined />}
                 />
               </Col>
