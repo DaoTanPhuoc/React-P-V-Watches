@@ -265,7 +265,7 @@ const CartPage = () => {
                   title="Bạn chưa đăng nhập vào hệ thống!"
                   subTitle="Vui lòng đăng nhập để tiếp tục"
                   extra={
-                    <Button type="primary" onClick={() => navigate("/login")}>Đăng Nhập</Button>
+                    <Button style={{ backgroundColor: "#000000", color: "#fff" }} type="primary" onClick={() => navigate("/login")}>Đăng Nhập</Button>
                   }
                 />
               </Modal>

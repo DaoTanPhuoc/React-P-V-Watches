@@ -7,6 +7,7 @@ import {
   Result,
   Row,
   Space,
+  Spin,
   Statistic,
   Table,
   Tag,
@@ -51,7 +52,7 @@ interface DataType {
   Image: string;
   Stock: number;
   Price: number;
-  BrandId: number;
+  BrandName: string;
   tag: string;
 }
 type DataIndex = keyof DataType;
@@ -143,49 +144,17 @@ const myData = [
   { x: "Chủ Nhật", y: 9 },
 ];
 
-const RoundChartData = [
-  {
-    type: "Rolex",
-    value: 27,
-  },
-  {
-    type: "Channel",
-    value: 25,
-  },
-  {
-    type: "Orient",
-    value: 18,
-  },
-  {
-    type: "Hublot",
-    value: 15,
-  },
-  {
-    type: "Citizen",
-    value: 10,
-  },
-];
+
 
 // call api chart
 
 const StatisticalPage = () => {
-  //api brand
-  const [chartStock, setChartStock] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`https://localhost:7182/api/Brands/getBrands`)
-      .then((result) => {
-        const charPie = result.data;
-        setChartStock(charPie);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
+
 
   // call api table tồn kho
   const [state, setstate] = useState([]);
   const [loading, setloading] = useState(true);
+
   useEffect(() => {
     getData();
   }, []);
@@ -201,22 +170,95 @@ const StatisticalPage = () => {
             Image: number;
             Stock: number;
             Price: string;
-            BrandId: number;
+            BrandName: string;
           }) => ({
             Name: row.Name,
             Code: row.Code,
             Image: row.Image,
             Stock: row.Stock,
             Price: row.Price,
-            BrandId: row.BrandId,
+            BrandName: row.BrandName,
           })
         )
       );
     });
   };
 
+  // closed
+
+  // api tổng sản phẩm
+  const [countStock, setCountStock] = useState([])
+  useEffect(() => {
+    axios
+      .get("https://localhost:7182/api/Products")
+      .then((result) => {
+        const countS = result.data;
+        setCountStock(countS)
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  })
+  const countStockProducts = countStock.length;
+  // closed
+
+  // Tổng thương hiệu
+  const [countBrand, setCountBrand] = useState([])
+  useEffect(() => {
+    axios
+      .get("https://localhost:7182/api/Brands/GetBrands")
+      .then((result) => {
+        setCountBrand(result.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  })
+  const countBrandProducts = countBrand.length;
+  // closed
+
+
+  // call api chart pie
+  // const [data, setData] = useState([]);
+
+  // useEffect(() => {
+  //   axios.get('https://example.com/api/data')
+  //     .then(response => {
+  //       const transformedData = response.data.map((item: { BrandName: any; Stock: any; }) => ({
+  //         type: item.BrandName,
+  //         value: item.Stock
+  //       }));
+  //       setData(transformedData);
+  //     })
+  //     .catch(error => {
+  //       console.error(error);
+  //     });
+  // }, []);
+
   //
 
+  const RoundChartData = [
+    {
+      type: "Role",
+      value: 27,
+    },
+    {
+      type: "Channel",
+      value: 25,
+    },
+    {
+      type: "Orient",
+      value: 18,
+    },
+    {
+      type: "Hublot",
+      value: 15,
+    },
+    {
+      type: "Citizen",
+      value: 10,
+    },
+  ];
   const config = {
     appendPadding: 10,
     RoundChartData,
@@ -397,15 +439,16 @@ const StatisticalPage = () => {
 
     {
       title: "Thương hiệu",
-      dataIndex: "BrandId",
+      dataIndex: "BrandName",
       width: "15%",
       //render: (BrandId) => brandProducts[BrandId].Name,
-      render: (BrandId) => BrandId,
-      ...getColumnSearchProps("BrandId"),
+      render: (BrandName) => BrandName,
+      ...getColumnSearchProps("BrandName"),
     },
     {
       title: "Tình trạng",
       dataIndex: "tag",
+      width: "10%",
       render: (tag: string) => (
         <span>
           <Tag color={tag}>
@@ -432,7 +475,7 @@ const StatisticalPage = () => {
       <div className="chart-das-container">
         <div className="left-chart">
           <Table
-            pagination={{ pageSize: 5 }}
+            pagination={{ pageSize: 4 }}
             columns={columns}
             dataSource={state}
           />
@@ -445,18 +488,18 @@ const StatisticalPage = () => {
             <Pie data={RoundChartData} {...config} />
           </div>
           <div className="container-right">
-            <Row gutter={16}>
+            <Row gutter={20}>
               <Col span={12}>
                 <Statistic
                   title="Tổng sản phẩm"
-                  value={128}
+                  value={countStockProducts}
                   prefix={<ShopOutlined />}
                 />
               </Col>
               <Col span={12}>
                 <Statistic
                   title="Tổng thương hiệu"
-                  value={10}
+                  value={countBrandProducts}
                   prefix={<DollarOutlined />}
                 />
               </Col>
@@ -464,6 +507,7 @@ const StatisticalPage = () => {
           </div>
         </div>
       </div>
+
     </div>
   );
 };

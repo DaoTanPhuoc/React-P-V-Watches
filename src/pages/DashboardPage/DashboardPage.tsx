@@ -10,6 +10,7 @@ import {
   DashboardOutlined,
   WalletOutlined,
   BookOutlined,
+  DollarOutlined,
 } from "@ant-design/icons";
 import {
   Avatar,
@@ -223,27 +224,35 @@ const Dashboard: React.FC = () => {
         "3",
         <WalletOutlined />
       ),
+      getItem(
+        <Link to="/admin/brandDash">Loại sản phẩm</Link>,
+        "4",
+        <WalletOutlined />
+      ),
     ]),
     getItem("Hóa đơn", "sub2", <FormOutlined />, [
       getItem(
         <Link to="/admin/dasBilling">Danh sách</Link>,
-        "4",
+        "5",
         <BookOutlined />
       ),
-      getItem("Option 8", "8"),
-      getItem("Option 9", "9"),
-      getItem("Option 10", "10"),
+      getItem(
+        <Link to="/admin/importProducts">Nhập hàng</Link>,
+        "6",
+        <BookOutlined />
+      ),
+
     ]),
     getItem(
       <Link to="/admin/dasPost">Bài viết</Link>,
-      "5",
+      "7",
       <DashboardOutlined />
     ),
-    getItem(<Link to="/admin/ros">Doanh thu</Link>, "6", <DashboardOutlined />),
+    getItem(<Link to="/admin/ros">Doanh thu</Link>, "8", <DollarOutlined />),
   ];
 
   return (
-    <Layout>
+    <Layout >
       <Sider
         breakpoint="lg"
         collapsedWidth="100"
@@ -255,33 +264,7 @@ const Dashboard: React.FC = () => {
         }}
         className="slider-menu"
       >
-        {/* <div className="slider-menu">
-          <div className="logo" />
-          <img
-            style={{
-              backgroundColor: "white",
-              width: 200,
-              height: 64,
-              objectFit: "cover",
-            }}
-            src="https://i1.sndcdn.com/artworks-000638521540-rcn15j-t500x500.jpg"
-            alt=""
-          />
-          <Menu
-            style={{ height: "100%", backgroundColor: "#fff" }}
-            // theme="dark"
-            mode="inline"
-            defaultSelectedKeys={["1"]}
-            items={menuItems.map((i) => ({
-              key: i.key,
-              icon: i.icon,
-              label: i.label,
-              onClick: () => {
-                SetRender(i.compoment);
-              },
-            }))}
-          />
-        </div> */}
+
 
         <div className="logo" />
         <img
@@ -294,20 +277,6 @@ const Dashboard: React.FC = () => {
           src="https://i1.sndcdn.com/artworks-000638521540-rcn15j-t500x500.jpg"
           alt=""
         />
-        {/* <Menu
-          style={{ height: "100%", backgroundColor: "#fff" }}
-          // theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          items={menuItems.map((i) => ({
-            key: i.key,
-            icon: i.icon,
-            label: i.label,
-            onClick: () => {
-              SetRender(i.compoment);
-            },
-          }))}
-        /> */}
         <Menu
           theme="dark"
           defaultSelectedKeys={["1"]}
@@ -353,7 +322,7 @@ const Dashboard: React.FC = () => {
         <Content
           style={{
             padding: 10,
-            minHeight: 280,
+            minHeight: 950,
           }}
         >
           <Outlet />

@@ -99,6 +99,11 @@ const News = () => {
             <div className="card-blog">
               <div className="image-section">
                 <img
+                  style={{
+                    width: '100%',
+                    height: 250,
+                    objectFit: "cover",
+                  }}
                   src="https://bossluxurywatch.vn/uploads/anh-dong-ho-dang-bao/5004/1-5-mau-dong-ho-sanh-dieu-va-thoi-thuong-danh-cho-phai-dep/audemars-piguet-fpj-h-moser-cie-va-zenith-dat-gia-pha-ky-luc-tai-only-watch-2021/richard-mille-ra-mat-sieu-pham-rm-88-tourbillon-smiley-vui-tuoi-va-day-mau-sac/thumbs/418x0/richard-mille-rm-88-tourbillon-smiley.jpg"
                   alt=""
                 />
@@ -157,6 +162,7 @@ const News = () => {
               <img
                 style={{
                   height: 250,
+                  width: "100%",
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/tao/0-00000a/thumbs/418x0/screenshot-2.jpg"
@@ -177,6 +183,7 @@ const News = () => {
                 style={{
                   width: '100%',
                   height: 250,
+
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/tao/0/thumbs/418x0/h20a4609.jpg"
@@ -197,6 +204,7 @@ const News = () => {
                 style={{
                   width: '100%',
                   height: 250,
+
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/tao/thumbs/418x0/platinumrolexdaytona.jpeg"
@@ -217,6 +225,7 @@ const News = () => {
                 style={{
                   width: '100%',
                   height: 250,
+
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/tao/0-0e/thumbs/418x0/curatedition-audemars-piguet-royal-oak-2.jpg"
@@ -234,6 +243,11 @@ const News = () => {
           <Card.Grid style={gridStyle}>
             <div className="Card">
               <img
+                style={{
+                  width: '100%',
+                  height: 250,
+                  objectFit: "cover",
+                }}
                 src="https://bossluxurywatch.vn/uploads/tao/0-0e/thumbs/418x0/screenshot-12.jpg"
                 alt=""
               />
@@ -271,6 +285,7 @@ const News = () => {
               <img
                 style={{
                   height: 250,
+                  width: "100%",
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/anh-muc-tin-tuc/thuy-linh/0-2023/thang-1/5/thumbs/418x0/dong-ho-hublot-lvmh-watch-week-2.jpg"
@@ -290,6 +305,7 @@ const News = () => {
               <img
                 style={{
                   height: 250,
+                  width: "100%",
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/anh-muc-tin-tuc/thuy-linh/0-2023/thang-1/5/thumbs/418x0/dong-ho-hublot-lvmh-watch-week-2.jpg"
@@ -309,6 +325,7 @@ const News = () => {
               <img
                 style={{
                   height: 250,
+                  width: "100%",
                   objectFit: "cover",
                 }}
                 src="https://bossluxurywatch.vn/uploads/anh-muc-tin-tuc/thuy-linh/0-2023/thang-1/5/thumbs/418x0/dong-ho-hublot-lvmh-watch-week-2.jpg"
