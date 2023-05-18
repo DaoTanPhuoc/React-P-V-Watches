@@ -155,6 +155,8 @@ const Details = () => {
       .get<ProductModel>(`${baseApi}/Products/${code}`)
       .then((result) => {
         const product = result.data;
+        console.log(product);
+
         setProduct(product);
       })
       .catch((error) => {
@@ -549,9 +551,8 @@ const ProductDetail = () => {
                   <div
                     key={index}
                     onClick={() => setCurrentPreviewIndex(index)}
-                    className={`img-item${
-                      currentPreviewIndex === index ? " active" : ""
-                    }`}
+                    className={`img-item${currentPreviewIndex === index ? " active" : ""
+                      }`}
                   >
                     <img src={previewItem} alt="" />
                   </div>

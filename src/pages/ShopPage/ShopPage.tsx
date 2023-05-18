@@ -158,6 +158,17 @@ const ShopPage = () => {
     setFilteredProducts(productsTmp);
   };
 
+  const sortByPrice = (value: number) => {
+    let temp = products.sort((a, b) => a.Price < b.Price ? 1 : -1);
+    if (value === 2) {
+      filterData(currentPage, temp);
+    } else if (value === 3) {
+      filterData(currentPage, temp.reverse())
+    } else if (value === 1) {
+      filterData(currentPage, products)
+    }
+  }
+
   const isShow = true;
 
   // product: OrderProductModel
@@ -257,9 +268,11 @@ const ShopPage = () => {
               }}
               placeholder="Sắp xếp"
               optionFilterProp="children"
+              defaultValue={1}
               filterOption={(input, option) =>
                 (option?.label ?? "").includes(input)
               }
+              onChange={(value) => sortByPrice(value)}
               filterSort={(optionA, optionB) =>
                 (optionA?.label ?? "")
                   .toLowerCase()

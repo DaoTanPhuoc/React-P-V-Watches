@@ -11,11 +11,32 @@ import {
 } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { ColumnsType } from "antd/es/table";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ClockCircleOutlined, SmileOutlined } from "@ant-design/icons";
 import { TinyArea } from "@ant-design/plots";
 import "./HomeDashboard.css";
+import axios from "axios";
+import { AppContext } from "../../../App";
 const HomeDas = () => {
+  const moneyFormatter = new Intl.NumberFormat("vi", {
+    style: "currency",
+    currency: "VND",
+    maximumFractionDigits: 0,
+  });
+  const { baseApi } = useContext(AppContext);
+  const [todaySales, setTodaySales] = useState<number>();
+  const [totalUser, setTotalUser] = useState<number>();
+  const [dailyProductSale, setDailyProductSale] = useState<number>();
+  const [topProductSales, setTopProductSales] = useState<any>([]);
+  const [yearlySales, setYearlySales] = useState<any>([]);
+  useEffect(() => {
+    axios.get(`${baseApi}/Statistics/DailyOrderSales`).then(res => setTodaySales(res.data))
+    axios.get(`${baseApi}/Statistics/UsersCount`).then(res => setTotalUser(res.data))
+    axios.get(`${baseApi}/Statistics/DailyProductSales`).then(res => setDailyProductSale(res.data))
+    axios.get(`${baseApi}/Statistics/GetBestProductsSale`).then(res => setTopProductSales(res.data))
+    axios.get(`${baseApi}/Statistics/GetYearlySales`).then(res => setYearlySales(res.data))
+  }, [baseApi])
+
   interface DataType {
     key: string;
     name: string;
@@ -90,9 +111,9 @@ const HomeDas = () => {
     { year: "1999", value: 13 },
   ];
   const config1 = {
-    data2,
+    yearlySales,
     height: 400,
-    xField: "year",
+    xField: "month",
     yField: "value",
     point: {
       size: 5,
@@ -127,13 +148,13 @@ const HomeDas = () => {
                 <Row>
                   <Col flex={3}>
                     <Col style={{ fontWeight: 600, color: "#8c8c8c" }} flex={1}>
-                      Today Sales
+                      Tổng hóa đơn hôm nay:
                     </Col>
                     <Col
                       flex={1}
                       style={{ fontWeight: 700, fontSize: 30, lineHeight: 2 }}
                     >
-                      $ 53,000
+                      {todaySales}
                     </Col>
                   </Col>
                   <Col flex={1}>
@@ -185,13 +206,13 @@ const HomeDas = () => {
                 <Row>
                   <Col flex={3}>
                     <Col style={{ fontWeight: 600, color: "#8c8c8c" }} flex={1}>
-                      User
+                      Người dùng:
                     </Col>
                     <Col
                       flex={1}
                       style={{ fontWeight: 700, fontSize: 30, lineHeight: 2 }}
                     >
-                      3000
+                      {totalUser}
                     </Col>
                   </Col>
                   <Col flex={1}>
@@ -289,13 +310,13 @@ const HomeDas = () => {
                 <Row>
                   <Col flex={3}>
                     <Col style={{ fontWeight: 600, color: "#8c8c8c" }} flex={1}>
-                      Products
+                      Sản phẩm đã bán hôm nay:
                     </Col>
                     <Col
                       flex={1}
                       style={{ fontWeight: 700, fontSize: 30, lineHeight: 2 }}
                     >
-                      2000
+                      {dailyProductSale}
                     </Col>
                   </Col>
                   <Col flex={1}>
@@ -330,46 +351,31 @@ const HomeDas = () => {
         <div className="chart">
           <div className="left-chart">
             <div id="header-left-chart">
-              <h1>Top sản phẩm</h1>
+              <h1>Top sản phẩm bán chạy</h1>
             </div>
             <div id="leaderboard">
               <div className="ribbon"></div>
               <table className="table-left-chart">
-                <tr className="tr-left-chart">
-                  <td className="number">1</td>
-                  <td className="name">ROLEX DATEJUST 36</td>
-                  <td className="points">
-                    258.244{" "}
-                    <img
-                      className="gold-medal"
-                      src="https://github.com/malunaridev/Challenges-iCodeThis/blob/master/4-leaderboard/assets/gold-medal.png?raw=true"
-                      alt="gold medal"
-                    />
-                  </td>
-                </tr>
-                <tr className="tr-left-chart">
-                  <td className="number">2</td>
-                  <td className="name">HUBLOT BIG BANG STEEL</td>
-                  <td className="points">258.242</td>
-                </tr>
-                <tr className="tr-left-chart">
-                  <td className="number">3</td>
-                  <td className="name">
-                    FRANCK MULLER VANGUARD LADY MOONPHASE
-                  </td>
-                  <td className="points">258.223</td>
-                </tr>
-                <tr className="tr-left-chart">
-                  <td className="number">4</td>
-                  <td className="name">PATEK PHILIPPE COMPLICATIONS</td>
-                  <td className="points">258.212</td>
-                </tr>
+                {topProductSales && topProductSales.map((p: any, index: number) => (
+                  <tr className="tr-left-chart">
+                    <td className="number">{index + 1}</td>
+                    <td className="name">{p.Name}</td>
+                    <td className="points">
+                      {p.Sales}{" "}
+                      {index === 0 ? <img
+                        className="gold-medal"
+                        src="https://github.com/malunaridev/Challenges-iCodeThis/blob/master/4-leaderboard/assets/gold-medal.png?raw=true"
+                        alt="gold medal"
+                      /> : ""}
+                    </td>
+                  </tr>
+                ))}
               </table>
             </div>
           </div>
 
           <div className="right-chart">
-            <Column className="right-chart-table" data={data2} {...config1} />
+            <Column className="right-chart-table" data={yearlySales} {...config1} />
           </div>
         </div>
         {/* TABLE */}
