@@ -323,7 +323,7 @@ const ShopPage = () => {
                     className="btn-shopping"
                     icon={<ShoppingCartOutlined style={{ color: "#fff" }} />}
                     style={{
-                      margin: 25,
+                      margin: 53,
                       color: "#fff",
                       backgroundColor: "#000000",
                     }}

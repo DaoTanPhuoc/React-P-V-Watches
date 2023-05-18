@@ -8,3 +8,7 @@
   justify-content: space-between;
   padding-bottom: 20px;
 }
+
+.moadal-add-brand {
+  width: 40% !important;
+}

@@ -95,7 +95,7 @@
 .chart {
   padding-left: 10px;
   padding-right: 2px;
-  padding-top: 39px;
+  padding-top: 4rem;
   padding-bottom: 47px;
 }
 
@@ -125,13 +125,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 1rem;
+  padding: 2.86rem 1.2rem;
 }
 
 #header-left-chart h1 {
   font-family: "Rubik", sans-serif;
   font-size: 1.7rem;
-  color: #141a39;
+  color: #4963af;
   text-transform: uppercase;
   cursor: default;
 }

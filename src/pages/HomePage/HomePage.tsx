@@ -164,18 +164,9 @@ const HomePage = () => {
           <div className="main-container">
             <ul className="grid-wrapper">
               {brandImages.map((brandImage) => (
-                <li
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: 155,
-                    height: 90,
-                    objectFit: "cover"
-                  }}
-                >
-                  <img src={brandImage} alt="" />
-                </li>
+
+                <img style={{ width: 130, height: 90 }} src={brandImage} alt="" />
+
               ))}
             </ul>
           </div>

@@ -199,7 +199,7 @@ const ProductsDashboard = () => {
       name: "xxx.png",
       status: "done",
       response: "Server Error 500", // custom error message to show
-      url: "https://eltallerdehector.com/wp-content/uploads/2022/10/spiderman-png-free.png",
+      // url: "https://eltallerdehector.com/wp-content/uploads/2022/10/spiderman-png-free.png",
     },
   ]);
 
@@ -221,6 +221,39 @@ const ProductsDashboard = () => {
     const imgWindow = window.open(src);
     imgWindow?.document.write(image.outerHTML);
   };
+  // closed
+
+
+  // preview image
+  const [fileListPreview, setfileListPreview] = useState<UploadFile[]>([
+    {
+      uid: "1",
+      name: "xxx.png",
+      status: "done",
+      response: "Server Error 500", // custom error message to show
+      // url: "https://eltallerdehector.com/wp-content/uploads/2022/10/spiderman-png-free.png",
+    },
+  ]);
+
+  const onChangePreview: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+    setfileListPreview(newFileList);
+  };
+
+  const onPreviewImage = async (file: UploadFile) => {
+    let src = file.url as string;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj as RcFile);
+        reader.onload = () => resolve(reader.result as string);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
+  //closed
 
   // api danh sách sản phẩm
   const [state, setstate] = useState([]);
@@ -288,33 +321,33 @@ const ProductsDashboard = () => {
             className="modal-add-products"
           >
             <Form
-              labelCol={{ span: 4 }}
-              wrapperCol={{ span: 14 }}
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
               layout="horizontal"
               style={{ maxWidth: 600 }}
             >
               <Form.Item
-                label={<span style={{ color: "#000000" }}>Mã sản phẩm:</span>}
+                label={<span style={{ color: "#000000" }}>Mã sản phẩm</span>}
               >
                 <Input />
               </Form.Item>
               <Form.Item
-                label={<span style={{ color: "#000000" }}>Tên sản phẩm:</span>}
+                label={<span style={{ color: "#000000" }}>Tên sản phẩm</span>}
               >
                 <Input />
               </Form.Item>
               <Form.Item
-                label={<span style={{ color: "#000000" }}>Giá tiền:</span>}
+                label={<span style={{ color: "#000000" }}>Giá tiền</span>}
               >
                 <Input />
               </Form.Item>
               <Form.Item
-                label={<span style={{ color: "#000000" }}>Số lượng:</span>}
+                label={<span style={{ color: "#000000" }}>Số lượng</span>}
               >
-                <InputNumber />
+                <InputNumber min={0} />
               </Form.Item>
               <Form.Item
-                label={<span style={{ color: "#000000" }}>Hình ảnh:</span>}
+                label={<span style={{ color: "#000000" }}>Hình ảnh</span>}
               >
                 <ImgCrop rotationSlider>
                   <Upload
@@ -334,12 +367,12 @@ const ProductsDashboard = () => {
                 </ImgCrop>
               </Form.Item>
               <Form.Item
-                label={<span style={{ color: "#000000" }}>Màu sắc:</span>}
+                label={<span style={{ color: "#000000" }}>Màu sắc</span>}
               >
                 <Input />
               </Form.Item>
-              {/* <Form.Item
-                label={<span style={{ color: "#000000" }}>Hình ảnh:</span>}
+              <Form.Item
+                label={<span style={{ color: "#000000" }}>Preview Image</span>}
               >
                 <ImgCrop rotationSlider>
                   <Upload
@@ -350,55 +383,53 @@ const ProductsDashboard = () => {
                     }}
                     action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                     listType="picture-card"
-                    fileList={fileList}
-                    onChange={onChange}
-                    onPreview={onPreview}
+                    fileList={fileListPreview}
+                    onChange={onChangePreview}
+                    onPreview={onPreviewImage}
                   >
-                    {fileList.length < 4 && "+ Upload"}
+                    {fileListPreview.length < 4 && "+ Upload"}
                   </Upload>
                 </ImgCrop>
-              </Form.Item> */}
+              </Form.Item>
               <Form.Item
-                label={<span style={{ color: "#000000" }}>Chất liệu vỏ:</span>}
+                label={<span style={{ color: "#000000" }}>Chất liệu vỏ</span>}
               >
                 <Input />
               </Form.Item>
               <Form.Item
-                label={<span style={{ color: "#000000" }}>Kích thước:</span>}
+                label={<span style={{ color: "#000000" }}>Kích thước</span>}
               >
                 <InputNumber />
               </Form.Item>
               <Form.Item
-                label={<span style={{ color: "#000000" }}>Mặt kính:</span>}
+                label={<span style={{ color: "#000000" }}>Mặt kính</span>}
               >
                 <Input />
               </Form.Item>
               <Form.Item
-                label={<span style={{ color: "#000000" }}>Bộ máy:</span>}
+                label={<span style={{ color: "#000000" }}>Bộ máy</span>}
               >
                 <Input />
               </Form.Item>
               <Form.Item
-                label={<span style={{ color: "#000000" }}>Kháng nước:</span>}
+                label={<span style={{ color: "#000000" }}>Kháng nước</span>}
               >
-                <InputNumber />
+                <InputNumber min={0} />
               </Form.Item>
               <Form.Item
-                label={<span style={{ color: "#000000" }}>Mô tả:</span>}
+                label={<span style={{ color: "#000000" }}>Mô tả</span>}
               >
                 <Input />
               </Form.Item>
               <Form.Item
-                label={<span style={{ color: "#000000" }}>Bảo hành:</span>}
+                label={<span style={{ color: "#000000" }}>Bảo hành</span>}
               >
-                <InputNumber />
+                <InputNumber min={0} />
               </Form.Item>
 
-              <Form.Item label="Switch" valuePropName="checked">
-                <Switch />
-              </Form.Item>
-              <Form.Item label="Button">
-                <Button style={{ color: "#fff", backgroundColor: "#000000" }}>
+
+              <Form.Item >
+                <Button style={{ color: "#fff", backgroundColor: "#000000", marginLeft: "70%" }}>
                   Thêm sản phẩm
                 </Button>
               </Form.Item>
@@ -408,9 +439,10 @@ const ProductsDashboard = () => {
       </div>
       <div>
         {loading ? (
-          "Loading"
+          <Spin style={{ display: "flex", justifyContent: "center", alignItems: "center" }} delay={1000} />
         ) : (
           <Table
+            style={{ paddingTop: "3%" }}
             columns={columns}
             dataSource={state}
             pagination={{ pageSize: 5 }}

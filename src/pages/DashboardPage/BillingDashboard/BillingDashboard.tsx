@@ -9,13 +9,14 @@ import {
   Space,
   Tag,
 } from "antd";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./BillingDashboard.css";
 import Table, { ColumnType, ColumnsType } from "antd/es/table";
 import { FilterConfirmProps } from "antd/es/table/interface";
 
 import { SearchOutlined } from "@ant-design/icons";
 import { TinyArea, TinyColumn } from "@ant-design/charts";
+import axios from "axios";
 
 const onChange = (value: string) => {
   console.log(`selected ${value}`);
@@ -36,6 +37,9 @@ interface DataType {
   tag: string;
 }
 type DataIndex = keyof DataType;
+
+
+
 
 const data: DataType[] = [
   {
@@ -331,8 +335,8 @@ const BillingDashboard = () => {
             {tag === "processing"
               ? "Đang chờ"
               : tag === "success"
-              ? "Đã xác nhận"
-              : "Đã hủy"}
+                ? "Đã xác nhận"
+                : "Đã hủy"}
           </Tag>
         </span>
       ),

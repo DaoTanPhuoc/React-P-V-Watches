@@ -22,6 +22,7 @@ import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import StatisticalPage from "../pages/DashboardPage/Statistical/StatisticalPage";
 import RosPage from "../pages/DashboardPage/RosPage/RosPage";
 import BrandDashboardPage from "../pages/DashboardPage/BrandDashboard/BrandDashboardPage";
+import ImportProductsPage from "../pages/DashboardPage/ImportProduct/ImportProductsPage";
 
 export const userRoutes = createBrowserRouter([
   {
@@ -96,6 +97,10 @@ export const userRoutes = createBrowserRouter([
         path: "brandDash",
         element: <BrandDashboardPage />,
       },
+      {
+        path: "importProducts",
+        element: <ImportProductsPage />
+      }
     ],
   },
   {

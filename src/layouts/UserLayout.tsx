@@ -332,24 +332,27 @@ const UserLayout = () => {
               <h4>Theo dõi & Liên hệ</h4>
               <div className="social-links">
                 <a href="#">
-                  <i className="fab fa-facebook-f">
-                    <img
-                      src="https://donghotantan.vn/images/config/zalo.png"
-                      alt=""
-                    />
-                  </i>
+
+                  <img
+                    style={{ width: 40, height: 40 }}
+                    src="https://donghotantan.vn/images/config/zalo.png"
+                    alt=""
+                  />
+
                 </a>
                 <a href="#">
-                  <i className="fab fa-twitter">
-                    <img
-                      src="https://donghotantan.vn/images/config/message.png"
-                      alt=""
-                    />
-                  </i>
+
+                  <img
+                    style={{ width: 40, height: 40 }}
+                    src="https://donghotantan.vn/images/config/message.png"
+                    alt=""
+                  />
+
                 </a>
 
                 <a href="#">
                   <img
+                    style={{ width: 40, height: 40 }}
                     src="https://ssr-resource-prod.gosell.vn/images/icon/instagram-icon.png"
                     alt=""
                   />
