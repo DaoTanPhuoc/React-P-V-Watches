@@ -2,6 +2,7 @@ import {
   Button,
   Card,
   Form,
+  FormInstance,
   Input,
   InputRef,
   Modal,
@@ -9,7 +10,7 @@ import {
   Space,
   Tag,
 } from "antd";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./BillingDashboard.css";
 import Table, { ColumnType, ColumnsType } from "antd/es/table";
 import { FilterConfirmProps } from "antd/es/table/interface";
@@ -17,6 +18,8 @@ import { FilterConfirmProps } from "antd/es/table/interface";
 import { SearchOutlined } from "@ant-design/icons";
 import { TinyArea, TinyColumn } from "@ant-design/charts";
 import axios from "axios";
+import { AppContext } from "../../../App";
+import { error } from "console";
 
 const onChange = (value: string) => {
   console.log(`selected ${value}`);
@@ -160,6 +163,9 @@ const configTotalSales = {
 };
 
 const BillingDashboard = () => {
+
+
+
   // moadal
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -353,6 +359,63 @@ const BillingDashboard = () => {
       ),
     },
   ];
+
+  // call api danh sach hóa đơn
+  // const { currentToken } = useContext(AppContext);
+  // const formRef = useRef<FormInstance<any>>(null);
+  // const [billdash, setBillDash] = useState([])
+  // const [loading, setloading] = useState(true);
+  // useEffect(() => {
+  //   axios
+  //     .get(`https://localhost:7182/api/Orders`, {
+  //       headers: {
+  //         'Authorization': `Bearer ${currentToken}`,
+  //       },
+  //     })
+  //     .then((result) => {
+  //       setloading(false);
+  //       if (result.status === 200) {
+  //         formRef.current?.resetFields();
+  //       }
+  //       setBillDash(
+  //         result.data.map(
+  //           (row: {
+  //             CustomerName: string;
+  //             Address: string;
+  //             Total: number;
+
+  //           }) => ({
+  //             CustomerName: row.CustomerName,
+  //             Address: row.Address,
+  //             Total: row.Total,
+  //           })
+  //         )
+  //       );
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     })
+  // })
+  // const [orders, setOrders] = useState([])
+  // const [ordersProducts, setOrdersProducts] = useState([])
+  // useEffect(() => {
+  //   axios.get('https://localhost:7182/api/Orders')
+  //     .then(response => {
+  //       setOrders(response.data);
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+
+  //   axios.get('https://api2.example.com/data')
+  //     .then(response => {
+  //       setOrdersProducts(response.data);
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // }, []);
+  // closed
 
   return (
     <>
