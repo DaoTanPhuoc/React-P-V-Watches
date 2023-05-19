@@ -195,9 +195,7 @@ const HomePage = () => {
               {GetAvailableProducts.map((brandImage) => (
                 <div>
                   <div>
-                    <Link
-                      to={`/ProductDetail/${brandImage.BrandName}/${brandImage.Code}`}
-                    >
+                    <Link to={`/ProductDetail/${brandImage.BrandId}/${brandImage.Code}`}>
                       <img
                         style={{
                           height: 300,
@@ -295,35 +293,37 @@ const HomePage = () => {
             </div>
           </div>
           <div className="galleryContainer">
-            {newstProducts &&
-              newstProducts.map((item) => (
-                <div className="galleryItem">
-                  <Link to={`/ProductDetail/${item.BrandName}/${item.Code}`}>
-                    <img
-                      style={{ cursor: "pointer" }}
-                      src={item.Image}
-                      key={item.id}
-                      alt=""
-                    />
-                  </Link>
-                  {/* <h3 style={{ textAlign: "center", padding: 10 }}>{item.name}</h3> */}
-                  <div className="btn-inStore">
-                    {/* <button className="btn-item">Buy Now</button> */}
-                    <div
-                      style={{
-                        padding: 20,
-                        textAlign: "center",
-                      }}
-                    >
-                      <h4 style={{ color: "#888888" }}>MSP: {item.Code}</h4>
-                      <h4>{item.Name}</h4>
-                      <h4 style={{ color: "#dbaf56" }}>
-                        {moneyFormatter.format(item.Price)}
-                      </h4>
-                    </div>
+            {newstProducts && newstProducts.map((item) => (
+              <div className="galleryItem">
+                <Link to={`/ProductDetail/${item.BrandId}/${item.Code}`}>
+                  <img
+                    style={{ cursor: "pointer" }}
+                    src={item.Image}
+                    key={item.id}
+                    alt=""
+                    onClick={() =>
+                      navigate(
+                        `/productdetail/${item.Id}/${item.BrandId}/${item.CaseSize}`
+                      )
+                    }
+                  />
+                </Link>
+                {/* <h3 style={{ textAlign: "center", padding: 10 }}>{item.name}</h3> */}
+                <div className="btn-inStore">
+                  {/* <button className="btn-item">Buy Now</button> */}
+                  <div
+                    style={{
+                      padding: 20,
+                      textAlign: "center",
+                    }}
+                  >
+                    <h4 style={{ color: "#888888" }}>MSP: {item.Code}</h4>
+                    <h4>{item.Name}</h4>
+                    <h4 style={{ color: "#dbaf56" }}>{moneyFormatter.format(item.Price)}</h4>
                   </div>
                 </div>
-              ))}
+              </div>
+            ))}
           </div>
         </div>
 
