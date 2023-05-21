@@ -38,7 +38,7 @@ export const userRoutes = createBrowserRouter([
         element: <ShopPage />,
       },
       {
-        path: "/ProductDetail/:brandId/:code",
+        path: "/ProductDetail/:BrandName/:code",
         element: <ProductDetail />,
       },
       {

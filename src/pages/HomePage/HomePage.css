@@ -185,6 +185,12 @@ hr {
   grid-template-columns: 1fr 1fr 1fr;
 }
 
+/* @media screen and (max-width: 700px) {
+  .galleryContainer {
+    grid-template-rows: 1fr;
+  }
+} */
+
 .galleryItem {
   background: #f1f1f1;
   padding: 10px;
@@ -205,6 +211,24 @@ hr {
   justify-content: center;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 10px;
+}
+
+@media screen and (max-width: 992px) {
+  .galleryContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (max-width: 768px) {
+  .galleryContainer {
+    grid-template-columns: 1fr;
+  }
+  .galleryContainer .galleryItem img {
+    width: 380px;
+    height: 380px;
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 .galleryWrapper hr {
@@ -691,7 +715,7 @@ figure.snip1204 blockquote {
   position: relative;
   background-color: #fafafa;
   padding: 30px 50px 65px 50px;
-  font-size: 0.8em;
+  /* font-size: 0.8em; */
   font-weight: 500;
   margin: 0 0 -40px;
   line-height: 1.6em;
@@ -744,11 +768,13 @@ figure.snip1204 .author span {
   top: 50%;
 }
 
-/* @media screen and (max-width: 992px) {
-  .row-banner .container-section .card {
-    grid-template-columns: repeat(2, 1fr);
+/* @media screen and (max-width: 380px) {
+  .figure.snip1204 blockquote {
+    font-size: 20px;
   }
-}
+} */
+
+/* 
 @media screen and (max-width: 768px) {
   .row-banner .container-section .card {
     grid-template-columns: 1fr;

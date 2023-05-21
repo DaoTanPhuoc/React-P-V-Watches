@@ -170,32 +170,17 @@ const UserLayout = () => {
             {
               key: 3,
               label: <span style={{ color: "#fff" }}>ĐỒNG HỒ NAM</span>,
-              onMouseEnter: () => {
-                setHoverMenu(3);
-              },
-              onMouseLeave: () => {
-                setHoverMenu(0);
-              },
+
             },
             {
               key: 4,
               label: <span style={{ color: "#fff" }}>ĐỒNG HỒ NỮ</span>,
-              onMouseEnter: () => {
-                setHoverMenu(3);
-              },
-              onMouseLeave: () => {
-                setHoverMenu(0);
-              },
+
             },
             {
               key: 5,
               label: <span style={{ color: "#fff" }}>ĐỒNG HỒ ĐÔI</span>,
-              onMouseEnter: () => {
-                setHoverMenu(3);
-              },
-              onMouseLeave: () => {
-                setHoverMenu(0);
-              },
+
             },
             {
               key: 6,
@@ -207,11 +192,15 @@ const UserLayout = () => {
             },
             {
               key: 7,
-              label: (
-                <Link to="/news">
-                  <span style={{ color: "#fff" }}>GIỚI THIỆU</span>
-                </Link>
-              ),
+              label:
+
+                <span style={{ color: "#fff" }}>GIỚI THIỆU</span>,
+              onMouseEnter: () => {
+                setHoverMenu(3);
+              },
+              onMouseLeave: () => {
+                setHoverMenu(0);
+              },
             },
           ]}
         />

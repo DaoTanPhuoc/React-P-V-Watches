@@ -19,7 +19,7 @@ export interface ProductModel {
   IsDeleted: boolean;
   BrandId: number;
   CategoryId: number;
-  Brand?: any;
+  BrandName?: any;
   Category?: any;
   PreviewImages: string;
 }

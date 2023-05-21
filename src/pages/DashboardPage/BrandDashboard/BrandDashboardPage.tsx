@@ -574,7 +574,7 @@ const BrandDashboardPage = () => {
       .then((result) => {
         if (result.status === 200) {
           formRef.current?.resetFields();
-
+          setAddBrand([])
         }
       })
       .catch((error) => {
@@ -707,11 +707,18 @@ const BrandDashboardPage = () => {
                   Số lượng sản phẩm
                 </h4>
                 {loading ? (
-                  <Spin style={{ display: "flex", justifyContent: "center", alignItems: "center" }} delay={1000} />
+                  <Spin style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    margin: "25%"
+                  }} />
                 ) : (<Table
                   pagination={{ pageSize: 3 }}
                   columns={columns}
-                  dataSource={state} />)}
+                  dataSource={state}
+                  bordered
+                />)}
 
               </div>
             </Col>

@@ -124,7 +124,7 @@ const HomeDas = () => {
     <>
       <Content
         style={{
-          padding: 10,
+          padding: 0,
           minHeight: 280,
           // background: "white",
         }}
@@ -136,8 +136,8 @@ const HomeDas = () => {
           }}
           className="content-das"
         >
-          <Row justify="space-between">
-            <Col span={4}>
+          <Row gutter={[4, 24]}>
+            <Col xs={{ span: 14, offset: 0.1 }} lg={{ span: 4, offset: 2 }}>
               <Card
                 style={{
                   width: 290,
@@ -195,7 +195,7 @@ const HomeDas = () => {
                 </Row>
               </Card>
             </Col>
-            <Col span={4}>
+            <Col xs={{ span: 14, offset: 0.1 }} lg={{ span: 4, offset: 2 }}>
               <Card
                 style={{
                   width: 290,
@@ -257,7 +257,7 @@ const HomeDas = () => {
                 </Row>
               </Card>
             </Col>
-            <Col span={4}>
+            <Col xs={{ span: 14, offset: 0.1 }} lg={{ span: 4, offset: 2 }}>
               <Card
                 style={{
                   width: 290,
@@ -299,7 +299,7 @@ const HomeDas = () => {
                 </Row>
               </Card>
             </Col>
-            <Col span={4}>
+            <Col xs={{ span: 14, offset: 0.1 }} lg={{ span: 4, offset: 2 }}>
               <Card
                 style={{
                   width: 290,
@@ -347,38 +347,44 @@ const HomeDas = () => {
             </Col>
           </Row>
         </div>
-        {/* chart */}
-        <div className="chart">
-          <div className="left-chart">
-            <div id="header-left-chart">
-              <h1>Top sản phẩm bán chạy</h1>
-            </div>
-            <div id="leaderboard">
-              <div className="ribbon"></div>
-              <table className="table-left-chart">
-                {topProductSales && topProductSales.map((p: any, index: number) => (
-                  <tr className="tr-left-chart">
-                    <td className="number">{index + 1}</td>
-                    <td className="name">{p.Name}</td>
-                    <td className="points">
-                      {p.Sales}{" "}
-                      {index === 0 ? <img
-                        className="gold-medal"
-                        src="https://github.com/malunaridev/Challenges-iCodeThis/blob/master/4-leaderboard/assets/gold-medal.png?raw=true"
-                        alt="gold medal"
-                      /> : ""}
-                    </td>
-                  </tr>
-                ))}
-              </table>
-            </div>
-          </div>
 
-          <div className="right-chart">
-            <Column className="right-chart-table" data={yearlySales} {...config1} />
-          </div>
+
+        <div className="chart">
+
+          <Row gutter={[8, 8]}>
+            <Col xs={{ span: 26, offset: 1 }} lg={{ span: 8, offset: 1 }}>
+              <div >
+                <div id="header-left-chart">
+                  <h1>Top sản phẩm bán chạy</h1>
+                </div>
+                <div id="leaderboard">
+                  <div className="ribbon"></div>
+                  <table className="table-left-chart">
+                    {topProductSales && topProductSales.map((p: any, index: number) => (
+                      <tr className="tr-left-chart">
+                        <td className="number">{index + 1}</td>
+                        <td className="name">{p.Name}</td>
+                        <td className="points">
+                          {p.Sales}{" "}
+                          {index === 0 ? <img
+                            className="gold-medal"
+                            src="https://github.com/malunaridev/Challenges-iCodeThis/blob/master/4-leaderboard/assets/gold-medal.png?raw=true"
+                            alt="gold medal"
+                          /> : ""}
+                        </td>
+                      </tr>
+                    ))}
+                  </table>
+                </div>
+              </div>
+            </Col>
+            <Col xs={{ span: 20, offset: 1 }} lg={{ span: 14, offset: 1 }}>
+              <Column style={{ marginTop: 80, marginBottom: 60 }} className="right-chart-table" data={yearlySales} {...config1} />
+            </Col>
+          </Row>
+
         </div>
-        {/* TABLE */}
+
       </Content>
     </>
   );

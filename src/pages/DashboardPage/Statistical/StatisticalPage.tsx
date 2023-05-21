@@ -408,7 +408,7 @@ const StatisticalPage = () => {
     {
       title: "Mã sản phẩm",
       dataIndex: "Code",
-      width: "10%",
+      width: "15%",
       ...getColumnSearchProps("Code"),
     },
     {
@@ -440,7 +440,7 @@ const StatisticalPage = () => {
     {
       title: "Thương hiệu",
       dataIndex: "BrandName",
-      width: "15%",
+      width: "10%",
       //render: (BrandId) => brandProducts[BrandId].Name,
       render: (BrandName) => BrandName,
       ...getColumnSearchProps("BrandName"),
@@ -474,11 +474,20 @@ const StatisticalPage = () => {
       <div className="title-chart-das">Thống Kê Doanh Thu</div>
       <div className="chart-das-container">
         <div className="left-chart">
-          <Table
-            pagination={{ pageSize: 4 }}
-            columns={columns}
-            dataSource={state}
-          />
+          {loading ? (
+            <Spin style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: "20%"
+            }} delay={1000} />
+          ) : (
+            <Table
+              pagination={{ pageSize: 4 }}
+              columns={columns}
+              dataSource={state}
+            />
+          )}
         </div>
         <div className="right-chart">
           <div style={{ fontWeight: 600, fontSize: 19, padding: "20px 20px" }}>

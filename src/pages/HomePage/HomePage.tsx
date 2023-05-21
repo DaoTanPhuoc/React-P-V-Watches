@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import "./HomePage.css";
-import { Card, FloatButton } from "antd";
+import { Card, Col, FloatButton, Row } from "antd";
 import "react-indiana-drag-scroll/dist/style.css";
 import axios from "axios";
 import Slider from "react-slick";
@@ -10,6 +10,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { MessageOutlined } from "@ant-design/icons";
 import { AppContext } from "../../App";
 import { Link, useNavigate } from "react-router-dom";
+import { responsiveArray } from "antd/es/_util/responsiveObserver";
 
 const moneyFormatter = new Intl.NumberFormat("vi", {
   style: "currency",
@@ -191,11 +192,13 @@ const HomePage = () => {
               <h2 style={{ textTransform: "uppercase" }}>Sản Phẩm nổi bật</h2>
               <hr />
             </div>
+
+
             <Slider {...setting2}>
               {GetAvailableProducts.map((brandImage) => (
                 <div>
                   <div>
-                    <Link to={`/ProductDetail/${brandImage.BrandId}/${brandImage.Code}`}>
+                    <Link to={`/ProductDetail/${brandImage.BrandName}/${brandImage.Code}`}>
                       <img
                         style={{
                           height: 300,
@@ -295,17 +298,17 @@ const HomePage = () => {
           <div className="galleryContainer">
             {newstProducts && newstProducts.map((item) => (
               <div className="galleryItem">
-                <Link to={`/ProductDetail/${item.BrandId}/${item.Code}`}>
+                <Link to={`/ProductDetail/${item.BrandName}/${item.Code}`}>
                   <img
                     style={{ cursor: "pointer" }}
                     src={item.Image}
                     key={item.id}
                     alt=""
-                    onClick={() =>
-                      navigate(
-                        `/productdetail/${item.Id}/${item.BrandId}/${item.CaseSize}`
-                      )
-                    }
+                  // onClick={() =>
+                  //   navigate(
+                  //     `/productdetail/${item.Id}/${item.BrandId}/${item.CaseSize}`
+                  //   )
+                  // }
                   />
                 </Link>
                 {/* <h3 style={{ textAlign: "center", padding: 10 }}>{item.name}</h3> */}

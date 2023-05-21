@@ -482,7 +482,7 @@ const ProductDetail = () => {
   // SimilarProduct
   const [similarProducts, setSimilarProducts] = useState<any[]>([]);
 
-  const { code, brandId } = useParams();
+  const { code, brandId, BrandName } = useParams();
 
   useEffect(() => {
     axios
@@ -498,7 +498,7 @@ const ProductDetail = () => {
       });
 
     axios
-      .get(`https://localhost:7182/api/Products/SimilarProduct/${brandId}`)
+      .get(`https://localhost:7182/api/Products/SimilarProduct/${BrandName}`)
       .then((result) => {
         const similarProduct = result.data;
         setSimilarProducts(similarProduct);
@@ -506,7 +506,7 @@ const ProductDetail = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [code, baseApi, brandId]);
+  }, [code, baseApi, BrandName]);
 
   // add cart
   const { cartOrders = [], onChangeCartOrders } = useContext(AppContext);

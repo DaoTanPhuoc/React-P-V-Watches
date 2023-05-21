@@ -302,7 +302,7 @@ const ShopPage = () => {
         <Card>
           {filteredProducts.map((watchItem) => (
             <Card.Grid style={gridStyle} key={watchItem.Id}>
-              <Link to={`/ProductDetail/${watchItem.BrandId}/${watchItem.Code}`}>
+              <Link to={`/ProductDetail/${watchItem.BrandName}/${watchItem.Code}`}>
                 <Image
                   style={{ height: 250, cursor: "pointer" }}
                   rootClassName="card-item-image"

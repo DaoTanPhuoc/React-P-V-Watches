@@ -439,13 +439,19 @@ const ProductsDashboard = () => {
       </div>
       <div>
         {loading ? (
-          <Spin style={{ display: "flex", justifyContent: "center", alignItems: "center" }} delay={1000} />
+          <Spin style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            margin: "20%"
+          }} delay={1000} />
         ) : (
           <Table
             style={{ paddingTop: "3%" }}
             columns={columns}
             dataSource={state}
             pagination={{ pageSize: 5 }}
+            bordered
           />
         )}
       </div>

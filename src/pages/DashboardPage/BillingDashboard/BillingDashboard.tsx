@@ -1,11 +1,13 @@
 import {
   Button,
   Card,
+  Col,
   Form,
   FormInstance,
   Input,
   InputRef,
   Modal,
+  Row,
   Select,
   Space,
   Tag,
@@ -31,98 +33,27 @@ const onSearch = (value: string) => {
 
 interface DataType {
   key: string;
-  name: string;
-  image: string;
-  nameProduct: string;
-  Price: number;
-  address: string;
-  phone: string;
+  UserFullName: string;
+  Total: number;
+  Status: number;
+  Address: string;
+  Phone: string;
   tag: string;
+  OrderProducts: []
 }
 type DataIndex = keyof DataType;
 
+// format money
+const moneyFormatter = new Intl.NumberFormat("vi", {
+  style: "currency",
+  currency: "VND",
 
+  // These options are needed to round to whole numbers if that's what you want.
+  //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+  maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+});
+// closed
 
-
-const data: DataType[] = [
-  {
-    key: "1",
-    name: "Đào Tấn Phước",
-    image:
-      "https://bossluxurywatch.vn/uploads/san-pham/rolex/day-date-1/thumbs/418x0/rolex-day-date-40mm-228235-0045.png",
-    nameProduct: "ROLEX DAY-DATE 40MM",
-    Price: 32,
-    address: "số 5, Đường Nguyễn Trung Ngạn, Quận 1, TP. Hồ Chí Minh",
-    phone: "0909970879",
-    tag: "success",
-  },
-  {
-    key: "2",
-    name: "Joe Black",
-    image:
-      "https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/complications/thumbs/418x0/patek-philippe-complications-7130g-016.png",
-    nameProduct: "PATEK PHILIPPE COMPLICATIONS",
-    Price: 42,
-    address: "London No. 1 Lake Park",
-    phone: "0909970878",
-    tag: "success",
-  },
-  {
-    key: "3",
-    name: "Jim Green",
-    image:
-      "https://bossluxurywatch.vn/uploads/san-pham/hublot/big-bang/thumbs/418x0/hublot-big-bang-steel-diamonds-341-sx-130-rx-114.png",
-    nameProduct: "HUBLOT BIG BANG STEEL DIAMONDS",
-    Price: 32,
-    address: "Sydney No. 1 Lake Park",
-    phone: "0909970877",
-    tag: "processing",
-  },
-  {
-    key: "4",
-    name: "Jim Red",
-    image:
-      "https://bossluxurywatch.vn/uploads/san-pham/franck-muller/thumbs/418x0/vanguard-lady-moonphase-v-32-sc-fo-l-d-cd-1p-cold.png",
-    nameProduct: "FRANCK MULLER VANGUARD LADY MOONPHASE",
-    Price: 32,
-    address: "London No. 2 Lake Park",
-    phone: "0909970877",
-    tag: "error",
-  },
-  {
-    key: "5",
-    name: "Jim yellow",
-    image:
-      "https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/complications/thumbs/418x0/patek-philippe-complications-5905p-001.png",
-    nameProduct: "PATEK PHILIPPE COMPLICATIONS",
-    Price: 3550000000,
-    address: "Đồng Nai",
-    phone: "0901605536",
-    tag: "processing",
-  },
-  {
-    key: "6",
-    name: "Jim yellow",
-    image:
-      "https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/complications/thumbs/418x0/patek-philippe-complications-5905p-001.png",
-    nameProduct: "PATEK PHILIPPE COMPLICATIONS",
-    Price: 3550000000,
-    address: "Thành Phố Hồ Chí Minh, Quận 1",
-    phone: "0901605535",
-    tag: "processing",
-  },
-  {
-    key: "7",
-    name: "Jim yellow",
-    image:
-      "https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/complications/thumbs/418x0/patek-philippe-complications-5905p-001.png",
-    nameProduct: "PATEK PHILIPPE COMPLICATIONS",
-    Price: 3550000000,
-    address: "Thành Phố Hồ Chí Minh, Quận 1",
-    phone: "0901605535",
-    tag: "processing",
-  },
-];
 
 // data tổng chốt đơn
 const dataSumBill = [274, 337, 81, 497, 666, 219, 269];
@@ -284,53 +215,101 @@ const BillingDashboard = () => {
     },
   });
 
+
+
+  // call api danh sach hóa đơn
+  const { currentToken } = useContext(AppContext);
+  const formRef = useRef<FormInstance<any>>(null);
+  const [billdash, setBillDash] = useState([])
+  const [loading, setloading] = useState(true);
+  useEffect(() => {
+    axios
+      .get(`https://localhost:7182/api/Orders`, {
+        headers: {
+          'Authorization': `Bearer ${currentToken}`,
+        },
+      })
+      .then((result) => {
+        setloading(false);
+        if (result.status === 200) {
+          formRef.current?.resetFields();
+        }
+        setBillDash(
+          result.data.map(
+            (row: {
+              UserFullName: string;
+              Address: string;
+              Total: number;
+              Phone: string;
+              OrderProducts: []
+
+            }) => ({
+              UserFullName: row.UserFullName,
+              Address: row.Address,
+              Total: row.Total,
+              Phone: row.Phone,
+              OrderProducts: row.OrderProducts
+            })
+          )
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }, [])
+
+
   const columns: ColumnsType<DataType> = [
     {
       title: "Họ Tên",
-      dataIndex: "name",
-      key: "name",
-      width: "20%",
-      ...getColumnSearchProps("name"),
+      dataIndex: "UserFullName",
+      width: "15%",
+      ...getColumnSearchProps("UserFullName"),
     },
     {
       title: "Sản phẩm",
-      dataIndex: "image",
+      dataIndex: "OrderProducts",
       width: "10%",
-      render: (image: string) => (
-        <img
-          src={image}
-          style={{ width: 100, height: 100, objectFit: "cover" }}
-          alt=""
-        />
+      render: (OrderProducts) => (
+        OrderProducts.map((order: { ProductImage: any }) =>
+          <img
+            src={order.ProductImage}
+            style={{ width: 100, height: 100, objectFit: "cover", margin: 15 }}
+            alt=""
+          />)
       ),
     },
     {
       title: "Tên sản phẩm",
-      dataIndex: "nameProduct",
-      width: "25%",
-      ...getColumnSearchProps("nameProduct"),
+      dataIndex: "OrderProducts",
+      width: "20%",
+      render: (OrderProducts) => <div style={{ whiteSpace: "pre-line" }}>
+        {OrderProducts.map((OrderProduct: { ProductName: any; }) => OrderProduct.ProductName).join('\n \n \n \n')}
+      </div>
+      // ...getColumnSearchProps("nameProduct"),
     },
     {
-      title: "Giá Tiền",
-      dataIndex: "Price",
-      key: "Price",
+      title: "Tổng tiền",
+      dataIndex: "Total",
+      key: "Total",
       width: "10%",
+      render: (Total) => moneyFormatter.format(Total)
       // ...getColumnSearchProps("Price"),
     },
     {
       title: "Địa Chỉ",
-      dataIndex: "address",
-      key: "address",
-      ...getColumnSearchProps("address"),
-      width: "25%",
+      dataIndex: "Address",
+      key: "Address",
+      ...getColumnSearchProps("Address"),
+      width: "22%",
       // sorter: (a, b) => a.address.length - b.address.length,
       // sortDirections: ["descend", "ascend"],
     },
     {
       title: "Số điện thoại",
-      dataIndex: "phone",
+      dataIndex: "Phone",
       width: "15%",
-      ...getColumnSearchProps("phone"),
+      ...getColumnSearchProps("Phone"),
     },
     {
       title: "Tình trạng",
@@ -360,61 +339,6 @@ const BillingDashboard = () => {
     },
   ];
 
-  // call api danh sach hóa đơn
-  // const { currentToken } = useContext(AppContext);
-  // const formRef = useRef<FormInstance<any>>(null);
-  // const [billdash, setBillDash] = useState([])
-  // const [loading, setloading] = useState(true);
-  // useEffect(() => {
-  //   axios
-  //     .get(`https://localhost:7182/api/Orders`, {
-  //       headers: {
-  //         'Authorization': `Bearer ${currentToken}`,
-  //       },
-  //     })
-  //     .then((result) => {
-  //       setloading(false);
-  //       if (result.status === 200) {
-  //         formRef.current?.resetFields();
-  //       }
-  //       setBillDash(
-  //         result.data.map(
-  //           (row: {
-  //             CustomerName: string;
-  //             Address: string;
-  //             Total: number;
-
-  //           }) => ({
-  //             CustomerName: row.CustomerName,
-  //             Address: row.Address,
-  //             Total: row.Total,
-  //           })
-  //         )
-  //       );
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     })
-  // })
-  // const [orders, setOrders] = useState([])
-  // const [ordersProducts, setOrdersProducts] = useState([])
-  // useEffect(() => {
-  //   axios.get('https://localhost:7182/api/Orders')
-  //     .then(response => {
-  //       setOrders(response.data);
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-
-  //   axios.get('https://api2.example.com/data')
-  //     .then(response => {
-  //       setOrdersProducts(response.data);
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // }, []);
   // closed
 
   return (
@@ -474,59 +398,69 @@ const BillingDashboard = () => {
               Danh sách hóa đơn
             </h5>
             <div style={{ textAlign: "center", paddingBottom: 50 }}>
-              <Space direction="horizontal" size={16}>
-                <Card
-                  style={{
-                    width: 300,
-                    borderRadius: 12,
-                    boxShadow: "0 5px 10px rgba(0,0,0,.12)",
-                  }}
-                >
-                  <h4 style={{ fontWeight: 600, color: "#8c8c8c" }}>
-                    Tổng chốt đơn
-                  </h4>
-                  <p style={{ fontWeight: 700, fontSize: 30, lineHeight: 2 }}>
-                    1200 đơn
-                  </p>
-                  <TinyColumn data={dataSumBill} {...configClBill} />
-                </Card>
-                <Card
-                  style={{
-                    width: 300,
-                    borderRadius: 12,
-                    boxShadow: "0 5px 10px rgba(0,0,0,.12)",
-                  }}
-                >
-                  <h4 style={{ fontWeight: 600, color: "#8c8c8c" }}>
-                    Tổng đơn đã hủy
-                  </h4>
-                  <p style={{ fontWeight: 700, fontSize: 30, lineHeight: 2 }}>
-                    100 đơn
-                  </p>
-                  <TinyColumn data={dataExitBill} {...configClExitBill} />
-                </Card>
-                <Card
-                  style={{
-                    width: 300,
-                    borderRadius: 12,
-                    boxShadow: "0 5px 10px rgba(0,0,0,.12)",
-                  }}
-                >
-                  <h4 style={{ fontWeight: 600, color: "#8c8c8c" }}>
-                    Tổng Tiền bán
-                  </h4>
-                  <p style={{ fontWeight: 700, fontSize: 30, lineHeight: 2 }}>
-                    1000000000 đ
-                  </p>
-                  <TinyArea data={dataTotalSales} {...configTotalSales} />
-                </Card>
-              </Space>
+              <Row>
+                <Col xs={{ span: 6, offset: 8 }} lg={{ span: 6, offset: 2 }}>
+                  <Card
+                    style={{
+                      width: 300,
+                      borderRadius: 12,
+                      boxShadow: "0 5px 10px rgba(0,0,0,.12)",
+                    }}
+                  >
+                    <h4 style={{ fontWeight: 600, color: "#8c8c8c" }}>
+                      Tổng chốt đơn
+                    </h4>
+                    <p style={{ fontWeight: 700, fontSize: 30, lineHeight: 2 }}>
+                      1200 đơn
+                    </p>
+                    <TinyColumn data={dataSumBill} {...configClBill} />
+                  </Card>
+                </Col>
+                <Col xs={{ span: 6, offset: 8 }} lg={{ span: 6, offset: 2 }}>
+                  <Card
+                    style={{
+                      width: 300,
+                      borderRadius: 12,
+                      boxShadow: "0 5px 10px rgba(0,0,0,.12)",
+                    }}
+                  >
+                    <h4 style={{ fontWeight: 600, color: "#8c8c8c" }}>
+                      Tổng đơn đã hủy
+                    </h4>
+                    <p style={{ fontWeight: 700, fontSize: 30, lineHeight: 2 }}>
+                      100 đơn
+                    </p>
+                    <TinyColumn data={dataExitBill} {...configClExitBill} />
+                  </Card>
+                </Col>
+                <Col xs={{ span: 6, offset: 8 }} lg={{ span: 6, offset: 2 }}>
+                  <Card
+                    style={{
+                      width: 300,
+                      borderRadius: 12,
+                      boxShadow: "0 5px 10px rgba(0,0,0,.12)",
+                    }}
+                  >
+                    <h4 style={{ fontWeight: 600, color: "#8c8c8c" }}>
+                      Tổng Tiền bán
+                    </h4>
+                    <p style={{ fontWeight: 700, fontSize: 30, lineHeight: 2 }}>
+                      1000000000 đ
+                    </p>
+                    <TinyArea data={dataTotalSales} {...configTotalSales} />
+                  </Card>
+                </Col>
+              </Row>
+              {/* <Space direction="horizontal" size={16}>
+
+              </Space> */}
             </div>
             <div className="table-item">
               <Table
                 pagination={{ pageSize: 5 }}
                 columns={columns}
-                dataSource={data}
+                dataSource={billdash}
+                bordered
               />
             </div>
           </div>

@@ -296,7 +296,7 @@ const Dashboard: React.FC = () => {
         >
           <div style={{ width: "100%" }}>
             <div style={{ fontSize: "22px" }}>
-              <SearchOutlined style={{ color: "#fff" }} />
+              {/* <SearchOutlined style={{ color: "#fff" }} /> */}
             </div>
           </div>
 
