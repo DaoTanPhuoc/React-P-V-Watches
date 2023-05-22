@@ -1,13 +1,40 @@
-import { Card, Col, Row, Select, Space } from "antd";
-import React from "react";
+import { Card, Col, Row, Select, Skeleton, Space } from "antd";
+import React, { useContext, useEffect, useState } from "react";
 import "./RosPage.css";
 import { Column, Pie } from "@ant-design/charts";
+import { AppContext } from "../../../App";
+import axios from "axios";
+import moment from "moment";
 
 const handleChange = (value: string) => {
   console.log(`selected ${value}`);
 };
 
 const RosPage = () => {
+  const { baseApi } = useContext(AppContext);
+  const date = new Date();
+  const [month, setMonth] = useState<number>(date.getMonth() + 1);
+  const [orderSales, setOrderSales] = useState<number>(0);
+  const [importCost, setImportCost] = useState<number>(0);
+  const [countOrder, setCountOrder] = useState<number>(0);
+  const [brandSales, setBrandSale] = useState([]);
+  const [brandStock, setBrandStock] = useState([])
+  const [loading, setloading] = useState<boolean>(true)
+
+  useEffect(() => {
+    setloading(true)
+    axios.get(`${baseApi}/Statistics/OrderSalesTotalMonth/${month}`).then(res => setOrderSales(res.data))
+    axios.get(`${baseApi}/Statistics/CountOrdersMonth/${month}`).then(res => setCountOrder(res.data))
+    axios.get(`${baseApi}/Statistics/ImportTotalMonth/${month}`).then(res => setImportCost(res.data))
+    axios.get(`${baseApi}/Statistics/BrandCountSales/${month}`).then(res => setBrandSale(res.data))
+    axios.get(`${baseApi}/Statistics/BrandCountStock`).then(res => setBrandStock(res.data))
+    setloading(false)
+  }, [baseApi, month])
+  const moneyFormatter = new Intl.NumberFormat("vi", {
+    style: "currency",
+    currency: "VND",
+    maximumFractionDigits: 0,
+  });
   const data = [
     {
       type: "Rolex",
@@ -43,7 +70,7 @@ const RosPage = () => {
     },
   ];
   const config = {
-    data,
+    brandSales,
     xField: "type",
     yField: "sales",
 
@@ -139,7 +166,7 @@ const RosPage = () => {
   ];
   const configRoundChart = {
     appendPadding: 10,
-    RoundChartData,
+    brandStock,
     angleField: "value",
     colorField: "type",
     radius: 0.8,
@@ -161,22 +188,22 @@ const RosPage = () => {
         </div>
         <div className="select-month">
           <Select
-            defaultValue="Tháng 1"
+            defaultValue={date.getMonth() + 1}
             style={{ width: 120 }}
-            onChange={handleChange}
+            onChange={(value) => setMonth(value)}
             options={[
-              { value: "Tháng 1", label: "Tháng 1" },
-              { value: "Tháng 2", label: "Tháng 2" },
-              { value: "Tháng 3", label: "Tháng 3" },
-              { value: "Tháng 4", label: "Tháng 4" },
-              { value: "Tháng 5", label: "Tháng 5" },
-              { value: "Tháng 6", label: "Tháng 6" },
-              { value: "Tháng 7", label: "Tháng 7" },
-              { value: "Tháng 8", label: "Tháng 8" },
-              { value: "Tháng 9", label: "Tháng 9" },
-              { value: "Tháng 10", label: "Tháng 10" },
-              { value: "Tháng 11", label: "Tháng 11" },
-              { value: "Tháng 12", label: "Tháng 12" },
+              { value: 1, label: "Tháng 1" },
+              { value: 2, label: "Tháng 2" },
+              { value: 3, label: "Tháng 3" },
+              { value: 4, label: "Tháng 4" },
+              { value: 5, label: "Tháng 5" },
+              { value: 6, label: "Tháng 6" },
+              { value: 7, label: "Tháng 7" },
+              { value: 8, label: "Tháng 8" },
+              { value: 9, label: "Tháng 9" },
+              { value: 10, label: "Tháng 10" },
+              { value: 11, label: "Tháng 11" },
+              { value: 12, label: "Tháng 12" },
             ]}
           />
         </div>
@@ -185,56 +212,58 @@ const RosPage = () => {
         <div style={{ paddingTop: 30 }} className="content-Ros-items">
           <Row gutter={[1, 1]}>
             <Col span={6}>
-              <Space direction="vertical" size={16}>
-                <Card style={{ width: 250 }}>
-                  <h4
-                    style={{
-                      textAlign: "center",
-                      padding: 10,
-                      fontWeight: 700,
-                    }}
-                  >
-                    Tổng doanh thu
-                  </h4>
-                  <h4 style={{ textAlign: "center" }}>12000000000</h4>
-                </Card>
-                <Card size="small" style={{ width: 250 }}>
-                  <h4
-                    style={{
-                      textAlign: "center",
-                      padding: 10,
-                      fontWeight: 700,
-                    }}
-                  >
-                    Tổng đơn hàng
-                  </h4>
-                  <h4 style={{ textAlign: "center" }}>1200 đơn</h4>
-                </Card>
-                <Card size="small" style={{ width: 250 }}>
-                  <h4
-                    style={{
-                      textAlign: "center",
-                      padding: 10,
-                      fontWeight: 700,
-                    }}
-                  >
-                    Tổng nhập sản phẩm
-                  </h4>
-                  <h4 style={{ textAlign: "center" }}>12000000000</h4>
-                </Card>
-                <Card size="small" style={{ width: 250 }}>
-                  <h4
-                    style={{
-                      textAlign: "center",
-                      padding: 10,
-                      fontWeight: 700,
-                    }}
-                  >
-                    Lợi nhuận
-                  </h4>
-                  <h4 style={{ textAlign: "center" }}>12000000000</h4>
-                </Card>
-              </Space>
+              <Skeleton active loading={loading}>
+                <Space direction="vertical" size={16}>
+                  <Card style={{ width: 250 }}>
+                    <h4
+                      style={{
+                        textAlign: "center",
+                        padding: 10,
+                        fontWeight: 700,
+                      }}
+                    >
+                      Tổng doanh thu
+                    </h4>
+                    <h4 style={{ textAlign: "center" }}>{moneyFormatter.format(orderSales)}</h4>
+                  </Card>
+                  <Card size="small" style={{ width: 250 }}>
+                    <h4
+                      style={{
+                        textAlign: "center",
+                        padding: 10,
+                        fontWeight: 700,
+                      }}
+                    >
+                      Tổng đơn hàng
+                    </h4>
+                    <h4 style={{ textAlign: "center" }}>{countOrder} đơn</h4>
+                  </Card>
+                  <Card size="small" style={{ width: 250 }}>
+                    <h4
+                      style={{
+                        textAlign: "center",
+                        padding: 10,
+                        fontWeight: 700,
+                      }}
+                    >
+                      Tổng nhập sản phẩm
+                    </h4>
+                    <h4 style={{ textAlign: "center" }}>{moneyFormatter.format(importCost)}</h4>
+                  </Card>
+                  <Card size="small" style={{ width: 250 }}>
+                    <h4
+                      style={{
+                        textAlign: "center",
+                        padding: 10,
+                        fontWeight: 700,
+                      }}
+                    >
+                      Lợi nhuận
+                    </h4>
+                    <h4 style={{ textAlign: "center" }}>{moneyFormatter.format(orderSales - importCost)}</h4>
+                  </Card>
+                </Space>
+              </Skeleton>
             </Col>
             <Col span={18}>
               <div style={{ border: "1px solid black " }}>
@@ -243,7 +272,7 @@ const RosPage = () => {
                 >
                   Doanh thu theo thương hiệu
                 </h4>
-                <Column {...config} />
+                <Column loading={loading} data={brandSales} {...config} />
               </div>
             </Col>
           </Row>
@@ -281,7 +310,7 @@ const RosPage = () => {
                 >
                   Số lượng sản phẩm
                 </h4>
-                <Column data={dataBrandSales} {...configBrandSales} />
+                <Column loading={loading} data={dataBrandSales} {...configBrandSales} />
               </div>
             </Col>
             <Col span={10}>
@@ -291,7 +320,7 @@ const RosPage = () => {
                 >
                   Số lượng tồn kho
                 </h4>
-                <Pie data={RoundChartData} {...configRoundChart} />
+                <Pie loading={loading} data={brandStock} {...configRoundChart} />
               </div>
             </Col>
           </Row>

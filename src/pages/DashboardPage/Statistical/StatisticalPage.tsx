@@ -154,14 +154,19 @@ const StatisticalPage = () => {
   // call api table tồn kho
   const [state, setstate] = useState([]);
   const [loading, setloading] = useState(true);
-
+  const [brandStock, setBrandStock] = useState([]);
   useEffect(() => {
     getData();
+    getBrandStock()
+    setloading(false);
   }, []);
+
+  const getBrandStock = async () => {
+    axios.get("https://localhost:7182/api/Statistics/BrandCountStock").then(res => setBrandStock(res.data));
+  }
 
   const getData = async () => {
     await axios.get("https://localhost:7182/api/Products").then((res) => {
-      setloading(false);
       setstate(
         res.data.map(
           (row: {
@@ -261,7 +266,7 @@ const StatisticalPage = () => {
   ];
   const config = {
     appendPadding: 10,
-    RoundChartData,
+    brandStock,
     angleField: "value",
     colorField: "type",
     radius: 0.8,
@@ -494,7 +499,7 @@ const StatisticalPage = () => {
             Thống kê số lượng tồn kho
           </div>
           <div className="chart-brand">
-            <Pie data={RoundChartData} {...config} />
+            <Pie data={brandStock} {...config} />
           </div>
           <div className="container-right">
             <Row gutter={20}>
