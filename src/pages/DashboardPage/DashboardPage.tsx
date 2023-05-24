@@ -215,40 +215,44 @@ const Dashboard: React.FC = () => {
     getItem(<Link to="/admin">Dashboard</Link>, "1", <DashboardOutlined />),
     getItem("Sản Phẩm", "sub1", <ShopOutlined />, [
       getItem(
-        <Link to="/admin/dasProducts">Danh sách</Link>,
+        <Link to="/admin/dasProducts">Danh Sách</Link>,
         "2",
         <BookOutlined />
       ),
       getItem(
-        <Link to="/admin/statistical">Tồn kho</Link>,
+        <Link to="/admin/statistical">Tồn Kho</Link>,
         "3",
         <WalletOutlined />
       ),
       getItem(
-        <Link to="/admin/brandDash">Loại sản phẩm</Link>,
+        <Link to="/admin/brandDash">Loại Sản Phẩm</Link>,
         "4",
         <WalletOutlined />
       ),
     ]),
     getItem("Hóa đơn", "sub2", <FormOutlined />, [
       getItem(
-        <Link to="/admin/dasBilling">Danh sách</Link>,
+        <Link to="/admin/dasBilling">Danh Sách</Link>,
         "5",
         <BookOutlined />
       ),
       getItem(
-        <Link to="/admin/importProducts">Nhập hàng</Link>,
+        <Link to="/admin/importProducts">Nhập Hàng</Link>,
         "6",
         <BookOutlined />
       ),
-
+      getItem(
+        <Link to="/admin/invoiceWait">Đơn Hàng</Link>,
+        "9",
+        <BookOutlined />
+      )
     ]),
     getItem(
-      <Link to="/admin/dasPost">Bài viết</Link>,
+      <Link to="/admin/dasPost">Bài Viết</Link>,
       "7",
       <DashboardOutlined />
     ),
-    getItem(<Link to="/admin/ros">Doanh thu</Link>, "8", <DollarOutlined />),
+    getItem(<Link to="/admin/ros">Doanh Thu</Link>, "8", <DollarOutlined />),
   ];
 
   return (

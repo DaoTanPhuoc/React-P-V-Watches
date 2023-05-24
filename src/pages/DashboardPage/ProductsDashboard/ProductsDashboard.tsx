@@ -53,58 +53,47 @@ interface DataType {
   Warranty: number;
 }
 const columns: ColumnsType<DataType> = [
+
   {
-    title: "Name",
-    dataIndex: "Name",
-    key: "name",
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: "Image",
+    title: "Hình ảnh",
     dataIndex: "Image",
     render: (theImageURL) => <img alt={theImageURL} src={theImageURL} />,
   },
   {
-    title: "Price",
+    title: "Tên sản phẩm",
+    dataIndex: "Name",
+    key: "name",
+    // render: (text) => <a>{text}</a>,
+  },
+
+  {
+    title: "Giá tiền",
     dataIndex: "Price",
     key: "price",
     render: (Price) => moneyFormatter.format(Price),
   },
   {
-    title: "Stock",
+    title: "Tồn kho",
     dataIndex: "Stock",
     key: "stock",
   },
 
   {
-    title: "CaseMeterial",
+    title: "Kích thước",
     dataIndex: "CaseMeterial",
     key: "CaseMeterial",
   },
+
+
   {
-    title: "CaseSize",
-    dataIndex: "CaseSize",
-    key: "CaseSize",
-  },
-  {
-    title: "GlassMaterial",
-    dataIndex: "GlassMaterial",
-    key: "GlassMaterial",
-  },
-  {
-    title: "Movement",
+    title: "Bộ máy",
     dataIndex: "Movement",
     key: "Movement",
   },
 
-  {
-    title: "Warranty",
-    dataIndex: "Warranty",
-    key: "Warranty",
-  },
 
   {
-    title: "Action",
+    title: "Chức năng",
     key: "action",
     render: () => (
       <Space size="middle">
@@ -274,9 +263,8 @@ const ProductsDashboard = () => {
             Stock: number;
             CaseMeterial: string;
             CaseSize: number;
-            GlassMaterial: string;
             Movement: string;
-            Warranty: number;
+
           }) => ({
             Name: row.Name,
             Image: row.Image,
@@ -284,9 +272,8 @@ const ProductsDashboard = () => {
             Stock: row.Stock,
             CaseMeterial: row.CaseMeterial,
             CaseSize: row.CaseSize,
-            GlassMaterial: row.GlassMaterial,
             Movement: row.Movement,
-            Warranty: row.Warranty,
+
           })
         )
       );
@@ -450,8 +437,8 @@ const ProductsDashboard = () => {
             style={{ paddingTop: "3%" }}
             columns={columns}
             dataSource={state}
-            pagination={{ pageSize: 5 }}
-            bordered
+            pagination={{ pageSize: 5, position: ['bottomCenter'] }}
+            scroll={{ x: '100%' }}
           />
         )}
       </div>

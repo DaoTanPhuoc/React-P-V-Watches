@@ -6,8 +6,8 @@
 }
 
 .chart-das-container .left-chart {
-  width: 75%;
-  box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  /* box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1); */
 }
 
 .chart-das-container .right-chart {

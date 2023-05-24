@@ -71,3 +71,9 @@
   padding-left: 20px;
   padding-right: 20px;
 }
+
+.image-section {
+  width: 100%;
+  height: 50%;
+  object-fit: cover;
+}

@@ -352,7 +352,7 @@ const HomePage = () => {
               <div className="card-blog">
                 <div className="image-section">
                   <img
-                    src="https://bossluxurywatch.vn/uploads/anh-dong-ho-dang-bao/5004/1-5-mau-dong-ho-sanh-dieu-va-thoi-thuong-danh-cho-phai-dep/audemars-piguet-fpj-h-moser-cie-va-zenith-dat-gia-pha-ky-luc-tai-only-watch-2021/24-mau-patek-philippe-ngung-san-xuat-tu-nam-2022/bao-cao-nganh-dong-ho-thuy-si-nam-2022-xu-huong-tiep-tuc-tang/thumbs/418x0/1-iws-reportmorganstanley-2-1024x683-lo-n.png"
+                    src="https://bossluxurywatch.vn/uploads/tao/0-0d/thumbs/418x0/rolex-cosmograph-daytona-meteorite-2021-1.jpg"
                     alt=""
                   />
                 </div>
@@ -379,7 +379,7 @@ const HomePage = () => {
               <div className="card-blog">
                 <div className="image-section">
                   <img
-                    src="https://bossluxurywatch.vn/uploads/anh-dong-ho-dang-bao/5004/1-5-mau-dong-ho-sanh-dieu-va-thoi-thuong-danh-cho-phai-dep/audemars-piguet-fpj-h-moser-cie-va-zenith-dat-gia-pha-ky-luc-tai-only-watch-2021/richard-mille-ra-mat-sieu-pham-rm-88-tourbillon-smiley-vui-tuoi-va-day-mau-sac/thumbs/418x0/richard-mille-rm-88-tourbillon-smiley.jpg"
+                    src="https://bossluxurywatch.vn/uploads/tao/0-00/thumbs/418x0/2023-rolex-cosmograph-daytona-steel-ceramic-white-dial-126500ln-calibre-4131-hands-on-review-13-2048x1365.jpg"
                     alt=""
                   />
                 </div>
@@ -406,7 +406,7 @@ const HomePage = () => {
               <div className="card-blog">
                 <div className="image-section">
                   <img
-                    src="https://bossluxurywatch.vn/uploads/anh-muc-tin-tuc/thuy-linh/0-2023/thang-1/7/thumbs/418x0/luxexpose-spirit-of-big-bang-bla.jpg"
+                    src="https://bossluxurywatch.vn/uploads/anh-muc-tin-tuc/thuy-linh/0-2023/thang-4/b11/thumbs/418x0/rolex-submariner-6538-5d3-1281-1.jpg"
                     alt=""
                   />
                 </div>

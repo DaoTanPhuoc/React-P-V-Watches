@@ -588,7 +588,7 @@ const BrandDashboardPage = () => {
       <div className="Brand-Dash-container">
         <div className="header-Brand-dash">
           <div className="header-Brand-dash-Items">
-            <h4 style={{ color: "#4963AF", fontWeight: 700 }}>
+            <h4 style={{ color: "#4963AF", fontWeight: 700, fontSize: 23 }}>
               Thống kê loại sản phẩm
             </h4>
             <Button onClick={showModal} style={{ color: "#fff", backgroundColor: "#000000" }}>
@@ -635,7 +635,7 @@ const BrandDashboardPage = () => {
           <Row gutter={[1, 1]}>
             <Col span={6}>
               <Space direction="vertical" size={16}>
-                <Card style={{ width: 250 }}>
+                <Card style={{ width: 270 }}>
                   <h4
                     style={{
                       textAlign: "center",
@@ -647,7 +647,7 @@ const BrandDashboardPage = () => {
                   </h4>
                   <h4 style={{ textAlign: "center" }}>{countCateProducts}</h4>
                 </Card>
-                <Card size="small" style={{ width: 250 }}>
+                <Card size="small" style={{ width: 270 }}>
                   <h4
                     style={{
                       textAlign: "center",
@@ -659,7 +659,7 @@ const BrandDashboardPage = () => {
                   </h4>
                   <h4 style={{ textAlign: "center" }}>{totalStock}</h4>
                 </Card>
-                <Card size="small" style={{ width: 250 }}>
+                <Card size="small" style={{ width: 270 }}>
                   <h4
                     style={{
                       textAlign: "center",
@@ -671,7 +671,7 @@ const BrandDashboardPage = () => {
                   </h4>
                   <h4 style={{ textAlign: "center" }}>{wacthesMan}</h4>
                 </Card>
-                <Card size="small" style={{ width: 250 }}>
+                <Card size="small" style={{ width: 270 }}>
                   <h4
                     style={{
                       textAlign: "center",
@@ -686,21 +686,34 @@ const BrandDashboardPage = () => {
               </Space>
             </Col>
             <Col span={18}>
-              <div style={{ border: "1px solid black " }}>
+              <div style={{ border: "1px solid black" }}>
                 <h4
                   style={{ padding: 10, textAlign: "center", color: "#4963AF" }}
                 >
                   Số lượng sản phẩm bán theo loại
                 </h4>
-                <Line data={dataBrand} {...config} />
+                <Line style={{ height: 456 }} data={dataBrand} {...config} />
               </div>
             </Col>
           </Row>
         </div>
         <div style={{ paddingTop: 50, paddingBottom: 50 }}>
-          <Row gutter={[4, 4]}>
-            <Col span={16}>
-              <div style={{ border: "1px solid black " }}>
+          <Row gutter={[16, 4]}>
+            <Col span={6}>
+              <div>
+                <h4
+                  style={{ padding: 10, textAlign: "center", color: "#4963AF" }}
+                >
+                  Thống kê sản phẩm theo loại
+                </h4>
+                <Pie
+                  style={{}}
+                  data={RoundChartData}
+                  {...configRoundChart} />
+              </div>
+            </Col>
+            <Col span={18}>
+              <div>
                 <h4
                   style={{ padding: 10, textAlign: "center", color: "#4963AF" }}
                 >
@@ -714,25 +727,13 @@ const BrandDashboardPage = () => {
                     margin: "25%"
                   }} />
                 ) : (<Table
-                  pagination={{ pageSize: 3 }}
+                  style={{
+                    paddingTop: 40
+                  }}
+                  pagination={{ pageSize: 3, position: ['bottomCenter'] }}
                   columns={columns}
                   dataSource={state}
-                  bordered
                 />)}
-
-              </div>
-            </Col>
-            <Col span={8}>
-              <div>
-                <h4
-                  style={{ padding: 10, textAlign: "center", color: "#4963AF" }}
-                >
-                  Thống kê sản phẩm theo loại
-                </h4>
-                <Pie
-                  style={{ marginLeft: 60 }}
-                  data={RoundChartData}
-                  {...configRoundChart} />
               </div>
             </Col>
           </Row>

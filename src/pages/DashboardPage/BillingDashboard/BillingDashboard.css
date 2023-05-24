@@ -13,3 +13,52 @@
   width: 50% !important;
   text-align: center;
 }
+
+/* .ant-table {
+  display: block;
+
+  @media screen and (max-width: 600px) {
+    &-thead {
+      display: none;
+    }
+
+    &-thead > tr,
+    &-tbody > tr {
+      th,
+      td {
+        &:first-of-type {
+          padding-top: 1rem;
+        }
+
+        &:last-of-type {
+          padding-bottom: 1rem;
+        }
+      }
+
+      > th,
+      > td {
+        display: block;
+        width: auto !important;
+        border: none;
+        padding: 0 1rem;
+        font-size: 1.1rem;
+
+        &:last-child {
+          border-bottom: 1px solid #eee;
+        }
+      }
+    }
+  }
+} */
+
+.dashbill-Quick-Stats {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+/* 
+@media screen and (max-width: 380px) {
+  .dashbill-Quick-Stats {
+    padding-left: 0;
+  }
+} */

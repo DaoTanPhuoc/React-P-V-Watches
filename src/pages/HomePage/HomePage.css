@@ -93,7 +93,7 @@ hr {
 
 .home-image img {
   width: 100%;
-  height: 100%;
+  height: 116%;
   object-fit: cover;
 }
 
@@ -715,7 +715,7 @@ figure.snip1204 blockquote {
   position: relative;
   background-color: #fafafa;
   padding: 30px 50px 65px 50px;
-  /* font-size: 0.8em; */
+  font-size: 15px;
   font-weight: 500;
   margin: 0 0 -40px;
   line-height: 1.6em;

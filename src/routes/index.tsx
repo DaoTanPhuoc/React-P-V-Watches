@@ -23,6 +23,7 @@ import StatisticalPage from "../pages/DashboardPage/Statistical/StatisticalPage"
 import RosPage from "../pages/DashboardPage/RosPage/RosPage";
 import BrandDashboardPage from "../pages/DashboardPage/BrandDashboard/BrandDashboardPage";
 import ImportProductsPage from "../pages/DashboardPage/ImportProduct/ImportProductsPage";
+import InvoiceWait from "../pages/DashboardPage/InvoiceWait/InvoiceWait";
 
 export const userRoutes = createBrowserRouter([
   {
@@ -100,6 +101,10 @@ export const userRoutes = createBrowserRouter([
       {
         path: "importProducts",
         element: <ImportProductsPage />
+      },
+      {
+        path: "invoiceWait",
+        element: <InvoiceWait />
       }
     ],
   },

@@ -26,6 +26,7 @@ import { useParams } from "react-router-dom";
 import Item from "antd/es/list/Item";
 import { error } from "console";
 import { type } from "os";
+import style from "antd/es/alert/style";
 
 const moneyFormatter = new Intl.NumberFormat("vi", {
   style: "currency",
@@ -458,21 +459,68 @@ const StatisticalPage = () => {
       ),
       // ...getColumnSearchProps("tag"),
     },
-    {
-      title: "Chức năng",
-      width: "15%",
-      dataIndex: "action",
-      render: () => (
-        <Space>
-          <a>Edit</a>
-        </Space>
-      ),
-    },
+    // {
+    //   title: "Chức năng",
+    //   width: "15%",
+    //   dataIndex: "action",
+    //   render: () => (
+    //     <Space>
+    //       <a>Edit</a>
+    //     </Space>
+    //   ),
+    // },
   ];
   return (
-    <div className="Container-StatisticalPage">
-      <div className="title-chart-das">Thống Kê Doanh Thu</div>
-      <div className="chart-das-container">
+    // <div className="Container-StatisticalPage">
+    //   <div className="title-chart-das">Thống Kê Doanh Thu</div>
+    //   <div className="chart-das-container">
+    //     <div className="left-chart">
+    //       {loading ? (
+    //         <Spin style={{
+    //           display: "flex",
+    //           justifyContent: "center",
+    //           alignItems: "center",
+    //           margin: "20%"
+    //         }} delay={1000} />
+    //       ) : (
+    //         <Table
+    //           pagination={{ pageSize: 4 }}
+    //           columns={columns}
+    //           dataSource={state}
+    //         />
+    //       )}
+    //     </div>
+    //     <div className="right-chart">
+    //       <div style={{ fontWeight: 600, fontSize: 19, padding: "20px 20px" }}>
+    //         Thống kê số lượng tồn kho
+    //       </div>
+    //       <div className="chart-brand">
+    //         <Pie data={RoundChartData} {...config} />
+    //       </div>
+    //       <div className="container-right">
+    //         <Row gutter={20}>
+    //           <Col span={12}>
+    //             <Statistic
+    //               title="Tổng sản phẩm"
+    //               value={countStockProducts}
+    //               prefix={<ShopOutlined />}
+    //             />
+    //           </Col>
+    //           <Col span={12}>
+    //             <Statistic
+    //               title="Tổng thương hiệu"
+    //               value={countBrandProducts}
+    //               prefix={<DollarOutlined />}
+    //             />
+    //           </Col>
+    //         </Row>
+    //       </div>
+    //     </div>
+    //   </div>
+
+    // </div>
+    <Row gutter={[8, 8]}>
+      <Col xs={{ span: 22, offset: 0 }} lg={{ span: 15, offset: 0 }}>
         <div className="left-chart">
           {loading ? (
             <Spin style={{
@@ -483,12 +531,16 @@ const StatisticalPage = () => {
             }} delay={1000} />
           ) : (
             <Table
-              pagination={{ pageSize: 4 }}
+              pagination={{ pageSize: 4, position: ['bottomCenter'] }}
               columns={columns}
               dataSource={state}
+              scroll={{ x: '100%' }}
             />
           )}
         </div>
+      </Col>
+
+      <Col xs={{ span: 30, offset: 0 }} lg={{ span: 8, offset: 1 }}>
         <div className="right-chart">
           <div style={{ fontWeight: 600, fontSize: 19, padding: "20px 20px" }}>
             Thống kê số lượng tồn kho
@@ -515,9 +567,8 @@ const StatisticalPage = () => {
             </Row>
           </div>
         </div>
-      </div>
-
-    </div>
+      </Col>
+    </Row>
   );
 };
 

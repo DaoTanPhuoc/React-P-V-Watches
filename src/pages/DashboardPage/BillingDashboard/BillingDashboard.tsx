@@ -56,7 +56,7 @@ const moneyFormatter = new Intl.NumberFormat("vi", {
 
 
 // data tổng chốt đơn
-const dataSumBill = [274, 337, 81, 497, 666, 219, 269];
+const dataSumBill = [274, 337, 81, 497, 666, 219];
 const configClBill = {
   height: 64,
   autoFit: false,
@@ -397,12 +397,12 @@ const BillingDashboard = () => {
             >
               Danh sách hóa đơn
             </h5>
-            <div style={{ textAlign: "center", paddingBottom: 50 }}>
-              <Row>
-                <Col xs={{ span: 6, offset: 8 }} lg={{ span: 6, offset: 2 }}>
+            <div className="dashbill-Quick-Stats" style={{ textAlign: "center", paddingBottom: 50 }}>
+              <Row gutter={[48, 8]}>
+                <Col xs={{ span: 6, offset: 8, pull: 8 }} lg={{ span: 6, offset: 2 }}>
                   <Card
                     style={{
-                      width: 300,
+                      width: 270,
                       borderRadius: 12,
                       boxShadow: "0 5px 10px rgba(0,0,0,.12)",
                     }}
@@ -416,10 +416,10 @@ const BillingDashboard = () => {
                     <TinyColumn data={dataSumBill} {...configClBill} />
                   </Card>
                 </Col>
-                <Col xs={{ span: 6, offset: 8 }} lg={{ span: 6, offset: 2 }}>
+                <Col xs={{ span: 6, offset: 8, pull: 8 }} lg={{ span: 6, offset: 2 }}>
                   <Card
                     style={{
-                      width: 300,
+                      width: 270,
                       borderRadius: 12,
                       boxShadow: "0 5px 10px rgba(0,0,0,.12)",
                     }}
@@ -433,10 +433,10 @@ const BillingDashboard = () => {
                     <TinyColumn data={dataExitBill} {...configClExitBill} />
                   </Card>
                 </Col>
-                <Col xs={{ span: 6, offset: 8 }} lg={{ span: 6, offset: 2 }}>
+                <Col xs={{ span: 6, offset: 8, pull: 8 }} lg={{ span: 6, offset: 2 }}>
                   <Card
                     style={{
-                      width: 300,
+                      width: 270,
                       borderRadius: 12,
                       boxShadow: "0 5px 10px rgba(0,0,0,.12)",
                     }}
@@ -457,10 +457,11 @@ const BillingDashboard = () => {
             </div>
             <div className="table-item">
               <Table
-                pagination={{ pageSize: 5 }}
+                pagination={{ pageSize: 5, position: ['bottomCenter'] }}
                 columns={columns}
                 dataSource={billdash}
                 bordered
+                scroll={{ x: '100%' }}
               />
             </div>
           </div>

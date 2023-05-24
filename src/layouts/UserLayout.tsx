@@ -9,17 +9,21 @@ import {
   Input,
   Dropdown,
   MenuProps,
+  AutoComplete,
 } from "antd";
 import {
   UserOutlined,
   ShoppingCartOutlined,
   LogoutOutlined,
+  SearchOutlined,
 } from "@ant-design/icons";
 import { Header, Content } from "antd/es/layout/layout";
-import { useContext, useMemo, useState } from "react";
+import { useContext, useMemo, useRef, useState } from "react";
 import "./UserLayout.css";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
+import axios from "axios";
+import { ProductModel } from "../models/ProductModel";
 
 const { Search } = Input;
 
@@ -33,6 +37,17 @@ const gridStyle: React.CSSProperties = {
 };
 
 const UserLayout = () => {
+  // formart money
+  const moneyFormatter = new Intl.NumberFormat("vi", {
+    style: "currency",
+    currency: "VND",
+
+    // These options are needed to round to whole numbers if that's what you want.
+    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+    maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+  });
+
+  //closed
   const { cartOrders, setCartOrders } = useContext(AppContext);
   const { currentUser, currentToken, setCurrentToken, setCurrentUser } =
     useContext(AppContext);
@@ -49,6 +64,45 @@ const UserLayout = () => {
 
   const onSearch = (value: string) => console.log(value);
 
+  // search autocomplete
+  const [options, setOptions] = useState([]);
+
+  const handleSearch = async (value: any) => {
+    if (value.trim().length === 0) {
+      setOptions([]);
+      return;
+    }
+
+    try {
+      const response = await axios.get(`https://localhost:7182/api/Products?q=${value.toLowerCase()}`);
+      const data = response.data;
+      const hasMatch = data.some((item: ProductModel) => item.Name.toLowerCase().includes(value.toLowerCase()));
+
+      if (hasMatch) {
+        const newOptions = data
+          .filter((item: ProductModel) => item.Name.toLowerCase().includes(value.toLowerCase()))
+          .map((item: ProductModel) => ({
+            value: item.Name,
+            label: (
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <img src={item.Image} alt={item.Name} style={{ width: 50, height: 50, objectFit: "cover", marginRight: '5px' }} />
+                <div>
+                  <div style={{ fontWeight: 600, textOverflow: "ellipsis", width: "100%" }}>{item.Name}</div>
+                  <div style={{ color: "#dbaf56" }}>{moneyFormatter.format(item.Price)}</div>
+                </div>
+              </div>
+            ),
+          }));
+        setOptions(newOptions);
+      } else {
+        setOptions([]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // closed autocomplete
   const activeMenu = useMemo(() => {
     switch (path) {
       case "shop":
@@ -205,15 +259,25 @@ const UserLayout = () => {
           ]}
         />
         <Space size={"large"}>
-          {/* <Search
-            placeholder="Nhập tên sản phẩm"
-            allowClear
-            enterButton={<SearchOutlined />}
-            size="large"
-            onSearch={onSearch}
+          {/* <SearchOutlined style={{ color: "#fff" }} />
+          <AutoComplete
+            style={{ width: 250 }}
+            options={options}
+            onSearch={handleSearch}
+            allowClear={true}
+            autoFocus={false}
+            placeholder="Tìm kiếm sản phẩm"
           /> */}
-          <Search placeholder="Nhập sản phẩm" />
-
+          <AutoComplete
+            style={{ width: 250 }}
+            options={options}
+            onSearch={handleSearch}
+            allowClear={true}
+            autoFocus={false}
+            placeholder="Tìm kiếm sản phẩm"
+          >
+            <Input suffix={<SearchOutlined />} />
+          </AutoComplete>
           <Link to="/cart">
             <Badge count={cartOrders.length}>
               {/* <Avatar shape="square" size="large" /> */}
