@@ -33,7 +33,7 @@ const onSearch = (value: string) => {
 
 interface DataType {
   key: string;
-  UserFullName: string;
+  FullName: string;
   Total: number;
   Status: number;
   Address: string;
@@ -262,9 +262,9 @@ const BillingDashboard = () => {
   const columns: ColumnsType<DataType> = [
     {
       title: "Họ Tên",
-      dataIndex: "UserFullName",
+      dataIndex: "FullName",
       width: "15%",
-      ...getColumnSearchProps("UserFullName"),
+      ...getColumnSearchProps("FullName"),
     },
     {
       title: "Sản phẩm",

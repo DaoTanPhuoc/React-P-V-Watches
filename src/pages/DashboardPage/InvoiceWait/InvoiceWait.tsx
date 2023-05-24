@@ -1,117 +1,106 @@
-import { Button, Tabs, TabsProps } from 'antd';
+import { Button, message, Tabs, TabsProps } from 'antd';
 import Table, { ColumnsType } from 'antd/es/table';
-import React from 'react'
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react'
+import { AppContext } from '../../../App';
 
 const InvoiceWait = () => {
+    const { baseApi, currentToken } = useContext(AppContext);
+    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
+    const [orders, setOrders] = useState<Order[]>([])
 
+    interface Order {
+        Id: number;
+        FullName: string;
+        OrderProducts: any;
+        Total: number;
+        Address: string;
+        Phone: string;
+        Status: number;
+    }
+    const columns: ColumnsType<Order> = [
+        {
+            title: 'Mã đơn hàng',
+            dataIndex: 'Id',
+        },
+        {
+            title: 'Tên khách hàng',
+            dataIndex: 'FullName',
+            render: (text: string) => <a>{text}</a>,
+        },
+        {
+            title: 'Hình ảnh',
+            dataIndex: 'OrderProducts',
+            render: (orderProducts: any[]) => (
+                orderProducts.map(p =>
+                    <img
+                        src={p.ProductImage}
+                        style={{ width: 100, height: 100, objectFit: "cover", margin: 15 }}
+                        alt=""
+                    />)
+            )
+        },
+        {
+            title: 'Tên sản phẩm',
+            dataIndex: 'OrderProducts',
+            render: (OrderProducts) => <div style={{ whiteSpace: "pre-line" }}>
+                {OrderProducts.map((OrderProduct: { ProductName: any; }) => OrderProduct.ProductName).join('\n \n \n \n')}
+            </div>
+        },
+        {
+            title: 'Tổng tiền',
+            dataIndex: 'Total',
+        },
+        {
+            title: 'Địa chỉ',
+            dataIndex: 'Address',
+        },
+        {
+            title: 'Số điện thoại',
+            dataIndex: 'Phone',
+        }
+    ];
+    const changeStatus = (status: number) => {
+        if (selectedRowKeys.length === 0) return;
+        message.open({ key: 'change', content: "Đang cập nhật...", type: 'loading' })
+        axios.put(`${baseApi}/Orders/UpdateOrderStatus`, selectedRowKeys, {
+            headers: {
+                'Authorization': `Bearer ${currentToken}`
+            },
+            params: {
+                status: status
+            }
+        }).then(res => {
+            switch (res.status) {
+                case 204:
+                    message.open({ key: 'change', content: "Cập nhật thành công", type: 'success' })
+                    break;
+                default:
+                    break;
+            }
+            fetchData();
+            setSelectedRowKeys([])
+        }).catch(err => {
+            message.open({ key: 'change', content: "Lỗi: " + err.data, type: 'error' })
+        })
+    }
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: (selectedRowKeys: React.Key[]) => setSelectedRowKeys(selectedRowKeys),
+    };
+    const fetchData = () => {
+        axios.get(`${baseApi}/Orders`, {
+            headers: {
+                'Authorization': `Bearer ${currentToken}`,
+            },
+        }).then(res => setOrders(res.data));
+    }
+    useEffect(() => {
+        fetchData();
+    }, [baseApi, currentToken])
     const Waitting = () => {
         // table đơn đang chờ xác nhận
-        interface DataType {
-            key: React.Key;
-            orderId: string;
-            name: string;
-            Image: string;
-            nameProducts: string;
-            quantity: number;
-            Price: number;
-            Address: string;
-            Phone: string;
-        }
-
-        const columns: ColumnsType<DataType> = [
-            {
-                title: 'Mã đơn hàng',
-                dataIndex: 'orderId',
-            },
-            {
-                title: 'Tên khách hàng',
-                dataIndex: 'name',
-                render: (text: string) => <a>{text}</a>,
-            },
-            {
-                title: 'Hình ảnh',
-                dataIndex: 'Image',
-                render: (Image: string) => <img src={Image} alt="" />
-            },
-            {
-                title: 'Tên sản phẩm',
-                dataIndex: 'nameProducts'
-            },
-            {
-                title: 'Số lượng',
-                dataIndex: 'quantity',
-            },
-            {
-                title: 'Tổng tiền',
-                dataIndex: 'Price',
-            },
-            {
-                title: 'Địa chỉ',
-                dataIndex: 'Address',
-            },
-            {
-                title: 'Số điện thoại',
-                dataIndex: 'Phone',
-            }
-        ];
-
-        const data: DataType[] = [
-            {
-                key: '1',
-                orderId: "1",
-                name: 'Đào Tấn Phước',
-                Image: 'https://bossluxurywatch.vn/uploads/san-pham/rolex/datejust-31/thumbs/418x0/dong-ho-rolex-datejust-31-278285rbr-0036.png',
-                nameProducts: "ROLEX DATEJUST 31 278285RBR-0036",
-                quantity: 1,
-                Price: 320000000,
-                Address: 'Ấp Vĩnh Hiệp, xã Tân Bình, Huyện Vĩnh Cứu, tỉnh ĐỒng Nai',
-                Phone: "0909970879",
-            },
-            {
-                key: '2',
-                orderId: "2",
-                name: 'Thái Thị Thu Thảo',
-                Image: 'https://bossluxurywatch.vn/uploads/san-pham/hublot/sang-bleu/thumbs/645x0/hublot-big-bang-one-click-sang-bleu-steel-pink-diamonds-39mm-465-ss-89p7-vr-1204-mxm20.png',
-                nameProducts: "HUBLOT BIG BANG ONE CLICK SANG",
-                quantity: 1,
-                Price: 400000000,
-                Address: 'Số 5, Đường Nguyễn Trung Ngạn, Quận 1, Thành Phố Hồ CHí Minh',
-                Phone: "0908970879",
-            },
-            {
-                key: '3',
-                orderId: "3",
-                name: 'Đào Thanh Phát',
-                Image: 'https://bossluxurywatch.vn/uploads/san-pham/rolex/datejust-36/thumbs/418x0/rolex-datejust-36-126284rbr-0029.png',
-                nameProducts: "HUBLOT BIG BANG ONE CLICK SANG",
-                quantity: 1,
-                Price: 500000000,
-                Address: 'Số 3, Đường Nguyễn Trung Ngạn, Quận 1, Thành Phố Hồ CHí Minh',
-                Phone: "0908970899",
-            },
-            {
-                key: '4',
-                orderId: "4",
-                name: 'Đào Thanh Phương',
-                Image: 'https://bossluxurywatch.vn/uploads/san-pham/rolex/datejust-28/thumbs/645x0/rolex-datejust-28-279381rbr-0011.png',
-                nameProducts: "ROLEX DATEJUST 28 279381RBR-0011",
-                quantity: 1,
-                Price: 200000000,
-                Address: 'Số 1, Đường Nguyễn Trung Ngạn, Quận 1, Thành Phố Hồ CHí Minh',
-                Phone: "0908970889",
-            },
-        ];
-
-        const rowSelection = {
-            onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-            },
-            getCheckboxProps: (record: DataType) => ({
-                disabled: record.name === 'Disabled User', // Column configuration not to be checked
-                name: record.name,
-            }),
-        };
-
+        const data = orders.filter(order => order.Status === 0)
         // closed
         return (
             <>
@@ -121,7 +110,9 @@ const InvoiceWait = () => {
                         color: "#fff",
                         marginBottom: "40px",
                         marginTop: "20px"
-                    }}>
+                    }}
+                    onClick={() => changeStatus(1)}
+                >
                     Cập nhật
                 </Button>
                 <Table
@@ -129,6 +120,7 @@ const InvoiceWait = () => {
                         type: "checkbox",
                         ...rowSelection,
                     }}
+                    rowKey="Id"
                     columns={columns}
                     dataSource={data}
                     pagination={{ pageSize: 5 }}
@@ -138,102 +130,8 @@ const InvoiceWait = () => {
     }
 
     const WaittingExit = () => {
-        // table đơn đang chờ xác nhận
-        interface DataType {
-            key: React.Key;
-            orderId: string;
-            name: string;
-            Image: string;
-            nameProducts: string;
-            quantity: number;
-            Price: number;
-            Address: string;
-            Phone: string;
-        }
-
-        const columns: ColumnsType<DataType> = [
-            {
-                title: 'Mã đơn hàng',
-                dataIndex: 'orderId',
-            },
-            {
-                title: 'Tên khách hàng',
-                dataIndex: 'name',
-                render: (text: string) => <a>{text}</a>,
-            },
-            {
-                title: 'Hình ảnh',
-                dataIndex: 'Image',
-                render: (Image: string) => <img src={Image} alt="" />
-            },
-            {
-                title: 'Tên sản phẩm',
-                dataIndex: 'nameProducts'
-            },
-            {
-                title: 'Số lượng',
-                dataIndex: 'quantity',
-            },
-            {
-                title: 'Tổng tiền',
-                dataIndex: 'Price',
-            },
-            {
-                title: 'Địa chỉ',
-                dataIndex: 'Address',
-            },
-            {
-                title: 'Số điện thoại',
-                dataIndex: 'Phone',
-            }
-        ];
-
-        const data: DataType[] = [
-            {
-                key: '1',
-                orderId: "1",
-                name: 'Đào Tấn Phước',
-                Image: 'https://bossluxurywatch.vn/uploads/san-pham/rolex/datejust-31/thumbs/418x0/dong-ho-rolex-datejust-31-278285rbr-0036.png',
-                nameProducts: "ROLEX DATEJUST 31 278285RBR-0036",
-                quantity: 1,
-                Price: 320000000,
-                Address: 'Ấp Vĩnh Hiệp, xã Tân Bình, Huyện Vĩnh Cứu, tỉnh ĐỒng Nai',
-                Phone: "0909970879",
-            },
-            {
-                key: '2',
-                orderId: "2",
-                name: 'Thái Thị Thu Thảo',
-                Image: 'https://bossluxurywatch.vn/uploads/san-pham/hublot/sang-bleu/thumbs/645x0/hublot-big-bang-one-click-sang-bleu-steel-pink-diamonds-39mm-465-ss-89p7-vr-1204-mxm20.png',
-                nameProducts: "HUBLOT BIG BANG ONE CLICK SANG",
-                quantity: 1,
-                Price: 400000000,
-                Address: 'Số 5, Đường Nguyễn Trung Ngạn, Quận 1, Thành Phố Hồ CHí Minh',
-                Phone: "0908970879",
-            },
-            {
-                key: '3',
-                orderId: "4",
-                name: 'Đào Thanh Phương',
-                Image: 'https://bossluxurywatch.vn/uploads/san-pham/rolex/datejust-28/thumbs/645x0/rolex-datejust-28-279381rbr-0011.png',
-                nameProducts: "ROLEX DATEJUST 28 279381RBR-0011",
-                quantity: 1,
-                Price: 200000000,
-                Address: 'Số 1, Đường Nguyễn Trung Ngạn, Quận 1, Thành Phố Hồ CHí Minh',
-                Phone: "0908970889",
-            },
-        ];
-
-        const rowSelection = {
-            onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-            },
-            getCheckboxProps: (record: DataType) => ({
-                disabled: record.name === 'Disabled User', // Column configuration not to be checked
-                name: record.name,
-            }),
-        };
-
+        // table đơn đang chờ hủy
+        const data = orders.filter(order => order.Status === -1)
         // closed
         return (
             <>
@@ -243,7 +141,9 @@ const InvoiceWait = () => {
                         color: "#fff",
                         marginBottom: "40px",
                         marginTop: "20px"
-                    }}>
+                    }}
+                    onClick={() => changeStatus(0)}
+                >
                     Cập nhật
                 </Button>
                 <Table
@@ -251,6 +151,7 @@ const InvoiceWait = () => {
                         type: "checkbox",
                         ...rowSelection,
                     }}
+                    rowKey="Id"
                     columns={columns}
                     dataSource={data}
                     pagination={{ pageSize: 5 }}
@@ -258,15 +159,6 @@ const InvoiceWait = () => {
             </>
         )
     }
-
-
-
-
-
-
-    const onChange = (key: string) => {
-        console.log(key);
-    };
 
     const items: TabsProps['items'] = [
         {
@@ -290,8 +182,7 @@ const InvoiceWait = () => {
     return (
         <div>
             <h4 style={{ color: "#4963af", padding: "2%" }}> Quản lý đơn hàng</h4>
-            <Tabs type='card' defaultActiveKey="1" items={items} onChange={onChange} />
-
+            <Tabs type='card' defaultActiveKey="1" items={items} />
         </div>
     )
 }
