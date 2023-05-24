@@ -195,7 +195,7 @@ const Details = () => {
               Giờ, Phút, Giây, Ngày
             </Descriptions.Item>
             <Descriptions.Item label="Chất liệu: ">
-              {product?.CaseMeterial}
+              {product?.CaseMaterial}
             </Descriptions.Item>
             <Descriptions.Item label="Bezel: ">Nạm kim cương</Descriptions.Item>
             <Descriptions.Item label="dây đeo: ">

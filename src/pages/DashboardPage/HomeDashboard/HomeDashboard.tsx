@@ -366,11 +366,7 @@ const HomeDas = () => {
                         <td className="name">{p.Name}</td>
                         <td className="points">
                           {p.Sales}{" "}
-                          {index === 0 ? <img
-                            className="gold-medal"
-                            src="https://github.com/malunaridev/Challenges-iCodeThis/blob/master/4-leaderboard/assets/gold-medal.png?raw=true"
-                            alt="gold medal"
-                          /> : ""}
+
                         </td>
                       </tr>
                     ))}

@@ -8,7 +8,7 @@ export interface ProductModel {
   Stock: number;
   Image: string;
   Color: string;
-  CaseMeterial: string;
+  CaseMaterial: string;
   CaseSize: number;
   GlassMaterial: string;
   Movement: string;

@@ -78,11 +78,6 @@ const columns: ColumnsType<DataType> = [
     key: "stock",
   },
 
-  {
-    title: "Kích thước",
-    dataIndex: "CaseMeterial",
-    key: "CaseMeterial",
-  },
 
 
   {
@@ -329,11 +324,6 @@ const ProductsDashboard = () => {
                 <Input />
               </Form.Item>
               <Form.Item
-                label={<span style={{ color: "#000000" }}>Số lượng</span>}
-              >
-                <InputNumber min={0} />
-              </Form.Item>
-              <Form.Item
                 label={<span style={{ color: "#000000" }}>Hình ảnh</span>}
               >
                 <ImgCrop rotationSlider>
@@ -356,7 +346,37 @@ const ProductsDashboard = () => {
               <Form.Item
                 label={<span style={{ color: "#000000" }}>Màu sắc</span>}
               >
-                <Input />
+                <Select
+                  showSearch
+                  style={{
+                    width: 150,
+                    fontWeight: "bold",
+                  }}
+                  placeholder="Màu sắc"
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>
+                    (option?.label ?? "").includes(input)
+                  }
+                  filterSort={(optionA, optionB) =>
+                    (optionA?.label ?? "")
+                      .toLowerCase()
+                      .localeCompare((optionB?.label ?? "").toLowerCase())
+                  }
+                  options={[
+                    {
+                      value: 1,
+                      label: "Vàng",
+                    },
+                    {
+                      value: 2,
+                      label: "Hồng",
+                    },
+                    {
+                      value: 3,
+                      label: "Bạch Kim",
+                    },
+                  ]}
+                />
               </Form.Item>
               <Form.Item
                 label={<span style={{ color: "#000000" }}>Preview Image</span>}
@@ -386,12 +406,72 @@ const ProductsDashboard = () => {
               <Form.Item
                 label={<span style={{ color: "#000000" }}>Kích thước</span>}
               >
-                <InputNumber />
+                <Select
+                  showSearch
+                  style={{
+                    width: 150,
+                    fontWeight: "bold",
+                  }}
+                  placeholder="Thương Hiệu"
+                  optionFilterProp="children"
+                  options={[
+                    {
+                      value: 1,
+                      label: 40,
+                    },
+                    {
+                      value: 2,
+                      label: 31,
+                    },
+                    {
+                      value: 3,
+                      label: 44,
+                    },
+                    {
+                      value: 4,
+                      label: 30,
+                    },
+                  ]}
+                />
               </Form.Item>
               <Form.Item
                 label={<span style={{ color: "#000000" }}>Mặt kính</span>}
               >
-                <Input />
+                <Select
+                  showSearch
+                  style={{
+                    width: 150,
+                    fontWeight: "bold",
+                  }}
+                  placeholder="Loại kính"
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>
+                    (option?.label ?? "").includes(input)
+                  }
+                  filterSort={(optionA, optionB) =>
+                    (optionA?.label ?? "")
+                      .toLowerCase()
+                      .localeCompare((optionB?.label ?? "").toLowerCase())
+                  }
+                  options={[
+                    {
+                      value: 1,
+                      label: "Sapphire",
+                    },
+                    {
+                      value: 2,
+                      label: " Acrylic Crystal",
+                    },
+                    {
+                      value: 3,
+                      label: "Mineral Crystal",
+                    },
+                    {
+                      value: 4,
+                      label: "Hardlex Crystal",
+                    },
+                  ]}
+                />
               </Form.Item>
               <Form.Item
                 label={<span style={{ color: "#000000" }}>Bộ máy</span>}
@@ -401,7 +481,33 @@ const ProductsDashboard = () => {
               <Form.Item
                 label={<span style={{ color: "#000000" }}>Kháng nước</span>}
               >
-                <InputNumber min={0} />
+                <Select
+                  showSearch
+                  style={{
+                    width: 150,
+                    fontWeight: "bold",
+                  }}
+                  placeholder="Mức ATM"
+                  optionFilterProp="children"
+                  options={[
+                    {
+                      value: 1,
+                      label: 3,
+                    },
+                    {
+                      value: 2,
+                      label: 5,
+                    },
+                    {
+                      value: 3,
+                      label: 10,
+                    },
+                    {
+                      value: 4,
+                      label: 20,
+                    },
+                  ]}
+                />
               </Form.Item>
               <Form.Item
                 label={<span style={{ color: "#000000" }}>Mô tả</span>}
@@ -411,7 +517,7 @@ const ProductsDashboard = () => {
               <Form.Item
                 label={<span style={{ color: "#000000" }}>Bảo hành</span>}
               >
-                <InputNumber min={0} />
+                <InputNumber min={1} />
               </Form.Item>
 
 
