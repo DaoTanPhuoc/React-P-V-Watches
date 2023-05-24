@@ -200,9 +200,12 @@ const BrandDashboardPage = () => {
 
   const [state, setstate] = useState([]);
   const [loading, setloading] = useState(true);
+  const [dataChart, setDataChart] = useState([]);
+
 
   useEffect(() => {
     getData();
+    fetchChart();
   }, []);
 
   const getData = async () => {
@@ -227,6 +230,12 @@ const BrandDashboardPage = () => {
       );
     });
   };
+
+  const fetchChart = () => {
+    axios.get("https://localhost:7182/api/Statistics/TotalProductsCategoryOfWeek").then(res => {
+      setDataChart(res.data)
+    })
+  }
 
   // api tông sản phẩm
   const [countCate, setCountCate] = useState([])
@@ -483,8 +492,8 @@ const BrandDashboardPage = () => {
     },
   ];
   const config = {
-    dataBrand,
-    xField: "month",
+    dataChart,
+    xField: "date",
     yField: "value",
     seriesField: "key",
     stepType: "hvh",
@@ -692,7 +701,7 @@ const BrandDashboardPage = () => {
                 >
                   Số lượng sản phẩm bán theo loại
                 </h4>
-                <Line style={{ height: 456 }} data={dataBrand} {...config} />
+                <Line style={{ height: 456 }} data={dataChart} {...config} />
               </div>
             </Col>
           </Row>
