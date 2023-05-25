@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import "./ImportProductsPage.css"
-import { Button, Form, Input, InputNumber, Modal, Select, Space } from 'antd'
+import { Button, Form, Input, InputNumber, message, Modal, Select, Space } from 'antd'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import Table, { ColumnsType } from 'antd/es/table';
+import { AppContext } from '../../../App';
+import axios from 'axios';
 
 const ImportProductsPage = () => {
-
+    const { baseApi, currentToken } = useContext(AppContext);
+    const [data, setData] = useState<DataType[]>([])
+    const [loading, setLoading] = useState<boolean>(true)
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const showModal = () => {
@@ -19,60 +23,64 @@ const ImportProductsPage = () => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-    const handleChange = (value: string) => {
-        console.log(`selected ${value}`);
-    };
-
+    const fetchData = () => {
+        axios.get(`${baseApi}/Imports`, {
+            headers: {
+                'Authorization': `Bearer ${currentToken}`
+            }
+        }).then(res => {
+            setData(res.data)
+            setLoading(false)
+        })
+    }
+    useEffect(() => {
+        fetchData()
+    }, [])
     // danh sach dat hang
     interface DataType {
-        key: React.Key;
+        Id: number;
         Total: number;
-        UserId: string;
-        Supplierld: number;
+        FullName: string;
+        SupplierName: string;
+        CreateAt: string;
     }
 
     const columns: ColumnsType<DataType> = [
         {
-            title: 'Tên User',
-            dataIndex: 'UserId',
-        },
-        {
-            title: 'Nhà cung cấp',
-            dataIndex: 'Supplierld',
+            title: 'Nhà Cung Cấp',
+            dataIndex: 'SupplierName',
         },
         {
             title: 'Tổng cộng',
             dataIndex: 'Total',
         },
-
-
-    ];
-    // dư lieu fake
-    const data: DataType[] = [
         {
-            key: '1',
-            UserId: 'John Brown',
-            Supplierld: 1,
-            Total: 1000000000,
+            title: 'Người nhập',
+            dataIndex: 'FullName',
         },
         {
-            key: '2',
-            UserId: 'John Brown 2',
-            Supplierld: 2,
-            Total: 2000000000,
-        },
-        {
-            key: '3',
-            UserId: 'John Brown 3',
-            Supplierld: 1,
-            Total: 3000000000,
+            title: 'Ngày nhập',
+            dataIndex: 'CreatedAt',
         },
     ];
-
-    // close
 
     const onFinish = (values: any) => {
-        console.log('Received values of form:', values);
+        message.open({ key: 'save', content: "Đang nhập...", type: 'loading' })
+        axios.post(`${baseApi}/Imports`, values, {
+            headers: {
+                'Authorization': `Bearer ${currentToken}`
+            }
+        }).then(res => {
+            switch (res.status) {
+                case 204:
+                    message.open({ key: 'save', content: "Nhập thành công!", type: 'success' })
+                    fetchData()
+                    break;
+
+                default:
+                    break;
+            }
+        }).catch(err => message.open({ key: 'save', content: "Lỗi: " + err.data, type: 'error' }))
     };
     return (
         <div className="container-import-products">
@@ -82,7 +90,7 @@ const ImportProductsPage = () => {
                     fontSize: 22,
                     paddingTop: 30,
                     paddingBottom: 30,
-                }}>Nhập sản phẩm</h4>
+                }}>Quản Lý Hóa Đơn Nhập</h4>
                 <Button onClick={showModal} style={{
                     color: "#fff",
                     backgroundColor: "#000000",
@@ -100,47 +108,46 @@ const ImportProductsPage = () => {
                             style={{ maxWidth: 600 }}
                             autoComplete="off"
                         >
-                            <Form.List name="users">
+                            <Form.Item
+                                name='supplierId'
+                                initialValue={1}
+                            >
+                                <Select
+                                    style={{ width: '100%', marginBottom: 10 }}
+                                    options={[
+                                        { value: 1, label: 'Rolex Factory' },
+                                        { value: 2, label: 'Lucy' },
+                                        { value: 3, label: 'yiminghe' },
+                                    ]}
+                                />
+                            </Form.Item>
+                            <Form.List name="ImportProducts">
                                 {(fields, { add, remove }) => (
                                     <>
                                         {fields.map(({ key, name, ...restField }) => (
                                             <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
                                                 <Form.Item
                                                     {...restField}
-                                                    name={[name, 'first']}
-                                                    rules={[{ required: true, message: 'Missing first name' }]}
+                                                    name={[name, 'ProductCode']}
+                                                    rules={[{ required: true, message: 'Vui lòng nhập mã sản phẩm' }]}
                                                 >
                                                     <Input placeholder="Mã sản phẩm" />
                                                 </Form.Item>
                                                 <Form.Item
+                                                    initialValue={1}
                                                     {...restField}
-                                                    name={[name, 'last']}
-                                                    rules={[{ required: true, message: 'Missing last name' }]}
+                                                    name={[name, 'Price']}
+                                                    rules={[{ required: true, message: 'Vui lòng nhập số lượng' }]}
                                                 >
-                                                    <Input placeholder="Số lượng" />
+                                                    <Input placeholder="Số lượng" type='number' />
                                                 </Form.Item>
                                                 <Form.Item
+                                                    initialValue={1}
                                                     {...restField}
-
-                                                    rules={[{ required: true, message: 'Missing last name' }]}
+                                                    name={[name, 'Quantity']}
+                                                    rules={[{ required: true, message: 'Vui lòng nhập đơn giá' }]}
                                                 >
-                                                    <Input placeholder="Đơn giá nhập" />
-                                                </Form.Item>
-                                                <Form.Item
-                                                    {...restField}
-
-                                                    rules={[{ required: true, message: 'Missing last name' }]}
-                                                >
-                                                    <Select
-                                                        defaultValue="lucy"
-                                                        style={{ width: 120 }}
-                                                        onChange={handleChange}
-                                                        options={[
-                                                            { value: 1, label: 'Rolex Factory' },
-                                                            { value: 'lucy', label: 'Lucy' },
-                                                            { value: 'Yiminghe', label: 'yiminghe' },
-                                                        ]}
-                                                    />
+                                                    <Input placeholder="Đơn giá nhập" type='number' />
                                                 </Form.Item>
                                                 <MinusCircleOutlined onClick={() => remove(name)} />
                                             </Space>
@@ -162,13 +169,7 @@ const ImportProductsPage = () => {
                     </div>
                 </Modal>
                 <div className="table-import-products">
-                    <h4 style={{
-                        color: "#4963AF",
-                        paddingTop: 30,
-                        paddingBottom: 30,
-                        fontSize: 22
-                    }}>Danh sách sản phẩm nhập</h4>
-                    <Table columns={columns} dataSource={data} />
+                    <Table loading={loading} columns={columns} dataSource={data} />
                 </div>
             </div>
         </div>

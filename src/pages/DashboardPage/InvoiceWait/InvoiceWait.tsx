@@ -113,7 +113,7 @@ const InvoiceWait = () => {
                     }}
                     onClick={() => changeStatus(1)}
                 >
-                    Cập nhật
+                    Xác nhận đơn hàng
                 </Button>
                 <Table
                     rowSelection={{
@@ -142,9 +142,9 @@ const InvoiceWait = () => {
                         marginBottom: "40px",
                         marginTop: "20px"
                     }}
-                    onClick={() => changeStatus(0)}
+                    onClick={() => changeStatus(-2)}
                 >
-                    Cập nhật
+                    Xác nhận hủy
                 </Button>
                 <Table
                     rowSelection={{
@@ -162,6 +162,7 @@ const InvoiceWait = () => {
 
     // Đang chuẩn bị hàng
     const PreparingGoods = () => {
+        const data = orders.filter(order => order.Status === 1)
         return (
             <>
                 <Button
@@ -171,9 +172,9 @@ const InvoiceWait = () => {
                         marginBottom: "40px",
                         marginTop: "20px"
                     }}
-                    onClick={() => changeStatus(0)}
+                    onClick={() => changeStatus(2)}
                 >
-                    Cập nhật
+                    Cập nhật trạng thái
                 </Button>
                 <Table
                     rowSelection={{
@@ -182,16 +183,33 @@ const InvoiceWait = () => {
                     }}
                     rowKey="Id"
                     columns={columns}
-                    // dataSource={}
+                    dataSource={data}
                     pagination={{ pageSize: 5 }}
                 />
             </>
         )
     }
-    // closed
-
+    //Đang giao
+    const Delivering = () => {
+        const data = orders.filter(order => order.Status === 2)
+        return (
+            <>
+                <Table
+                    rowSelection={{
+                        type: "checkbox",
+                        ...rowSelection,
+                    }}
+                    rowKey="Id"
+                    columns={columns}
+                    dataSource={data}
+                    pagination={{ pageSize: 5 }}
+                />
+            </>
+        )
+    }
     // đã hoàn thành
     const Complete = () => {
+        const data = orders.filter(order => order.Status === 3)
         return (
             <>
                 <Table
@@ -201,34 +219,15 @@ const InvoiceWait = () => {
                     }}
                     rowKey="Id"
                     columns={columns}
-                    // dataSource={}
+                    dataSource={data}
                     pagination={{ pageSize: 5 }}
                 />
             </>
         )
     }
-    // closed
-
-    // đã hủy
-    const Delivering = () => {
-        return (
-            <>
-                <Table
-                    rowSelection={{
-                        type: "checkbox",
-                        ...rowSelection,
-                    }}
-                    rowKey="Id"
-                    columns={columns}
-                    // dataSource={}
-                    pagination={{ pageSize: 5 }}
-                />
-            </>
-        )
-    }
-    // closed
 
     const Cancelled = () => {
+        const data = orders.filter(order => order.Status === -2)
         return (
             <>
                 <Table
@@ -238,7 +237,7 @@ const InvoiceWait = () => {
                     }}
                     rowKey="Id"
                     columns={columns}
-                    // dataSource={}
+                    dataSource={data}
                     pagination={{ pageSize: 5 }}
                 />
             </>
@@ -281,7 +280,7 @@ const InvoiceWait = () => {
 
     return (
         <div>
-            <h4 style={{ color: "#4963af", padding: "2%" }}> Quản lý đơn hàng</h4>
+            <h4 style={{ color: "#4963af", padding: "2%", textTransform: 'uppercase', fontWeight: 'bold' }}> Quản lý đơn hàng</h4>
             <Tabs type='card' defaultActiveKey="1" items={items} />
         </div>
     )
