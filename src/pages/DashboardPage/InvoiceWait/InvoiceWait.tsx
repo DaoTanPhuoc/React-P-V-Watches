@@ -1,7 +1,7 @@
 import { Button, message, Tabs, TabsProps } from 'antd';
 import Table, { ColumnsType } from 'antd/es/table';
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react'
+import React, { Children, useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../../App';
 
 const InvoiceWait = () => {
@@ -160,6 +160,91 @@ const InvoiceWait = () => {
         )
     }
 
+    // Đang chuẩn bị hàng
+    const PreparingGoods = () => {
+        return (
+            <>
+                <Button
+                    style={{
+                        backgroundColor: "#000000",
+                        color: "#fff",
+                        marginBottom: "40px",
+                        marginTop: "20px"
+                    }}
+                    onClick={() => changeStatus(0)}
+                >
+                    Cập nhật
+                </Button>
+                <Table
+                    rowSelection={{
+                        type: "checkbox",
+                        ...rowSelection,
+                    }}
+                    rowKey="Id"
+                    columns={columns}
+                    // dataSource={}
+                    pagination={{ pageSize: 5 }}
+                />
+            </>
+        )
+    }
+    // closed
+
+    // đã hoàn thành
+    const Complete = () => {
+        return (
+            <>
+                <Table
+                    rowSelection={{
+                        type: "checkbox",
+                        ...rowSelection,
+                    }}
+                    rowKey="Id"
+                    columns={columns}
+                    // dataSource={}
+                    pagination={{ pageSize: 5 }}
+                />
+            </>
+        )
+    }
+    // closed
+
+    // đã hủy
+    const Delivering = () => {
+        return (
+            <>
+                <Table
+                    rowSelection={{
+                        type: "checkbox",
+                        ...rowSelection,
+                    }}
+                    rowKey="Id"
+                    columns={columns}
+                    // dataSource={}
+                    pagination={{ pageSize: 5 }}
+                />
+            </>
+        )
+    }
+    // closed
+
+    const Cancelled = () => {
+        return (
+            <>
+                <Table
+                    rowSelection={{
+                        type: "checkbox",
+                        ...rowSelection,
+                    }}
+                    rowKey="Id"
+                    columns={columns}
+                    // dataSource={}
+                    pagination={{ pageSize: 5 }}
+                />
+            </>
+        )
+    }
+
     const items: TabsProps['items'] = [
         {
             key: '1',
@@ -168,13 +253,28 @@ const InvoiceWait = () => {
         },
         {
             key: '2',
+            label: `Đang chuẩn bị hàng`,
+            children: <PreparingGoods />,
+        },
+        {
+            key: '3',
+            label: `Đang giao`,
+            children: <Delivering />,
+        },
+        {
+            key: '4',
+            label: `Hoàn thành`,
+            children: <Complete />,
+        },
+        {
+            key: '5',
             label: `Đơn hàng chờ hủy`,
             children: <WaittingExit />,
         },
         {
-            key: '3',
-            label: `Đã xác nhận`,
-            children: `Content of Tab Pane 3`,
+            key: '6',
+            label: `Đã hủy`,
+            children: <Cancelled />,
         },
     ];
 
