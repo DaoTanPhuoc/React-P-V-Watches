@@ -47,11 +47,16 @@ const MyOrder = () => {
   const OrderAll = () => {
     const { currentToken } = useContext(AppContext);
     const formRef = useRef<FormInstance<any>>(null);
-    const [orderByUser, setOrderByUser] = useState<any[]>([])
-    // chuyển trang pangintion
-
+    const [orderByUser, setOrderByUser] = useState<any[]>([]);
+    // chuyen trang
+    const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [pageSize, setPageSize] = useState<number>(2);
     // closed
+
+    // Lấy dữ liệu đơn hàng (chuyen trang)
     useEffect(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
       axios
         .get(`https://localhost:7182/api/Orders/GetOrdersByUserId`, {
           headers: {
@@ -59,15 +64,29 @@ const MyOrder = () => {
           },
         })
         .then((result) => {
-          setOrderByUser(result.data)
+          setOrderByUser(result.data);
+          setFilteredProducts(result.data.slice(0, pageSize));
         })
         .catch((error) => {
           console.log(error);
         })
-    }, [])
+    }, [currentToken, pageSize]);
+    // close
 
+    // Lọc dữ liệu đơn hàng theo trang và kích thước trang
+    const filterData = (page: number, data: any[]) => {
+      const startIndex = (page - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      setFilteredProducts(data.slice(startIndex, endIndex));
+    };
 
-    function StatusOrder(status: Number) {
+    // Xử lý sự kiện chuyển trang
+    const handlePageChange = (page: number) => {
+      setCurrentPage(page);
+      filterData(page, orderByUser);
+    };
+
+    function StatusOrder(status: number) {
       switch (status) {
         case -2:
           return (<Tag color="error">Đã Hủy</Tag>);
@@ -84,7 +103,7 @@ const MyOrder = () => {
       }
     }
 
-    const orders = orderByUser.map((order) => {
+    const orders = filteredProducts.map((order) => {
       const products = order.OrderProducts.map((product: any) => {
         return (
           <div style={{ padding: 10 }}>
@@ -118,6 +137,13 @@ const MyOrder = () => {
     return (
       <>
         {orders}
+        <Pagination
+          current={currentPage}
+          pageSize={pageSize}
+          total={orderByUser.length}
+          onChange={handlePageChange}
+          style={{ marginTop: 16, textAlign: "center" }}
+        />
       </>
     );
   };
@@ -177,6 +203,7 @@ const MyOrder = () => {
     return (
       <>
         {orders}
+
       </>
     );
   };
