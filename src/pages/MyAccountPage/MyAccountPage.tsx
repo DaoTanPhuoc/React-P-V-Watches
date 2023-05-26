@@ -11,6 +11,7 @@ import {
   Input,
   message,
   Modal,
+  Pagination,
   Result,
   Row,
   Select,
@@ -47,6 +48,9 @@ const MyOrder = () => {
     const { currentToken } = useContext(AppContext);
     const formRef = useRef<FormInstance<any>>(null);
     const [orderByUser, setOrderByUser] = useState<any[]>([])
+    // chuyển trang pangintion
+
+    // closed
     useEffect(() => {
       axios
         .get(`https://localhost:7182/api/Orders/GetOrdersByUserId`, {
@@ -100,7 +104,6 @@ const MyOrder = () => {
         <Card style={{ marginTop: 16 }} type="inner" title={`Mã đơn hàng #${order.Id} `}>
           <div>
             {products}
-
             <div style={{ padding: 26 }}>
               <p>Trạng thái: {StatusOrder(order.Status)}</p>
               <p>Nhận hàng vào: {order.UpdatedAt}</p>
@@ -119,89 +122,61 @@ const MyOrder = () => {
     );
   };
 
+  // tab đã hủy
   const ExitOrder = () => {
+    const [exitOrderProducts, setExitOrderProducts] = useState<any[]>([])
+    const { currentToken } = useContext(AppContext);
+    useEffect(() => {
+      axios
+        .get(`https://localhost:7182/api/Orders/GetOrdersByUserId`, {
+          headers: {
+            'Authorization': `Bearer ${currentToken}`,
+          }
+        })
+        .then((result) => {
+          setExitOrderProducts(result.data)
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }, [])
 
+
+    const orders = exitOrderProducts
+      .filter((order) => order.Status === -2)
+      .map((order) => {
+        const products = order.OrderProducts.map((product: any) => {
+          return (
+            <div style={{ padding: 10 }}>
+              <Card type="inner" title="Sản phẩm" extra={<a href="#">More</a>}>
+                <div style={{ display: 'flex', justifyContent: "space-between" }}>
+                  <p><img src={product.ProductImage} alt="" /></p>
+                  <p>{product.ProductName}</p>
+                  <p>Số lượng: {product.Quantity}</p>
+                  <p>{moneyFormatter.format(product.Price)}</p>
+                </div>
+              </Card>
+            </div>
+          );
+        });
+
+        return (
+          <Card style={{ marginTop: 16 }} type="inner" title={`Mã đơn hàng #${order.Id} `}>
+            <div>
+              {products}
+
+              <div style={{ padding: 26 }}>
+                <p>Nhận hàng vào: {order.UpdatedAt}</p>
+                <p>Địa chỉ: {order.Address}</p>
+                <p>Tổng giá tiền: {order.TotalPrice} đ</p>
+              </div>
+            </div>
+          </Card>
+        );
+      });
     return (
       <>
-        <div
-          style={{
-            backgroundColor: "#E8EAE9",
-            border: "1px solid #BAC0BD",
-            marginTop: 10,
-          }}
-          className="order-id"
-        >
-          ID Đơn Hàng: #32131
-        </div>
-        <div
-          style={{
-            display: "flex",
-            border: "1px solid #000000",
-            paddingTop: 30,
-          }}
-          className="confirm-order"
-        >
-          <img
-            style={{ width: 100, height: 100, objectFit: "cover" }}
-            src="https://bossluxurywatch.vn/uploads/san-pham/rolex/day-date-1/thumbs/418x0/rolex-day-date-40mm-228235-0045.png"
-            alt=""
-          />
-          <div
-            style={{
-              // whiteSpace: "nowrap",
-              // overflow: "hidden",
-              textOverflow: "ellipsis",
-              width: 110,
-            }}
-          >
-            <Descriptions.Item>
-              PATEK PHILIPPE COMPLICATIONS 5930G-010s
-            </Descriptions.Item>
-          </div>
-          <p style={{ paddingLeft: 20 }}>
-            <span style={{ color: "#6f6e77" }}>Số lượng: </span>1
-          </p>
-          <div>
-            <Space style={{ paddingLeft: 30 }} size={[0, 8]} wrap>
-              {" "}
-              <Tag color="error">Đã hủy</Tag>
-            </Space>
-          </div>
-          <div
-            style={{
-              textOverflow: "ellipsis",
-              width: 150,
-              paddingLeft: 20,
-              color: "#33CC33",
-            }}
-          >
-            Nhận hàng vào <Descriptions.Item>2018-04-24</Descriptions.Item>
-          </div>
-          <div
-            style={{
-              textOverflow: "ellipsis",
-              width: 150,
-            }}
-          >
-            <Descriptions.Item>
-              Số 5, Đường Nguyễn Trung Ngạn, Phường Bến Nghé, Quận 1, Thành Phố
-              Hồ Chí Minh
-            </Descriptions.Item>
-          </div>
-          <div style={{ paddingLeft: 20, width: 130 }}>360.000.000 đ</div>
-          <div>
-            <Button
-              style={{
-                color: "white",
-                backgroundColor: "black",
-                fontWeight: "bold",
-                marginLeft: 30,
-              }}
-            >
-              Hủy Đơn
-            </Button>
-          </div>
-        </div>
+        {orders}
       </>
     );
   };
