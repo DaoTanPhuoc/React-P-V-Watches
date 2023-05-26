@@ -109,10 +109,10 @@ const MyOrder = () => {
           <div style={{ padding: 10 }}>
             <Card type="inner" title="Sản phẩm" extra={<a href="#">More</a>}>
               <div style={{ display: 'flex', justifyContent: "space-between" }}>
-                <p><img src={product.ProductImage} alt="" /></p>
-                <p>{product.ProductName}</p>
-                <p>Số lượng: {product.Quantity}</p>
-                <p>{moneyFormatter.format(product.Price)}</p>
+                <p style={{ width: "10%" }}><img src={product.ProductImage} alt="" /></p>
+                <p style={{ width: "25%" }}> {product.ProductName}</p>
+                <p style={{ width: "10%" }}>Số lượng: {product.Quantity}</p>
+                <p style={{ width: "15%" }}>{moneyFormatter.format(product.Price)}</p>
               </div>
             </Card>
           </div>
@@ -123,11 +123,18 @@ const MyOrder = () => {
         <Card style={{ marginTop: 16 }} type="inner" title={`Mã đơn hàng #${order.Id} `}>
           <div>
             {products}
-            <div style={{ padding: 26 }}>
-              <p>Trạng thái: {StatusOrder(order.Status)}</p>
-              <p>Nhận hàng vào: {order.UpdatedAt}</p>
-              <p>Địa chỉ: {order.Address}</p>
-              <p>Tổng giá tiền: {order.TotalPrice} đ</p>
+            <div style={{ display: 'flex', justifyContent: "space-between" }}>
+              <div style={{ padding: 26, display: 'flex', flexDirection: "column" }}>
+                <p style={{ padding: 5 }}>
+                  Trạng thái: {StatusOrder(order.Status)}
+                </p>
+                <p style={{ padding: 5 }}>Nhận hàng vào: {order.UpdatedAt}</p>
+                <p style={{ padding: 5 }}>Địa chỉ: {order.Address}</p>
+                <p style={{ padding: 5 }}>Tổng giá tiền:  </p>
+              </div>
+              <Button style={{ backgroundColor: "#000000", color: "#fff", marginTop: "8%" }} disabled={order.Status == 0 ? false : true} >
+                Hủy Đơn
+              </Button>
             </div>
           </div>
         </Card>
@@ -152,7 +159,9 @@ const MyOrder = () => {
   const ExitOrder = () => {
     const [exitOrderProducts, setExitOrderProducts] = useState<any[]>([])
     const { currentToken } = useContext(AppContext);
+
     useEffect(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
       axios
         .get(`https://localhost:7182/api/Orders/GetOrdersByUserId`, {
           headers: {
@@ -165,7 +174,24 @@ const MyOrder = () => {
         .catch((error) => {
           console.log(error);
         })
-    }, [])
+    }, [currentToken])
+
+    function StatusOrder(status: number) {
+      switch (status) {
+        case -2:
+          return (<Tag color="error">Đã Hủy</Tag>);
+        case -1:
+          return (<Tag color="warning">Chờ Hủy</Tag>);
+        case 0:
+          return (<Tag color="processing">Chờ xác nhận</Tag>);
+        case 1:
+          return (<Tag color="lime">Đang chuẩn bị</Tag>);
+        case 2:
+          return (<Tag color="lime">Đang Giao</Tag>);
+        default:
+          return (<Tag color="success">Đã Giao</Tag>);
+      }
+    }
 
 
     const orders = exitOrderProducts
@@ -191,10 +217,16 @@ const MyOrder = () => {
             <div>
               {products}
 
-              <div style={{ padding: 26 }}>
-                <p>Nhận hàng vào: {order.UpdatedAt}</p>
-                <p>Địa chỉ: {order.Address}</p>
-                <p>Tổng giá tiền: {order.TotalPrice} đ</p>
+              <div style={{ display: 'flex', justifyContent: "space-between" }}>
+                <div style={{ padding: 26, display: 'flex', flexDirection: "column" }}>
+                  <p style={{ padding: 5 }}>
+                    Trạng thái: {StatusOrder(order.Status)}
+                  </p>
+                  <p style={{ padding: 5 }}>Nhận hàng vào: {order.UpdatedAt}</p>
+                  <p style={{ padding: 5 }}>Địa chỉ: {order.Address}</p>
+                  <p style={{ padding: 5 }}>Tổng giá tiền:  </p>
+                </div>
+
               </div>
             </div>
           </Card>
@@ -203,7 +235,6 @@ const MyOrder = () => {
     return (
       <>
         {orders}
-
       </>
     );
   };
