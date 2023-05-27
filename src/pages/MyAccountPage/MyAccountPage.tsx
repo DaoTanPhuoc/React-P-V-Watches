@@ -16,6 +16,7 @@ import {
   Row,
   Select,
   Space,
+  Spin,
   Tabs,
   TabsProps,
   Tag,
@@ -33,10 +34,12 @@ import {
 import "./MyAccountPage.css";
 import { AppContext } from "../../App";
 import { useNavigate, useParams } from "react-router-dom";
-import moment from "moment";
+import moment, { updateLocale } from "moment";
 import axios from "axios";
 import Upload, { RcFile } from "antd/es/upload";
 import { render } from "@testing-library/react";
+import { error } from "console";
+import { LoadingOutlined } from '@ant-design/icons';
 
 const MyOrder = () => {
   const moneyFormatter = new Intl.NumberFormat("vi", {
@@ -53,6 +56,40 @@ const MyOrder = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [pageSize, setPageSize] = useState<number>(2);
     // closed
+
+    // loading
+    const [loading, setLoading] = useState(false);
+    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+    //closed
+
+
+    const handleCancelOrder = (orderId: number) => {
+      axios
+        .post(`https://localhost:7182/api/Orders/DeleteOrder`, null, {
+          headers: {
+            'Authorization': `Bearer ${currentToken}`,
+          },
+          params: {
+            id: orderId
+          }
+        })
+        .then((result) => {
+          const updatedOrderByUser = orderByUser.map((order) => {
+            if (order.Id === orderId) {
+              return { ...order, Status: -1 }; // Thay đổi trạng thái thành -1 (Đang chờ hủy)
+            }
+            return order;
+          });
+          setOrderByUser(updatedOrderByUser);
+          setLoading(true)
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+    // closed
+
 
     // Lấy dữ liệu đơn hàng (chuyen trang)
     useEffect(() => {
@@ -117,7 +154,14 @@ const MyOrder = () => {
             </Card>
           </div>
         );
-      });
+      }
+      );
+
+      // tổng tiền 
+      const totalPrice = order.OrderProducts.reduce((total: any, product: any) => {
+        return total + product.Price * product.Quantity;
+      }, 0);
+      // closed
 
       return (
         <Card style={{ marginTop: 16 }} type="inner" title={`Mã đơn hàng #${order.Id} `}>
@@ -125,15 +169,29 @@ const MyOrder = () => {
             {products}
             <div style={{ display: 'flex', justifyContent: "space-between" }}>
               <div style={{ padding: 26, display: 'flex', flexDirection: "column" }}>
-                <p style={{ padding: 5 }}>
-                  Trạng thái: {StatusOrder(order.Status)}
+                <p style={{ padding: 5, fontSize: 15 }}>
+                  <span style={{ fontWeight: 700 }}>Trạng thái:</span> {StatusOrder(order.Status)}
                 </p>
-                <p style={{ padding: 5 }}>Nhận hàng vào: {order.UpdatedAt}</p>
-                <p style={{ padding: 5 }}>Địa chỉ: {order.Address}</p>
-                <p style={{ padding: 5 }}>Tổng giá tiền:  </p>
+                <p style={{ padding: 5, fontSize: 15 }}>
+                  <span style={{ fontWeight: 700 }}>Nhận hàng vào:</span> {order.UpdatedAt}
+                </p>
+                <p style={{ padding: 5, fontSize: 15 }}>
+                  <span style={{ fontWeight: 700 }}>Địa chỉ:</span> {order.Address}
+                </p>
+                <p style={{ padding: 5, fontSize: 15 }}>
+                  <span style={{ fontWeight: 700 }}>Tổng tiền :</span> {moneyFormatter.format(totalPrice)}
+                </p>
               </div>
-              <Button style={{ backgroundColor: "#000000", color: "#fff", marginTop: "8%" }} disabled={order.Status == 0 ? false : true} >
-                Hủy Đơn
+              <Button
+                style={{ backgroundColor: "#000000", color: "#fff", marginTop: "8%" }}
+                disabled={order.Status == 0 ? false : true}
+                onClick={() => { handleCancelOrder(order.Id) }}
+              >
+                {loading && (
+                  <div className="overlaySpin">
+                    <Spin indicator={antIcon} />;
+                  </div>
+                )} Hủy Đơn
               </Button>
             </div>
           </div>
