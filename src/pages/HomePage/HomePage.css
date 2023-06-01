@@ -780,3 +780,18 @@ figure.snip1204 .author span {
     grid-template-columns: 1fr;
   }
 } */
+@media only screen and (max-width: 428px) {
+  .grid-wrapper {
+    --auto-grid-min-size: 18rem;
+    grid-gap: 2rem;
+    padding-left: 2.2rem;
+    margin-left: 2rem;
+  }
+}
+
+/* @media only screen and (max-width: 375px) {
+  .grid-wrapper {
+    --auto-grid-min-size: 6rem;
+    grid-gap: 0.5rem;
+  }
+} */

@@ -14,11 +14,13 @@ import {
 import type { DrawerProps, RadioChangeEvent } from "antd";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { SliderMarks } from "antd/es/slider";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { ProductModel } from "../../models/ProductModel";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import { AppContext } from "../../App";
+import { error } from "console";
+import { AnySrvRecord } from "dns";
 
 // search filter
 const initialList = {
@@ -81,10 +83,7 @@ const marks: SliderMarks = {
     label: <strong>100.000$</strong>,
   },
 };
-
-const onChangeCheckBox = (checkedValues: CheckboxValueType[]) => {
-  console.log("checked = ", checkedValues);
-};
+;
 
 const pageSize = 8;
 const Context = React.createContext({ name: "Default" });
@@ -111,7 +110,7 @@ const ShopPage = () => {
   const [products, setProducts] = useState<ProductModel[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<ProductModel[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-
+  // const { brandId, categoryId } = useParams();
   // (chuyen trang)
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -127,18 +126,6 @@ const ShopPage = () => {
   }, []);
 
   //
-
-  const [open, setOpen] = useState(false);
-  const [placement, setPlacement] = useState<DrawerProps["placement"]>("left");
-  const showDrawer = () => {
-    setOpen(true);
-  };
-  const onClose = () => {
-    setOpen(false);
-  };
-  const onChange = (e: RadioChangeEvent) => {
-    setPlacement(e.target.value);
-  };
 
   const onChangePage = (page: number) => {
     setCurrentPage(page);
@@ -169,7 +156,92 @@ const ShopPage = () => {
     }
   }
 
-  const isShow = true;
+  // filter theo thương hiệu sản phẩm
+  const [selectedBrand, setSelectedBrand] = useState(0);
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`https://localhost:7182/api/Products/GetProductsByBrand?brandId=${selectedBrand}`)
+  //     .then((result) => {
+  //       filterData(currentPage, result.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, [selectedBrand, currentPage]);
+
+  useEffect(() => {
+    if (selectedBrand === 0) {
+      return;
+    }
+    axios
+      .get(`https://localhost:7182/api/Products/GetProductsByBrand?brandId=${selectedBrand}`)
+      .then((result) => {
+        filterData(currentPage, result.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [selectedBrand, currentPage]);
+
+
+  // const handleBrandChange = (value: number) => {
+  //   setSelectedBrand(value);
+  //   setCurrentPage(1);
+  // };
+  // const handleBrandChange = (value: number) => {
+  //   setSelectedBrand(value);
+  //   setCurrentPage(1);
+  //   if (value === 0) {
+  //     setFilteredProducts(products);
+  //   } else {
+  //     axios
+  //       .get(`https://localhost:7182/api/Products/GetProductsByBrand?brandId=${value}`)
+  //       .then((result) => {
+  //         filterData(currentPage, result.data);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // };
+  // const handleBrandChange = (value: number) => {
+  //   if (value === 0) {
+  //     setSelectedBrand(value);
+  //     setCurrentPage(1);
+  //     setFilteredProducts(products);
+  //   } else {
+  //     axios
+  //       .get(`https://localhost:7182/api/Products/GetProductsByBrand?brandId=${value}`)
+  //       .then((result) => {
+  //         filterData(currentPage, result.data);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // };
+  const handleBrandChange = (value: number) => {
+    if (value === 0) {
+      setSelectedBrand(value);
+      setCurrentPage(1);
+      // setFilteredProducts(products);
+      filterData(1, products)
+    } else {
+      setSelectedBrand(value);
+      setCurrentPage(1);
+      axios
+        .get(`https://localhost:7182/api/Products/GetProductsByBrand?brandId=${value}`)
+        .then((result) => {
+          setFilteredProducts(result.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
+
 
   // product: OrderProductModel
   function addToCart(orderProduct: any) {
@@ -231,9 +303,12 @@ const ShopPage = () => {
               }}
               placeholder="Thương Hiệu"
               optionFilterProp="children"
+              value={selectedBrand}
+              defaultValue={0}
               filterOption={(input, option) =>
                 (option?.label ?? "").includes(input)
               }
+              onChange={handleBrandChange}
               filterSort={(optionA, optionB) =>
                 (optionA?.label ?? "")
                   .toLowerCase()
@@ -241,12 +316,16 @@ const ShopPage = () => {
               }
               options={[
                 {
+                  value: 0,
+                  label: "Thương Hiệu",
+                },
+                {
                   value: 1,
                   label: "Rolex",
                 },
                 {
                   value: 2,
-                  label: "Channel",
+                  label: "Hublot",
                 },
                 {
                   value: 3,
@@ -254,7 +333,7 @@ const ShopPage = () => {
                 },
                 {
                   value: 4,
-                  label: "Hublot",
+                  label: "Channel",
                 },
               ]}
             />
@@ -299,7 +378,7 @@ const ShopPage = () => {
         <div style={{ padding: 20 }}>
           <h4 style={{ fontWeight: "bold" }}>Watches For You!</h4>
         </div>
-        <Card>
+        <Card className="card-resp">
           {filteredProducts.map((watchItem) => (
             <Card.Grid style={gridStyle} key={watchItem.Id}>
               <Link to={`/ProductDetail/${watchItem.BrandName}/${watchItem.Code}`}>
@@ -335,7 +414,7 @@ const ShopPage = () => {
                 {watchItem.Stock !== 0 ? (
                   <Button
                     className="btn-shopping"
-                    icon={<ShoppingCartOutlined style={{ color: "#fff" }} />}
+                    icon={<ShoppingCartOutlined className="icon-btn-shopping" style={{ color: "#fff" }} />}
                     style={{
                       margin: 53,
                       color: "#fff",
@@ -355,6 +434,7 @@ const ShopPage = () => {
             </Card.Grid>
           ))}
         </Card>
+
         <Pagination
           style={{ textAlign: "center", padding: 35 }}
           current={currentPage}

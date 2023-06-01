@@ -160,3 +160,11 @@
   color: #fff !important;
   background-color: #00000000 !important;
 } */
+@media only screen and (max-width: 414px) {
+  .table-cart-responsive td,
+  .table-cart-responsive th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

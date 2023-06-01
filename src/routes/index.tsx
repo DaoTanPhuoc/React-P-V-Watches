@@ -24,6 +24,13 @@ import RosPage from "../pages/DashboardPage/RosPage/RosPage";
 import BrandDashboardPage from "../pages/DashboardPage/BrandDashboard/BrandDashboardPage";
 import ImportProductsPage from "../pages/DashboardPage/ImportProduct/ImportProductsPage";
 import InvoiceWait from "../pages/DashboardPage/InvoiceWait/InvoiceWait";
+import AdminSettingDas from "../pages/DashboardPage/AdminSetting/AdminSettingDas";
+import ShopMan from "../pages/ShopMan/ShopMan";
+import ShopWoMan from "../pages/ShopWoman/ShopWoMan";
+
+
+
+
 
 export const userRoutes = createBrowserRouter([
   {
@@ -64,6 +71,14 @@ export const userRoutes = createBrowserRouter([
         path: "/myAccount",
         element: <MyAccountPage />,
       },
+      {
+        path: "/shopman/:categoryId",
+        element: <ShopMan />
+      },
+      {
+        path: "/shopwoman/:categoryId",
+        element: <ShopWoMan />
+      }
     ],
   },
   {
@@ -105,6 +120,10 @@ export const userRoutes = createBrowserRouter([
       {
         path: "invoiceWait",
         element: <InvoiceWait />
+      },
+      {
+        path: "settingAccount",
+        element: <AdminSettingDas />
       }
     ],
   },

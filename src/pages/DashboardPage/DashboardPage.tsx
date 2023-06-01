@@ -4,8 +4,8 @@ import {
   UserOutlined,
   BellOutlined,
   FormOutlined,
-  SearchOutlined,
-  FileTextOutlined,
+  SettingFilled,
+  AuditOutlined,
   PoweroffOutlined,
   DashboardOutlined,
   WalletOutlined,
@@ -244,7 +244,7 @@ const Dashboard: React.FC = () => {
       getItem(
         <Link to="/admin/invoiceWait">Đơn Hàng</Link>,
         "9",
-        <BookOutlined />
+        <AuditOutlined />
       )
     ]),
     getItem(
@@ -253,6 +253,7 @@ const Dashboard: React.FC = () => {
       <DashboardOutlined />
     ),
     getItem(<Link to="/admin/ros">Doanh Thu</Link>, "8", <DollarOutlined />),
+    getItem(<Link to="/admin/settingAccount">Tài Khoản</Link>, "10", <SettingFilled />),
   ];
 
   return (

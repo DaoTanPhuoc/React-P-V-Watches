@@ -11,10 +11,13 @@ import {
   Input,
   message,
   Modal,
+  Pagination,
+  Popconfirm,
   Result,
   Row,
   Select,
   Space,
+  Spin,
   Tabs,
   TabsProps,
   Tag,
@@ -32,10 +35,12 @@ import {
 import "./MyAccountPage.css";
 import { AppContext } from "../../App";
 import { useNavigate, useParams } from "react-router-dom";
-import moment from "moment";
+import moment, { updateLocale } from "moment";
 import axios from "axios";
 import Upload, { RcFile } from "antd/es/upload";
 import { render } from "@testing-library/react";
+import { error } from "console";
+import { LoadingOutlined } from '@ant-design/icons';
 
 const MyOrder = () => {
   const moneyFormatter = new Intl.NumberFormat("vi", {
@@ -46,8 +51,50 @@ const MyOrder = () => {
   const OrderAll = () => {
     const { currentToken } = useContext(AppContext);
     const formRef = useRef<FormInstance<any>>(null);
-    const [orderByUser, setOrderByUser] = useState<any[]>([])
+    const [orderByUser, setOrderByUser] = useState<any[]>([]);
+    // chuyen trang
+    const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [pageSize, setPageSize] = useState<number>(2);
+    // closed
+
+    // loading
+    const [loading, setLoading] = useState(false);
+    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+    //closed
+
+
+    const handleCancelOrder = (orderId: number) => {
+      axios
+        .post(`https://localhost:7182/api/Orders/DeleteOrder`, null, {
+          headers: {
+            'Authorization': `Bearer ${currentToken}`,
+          },
+          params: {
+            id: orderId
+          }
+        })
+        .then((result) => {
+          const updatedOrderByUser = orderByUser.map((order) => {
+            if (order.Id === orderId) {
+              return { ...order, Status: -1 }; // Thay đổi trạng thái thành -1 (Đang chờ hủy)
+            }
+            return order;
+          });
+          setOrderByUser(updatedOrderByUser);
+          setLoading(true)
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+    // closed
+
+
+    // Lấy dữ liệu đơn hàng (chuyen trang)
     useEffect(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
       axios
         .get(`https://localhost:7182/api/Orders/GetOrdersByUserId`, {
           headers: {
@@ -55,15 +102,29 @@ const MyOrder = () => {
           },
         })
         .then((result) => {
-          setOrderByUser(result.data)
+          setOrderByUser(result.data);
+          setFilteredProducts(result.data.slice(0, pageSize));
         })
         .catch((error) => {
           console.log(error);
         })
-    }, [])
+    }, [currentToken, pageSize]);
+    // close
 
+    // Lọc dữ liệu đơn hàng theo trang và kích thước trang
+    const filterData = (page: number, data: any[]) => {
+      const startIndex = (page - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      setFilteredProducts(data.slice(startIndex, endIndex));
+    };
 
-    function StatusOrder(status: Number) {
+    // Xử lý sự kiện chuyển trang
+    const handlePageChange = (page: number) => {
+      setCurrentPage(page);
+      filterData(page, orderByUser);
+    };
+
+    function StatusOrder(status: number) {
       switch (status) {
         case -2:
           return (<Tag color="error">Đã Hủy</Tag>);
@@ -80,32 +141,81 @@ const MyOrder = () => {
       }
     }
 
-    const orders = orderByUser.map((order) => {
+    const orders = filteredProducts.map((order) => {
       const products = order.OrderProducts.map((product: any) => {
         return (
           <div style={{ padding: 10 }}>
             <Card type="inner" title="Sản phẩm" extra={<a href="#">More</a>}>
               <div style={{ display: 'flex', justifyContent: "space-between" }}>
-                <p><img src={product.ProductImage} alt="" /></p>
-                <p>{product.ProductName}</p>
-                <p>Số lượng: {product.Quantity}</p>
-                <p>{moneyFormatter.format(product.Price)}</p>
+                <p style={{ width: "10%" }}><img src={product.ProductImage} alt="" /></p>
+                <p style={{ width: "25%" }}> {product.ProductName}</p>
+                <p style={{ width: "10%" }}>Số lượng: {product.Quantity}</p>
+                <p style={{ width: "15%" }}>{moneyFormatter.format(product.Price)}</p>
               </div>
             </Card>
           </div>
         );
-      });
+      }
+      );
 
+      // tổng tiền 
+      const totalPrice = order.OrderProducts.reduce((total: any, product: any) => {
+        return total + product.Price * product.Quantity;
+      }, 0);
+      // closed
+
+      // message
+
+      // closed
+      const confirm = (e: any) => {
+        console.log(e);
+        message.success('Hủy đơn thành công');
+      };
+
+      const cancel = (e: any) => {
+        console.log(e);
+        message.error('Thoát');
+      };
       return (
         <Card style={{ marginTop: 16 }} type="inner" title={`Mã đơn hàng #${order.Id} `}>
           <div>
             {products}
+            <div style={{ display: 'flex', justifyContent: "space-between" }}>
+              <div style={{ padding: 26, display: 'flex', flexDirection: "column" }}>
+                <p style={{ padding: 5, fontSize: 15 }}>
+                  <span style={{ fontWeight: 700 }}>Trạng thái:</span> {StatusOrder(order.Status)}
+                </p>
+                <p style={{ padding: 5, fontSize: 15 }}>
+                  <span style={{ fontWeight: 700 }}>Nhận hàng vào:</span> {order.UpdatedAt}
+                </p>
+                <p style={{ padding: 5, fontSize: 15 }}>
+                  <span style={{ fontWeight: 700 }}>Địa chỉ:</span> {order.Address}
+                </p>
+                <p style={{ padding: 5, fontSize: 15 }}>
+                  <span style={{ fontWeight: 700 }}>Tổng tiền :</span> {moneyFormatter.format(totalPrice)}
+                </p>
+              </div>
+              <Popconfirm
+                title="HỦy đơn"
+                description="Bạn có chắc muốn hủy đơn hàng ?"
+                onConfirm={() => { handleCancelOrder(order.Id) }}
+                onCancel={cancel}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button
+                  style={{ backgroundColor: "#000000", color: "#fff", marginTop: "8%" }}
+                  disabled={order.Status == 0 ? false : true}
 
-            <div style={{ padding: 26 }}>
-              <p>Trạng thái: {StatusOrder(order.Status)}</p>
-              <p>Nhận hàng vào: {order.UpdatedAt}</p>
-              <p>Địa chỉ: {order.Address}</p>
-              <p>Tổng giá tiền: {order.TotalPrice} đ</p>
+                // onClick={() => { handleCancelOrder(order.Id) }}
+                >
+                  {loading && (
+                    <div className="overlaySpin">
+                      <Spin indicator={antIcon} />;
+                    </div>
+                  )} Hủy Đơn
+                </Button>
+              </Popconfirm>
             </div>
           </div>
         </Card>
@@ -115,93 +225,97 @@ const MyOrder = () => {
     return (
       <>
         {orders}
+        <Pagination
+          current={currentPage}
+          pageSize={pageSize}
+          total={orderByUser.length}
+          onChange={handlePageChange}
+          style={{ marginTop: 16, textAlign: "center" }}
+        />
       </>
     );
   };
 
+  // tab đã hủy
   const ExitOrder = () => {
+    const [exitOrderProducts, setExitOrderProducts] = useState<any[]>([])
+    const { currentToken } = useContext(AppContext);
 
+    useEffect(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      axios
+        .get(`https://localhost:7182/api/Orders/GetOrdersByUserId`, {
+          headers: {
+            'Authorization': `Bearer ${currentToken}`,
+          }
+        })
+        .then((result) => {
+          setExitOrderProducts(result.data)
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }, [currentToken])
+
+    function StatusOrder(status: number) {
+      switch (status) {
+        case -2:
+          return (<Tag color="error">Đã Hủy</Tag>);
+        case -1:
+          return (<Tag color="warning">Chờ Hủy</Tag>);
+        case 0:
+          return (<Tag color="processing">Chờ xác nhận</Tag>);
+        case 1:
+          return (<Tag color="lime">Đang chuẩn bị</Tag>);
+        case 2:
+          return (<Tag color="lime">Đang Giao</Tag>);
+        default:
+          return (<Tag color="success">Đã Giao</Tag>);
+      }
+    }
+
+
+    const orders = exitOrderProducts
+      .filter((order) => order.Status === -2)
+      .map((order) => {
+        const products = order.OrderProducts.map((product: any) => {
+          return (
+            <div style={{ padding: 10 }}>
+              <Card type="inner" title="Sản phẩm" extra={<a href="#">More</a>}>
+                <div style={{ display: 'flex', justifyContent: "space-between" }}>
+                  <p><img src={product.ProductImage} alt="" /></p>
+                  <p>{product.ProductName}</p>
+                  <p>Số lượng: {product.Quantity}</p>
+                  <p>{moneyFormatter.format(product.Price)}</p>
+                </div>
+              </Card>
+            </div>
+          );
+        });
+
+        return (
+          <Card style={{ marginTop: 16 }} type="inner" title={`Mã đơn hàng #${order.Id} `}>
+            <div>
+              {products}
+
+              <div style={{ display: 'flex', justifyContent: "space-between" }}>
+                <div style={{ padding: 26, display: 'flex', flexDirection: "column" }}>
+                  <p style={{ padding: 5 }}>
+                    Trạng thái: {StatusOrder(order.Status)}
+                  </p>
+                  <p style={{ padding: 5 }}>Nhận hàng vào: {order.UpdatedAt}</p>
+                  <p style={{ padding: 5 }}>Địa chỉ: {order.Address}</p>
+                  <p style={{ padding: 5 }}>Tổng giá tiền:  </p>
+                </div>
+
+              </div>
+            </div>
+          </Card>
+        );
+      });
     return (
       <>
-        <div
-          style={{
-            backgroundColor: "#E8EAE9",
-            border: "1px solid #BAC0BD",
-            marginTop: 10,
-          }}
-          className="order-id"
-        >
-          ID Đơn Hàng: #32131
-        </div>
-        <div
-          style={{
-            display: "flex",
-            border: "1px solid #000000",
-            paddingTop: 30,
-          }}
-          className="confirm-order"
-        >
-          <img
-            style={{ width: 100, height: 100, objectFit: "cover" }}
-            src="https://bossluxurywatch.vn/uploads/san-pham/rolex/day-date-1/thumbs/418x0/rolex-day-date-40mm-228235-0045.png"
-            alt=""
-          />
-          <div
-            style={{
-              // whiteSpace: "nowrap",
-              // overflow: "hidden",
-              textOverflow: "ellipsis",
-              width: 110,
-            }}
-          >
-            <Descriptions.Item>
-              PATEK PHILIPPE COMPLICATIONS 5930G-010s
-            </Descriptions.Item>
-          </div>
-          <p style={{ paddingLeft: 20 }}>
-            <span style={{ color: "#6f6e77" }}>Số lượng: </span>1
-          </p>
-          <div>
-            <Space style={{ paddingLeft: 30 }} size={[0, 8]} wrap>
-              {" "}
-              <Tag color="error">Đã hủy</Tag>
-            </Space>
-          </div>
-          <div
-            style={{
-              textOverflow: "ellipsis",
-              width: 150,
-              paddingLeft: 20,
-              color: "#33CC33",
-            }}
-          >
-            Nhận hàng vào <Descriptions.Item>2018-04-24</Descriptions.Item>
-          </div>
-          <div
-            style={{
-              textOverflow: "ellipsis",
-              width: 150,
-            }}
-          >
-            <Descriptions.Item>
-              Số 5, Đường Nguyễn Trung Ngạn, Phường Bến Nghé, Quận 1, Thành Phố
-              Hồ Chí Minh
-            </Descriptions.Item>
-          </div>
-          <div style={{ paddingLeft: 20, width: 130 }}>360.000.000 đ</div>
-          <div>
-            <Button
-              style={{
-                color: "white",
-                backgroundColor: "black",
-                fontWeight: "bold",
-                marginLeft: 30,
-              }}
-            >
-              Hủy Đơn
-            </Button>
-          </div>
-        </div>
+        {orders}
       </>
     );
   };

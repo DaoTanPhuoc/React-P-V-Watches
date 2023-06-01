@@ -253,6 +253,43 @@ img {
   display: flex;
 }
 
+@media only screen and (max-width: 480px) {
+  .container-tab-detail {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100% !important;
+  }
+  .lable-product-detail-resp {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    font-size: 7vw !important;
+    text-align: center;
+  }
+  .table-detail-res {
+    width: 380px !important;
+    margin-left: -80px !important;
+  }
+  .tab-detail-res {
+    font-size: 5vw !important;
+  }
+  .left-container-res {
+    width: 300px !important;
+    margin-left: -80px !important;
+  }
+  .header-left-container-res {
+    width: 300px !important;
+    text-align: center;
+    margin-left: -80px !important;
+    font-size: 3.5vw;
+  }
+}
+
+.container-ban {
+  width: 100%;
+  height: 100%;
+}
+
 .container-tab-detail .container-left {
   width: 50%;
 }

@@ -27,6 +27,40 @@ const setting2 = {
   slidesToScroll: 4,
 };
 
+const settings = {
+  infinite: true,
+  speed: 500,
+  slidesToShow: 4,
+  slidesToScroll: 1,
+  initialSlide: 0,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        infinite: true,
+        dots: true,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 2,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+  ],
+};
+
 const settings1 = {
   dots: false,
   arrows: false,
@@ -163,13 +197,13 @@ const HomePage = () => {
             <hr />
           </div>
           <div className="main-container">
-            <ul className="grid-wrapper">
+            <div className="grid-wrapper">
               {brandImages.map((brandImage) => (
 
                 <img style={{ width: 130, height: 90 }} src={brandImage} alt="" />
 
               ))}
-            </ul>
+            </div>
           </div>
         </div>
 
@@ -194,14 +228,14 @@ const HomePage = () => {
             </div>
 
 
-            <Slider {...setting2}>
+            <Slider {...settings}>
               {GetAvailableProducts.map((brandImage) => (
                 <div>
                   <div>
                     <Link to={`/ProductDetail/${brandImage.BrandName}/${brandImage.Code}`}>
                       <img
                         style={{
-                          height: 300,
+                          height: 340,
                           width: "100%",
                           objectFit: "cover",
                           cursor: "pointer",
@@ -255,7 +289,9 @@ const HomePage = () => {
 
               <div className="bottom-left">
                 <h3 style={{ color: "white" }}>Đồng Hồ Nữ</h3>
-                <button>Xem Thêm</button>
+                <Link to={`/shopwoman/2`}>
+                  <button>Xem Thêm</button>
+                </Link>
               </div>
             </div>
 
@@ -267,7 +303,9 @@ const HomePage = () => {
               />
               <div className="bottom-left">
                 <h3 style={{ color: "white" }}>Đồng Hồ Nam</h3>
-                <button>Xem Thêm</button>
+                <Link to={`/shopman/1`}>
+                  <button>Xem Thêm</button>
+                </Link>
               </div>
             </div>
             <div className="card">
