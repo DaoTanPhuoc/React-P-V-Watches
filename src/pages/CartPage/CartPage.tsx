@@ -205,6 +205,8 @@ const CartPage = () => {
         {contextHolder}
 
         <Table
+          // className="table-cart-responsive"
+          scroll={{ x: true }}
           pagination={false}
           columns={columns}
           dataSource={cartOrders}

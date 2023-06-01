@@ -8,7 +8,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./ProductDetailPage.css";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { ProductModel } from "../../models/ProductModel";
 import {
@@ -169,39 +169,40 @@ const Details = () => {
       <div className="container-right">
         <Col span={13}>
           <Descriptions
+            className="table-detail-res"
             style={{ padding: 30, width: 800 }}
             bordered
             column={1}
             size="small"
           // column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
           >
-            <Descriptions.Item label="Mã:">{product?.Code}</Descriptions.Item>
-            <Descriptions.Item label="Tình Trạng">New</Descriptions.Item>
-            <Descriptions.Item label="Xuất xứ:">Thụy Sĩ</Descriptions.Item>
-            <Descriptions.Item label="Kích thước:">
+            <Descriptions.Item className="lable-product-detail-resp" label="Mã:">{product?.Code}</Descriptions.Item>
+            <Descriptions.Item className="lable-product-detail-resp" label="Tình Trạng">New</Descriptions.Item>
+            <Descriptions.Item className="lable-product-detail-resp" label="Xuất xứ:">Thụy Sĩ</Descriptions.Item>
+            <Descriptions.Item className="lable-product-detail-resp" label="Kích thước:">
               {product?.CaseSize}
             </Descriptions.Item>
-            <Descriptions.Item label="Kính:">
+            <Descriptions.Item className="lable-product-detail-resp" label="Kính:">
               {product?.GlassMaterial}
             </Descriptions.Item>
-            <Descriptions.Item label="Mặt số:">Khảm trai</Descriptions.Item>
-            <Descriptions.Item label="Bộ máy:">
+            <Descriptions.Item className="lable-product-detail-resp" label="Mặt số:">Khảm trai</Descriptions.Item>
+            <Descriptions.Item className="lable-product-detail-resp" label="Bộ máy:">
               {product?.Movement}
             </Descriptions.Item>
-            <Descriptions.Item label="Dự trữ năng lượng: ">
+            <Descriptions.Item className="lable-product-detail-resp" label="Dự trữ năng lượng: ">
               55 giờ
             </Descriptions.Item>
-            <Descriptions.Item label="Chức năng: ">
+            <Descriptions.Item className="lable-product-detail-resp" label="Chức năng: ">
               Giờ, Phút, Giây, Ngày
             </Descriptions.Item>
-            <Descriptions.Item label="Chất liệu: ">
+            <Descriptions.Item className="lable-product-detail-resp" label="Chất liệu: ">
               {product?.CaseMaterial}
             </Descriptions.Item>
-            <Descriptions.Item label="Bezel: ">Nạm kim cương</Descriptions.Item>
-            <Descriptions.Item label="dây đeo: ">
+            <Descriptions.Item className="lable-product-detail-resp" label="Bezel: ">Nạm kim cương</Descriptions.Item>
+            <Descriptions.Item className="lable-product-detail-resp" label="dây đeo: ">
               President, liên kết ba mảnh hình bán nguyệt
             </Descriptions.Item>
-            <Descriptions.Item label="Chất liệu dây đeo: ">
+            <Descriptions.Item className="lable-product-detail-resp" label="Chất liệu dây đeo: ">
               {product?.Color}
             </Descriptions.Item>
           </Descriptions>
@@ -210,6 +211,7 @@ const Details = () => {
       <div className="container-left">
         <div style={{ padding: 18 }}>
           <h4
+            className="header-left-container-res"
             style={{
               textTransform: "uppercase",
               fontWeight: "bold",
@@ -220,6 +222,7 @@ const Details = () => {
           <Col span={14}>
             <Descriptions.Item style={{ display: "block" }} label="Config Info">
               <div
+                className="left-container-res"
                 style={{
                   display: "flex",
                   justifyContent: "center",
@@ -237,6 +240,7 @@ const Details = () => {
               </div>
               <br />
               <div
+                className="left-container-res"
                 style={{
                   display: "flex",
                   justifyContent: "center",
@@ -254,6 +258,7 @@ const Details = () => {
               </div>
               <br />
               <div
+                className="left-container-res"
                 style={{
                   display: "flex",
                   justifyContent: "center",
@@ -271,6 +276,7 @@ const Details = () => {
               </div>
               <br />
               <div
+                className="left-container-res"
                 style={{
                   display: "flex",
                   justifyContent: "center",
@@ -288,6 +294,7 @@ const Details = () => {
               </div>
               <br />
               <div
+                className="left-container-res"
                 style={{
                   display: "flex",
                   justifyContent: "center",
@@ -453,18 +460,13 @@ const PostProducts = () => {
 const items: TabsProps["items"] = [
   {
     key: "1",
-    label: `Chi tiết sản phẩm`,
+    label: (<span className="tab-detail-res">Chi tiết sản phẩm</span>),
     children: <Details />,
   },
   {
     key: "2",
-    label: `Bài viết liên quan`,
+    label: (<span className="tab-detail-res">Bài viết</span>),
     children: <PostProducts />,
-  },
-  {
-    key: "3",
-    label: `Chính sách`,
-    children: `Content of Tab Pane 3`,
   },
 ];
 
@@ -534,6 +536,13 @@ const ProductDetail = () => {
     }
   }
   // close
+
+  // click vào sản phẩm tương tự set lại chi tiêt sản phẩm
+  const handleSimilarProductClick = (similarProduct: any) => {
+    setProductDetail(similarProduct);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  //
 
   return (
     <div>
@@ -746,9 +755,11 @@ const ProductDetail = () => {
             {similarProducts.map((similarProduct) => (
               <div key={similarProduct.Id}>
                 <img
-                  style={{ height: 300, width: "100%", objectFit: "cover" }}
+                  key={similarProduct.Id}
+                  style={{ height: 360, width: "100%", objectFit: "cover", cursor: "pointer" }}
                   src={similarProduct.Image}
                   alt={similarProduct.Name}
+                  onClick={() => handleSimilarProductClick(similarProduct)}
                 />
                 <div style={{ padding: 20, textAlign: "center" }}>
                   <h4 style={{ color: "#888888" }}>

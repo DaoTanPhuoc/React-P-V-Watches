@@ -197,13 +197,13 @@ const HomePage = () => {
             <hr />
           </div>
           <div className="main-container">
-            <ul className="grid-wrapper">
+            <div className="grid-wrapper">
               {brandImages.map((brandImage) => (
 
                 <img style={{ width: 130, height: 90 }} src={brandImage} alt="" />
 
               ))}
-            </ul>
+            </div>
           </div>
         </div>
 
@@ -289,7 +289,9 @@ const HomePage = () => {
 
               <div className="bottom-left">
                 <h3 style={{ color: "white" }}>Đồng Hồ Nữ</h3>
-                <button>Xem Thêm</button>
+                <Link to={`/shopwoman/2`}>
+                  <button>Xem Thêm</button>
+                </Link>
               </div>
             </div>
 
@@ -301,7 +303,9 @@ const HomePage = () => {
               />
               <div className="bottom-left">
                 <h3 style={{ color: "white" }}>Đồng Hồ Nam</h3>
-                <button>Xem Thêm</button>
+                <Link to={`/shopman/1`}>
+                  <button>Xem Thêm</button>
+                </Link>
               </div>
             </div>
             <div className="card">

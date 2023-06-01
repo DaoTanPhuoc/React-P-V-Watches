@@ -12,6 +12,7 @@ import {
   message,
   Modal,
   Pagination,
+  Popconfirm,
   Result,
   Row,
   Select,
@@ -163,6 +164,18 @@ const MyOrder = () => {
       }, 0);
       // closed
 
+      // message
+
+      // closed
+      const confirm = (e: any) => {
+        console.log(e);
+        message.success('Hủy đơn thành công');
+      };
+
+      const cancel = (e: any) => {
+        console.log(e);
+        message.error('Thoát');
+      };
       return (
         <Card style={{ marginTop: 16 }} type="inner" title={`Mã đơn hàng #${order.Id} `}>
           <div>
@@ -182,17 +195,27 @@ const MyOrder = () => {
                   <span style={{ fontWeight: 700 }}>Tổng tiền :</span> {moneyFormatter.format(totalPrice)}
                 </p>
               </div>
-              <Button
-                style={{ backgroundColor: "#000000", color: "#fff", marginTop: "8%" }}
-                disabled={order.Status == 0 ? false : true}
-                onClick={() => { handleCancelOrder(order.Id) }}
+              <Popconfirm
+                title="HỦy đơn"
+                description="Bạn có chắc muốn hủy đơn hàng ?"
+                onConfirm={() => { handleCancelOrder(order.Id) }}
+                onCancel={cancel}
+                okText="Yes"
+                cancelText="No"
               >
-                {loading && (
-                  <div className="overlaySpin">
-                    <Spin indicator={antIcon} />;
-                  </div>
-                )} Hủy Đơn
-              </Button>
+                <Button
+                  style={{ backgroundColor: "#000000", color: "#fff", marginTop: "8%" }}
+                  disabled={order.Status == 0 ? false : true}
+
+                // onClick={() => { handleCancelOrder(order.Id) }}
+                >
+                  {loading && (
+                    <div className="overlaySpin">
+                      <Spin indicator={antIcon} />;
+                    </div>
+                  )} Hủy Đơn
+                </Button>
+              </Popconfirm>
             </div>
           </div>
         </Card>

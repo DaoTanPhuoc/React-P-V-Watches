@@ -254,3 +254,32 @@ ul {
 .ant-menu-title-content span:hover {
   color: #dbaf56 !important;
 }
+
+@media (min-width: 1000px) {
+  .btn-responsive {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .search-header {
+    width: 108% !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+  .logo-header {
+    display: none;
+  }
+  .avatar-header-res {
+    font-size: 14vw !important;
+  }
+  .Menu-in-web {
+    display: none !important;
+  }
+  .shopping-cart-res {
+    font-size: 14vw !important;
+  }
+  .icon-search-resp {
+    font-size: 8vw;
+  }
+}

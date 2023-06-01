@@ -25,6 +25,11 @@ import BrandDashboardPage from "../pages/DashboardPage/BrandDashboard/BrandDashb
 import ImportProductsPage from "../pages/DashboardPage/ImportProduct/ImportProductsPage";
 import InvoiceWait from "../pages/DashboardPage/InvoiceWait/InvoiceWait";
 import AdminSettingDas from "../pages/DashboardPage/AdminSetting/AdminSettingDas";
+import ShopMan from "../pages/ShopMan/ShopMan";
+import ShopWoMan from "../pages/ShopWoman/ShopWoMan";
+
+
+
 
 
 export const userRoutes = createBrowserRouter([
@@ -66,6 +71,14 @@ export const userRoutes = createBrowserRouter([
         path: "/myAccount",
         element: <MyAccountPage />,
       },
+      {
+        path: "/shopman/:categoryId",
+        element: <ShopMan />
+      },
+      {
+        path: "/shopwoman/:categoryId",
+        element: <ShopWoMan />
+      }
     ],
   },
   {
