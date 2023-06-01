@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from 'react'
 import "./ImportProductsPage.css"
 import { Button, Form, Input, InputNumber, message, Modal, Select, Space } from 'antd'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import Table, { ColumnsType } from 'antd/es/table';
+import Table, { ColumnsType, } from 'antd/es/table';
 import { AppContext } from '../../../App';
 import axios from 'axios';
 
 const ImportProductsPage = () => {
     const { baseApi, currentToken } = useContext(AppContext);
     const [data, setData] = useState<DataType[]>([])
+    const [suppliers, setSuppliers] = useState<any[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -33,9 +34,13 @@ const ImportProductsPage = () => {
             setLoading(false)
         })
     }
+    const fetchSupplier = () => {
+        axios.get(`${baseApi}/Suppliers`).then(res => setSuppliers(res.data))
+    }
     useEffect(() => {
         fetchData()
-    }, [])
+        fetchSupplier()
+    }, [baseApi])
     // danh sach dat hang
     interface DataType {
         Id: number;
@@ -80,7 +85,7 @@ const ImportProductsPage = () => {
                 default:
                     break;
             }
-        }).catch(err => message.open({ key: 'save', content: "Lỗi: " + err.data, type: 'error' }))
+        }).catch(err => message.open({ key: 'save', content: "Lỗi: " + err.response.data, type: 'error' }))
     };
     return (
         <div className="container-import-products">
@@ -113,12 +118,9 @@ const ImportProductsPage = () => {
                                 initialValue={1}
                             >
                                 <Select
+                                    placeholder="Chọn nhà cung cấp"
                                     style={{ width: '100%', marginBottom: 10 }}
-                                    options={[
-                                        { value: 1, label: 'Rolex Factory' },
-                                        { value: 2, label: 'Lucy' },
-                                        { value: 3, label: 'yiminghe' },
-                                    ]}
+                                    options={suppliers.map(supplier => ({ label: supplier.Name, value: supplier.Id }))}
                                 />
                             </Form.Item>
                             <Form.List name="ImportProducts">

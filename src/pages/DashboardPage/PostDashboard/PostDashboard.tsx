@@ -1,167 +1,251 @@
-import { Button, Input, Select, Space } from "antd";
-import React, { useState } from "react";
-import { DownloadOutlined } from "@ant-design/icons";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import { Search } from "react-router-dom";
-import { SizeType } from "antd/es/config-provider/SizeContext";
+import { Button, Checkbox, Form, Input, message, Modal, Row, Space } from "antd";
+import React, { useContext, useEffect, useState } from "react";
+import { FileAddOutlined } from "@ant-design/icons";
 import "./PostDashboard.css";
 import Table, { ColumnsType } from "antd/es/table";
+import { AppContext } from "../../../App";
+import axios from "axios";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import moment from "moment";
 const PostDashboard = () => {
-  const [content, setContent] = useState("");
-
-  function handleChange(value: React.SetStateAction<string>) {
-    setContent(value);
-  }
-
-  const onSearch = (value: string) => console.log(value);
-  const { Search } = Input;
-  const [size, setSize] = useState<SizeType>("large");
-
-  interface DataType {
-    key: React.Key;
-    name: string;
-    // age: number;
-    address: string;
-  }
-
-  const columns: ColumnsType<DataType> = [
+  const columns: ColumnsType<any> = [
     {
-      title: "Name",
-      dataIndex: "name",
+      title: 'Id',
+      dataIndex: "Id"
     },
-    // {
-    //   title: "Age",
-    //   dataIndex: "age",
-    // },
     {
-      title: "Address",
-      dataIndex: "address",
+      title: "Tiêu đề",
+      dataIndex: "Title",
     },
+    {
+      title: "Description",
+      dataIndex: "Description",
+    },
+    {
+      title: "Người tạo",
+      dataIndex: "UserName",
+    },
+    {
+      title: "Hiển thị",
+      dataIndex: "IsDeleted",
+      render: (IsDeleted: boolean) => <Checkbox defaultChecked={!IsDeleted} disabled></Checkbox>
+    },
+    {
+      title: "Ngày tạo",
+      dataIndex: "CreatedAt",
+      render: (CreatedAt) => (<p>{moment(CreatedAt).format("DD-MM-YYYY, hh:mm:ss")}</p>)
+    },
+    {
+      title: "Chức năng",
+      dataIndex: "Id",
+      render: (Id) => (
+        <Space align="center">
+          <Button style={{ backgroundColor: 'blue', fontWeight: 'bold', color: 'white' }} onClick={() => openModalEdit(Id)}>Cập nhật</Button>
+        </Space>
+      )
+    }
   ];
-
-  const data: DataType[] = [];
-  for (let i = 0; i < 46; i++) {
-    data.push({
-      key: i,
-      name: `Edward King ${i}`,
-      // age: 32,
-      address: `London, Park Lane no. ${i}`,
-    });
-  }
-
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const { baseApi, currentToken } = useContext(AppContext);
+  const [data, setData] = useState<any[]>([])
   const [loading, setLoading] = useState(false);
-
-  const start = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setSelectedRowKeys([]);
-      setLoading(false);
-    }, 1000);
-  };
-
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
-  const hasSelected = selectedRowKeys.length > 0;
-
+  const [isOpened, setIsOpened] = useState<boolean>(false)
+  const [openEdit, setOpenEdit] = useState<boolean>(false)
+  const [content, setContent] = useState<string>("<h2>Tạo nội dung bài viết</h2>")
+  const [contentEdit, setContentEdit] = useState<string>("")
+  const [postId, setPostid] = useState();
+  const [form] = Form.useForm()
+  const [formEdit] = Form.useForm()
+  const toggleModal = () => {
+    setIsOpened(!isOpened)
+  }
+  const openModalEdit = (postId: any) => {
+    setPostid(postId)
+    const post = data.find(post => post.Id === postId);
+    if (post === undefined) {
+      message.error("Vui lòng thử lại");
+      return;
+    }
+    formEdit.setFieldsValue({
+      Title: post.Title,
+      Description: post.Description,
+    })
+    setContentEdit(post.Content)
+    setOpenEdit(!openEdit)
+  }
+  const cancelModelEdit = () => setOpenEdit(false)
+  const getData = () => {
+    setLoading(true)
+    axios.get(`${baseApi}/News`).then(res => setData(res.data)).finally(() => setLoading(false))
+  }
+  const createPost = (values: any) => {
+    message.open({ type: 'loading', content: 'Đang tạo bài viết...', key: 'create' })
+    const dataPost = { ...values, content };
+    axios.post(`${baseApi}/News`, dataPost, {
+      headers: {
+        'Authorization': `Bearer ${currentToken}`
+      }
+    }).then(() => {
+      message.open({ type: 'success', content: 'Tạo bài viết thành công!', key: 'create' })
+      getData()
+      form.resetFields()
+      setContent("<h2>Tạo nội dung bài viết</h2>")
+      toggleModal()
+    }).catch(err => {
+      message.open({ type: 'error', content: 'Lỗi: ' + err.respose.data, key: 'create' })
+    })
+  }
+  const updatePost = (values: any) => {
+    message.open({ type: 'loading', content: 'Đang cập nhật bài viết...', key: 'update' })
+    const dataPost = { ...values, contentEdit, Id: postId };
+    axios.put(`${baseApi}/News/${postId}`, dataPost, {
+      headers: {
+        'Authorization': `Bearer ${currentToken}`
+      }
+    }).then(() => {
+      message.open({ type: 'success', content: 'Cập nhật bài viết thành công!', key: 'update' })
+      getData()
+      formEdit.resetFields()
+      setContentEdit("")
+      cancelModelEdit()
+    }).catch(err => {
+      message.open({ type: 'error', content: 'Lỗi: ' + err.respose.data, key: 'update' })
+    })
+  }
+  useEffect(() => {
+    getData();
+  }, [])
   return (
     <>
-      <ReactQuill value={content} onChange={handleChange} />
       <div>
         <div className="container-post">
           <h4
             style={{
               fontWeight: 700,
               padding: 10,
+              textTransform: 'uppercase'
             }}
           >
-            Thông tin bài viết
+            Quản Lý Bài Viết
           </h4>
           <div className="header-post">
             <div className="items-header-post">
-              <Select
-                showSearch
-                style={{ width: 120 }}
-                placeholder="Search to Select"
-                optionFilterProp="children"
-                filterOption={(input, option) =>
-                  (option?.label ?? "").includes(input)
-                }
-                filterSort={(optionA, optionB) =>
-                  (optionA?.label ?? "")
-                    .toLowerCase()
-                    .localeCompare((optionB?.label ?? "").toLowerCase())
-                }
-                options={[
-                  {
-                    value: "1",
-                    label: "Not Identified",
-                  },
-                  {
-                    value: "2",
-                    label: "Closed",
-                  },
-                  {
-                    value: "3",
-                    label: "Communicated",
-                  },
-                ]}
-              />
+              <Button
+                style={{ backgroundColor: 'green ' }}
+                type="primary"
+                icon={<FileAddOutlined />}
+                onClick={toggleModal}
+              >
+                Tạo bài viết
+              </Button>
             </div>
-            <div className="items-header-post">
-              <Space direction="vertical">
-                <Search
-                  placeholder="input search text"
-                  onSearch={onSearch}
-                  style={{ width: 950 }}
-                />
-              </Space>
-            </div>
-            <div className="items-header-post">
-              <Space wrap>
-                <Button
-                  style={{ backgroundColor: "blue" }}
-                  type="primary"
-                  icon={<DownloadOutlined />}
-                  size={size}
+            <Modal
+              title="Tạo Bài Viết"
+              open={isOpened}
+              onCancel={toggleModal}
+              footer={null}
+            >
+              <Form
+                form={form}
+                onFinish={createPost}
+                layout="vertical"
+              >
+                <Form.Item
+                  label="Tiêu đề"
+                  name="Title"
+                  rules={[{ required: true, message: "Vui lòng nhập tiêu đề" }]}
                 >
-                  Add Blog
-                </Button>
-              </Space>
-            </div>
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  label="Description"
+                  name="Description"
+                  rules={[{ required: true, message: "Vui lòng nhập Description" }]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  label="Nội dung"
+                >
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={content}
+                    onChange={(event, editor) => {
+                      const data = editor.getData()
+                      setContent(data)
+                    }}
+                  />
+                </Form.Item>
+                <Form.Item>
+                  <Row justify={'end'}>
+                    <Button type="primary" onClick={toggleModal} style={{ backgroundColor: 'red' }}>Quay lại</Button>
+                    <Button type="primary" htmlType="submit" style={{ backgroundColor: 'blue', margin: '0 15px' }}>Tạo bài viết</Button>
+                  </Row>
+                </Form.Item>
+              </Form>
+            </Modal>
           </div>
         </div>
         <div className="table-list-blog">
           <div>
             <div style={{ marginBottom: 16 }}>
-              {/* <Button
-                type="primary"
-                onClick={start}
-                disabled={!hasSelected}
-                loading={loading}
-              >
-                Reload
-              </Button> */}
               <span style={{ marginLeft: 8 }}>
-                {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
               </span>
             </div>
             <Table
-              rowSelection={rowSelection}
+              rowKey={"Id"}
+              loading={loading}
               columns={columns}
               dataSource={data}
             />
           </div>
         </div>
       </div>
+      <Modal
+        title="Cập nhật Bài Viết"
+        open={openEdit}
+        onCancel={cancelModelEdit}
+        footer={null}
+      >
+        <Form
+          form={formEdit}
+          layout="vertical"
+          onFinish={updatePost}
+        >
+          <Form.Item
+            label="Tiêu đề"
+            name="Title"
+            rules={[{ required: true, message: "Vui lòng nhập tiêu đề" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Description"
+            name="Description"
+            rules={[{ required: true, message: "Vui lòng nhập Description" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Nội dung"
+          >
+            <CKEditor
+              editor={ClassicEditor}
+              data={contentEdit}
+              onChange={(event, editor) => {
+                const data = editor.getData()
+                setContentEdit(data)
+              }}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Row justify={'end'}>
+              <Button type="primary" onClick={cancelModelEdit} style={{ backgroundColor: 'red' }}>Quay lại</Button>
+              <Button type="primary" htmlType="submit" style={{ backgroundColor: 'blue', margin: '0 15px' }}>Cập nhật bài viết</Button>
+            </Row>
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   );
 };
