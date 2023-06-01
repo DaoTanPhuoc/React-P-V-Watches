@@ -72,7 +72,7 @@ const InvoiceWait = () => {
             }
         }).then(res => {
             switch (res.status) {
-                case 204:
+                case 200:
                     message.open({ key: 'change', content: "Cập nhật thành công", type: 'success' })
                     break;
                 default:
