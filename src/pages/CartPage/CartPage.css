@@ -160,6 +160,9 @@
   color: #fff !important;
   background-color: #00000000 !important;
 } */
+.modal-update-address-orders-responsive {
+  width: 35% !important;
+}
 @media only screen and (max-width: 414px) {
   .table-cart-responsive td,
   .table-cart-responsive th {
@@ -167,4 +170,48 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .container-PaymentMethods {
+    margin: 20px !important;
+    width: 100%;
+  }
+  .title-paymethod-responsive {
+    font-size: 15px !important;
+    display: inline-block;
+    width: 400px;
+  }
+  .container-info-order-responsive {
+    width: 100%;
+    margin-left: 28%;
+  }
+  .address-info-order-responsive {
+    font-size: 12px !important;
+  }
+  .title2-paymethod-responsive {
+    font-size: 12px !important;
+    display: inline-block;
+    width: 400px;
+  }
+  .code-block {
+    width: 300px !important;
+  }
+  .btn-chose-payMethod {
+    left: 40% !important;
+  }
+  .title-option-paymethod {
+    font-size: 4vw !important;
+  }
+  .modal-update-address-orders-responsive {
+    width: 76% !important;
+  }
+}
+
+.code-block {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 16px;
+  margin: 10px;
+  width: 400px;
+  display: flex;
+  justify-content: space-around;
 }

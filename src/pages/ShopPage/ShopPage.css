@@ -172,6 +172,11 @@
   .icon-btn-shopping {
     font-size: 8vw;
   }
+  .filter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .container-ban {

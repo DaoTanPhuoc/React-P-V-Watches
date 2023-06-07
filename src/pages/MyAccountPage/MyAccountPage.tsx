@@ -6,6 +6,7 @@ import {
   Col,
   DatePicker,
   Descriptions,
+  Drawer,
   Form,
   FormInstance,
   Input,
@@ -146,11 +147,11 @@ const MyOrder = () => {
         return (
           <div style={{ padding: 10 }}>
             <Card type="inner" title="Sản phẩm" extra={<a href="#">More</a>}>
-              <div style={{ display: 'flex', justifyContent: "space-between" }}>
-                <p style={{ width: "10%" }}><img src={product.ProductImage} alt="" /></p>
-                <p style={{ width: "25%" }}> {product.ProductName}</p>
-                <p style={{ width: "10%" }}>Số lượng: {product.Quantity}</p>
-                <p style={{ width: "15%" }}>{moneyFormatter.format(product.Price)}</p>
+              <div className="card-myacc-responsive" style={{ display: 'flex', justifyContent: "space-between" }}>
+                <p className="name-fontSize-responsive" style={{ width: "10%" }} ><img style={{ width: 100, height: 100, objectFit: "cover" }} src={product.ProductImage} alt="" /></p>
+                <p className="name-fontSize-responsive" style={{ width: "25%" }}> {product.ProductName}</p>
+                <p className="name-fontSize-responsive" style={{ width: "10%" }}>Số lượng: {product.Quantity}</p>
+                <p className="name-fontSize-responsive" style={{ width: "15%" }}>{moneyFormatter.format(product.Price)}</p>
               </div>
             </Card>
           </div>
@@ -178,21 +179,21 @@ const MyOrder = () => {
       };
       return (
         <Card style={{ marginTop: 16 }} type="inner" title={`Mã đơn hàng #${order.Id} `}>
-          <div>
+          <div >
             {products}
-            <div style={{ display: 'flex', justifyContent: "space-between" }}>
+            <div className="Container-myacc-orderStatus-address" style={{ display: 'flex', justifyContent: "space-between" }}>
               <div style={{ padding: 26, display: 'flex', flexDirection: "column" }}>
                 <p style={{ padding: 5, fontSize: 15 }}>
-                  <span style={{ fontWeight: 700 }}>Trạng thái:</span> {StatusOrder(order.Status)}
+                  <span className="name-fontSizeLable-responsive" style={{ fontWeight: 700 }}>Trạng thái:</span> {StatusOrder(order.Status)}
                 </p>
                 <p style={{ padding: 5, fontSize: 15 }}>
-                  <span style={{ fontWeight: 700 }}>Nhận hàng vào:</span> {order.UpdatedAt}
+                  <span className="name-fontSizeLable-responsive" style={{ fontWeight: 700 }}>Nhận hàng vào:</span> {order.UpdatedAt}
                 </p>
                 <p style={{ padding: 5, fontSize: 15 }}>
-                  <span style={{ fontWeight: 700 }}>Địa chỉ:</span> {order.Address}
+                  <span className="name-fontSizeLable-responsive" style={{ fontWeight: 700 }}>Địa chỉ:</span> {order.Address}
                 </p>
                 <p style={{ padding: 5, fontSize: 15 }}>
-                  <span style={{ fontWeight: 700 }}>Tổng tiền :</span> {moneyFormatter.format(totalPrice)}
+                  <span className="name-fontSizeLable-responsive" style={{ fontWeight: 700 }}>Tổng tiền :</span> {moneyFormatter.format(totalPrice)}
                 </p>
               </div>
               <Popconfirm
@@ -204,6 +205,7 @@ const MyOrder = () => {
                 cancelText="No"
               >
                 <Button
+                  className="btn-myacc-exit-order"
                   style={{ backgroundColor: "#000000", color: "#fff", marginTop: "8%" }}
                   disabled={order.Status == 0 ? false : true}
 
@@ -280,8 +282,8 @@ const MyOrder = () => {
       .map((order) => {
         const products = order.OrderProducts.map((product: any) => {
           return (
-            <div style={{ padding: 10 }}>
-              <Card type="inner" title="Sản phẩm" extra={<a href="#">More</a>}>
+            <div className="container-card-responsive-order" style={{ padding: 10 }}>
+              <Card className="card-responsive-order" type="inner" title="Sản phẩm" extra={<a href="#">More</a>}>
                 <div style={{ display: 'flex', justifyContent: "space-between" }}>
                   <p><img src={product.ProductImage} alt="" /></p>
                   <p>{product.ProductName}</p>
@@ -361,7 +363,7 @@ const AddressOrder = () => {
     setIsModalOpen(true);
   };
   const saveAddress = async (values: any) => {
-    const userAddress = `${values["address"]} ${values["ward"]} ${values["district"]} ${values["provice"]}`;
+    const userAddress = `${values["address"]}, ${values["ward"]}, ${values["district"]}, ${values["provice"]}`;
     axios
       .post(
         `${baseApi}/Accounts/UpdateUserInfo`,
@@ -888,9 +890,10 @@ const MyAccountPage = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+  const [visibleTab, setVisibleTab] = useState(false);
   return currentUser ? (
     <>
-      <div style={{ marginLeft: "13%", padding: 20 }}>
+      <div style={{ marginLeft: 50, padding: 20 }}>
         <Upload
           accept="image/png"
           beforeUpload={(file) => {
@@ -909,15 +912,19 @@ const MyAccountPage = () => {
       </div>
 
       <Tabs
-        style={{
-          marginLeft: "10%",
-          marginRight: "10%",
-          padding: 50,
-        }}
+        className="responsive-tab-myAcc"
+        // style={{
+        //   marginLeft: 60,
+        //   marginRight: "8%",
+        //   //padding: 50,
+        //   paddingTop: 30,
+        //   paddingBottom: 50,
+        //   paddingLeft: 0
+        // }}
         tabPosition={"left"}
         type="card"
         defaultActiveKey="1"
-        size="large"
+        //size="large"
         items={items}
       />
     </>

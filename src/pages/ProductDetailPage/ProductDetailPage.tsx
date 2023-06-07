@@ -754,13 +754,15 @@ const ProductDetail = () => {
           <Slider {...settings}>
             {similarProducts.map((similarProduct) => (
               <div key={similarProduct.Id}>
-                <img
-                  key={similarProduct.Id}
-                  style={{ height: 360, width: "100%", objectFit: "cover", cursor: "pointer" }}
-                  src={similarProduct.Image}
-                  alt={similarProduct.Name}
-                  onClick={() => handleSimilarProductClick(similarProduct)}
-                />
+                <Link to={`/ProductDetail/${similarProduct.BrandName}/${similarProduct.Code}`}>
+                  <img
+                    key={similarProduct.Id}
+                    style={{ height: 360, width: "100%", objectFit: "cover", cursor: "pointer" }}
+                    src={similarProduct.Image}
+                    alt={similarProduct.Name}
+                  //onClick={() => handleSimilarProductClick(similarProduct)}
+                  />
+                </Link>
                 <div style={{ padding: 20, textAlign: "center" }}>
                   <h4 style={{ color: "#888888" }}>
                     MSP {similarProduct.Code}

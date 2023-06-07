@@ -330,7 +330,7 @@ const HomePage = () => {
             <hr />
             <div className="multi-button">
               <button onClick={() => fetchNewstProducts(1)}>Nam</button>
-              <button onClick={() => fetchNewstProducts(2)}>Nu</button>
+              <button onClick={() => fetchNewstProducts(2)}>Nữ</button>
             </div>
           </div>
           <div className="galleryContainer">
@@ -405,9 +405,9 @@ const HomePage = () => {
                   </p>
                 </div>
                 <div className="blog-view">
-                  <a href="#" className="btn-blog">
+                  {/* <a href="#" className="btn-blog">
                     Xem chi tiet
-                  </a>
+                  </a> */}
                 </div>
                 <div className="posted-date">
                   <p>Posted 22 July 2023</p>
@@ -432,9 +432,9 @@ const HomePage = () => {
                   </p>
                 </div>
                 <div className="blog-view">
-                  <a href="#" className="btn-blog">
+                  {/* <a href="#" className="btn-blog">
                     Xem chi tiet
-                  </a>
+                  </a> */}
                 </div>
                 <div className="posted-date">
                   <p>Posted 22 July 2023</p>
@@ -459,9 +459,9 @@ const HomePage = () => {
                   </p>
                 </div>
                 <div className="blog-view">
-                  <a href="#" className="btn-blog">
+                  {/* <a href="#" className="btn-blog">
                     Xem chi tiet
-                  </a>
+                  </a> */}
                 </div>
                 <div className="posted-date">
                   <p>Posted 22 July 2023</p>

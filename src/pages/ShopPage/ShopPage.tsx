@@ -108,6 +108,7 @@ const ShopPage = () => {
   // list product
 
   const [products, setProducts] = useState<ProductModel[]>([]);
+  const [tempProducts, setTempProducts] = useState<ProductModel[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<ProductModel[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   // const { brandId, categoryId } = useParams();
@@ -118,6 +119,7 @@ const ShopPage = () => {
       .get(`https://localhost:7182/api/Products`)
       .then((result) => {
         setProducts(result.data);
+        setTempProducts(result.data);
         filterData(currentPage, result.data);
       })
       .catch((error) => {
@@ -156,19 +158,50 @@ const ShopPage = () => {
     }
   }
 
+  // // lọc sản phẩm theo giá tăng giảm dần
+  const [selectedSortBy, setSelectedSortBy] = useState(1);
+  const sortProducts = (sortBy: number) => {
+    let sortedProducts;
+    if (selectedBrand === 0) {
+      sortedProducts = [...products];
+    }
+    else {
+      sortedProducts = [...filteredProducts];
+    }
+    //let sortedProducts = [...products];
+    switch (sortBy) {
+      case 2:
+        // Sắp xếp giá tăng dần
+        sortedProducts.sort((a, b) => {
+          return a.Price - b.Price;
+        });
+        setFilteredProducts(sortedProducts);
+        setCurrentPage(1);
+        filterData(currentPage, sortedProducts);
+        break;
+      case 3:
+        // Sắp xếp giá giảm dần
+        sortedProducts.sort((a, b) => {
+          return b.Price - a.Price;
+        });
+        setFilteredProducts(sortedProducts);
+        setCurrentPage(1);
+        filterData(currentPage, sortedProducts);
+        break;
+      default:
+        // Mặc định không sắp xếp
+        setProducts(tempProducts)
+        filterData(1, products);
+        break;
+    }
+  };
+
+
+
+
   // filter theo thương hiệu sản phẩm
   const [selectedBrand, setSelectedBrand] = useState(0);
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`https://localhost:7182/api/Products/GetProductsByBrand?brandId=${selectedBrand}`)
-  //     .then((result) => {
-  //       filterData(currentPage, result.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, [selectedBrand, currentPage]);
 
   useEffect(() => {
     if (selectedBrand === 0) {
@@ -185,61 +218,34 @@ const ShopPage = () => {
   }, [selectedBrand, currentPage]);
 
 
-  // const handleBrandChange = (value: number) => {
-  //   setSelectedBrand(value);
-  //   setCurrentPage(1);
-  // };
-  // const handleBrandChange = (value: number) => {
-  //   setSelectedBrand(value);
-  //   setCurrentPage(1);
-  //   if (value === 0) {
-  //     setFilteredProducts(products);
-  //   } else {
-  //     axios
-  //       .get(`https://localhost:7182/api/Products/GetProductsByBrand?brandId=${value}`)
-  //       .then((result) => {
-  //         filterData(currentPage, result.data);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }
-  // };
-  // const handleBrandChange = (value: number) => {
-  //   if (value === 0) {
-  //     setSelectedBrand(value);
-  //     setCurrentPage(1);
-  //     setFilteredProducts(products);
-  //   } else {
-  //     axios
-  //       .get(`https://localhost:7182/api/Products/GetProductsByBrand?brandId=${value}`)
-  //       .then((result) => {
-  //         filterData(currentPage, result.data);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }
-  // };
-  const handleBrandChange = (value: number) => {
-    if (value === 0) {
-      setSelectedBrand(value);
-      setCurrentPage(1);
-      // setFilteredProducts(products);
-      filterData(1, products)
+
+  const handleBrandChange = (value: string) => {
+    if (value === "") {
+      setProducts(tempProducts)
+      filterData(currentPage, products)
     } else {
-      setSelectedBrand(value);
-      setCurrentPage(1);
-      axios
-        .get(`https://localhost:7182/api/Products/GetProductsByBrand?brandId=${value}`)
-        .then((result) => {
-          setFilteredProducts(result.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      var tempProduct = tempProducts.filter(p => p.BrandName === value);
+      setProducts([...tempProduct])
+      filterData(currentPage, products)
     }
   };
+
+  // // filter casesize
+  // const [selectedSize, setSelectedSize] = useState(1)
+  // const sortByCaseSize = (selectedSize: number) => {
+  //   setCurrentPage(1)
+  //   let filteredProductsByCaseSize = [];
+
+  //   if (selectedSize === 1) {
+  //     filteredProductsByCaseSize = products;
+  //   } else {
+  //     filteredProductsByCaseSize = products.filter((product) => {
+  //       return selectedSize === product.CaseSize;
+  //     });
+  //   }
+  //   filterData(currentPage, filteredProductsByCaseSize);
+  // };
+  // //
 
 
 
@@ -303,8 +309,8 @@ const ShopPage = () => {
               }}
               placeholder="Thương Hiệu"
               optionFilterProp="children"
-              value={selectedBrand}
-              defaultValue={0}
+              //value={selectedBrand}
+              defaultValue={""}
               filterOption={(input, option) =>
                 (option?.label ?? "").includes(input)
               }
@@ -316,23 +322,23 @@ const ShopPage = () => {
               }
               options={[
                 {
-                  value: 0,
+                  value: "",
                   label: "Thương Hiệu",
                 },
                 {
-                  value: 1,
+                  value: "Rolex",
                   label: "Rolex",
                 },
                 {
-                  value: 2,
+                  value: "Hublot",
                   label: "Hublot",
                 },
                 {
-                  value: 3,
+                  value: "Orient",
                   label: "Orient",
                 },
                 {
-                  value: 4,
+                  value: "Channel",
                   label: "Channel",
                 },
               ]}
@@ -372,7 +378,66 @@ const ShopPage = () => {
                 },
               ]}
             />
+            {/* <Select
+              style={{ width: 150, fontWeight: "bold", marginLeft: 10 }}
+              placeholder="Sắp Xếp"
+              value={selectedSortBy}
+              defaultValue={1}
+              onChange={(value: number) => {
+                setSelectedSortBy(value);
+                sortProducts(value);
+              }}
+              options={[
+                { value: 1, label: "Mặc Định" },
+                { value: 2, label: "Giá Tăng Dần" },
+                { value: 3, label: "Giá Giảm Dần" },
+              ]}
+            /> */}
           </div>
+          {/* filter casesize */}
+          {/* <div className="filter-items">
+            <Select
+              showSearch
+              style={{
+                width: 150,
+                fontWeight: "bold",
+              }}
+              placeholder="Kích thước"
+              optionFilterProp="children"
+              defaultValue={1}
+              filterOption={(input, option) =>
+                (option?.label ?? "").includes(input)
+              }
+              onChange={(value: number) => { sortByCaseSize(value) }}
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? "")
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? "").toLowerCase())
+              }
+              options={[
+                {
+                  value: 1,
+                  label: "Tất cả",
+                },
+                {
+                  value: 31,
+                  label: "31mm",
+                },
+                {
+                  value: 44,
+                  label: "44mm",
+                },
+                {
+                  value: 33,
+                  label: "33mm",
+                },
+                {
+                  value: 40,
+                  label: "40mm",
+                },
+              ]}
+            />
+          </div> */}
         </div>
 
         <div style={{ padding: 20 }}>
@@ -399,13 +464,13 @@ const ShopPage = () => {
                 Add to cart
               </Button> */}
               <h4 style={{ color: "#888888" }}>MSP {watchItem.Code}</h4>
-              <h4 style={{ fontWeight: 600 }}>{watchItem.Name}</h4>
+              <h4 style={{ fontWeight: 600, height: 60 }}>{watchItem.Name}</h4>
               <h4 style={{ color: "#dbaf56" }}>
                 {moneyFormatter.format(watchItem.Price)}{" "}
               </h4>
 
               <Meta
-                style={{ padding: 10, textTransform: "uppercase" }}
+                style={{ padding: 30, textTransform: "uppercase" }}
                 title={watchItem.Stock === 0 ? "Hết Hàng" : <br />}
               />
 
@@ -416,7 +481,7 @@ const ShopPage = () => {
                     className="btn-shopping"
                     icon={<ShoppingCartOutlined className="icon-btn-shopping" style={{ color: "#fff" }} />}
                     style={{
-                      margin: 53,
+                      //marginTop: 25,
                       color: "#fff",
                       backgroundColor: "#000000",
                     }}
