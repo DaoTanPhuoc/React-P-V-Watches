@@ -1,5 +1,5 @@
-import { Button, Checkbox, Form, Input, message } from "antd";
-import { useContext, useEffect } from "react";
+import { Button, Checkbox, Form, Input, Modal, message } from "antd";
+import { useContext, useEffect, useState } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { AppContext } from "../../App";
 import axios from "axios";
@@ -45,7 +45,7 @@ const PageLogin = () => {
           const userInfo: any = await jwtDecode(token);
           const role =
             userInfo[
-              "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+            "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
             ];
           if (role === "User") {
             navigate("/");
@@ -63,6 +63,37 @@ const PageLogin = () => {
         });
       });
   };
+  // forgotpassword
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const layout = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
+  };
+
+  const validateMessages = {
+    required: '${label} is required!',
+    types: {
+      email: '${label} không đúng định dạng!',
+      number: '${label} is not a valid number!',
+    },
+    number: {
+      range: '${label} must be between ${min} and ${max}',
+    },
+  };
+  //
   return (
     <div className="container">
       <div
@@ -99,7 +130,7 @@ const PageLogin = () => {
         name="normal_login"
         style={{
           width: 400,
-          height: 520,
+          height: 540,
           backgroundColor: "rgba(255,255,255,0.13)",
           position: "absolute",
           transform: "Translate(-50%,-50%)",
@@ -132,7 +163,7 @@ const PageLogin = () => {
             { required: true, message: "Please input your Email!" },
             { type: "email", message: "Please input valid Email!" },
           ]}
-          label="Email"
+          label={<span style={{ color: "#fff" }}>Email</span>}
         >
           <Input
             type="email"
@@ -142,7 +173,7 @@ const PageLogin = () => {
         </Form.Item>
         <Form.Item
           name="password"
-          label="Mật Khẩu"
+          label={<span style={{ color: "#fff" }}>Mật Khẩu</span>}
           rules={[{ required: true, message: "Please input your Password!" }]}
         >
           <Input
@@ -152,9 +183,32 @@ const PageLogin = () => {
           />
         </Form.Item>
         <Form.Item name="remember" valuePropName="checked">
-          <Checkbox>Lưu đăng nhập?</Checkbox>
+          <Checkbox style={{ color: "#fff" }}>Lưu đăng nhập?</Checkbox>
         </Form.Item>
         <Form.Item>
+          <span style={{ color: "#fff" }}>
+            {/* <Link to="/forgotPassword">Quên mật khẩu? </Link>{" "} */}
+            <a onClick={showModal}>Quên mật khẩu ?</a>
+          </span>{" "}
+          <Modal className="forgotpassword-form-inputEmail" footer={null} title="Nhập email đã đăng ký" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Form
+              {...layout}
+              layout="vertical"
+              name="nest-messages"
+              onFinish={onFinish}
+              validateMessages={validateMessages}
+            >
+              <Form.Item style={{ marginLeft: "20%" }} name={['user', 'email']} label="Email" rules={[{ type: 'email' }]}>
+                <Input placeholder='Nhập địa chỉ email đăng kí ?' />
+              </Form.Item>
+              <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+                <Button style={{ backgroundColor: "#000000", color: "#fff" }} htmlType="submit">
+                  Xác nhận
+                </Button>
+
+              </Form.Item>
+            </Form>
+          </Modal>
           <Button htmlType="submit" className="login-form-button">
             Đăng Nhập
           </Button>

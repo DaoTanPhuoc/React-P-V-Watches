@@ -333,7 +333,7 @@ const BillingDashboard = () => {
       dataIndex: "action",
       render: () => (
         <Space>
-          <a onClick={showModal}>Edit</a>
+          <Button onClick={showModal}>Edit</Button>
         </Space>
       ),
     },

@@ -27,6 +27,7 @@ import InvoiceWait from "../pages/DashboardPage/InvoiceWait/InvoiceWait";
 import AdminSettingDas from "../pages/DashboardPage/AdminSetting/AdminSettingDas";
 import ShopMan from "../pages/ShopMan/ShopMan";
 import ShopWoMan from "../pages/ShopWoman/ShopWoMan";
+import ForgotPasswordPage from "../pages/ForgotPasswordPage/ForgotPasswordPage";
 
 
 
@@ -78,6 +79,10 @@ export const userRoutes = createBrowserRouter([
       {
         path: "/shopwoman/:categoryId",
         element: <ShopWoMan />
+      },
+      {
+        path: "/forgotPassword",
+        element: <ForgotPasswordPage />
       }
     ],
   },

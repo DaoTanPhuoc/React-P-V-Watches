@@ -50,3 +50,7 @@
   font-weight: 500;
   color: "#fff";
 }
+
+.forgotpassword-form-inputEmail {
+  width: 30% !important;
+}
