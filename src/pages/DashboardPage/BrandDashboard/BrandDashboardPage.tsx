@@ -1,5 +1,5 @@
 import { Line, Pie } from "@ant-design/charts";
-import { Button, Card, Checkbox, Col, Form, FormInstance, Input, InputRef, Modal, Row, Space, Spin, Table, message, DatePicker, Popconfirm } from "antd";
+import { Button, Card, Checkbox, Col, Form, FormInstance, Input, InputRef, Modal, Row, Space, Spin, Table, message, DatePicker, Popconfirm, Typography } from "antd";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./BrandDashboardPage.css";
 import {
@@ -13,6 +13,8 @@ import { error } from "console";
 import { AppContext } from "../../../App";
 import { useParams } from "react-router-dom";
 import moment, { updateLocale } from "moment";
+
+const { Text } = Typography;
 // function call tổng sản phẩm
 function SumStock() {
   const [totalStock, setTotalStock] = useState(0);
@@ -127,39 +129,20 @@ const BrandDashboardPage = () => {
   });
 
   // brand (thương hiệu)1
-  const [stateBrand, setstateBrand] = useState();
+  const [stateBrand, setstateBrand] = useState<any[]>([]);
   interface DataTypeBrand {
     key: string;
     Id: number;
     Name: string;
     Description: string;
-    IsDeleted: boolean;
-    CreatedAt: Date;
-    UpdatedAt: Date;
   }
 
   type DataIndexBrand = keyof DataTypeBrand;
 
   const getDataBrand = async () => {
     await axios.get("https://localhost:7182/api/Brands/GetBrands").then((res) => {
+      setstateBrand(res.data)
       setloading(false);
-      setstateBrand(
-        res.data.map(
-          (row: {
-            Id: number;
-            Name: string;
-            Description: string;
-            CreatedAt: Date,
-            UpdatedAt: Date
-          }) => ({
-            Id: row.Id,
-            Name: row.Name,
-            Description: row.Description,
-            CreatedAt: row.CreatedAt,
-            UpdatedAt: row.UpdatedAt
-          })
-        )
-      );
     });
   };
 
@@ -171,8 +154,14 @@ const BrandDashboardPage = () => {
   // const [currentCreatedAt, setCurrentCreatedAt] = useState(new Date());
 
   const showModalBrand = (Id: any) => {
-    setIsModalOpenBrand(true);
+    const brand = stateBrand.find(b => b.Id === Id);
     setCurrentBrand(Id);
+    editRef.current?.setFieldsValue({
+      Id: brand.Id,
+      Name: brand.Name,
+      Description: brand.Description
+    })
+    setIsModalOpenBrand(true);
   };
 
   const handleOkBrand = () => {
@@ -258,7 +247,7 @@ const BrandDashboardPage = () => {
       .catch((error) => {
         console.log(error);
       })
-  })
+  }, [])
 
   const countCateProducts = countCate.length;
 
@@ -523,16 +512,8 @@ const BrandDashboardPage = () => {
 
   // call api sửa thương hiệu
   const onFinishBrand = (values: any) => {
-    const { Name, Id, CreatedAt } = values;
-    const currentDate = moment().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-    const data = {
-      Id: currentBrand,
-      Name,
-      CreatedAt: currentDate,
-    };
 
-
-    axios.put(`https://localhost:7182/api/Brands/${currentBrand}`, data, {
+    axios.put(`https://localhost:7182/api/Brands/${currentBrand}`, values, {
       headers: {
         'Authorization': `Bearer ${currentToken}`,
       },
@@ -585,12 +566,7 @@ const BrandDashboardPage = () => {
   // clossed
 
 
-  const columnsBrand: ColumnsType<DataTypeBrand> = [
-    {
-      title: "Id Brand",
-      dataIndex: "Id",
-      width: "10%",
-    },
+  const columnsBrand: ColumnsType<any> = [
     {
       title: "Tên thương hiệu",
       dataIndex: "Name",
@@ -598,10 +574,13 @@ const BrandDashboardPage = () => {
       ...getColumnSearchPropsBrand("Name")
     },
     {
-      title: "Ngày đăng ký",
-      dataIndex: "CreatedAt",
-      key: "CreatedAt",
+      title: "Mô tả",
+      dataIndex: "Description",
+      key: "Description",
       width: "10%",
+      render: (Description) => (
+        <Text ellipsis style={{ width: 200 }}>{Description}</Text>
+      )
     },
     {
       title: "Chức năng",
@@ -617,78 +596,6 @@ const BrandDashboardPage = () => {
   ];
 
   // thống kê loại sản phẩm bán được trong tuần (Số lượng)
-  const dataBrand = [
-    {
-      month: "Thứ hai",
-      key: "Nam",
-      value: 125,
-    },
-    {
-      month: "Thứ hai",
-      key: "Nữ",
-      value: 51,
-    },
-    {
-      month: "Thứ ba",
-      key: "Nam",
-      value: 132,
-    },
-    {
-      month: "Thứ ba",
-      key: "Nữ",
-      value: 91,
-    },
-    {
-      month: "Thứ tư",
-      key: "Nam",
-      value: 141,
-    },
-    {
-      month: "Thứ tư",
-      key: "Nữ",
-      value: 34,
-    },
-    {
-      month: "Thứ năm",
-      key: "Nam",
-      value: 158,
-    },
-    {
-      month: "Thứ năm",
-      key: "Nữ",
-      value: 47,
-    },
-    {
-      month: "Thứ sáu",
-      key: "Nam",
-      value: 133,
-    },
-    {
-      month: "Thứ sáu",
-      key: "Nữ",
-      value: 63,
-    },
-    {
-      month: "Thứ bảy",
-      key: "Nam",
-      value: 143,
-    },
-    {
-      month: "Thứ bảy",
-      key: "Nữ",
-      value: 58,
-    },
-    {
-      month: "Chủ nhật",
-      key: "Nam",
-      value: 133,
-    },
-    {
-      month: "Chủ nhật",
-      key: "Nữ",
-      value: 63,
-    },
-  ];
   const config = {
     dataChart,
     xField: "date",
@@ -761,34 +668,23 @@ const BrandDashboardPage = () => {
       content: "Thêm không thành công",
     });
   }
-  const [addBrand, setAddBrand] = useState([])
   const { currentToken } = useContext(AppContext);
   const formRef = useRef<FormInstance<any>>(null);
+  const editRef = useRef<FormInstance<any>>(null);
   const onFinish = (values: any) => {
-    const BrandProducts = addBrand.map((Brand: any) => {
-      return {
-        Name: Brand.Name,
-        Description: Brand.Description,
-      };
-    });
-    console.log(BrandProducts);
-
-    const dataToPost = {
-      Name: values.Name,
-      Description: values.Description,
-      BrandProducts: BrandProducts,
-    };
     axios
-      .post(`https://localhost:7182/api/Brands`, dataToPost, {
+      .post(`https://localhost:7182/api/Brands`, values, {
         headers: {
+          "Content-Type": "application/json",
           'Authorization': `Bearer ${currentToken}`,
         },
       })
       .then((result) => {
         if (result.status === 200) {
           formRef.current?.resetFields();
-          setAddBrand([])
           success();
+          fetch()
+          handleCancel()
         }
       })
       .catch((error) => {
@@ -815,9 +711,7 @@ const BrandDashboardPage = () => {
                 labelCol={{ span: 6 }}
                 wrapperCol={{ span: 14 }}
                 onFinish={onFinishBrand}
-              // initialValues={{
-              //   Id: currentBrand,
-              // }}
+                ref={editRef}
               >
                 <Form.Item hidden
                   name="Id"
@@ -830,10 +724,11 @@ const BrandDashboardPage = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label={<span style={{ color: "#000000" }}>Ngày đăng ký</span>}
-                  name="CreatedAt"
+                  label={<span style={{ color: "#000000" }}>Mô tả</span>}
+                  name="Description"
+                  rules={[{ required: true, message: 'Vui lòng nhập mô tả' }]}
                 >
-                  <DatePicker />
+                  <Input />
                 </Form.Item>
 
                 <Form.Item>
@@ -860,16 +755,13 @@ const BrandDashboardPage = () => {
                 ref={formRef}
                 labelCol={{ span: 6 }}
                 wrapperCol={{ span: 14 }}
-
               >
-                <Form.Item label="Name" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên thương hiệu' }]}>
+                <Form.Item label="Tên" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên thương hiệu' }]}>
                   <Input />
                 </Form.Item>
-
-                <Form.Item label="Description" name="Description">
+                <Form.Item label="Mô tả" name="Description" rules={[{ required: true, message: 'Vui lòng nhập mô tả' }]}>
                   <Input />
                 </Form.Item>
-
                 <Form.Item>
                   <Button style={{
                     backgroundColor: "#000000",
