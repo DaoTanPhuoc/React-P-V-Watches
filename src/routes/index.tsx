@@ -28,6 +28,7 @@ import AdminSettingDas from "../pages/DashboardPage/AdminSetting/AdminSettingDas
 import ShopMan from "../pages/ShopMan/ShopMan";
 import ShopWoMan from "../pages/ShopWoman/ShopWoMan";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage/ForgotPasswordPage";
+import CategoryDashPage from "../pages/DashboardPage/CategoryDashboard/CategoryDashPage";
 
 
 
@@ -129,6 +130,10 @@ export const userRoutes = createBrowserRouter([
       {
         path: "settingAccount",
         element: <AdminSettingDas />
+      },
+      {
+        path: "categoryDash",
+        element: <CategoryDashPage />
       }
     ],
   },

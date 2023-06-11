@@ -768,14 +768,12 @@ const BrandDashboardPage = () => {
     const BrandProducts = addBrand.map((Brand: any) => {
       return {
         Name: Brand.Name,
-        Description: Brand.Description,
       };
     });
     console.log(BrandProducts);
 
     const dataToPost = {
       Name: values.Name,
-      Description: values.Description,
       BrandProducts: BrandProducts,
     };
     axios
@@ -862,13 +860,13 @@ const BrandDashboardPage = () => {
                 wrapperCol={{ span: 14 }}
 
               >
-                <Form.Item label="Name" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên thương hiệu' }]}>
+                <Form.Item label="Tên thương hiệu" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên thương hiệu' }]}>
                   <Input />
                 </Form.Item>
 
-                <Form.Item label="Description" name="Description">
+                {/* <Form.Item label="Description" name="Description">
                   <Input />
-                </Form.Item>
+                </Form.Item> */}
 
                 <Form.Item>
                   <Button style={{
