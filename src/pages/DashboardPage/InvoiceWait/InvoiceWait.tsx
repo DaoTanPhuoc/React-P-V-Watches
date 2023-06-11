@@ -124,6 +124,7 @@ const InvoiceWait = () => {
                     columns={columns}
                     dataSource={data}
                     pagination={{ pageSize: 5 }}
+                    scroll={{ x: '100%' }}
                 />
             </>
         )
@@ -155,6 +156,7 @@ const InvoiceWait = () => {
                     columns={columns}
                     dataSource={data}
                     pagination={{ pageSize: 5 }}
+                    scroll={{ x: '100%' }}
                 />
             </>
         )
@@ -185,6 +187,7 @@ const InvoiceWait = () => {
                     columns={columns}
                     dataSource={data}
                     pagination={{ pageSize: 5 }}
+                    scroll={{ x: '100%' }}
                 />
             </>
         )
@@ -203,6 +206,7 @@ const InvoiceWait = () => {
                     columns={columns}
                     dataSource={data}
                     pagination={{ pageSize: 5 }}
+                    scroll={{ x: '100%' }}
                 />
             </>
         )
@@ -221,6 +225,7 @@ const InvoiceWait = () => {
                     columns={columns}
                     dataSource={data}
                     pagination={{ pageSize: 5 }}
+                    scroll={{ x: '100%' }}
                 />
             </>
         )
@@ -239,6 +244,7 @@ const InvoiceWait = () => {
                     columns={columns}
                     dataSource={data}
                     pagination={{ pageSize: 5 }}
+                    scroll={{ x: '100%' }}
                 />
             </>
         )

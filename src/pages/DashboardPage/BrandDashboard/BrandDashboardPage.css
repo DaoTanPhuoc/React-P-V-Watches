@@ -12,3 +12,25 @@
 .moadal-add-brand {
   width: 40% !important;
 }
+
+@media only screen and (max-width: 767px) {
+  .brand-das-container-responsive {
+    flex-direction: column;
+  }
+  .brand-dash-container-responsive2 {
+    flex-direction: column;
+  }
+  .table-brand-list-responsive {
+    width: 260px !important;
+  }
+  .chart-brand-das-container-responsive {
+    width: 260px !important;
+    margin-top: 40px;
+  }
+  .title-brand-das-responsive {
+    font-size: 5vw;
+  }
+  .label-brand-das-responsive {
+    font-size: 5vw;
+  }
+}

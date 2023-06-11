@@ -121,6 +121,7 @@ const ShopMan = () => {
             .then((result) => {
                 setProducts(result.data);
                 filterData(currentPage, result.data);
+                //setTempProducts(result.data)
             })
             .catch((error) => {
                 console.log(error);
@@ -188,26 +189,36 @@ const ShopMan = () => {
             });
     }, [selectedBrand, currentPage]);
 
-    const handleBrandChange = (value: number) => {
-        if (value === 0) {
-            setSelectedBrand(value);
-            setCurrentPage(1);
-            filterData(1, products)
-        } else {
-            setSelectedBrand(value);
-            setCurrentPage(1);
-            axios
-                .get(`https://localhost:7182/api/Products/GetProductsByBrand?brandId=${value}`)
-                .then((result) => {
-                    //const filterMan = result.data.filter((manproducts: any) => manproducts.categoryId === 1)
-                    setFilteredProducts(result.data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        }
-    };
+    // const handleBrandChange = (value: number) => {
+    //     if (value === 0) {
+    //         setSelectedBrand(value);
+    //         setCurrentPage(1);
+    //         filterData(1, products)
+    //     } else {
+    //         setSelectedBrand(value);
+    //         setCurrentPage(1);
+    //         axios
+    //             .get(`https://localhost:7182/api/Products/GetProductsByBrand?brandId=${value}`)
+    //             .then((result) => {
+    //                 //const filterMan = result.data.filter((manproducts: any) => manproducts.categoryId === 1)
+    //                 setFilteredProducts(result.data);
+    //             })
+    //             .catch((error) => {
+    //                 console.log(error);
+    //             });
+    //     }
+    // };
 
+    // phuoc viet
+    const handleBrandChange = (value: string) => {
+        if (value == "") {
+            filterData(currentPage, products)
+        } else {
+            var filterPro = products.filter(p => p.BrandName === value);
+            filterData(currentPage, filterPro)
+        }
+    }
+    //
 
     // closed
     const isShow = true;
@@ -266,7 +277,7 @@ const ShopMan = () => {
             <div className="Products-container">
                 <div className="filter">
                     <div className="filter-items">
-                        <Select
+                        {/* <Select
                             showSearch
                             style={{
                                 width: 150,
@@ -304,6 +315,48 @@ const ShopMan = () => {
                                 },
                                 {
                                     value: 4,
+                                    label: "Channel",
+                                },
+                            ]}
+                        /> */}
+                        <Select
+                            showSearch
+                            style={{
+                                width: 150,
+                                fontWeight: "bold",
+                            }}
+                            placeholder="Thương Hiệu"
+                            optionFilterProp="children"
+                            //value={selectedBrand}
+                            defaultValue={""}
+                            filterOption={(input, option) =>
+                                (option?.label ?? "").includes(input)
+                            }
+                            onChange={handleBrandChange}
+                            filterSort={(optionA, optionB) =>
+                                (optionA?.label ?? "")
+                                    .toLowerCase()
+                                    .localeCompare((optionB?.label ?? "").toLowerCase())
+                            }
+                            options={[
+                                {
+                                    value: "",
+                                    label: "Thương Hiệu",
+                                },
+                                {
+                                    value: "Rolex",
+                                    label: "Rolex",
+                                },
+                                {
+                                    value: "Hublot",
+                                    label: "Hublot",
+                                },
+                                {
+                                    value: "Orient",
+                                    label: "Orient",
+                                },
+                                {
+                                    value: "Channel",
                                     label: "Channel",
                                 },
                             ]}

@@ -18,6 +18,7 @@ import {
   Card,
   Input,
   MenuProps,
+  Modal,
   Result,
   Space,
   Tag,
@@ -256,11 +257,18 @@ const Dashboard: React.FC = () => {
     getItem(<Link to="/admin/settingAccount">Tài Khoản</Link>, "10", <SettingFilled />),
   ];
 
+  const [collapsed, setCollapsed] = useState(false);
+
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
+
+
   return (
     <Layout >
       <Sider
         breakpoint="lg"
-        collapsedWidth="100"
+        collapsedWidth="80"
         onBreakpoint={(broken) => {
           console.log(broken);
         }}
@@ -291,6 +299,7 @@ const Dashboard: React.FC = () => {
       </Sider>
       <Layout className="site-layout">
         <Header
+          className="header-page-dashboard-responsive"
           style={{
             position: "sticky",
             top: 0,
@@ -330,7 +339,9 @@ const Dashboard: React.FC = () => {
             minHeight: 950,
           }}
         >
-          <Outlet />
+          <div className="contain-dashboardPage-responsive">
+            <Outlet />
+          </div>
         </Content>
       </Layout>
     </Layout>
