@@ -68,6 +68,7 @@ function App() {
         baseApi,
         currentToken,
         setCurrentToken,
+        loadUser,
         currentUser,
         setCurrentUser,
         currentAdmin,

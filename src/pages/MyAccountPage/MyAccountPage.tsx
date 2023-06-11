@@ -347,7 +347,7 @@ const MyOrder = () => {
 };
 
 const AddressOrder = () => {
-  const { currentToken, currentUser, baseApi } = useContext(AppContext);
+  const { currentToken, currentUser, baseApi, loadUser } = useContext(AppContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [provices, setProvices] = useState<any[]>([]);
   const [districts, setDistricts] = useState<any[]>([]);
@@ -382,6 +382,7 @@ const AddressOrder = () => {
             content: "Cập nhật thành công",
             type: "success",
           });
+          loadUser()
           addressForm.resetFields();
           setIsModalOpen(false);
         }
@@ -551,7 +552,7 @@ const { TextArea } = Input;
 
 const InfoAccount = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { currentUser, setCurrentUser, baseApi } = useContext(AppContext);
+  const { currentUser, setCurrentUser, baseApi, loadUser } = useContext(AppContext);
   const { currentToken, setCurrentToken } = useContext(AppContext);
   const [infoForm] = Form.useForm();
   const [passwordForm] = Form.useForm();
@@ -595,6 +596,7 @@ const InfoAccount = () => {
             content: "Cập nhật thành công",
             type: "success",
           });
+          loadUser()
         }
       })
       .catch((error) =>

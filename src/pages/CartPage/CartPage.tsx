@@ -1,7 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 import {
   Button,
-  Checkbox,
   Col,
   Form,
   Input,
@@ -15,11 +14,10 @@ import {
   Table,
 } from "antd";
 import { ColumnsType } from "antd/es/table";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./CartPage.css";
 import { AppContext } from "../../App";
 import axios from "axios";
-import { FormInstance } from "antd/es/form";
 import {
   DeleteOutlined,
 } from "@ant-design/icons";
@@ -53,49 +51,45 @@ const validateMessages = {
 };
 
 const CartPage = () => {
+  const [addressOrder, setAddressOrder] = useState("")
   const [showInfoCard, setShowInfoCard] = useState(false);
   const { cartOrders, onChangeCartOrders, baseApi, currentToken } = useContext(AppContext);
   const { currentUser } = useContext(AppContext)
-  const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate()
 
   // order status (modal antd)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const toggleModal = () => setIsModalOpen(!isModalOpen)
   // close
-  const formRef = useRef<FormInstance<any>>(null);
+  const [form] = Form.useForm();
   useEffect(() => {
-    formRef.current?.setFieldsValue({
+    currentUser && form.setFieldsValue({
       customerName: currentUser.FullName,
       email: currentUser.Email,
-      address: currentUser.Address,
       phone: currentUser.Phone
     })
-  }, [currentUser])
-  const success = () => {
-    messageApi.open({
-      type: "success",
-      content: "Đặt hàng thành công",
-    });
-  };
+    currentUser && setAddressOrder(currentUser.Address)
+  }, [currentUser, form])
 
   const onFinish = (values: any) => {
+    if (addressOrder === null || addressOrder === "") {
+      message.open({ key: 'order', content: "Vui lòng cập nhật địa chỉ", type: 'error' })
+      return;
+    }
+    message.open({ key: 'order', content: "Đang tạo đơn hàng", type: 'loading' })
     const orderProducts = cartOrders.map((cardOrder: any) => {
       return {
         ProductId: cardOrder.Id,
         Quanlity: cardOrder.Quantity,
       };
     });
-    console.log(orderProducts);
-    // giá trị mặc định địa chỉ của user 
-    const defaultAddress = currentUser.Address;
     // closed
     const dataToPost = {
       Name: values.customerName,
       Email: values.email,
-      //Address: addressOrder === "" ? currentUser.Address : addressOrder,// state
-      Address: addressOrder === "" ? defaultAddress : addressOrder,
+      Address: addressOrder,
       Phone: values.phone,
+      PaymentType: paymentType,
       orderProducts: orderProducts,
     };
     axios
@@ -106,16 +100,32 @@ const CartPage = () => {
       })
       .then((result) => {
         if (result.status === 200) {
-          formRef.current?.resetFields();
+          form.resetFields();
           onChangeCartOrders([]);
-          // thông báo thành công
-          success()
+          message.open({ key: 'order', content: "Tạo đơn hàng thành công", type: 'success' })
+          if (paymentType === "NganLuong") {
+            message.open({ key: 'order', content: "Đang chuyển đến trang thanh toán...", type: 'loading' })
+            const userInfo = `${values.customerName} *|* ${values.email} *|* ${values.phone} *|* ${addressOrder}`
+            getPaymentLink(userInfo, result.data, totalProductsprice)
+          }
         }
       })
       .catch((error) => {
-        console.log(error);
+        message.open({ key: 'order', content: "Lỗi: " + error.response.data, type: 'error' })
       });
   };
+
+  const getPaymentLink = async (userInfo: string, orderId: number, price: number) => {
+    await axios.get(`${baseApi}/checkouts/geturl`, {
+      params: {
+        userInfo: userInfo,
+        orderId: orderId,
+        price: price
+      }
+    }).then(res => {
+      window.location.href = res.data
+    })
+  }
 
   const removeOrderProduct = (index: number) => {
     const productsTmp = [...cartOrders];
@@ -214,9 +224,6 @@ const CartPage = () => {
   const [wards, setWards] = useState<any[]>([]);
   const [addressForm] = Form.useForm();
   const base_api = "https://provinces.open-api.vn/api";
-  //const [addressOrder, setAddressOrder] = useState(currentUser.Address)
-  const [addressOrder, setAddressOrder] = useState("")
-
   function markRequireAll(query: string) {
     const words = query.split(/\s+/);
     return words.map((w) => `+${w}`).join(" ");
@@ -227,35 +234,8 @@ const CartPage = () => {
   const saveAddress = async (values: any) => {
     const userAddress = `${values["address"]}, ${values["ward"]}, ${values["district"]}, ${values["provice"]}`;
     setAddressOrder(userAddress);
-    axios
-      .post(
-        `${baseApi}/Accounts/UpdateUserInfo`,
-        { ...currentUser, Address: userAddress },
-        {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            Authorization: `Bearer ${currentToken}`,
-          },
-        }
-      )
-      .then((res) => {
-        if (res.status === 204) {
-          message.open({
-            key: "save",
-            content: "Cập nhật thành công",
-            type: "success",
-          });
-          addressForm.resetFields();
-          setIsModalOpenAddress(false);
-        }
-      })
-      .catch((error) =>
-        message.open({
-          key: "save",
-          content: "Lỗi: " + error.response.data,
-          type: "error",
-        })
-      );
+    addressForm.resetFields()
+    handleCancelAddress()
   };
   const handleCancelAddress = () => {
     setIsModalOpenAddress(false);
@@ -299,16 +279,14 @@ const CartPage = () => {
   }, []);
   //
 
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [paymentType, setPaymentType] = useState("COD");
 
   const handleOptionChange = (event: any) => {
-    setSelectedOption(event.target.value);
+    setPaymentType(event.target.value);
   };
   return (
     <>
       <div className="small-container cart-page">
-        {contextHolder}
-
         <Table
           // className="table-cart-responsive"
           scroll={{ x: true }}
@@ -388,9 +366,8 @@ const CartPage = () => {
                       </span>
                       <Form
                         className="container-info-order-responsive"
-                        ref={formRef}
+                        form={form}
                         onFinish={onFinish}
-                        initialValues={{ customerName: currentUser.Name, email: currentUser.Email, phone: currentUser.Phone }}
                         {...layout}
                         name="nest-messages"
                         //onFinish={onFinish}
@@ -431,10 +408,9 @@ const CartPage = () => {
                           <Input />
                         </Form.Item>
                         <Form.Item name="address" label="Địa chỉ">
-                          {/* <Input /> */}
                           <div style={{ display: 'flex', justifyContent: "space-between" }}>
                             {/* <p>43 Nguyễn Chí Thanh,Ngọc Khánh, Ba Đình, Hà Nội</p> */}
-                            <p className="address-info-order-responsive">{addressOrder === "" ? currentUser.Address : addressOrder}</p>
+                            <p className="address-info-order-responsive">{addressOrder}</p>
                             <a className="address-info-order-responsive" style={{ width: 86 }} onClick={showModalAddres}>Cập nhật</a>
                             <Modal
                               title="Cập Nhật Địa Chỉ"
@@ -519,7 +495,6 @@ const CartPage = () => {
                           wrapperCol={{ ...layout.wrapperCol, offset: 8 }}
                         >
                           <Button
-                            // onClick={success}
                             style={{
                               color: "white",
                               backgroundColor: "black",
@@ -580,18 +555,10 @@ const CartPage = () => {
                           </Row>
                         </Checkbox.Group> */}
 
-                        <Radio.Group onChange={handleOptionChange} value={selectedOption}>
+                        <Radio.Group onChange={handleOptionChange} value={paymentType}>
                           <Row>
                             <Col span={24}>
-                              <Radio className="code-block" value="A">
-                                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                  <p className="title-option-paymethod" style={{ margin: 20 }}>Thanh toán qua ngân hàng</p>
-                                  <img style={{ width: 60, height: 60, objectFit: "cover", margin: 10, marginLeft: 40 }} src="https://cdn-icons-png.flaticon.com/512/2910/2910254.png" alt="Bank Icon" />
-                                </div>
-                              </Radio>
-                            </Col>
-                            <Col span={24}>
-                              <Radio className="code-block" value="B">
+                              <Radio className="code-block" value="COD">
                                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                                   <p className="title-option-paymethod" style={{ margin: 20 }}>Thanh toán khi nhận hàng</p>
                                   <img style={{ width: 60, height: 60, objectFit: "cover", margin: 10, marginLeft: 40 }} src="https://cdn-icons-png.flaticon.com/512/5578/5578525.png" alt="Cash Icon" />
@@ -599,7 +566,12 @@ const CartPage = () => {
                               </Radio>
                             </Col>
                             <Col span={24}>
-                              <Button className="btn-chose-payMethod" style={{ backgroundColor: "#000000", color: "#fff", left: "25%", marginTop: 20 }}>Xác nhận</Button>
+                              <Radio className="code-block" value="NganLuong">
+                                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                  <p className="title-option-paymethod" style={{ margin: 20 }}>Thanh toán qua ngân hàng</p>
+                                  <img style={{ width: 60, height: 60, objectFit: "cover", margin: 10, marginLeft: 40 }} src="https://cdn-icons-png.flaticon.com/512/2910/2910254.png" alt="Bank Icon" />
+                                </div>
+                              </Radio>
                             </Col>
                           </Row>
                         </Radio.Group>

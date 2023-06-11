@@ -1,8 +1,5 @@
-import path from "path";
 import {
-  BrowserRouter,
   createBrowserRouter,
-  RouterProvider,
 } from "react-router-dom";
 import HomePage from "../pages/HomePage/HomePage";
 import ProductDetail from "../pages/ProductDetailPage/ProductDetailPage";
@@ -28,6 +25,7 @@ import AdminSettingDas from "../pages/DashboardPage/AdminSetting/AdminSettingDas
 import ShopMan from "../pages/ShopMan/ShopMan";
 import ShopWoMan from "../pages/ShopWoman/ShopWoMan";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage/ForgotPasswordPage";
+import CheckOut from "../pages/CartPage/Checkout";
 
 
 
@@ -83,6 +81,10 @@ export const userRoutes = createBrowserRouter([
       {
         path: "/forgotPassword",
         element: <ForgotPasswordPage />
+      },
+      {
+        path: "/checkout",
+        element: <CheckOut />
       }
     ],
   },

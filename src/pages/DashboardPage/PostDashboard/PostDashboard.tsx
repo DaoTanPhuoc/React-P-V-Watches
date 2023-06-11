@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input, message, Modal, Row, Space } from "antd";
+import { Button, Checkbox, Form, Input, message, Modal, Row, Space, Upload, UploadFile } from "antd";
 import React, { useContext, useEffect, useState } from "react";
 import { FileAddOutlined } from "@ant-design/icons";
 import "./PostDashboard.css";
@@ -8,6 +8,7 @@ import axios from "axios";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import moment from "moment";
+import { RcFile, UploadProps } from "antd/es/upload";
 const PostDashboard = () => {
   const columns: ColumnsType<any> = [
     {
@@ -21,6 +22,11 @@ const PostDashboard = () => {
     {
       title: "Description",
       dataIndex: "Description",
+    },
+    {
+      title: "Hình ảnh",
+      dataIndex: "Thumbnail",
+      render: (thumbnail, title) => <img src={thumbnail} alt="Bài viết..."></img>
     },
     {
       title: "Người tạo",
@@ -51,6 +57,8 @@ const PostDashboard = () => {
   const [loading, setLoading] = useState(false);
   const [isOpened, setIsOpened] = useState<boolean>(false)
   const [openEdit, setOpenEdit] = useState<boolean>(false)
+  const [checkbox, setCheckBox] = useState<boolean>(false);
+  const [fileList, setFileList] = useState<any>([]);
   const [content, setContent] = useState<string>("<h2>Tạo nội dung bài viết</h2>")
   const [contentEdit, setContentEdit] = useState<string>("")
   const [postId, setPostid] = useState();
@@ -70,6 +78,12 @@ const PostDashboard = () => {
       Title: post.Title,
       Description: post.Description,
     })
+    setCheckBox(!post.IsDeleted)
+    setFileList([{
+      uid: "1",
+      url: post.Thumbnail,
+      thumbUrl: post.Thumbnail
+    }])
     setContentEdit(post.Content)
     setOpenEdit(!openEdit)
   }
@@ -80,7 +94,7 @@ const PostDashboard = () => {
   }
   const createPost = (values: any) => {
     message.open({ type: 'loading', content: 'Đang tạo bài viết...', key: 'create' })
-    const dataPost = { ...values, content };
+    const dataPost = { ...values, content, Thumbnail: values["Thumbnail"].file };
     axios.post(`${baseApi}/News`, dataPost, {
       headers: {
         'Authorization': `Bearer ${currentToken}`
@@ -97,7 +111,7 @@ const PostDashboard = () => {
   }
   const updatePost = (values: any) => {
     message.open({ type: 'loading', content: 'Đang cập nhật bài viết...', key: 'update' })
-    const dataPost = { ...values, contentEdit, Id: postId };
+    const dataPost = { ...values, contentEdit, Id: postId, IsDeleted: !values["IsDeleted"], Thumbnail: values["Thumbnail"].file };
     axios.put(`${baseApi}/News/${postId}`, dataPost, {
       headers: {
         'Authorization': `Bearer ${currentToken}`
@@ -111,6 +125,24 @@ const PostDashboard = () => {
     }).catch(err => {
       message.open({ type: 'error', content: 'Lỗi: ' + err.respose.data, key: 'update' })
     })
+  }
+  const onPreview = async (file: UploadFile) => {
+    let src = file.url as string;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj as RcFile);
+        reader.onload = () => resolve(reader.result as string);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
+  const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+    return false;
   }
   useEffect(() => {
     getData();
@@ -165,6 +197,22 @@ const PostDashboard = () => {
                   <Input />
                 </Form.Item>
                 <Form.Item
+                  name="Thumbnail"
+                  label="Hình ảnh"
+                >
+                  <Upload
+                    accept="image/*"
+                    listType="picture-card"
+                    fileList={fileList}
+                    beforeUpload={() => false}
+                    onChange={handleChange}
+                    onPreview={onPreview}
+                    maxCount={1}
+                  >
+                    {fileList.length < 1 && "+ Upload"}
+                  </Upload>
+                </Form.Item>
+                <Form.Item
                   label="Nội dung"
                 >
                   <CKEditor
@@ -209,7 +257,7 @@ const PostDashboard = () => {
       >
         <Form
           form={formEdit}
-          layout="vertical"
+          layout="horizontal"
           onFinish={updatePost}
         >
           <Form.Item
@@ -227,6 +275,22 @@ const PostDashboard = () => {
             <Input />
           </Form.Item>
           <Form.Item
+            name="Thumbnail"
+            label="Hình ảnh"
+          >
+            <Upload
+              accept="image/*"
+              listType="picture-card"
+              fileList={fileList}
+              beforeUpload={() => false}
+              onChange={handleChange}
+              onPreview={onPreview}
+              maxCount={1}
+            >
+              {fileList.length < 1 && "+ Upload"}
+            </Upload>
+          </Form.Item>
+          <Form.Item
             label="Nội dung"
           >
             <CKEditor
@@ -237,6 +301,12 @@ const PostDashboard = () => {
                 setContentEdit(data)
               }}
             />
+          </Form.Item>
+          <Form.Item
+            label="Hiển thị"
+            valuePropName="IsDeleted"
+          >
+            <Checkbox value={checkbox} />
           </Form.Item>
           <Form.Item>
             <Row justify={'end'}>
