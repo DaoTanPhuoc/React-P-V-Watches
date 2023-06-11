@@ -187,25 +187,37 @@ const ShopWoMan = () => {
             });
     }, [selectedBrand, currentPage]);
 
-    const handleBrandChange = (value: number) => {
-        if (value === 0) {
-            setSelectedBrand(value);
-            setCurrentPage(1);
-            filterData(1, products)
+    // brand
+
+    const handleBrandChange = (value: string) => {
+        if (value === "") {
+            filterData(currentPage, products)
         } else {
-            setSelectedBrand(value);
-            setCurrentPage(1);
-            axios
-                .get(`https://localhost:7182/api/Products/GetProductsByBrand?brandId=${value}`)
-                .then((result) => {
-                    //const filterMan = result.data.filter((manproducts: any) => manproducts.categoryId === 2)
-                    setFilteredProducts(result.data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            var tempProduct = products.filter(p => p.BrandName === value);
+            filterData(currentPage, tempProduct)
         }
     };
+    //
+
+    // const handleBrandChange = (value: number) => {
+    //     if (value === 0) {
+    //         setSelectedBrand(value);
+    //         setCurrentPage(1);
+    //         filterData(1, products)
+    //     } else {
+    //         setSelectedBrand(value);
+    //         setCurrentPage(1);
+    //         axios
+    //             .get(`https://localhost:7182/api/Products/GetProductsByBrand?brandId=${value}`)
+    //             .then((result) => {
+    //                 //const filterMan = result.data.filter((manproducts: any) => manproducts.categoryId === 2)
+    //                 setFilteredProducts(result.data);
+    //             })
+    //             .catch((error) => {
+    //                 console.log(error);
+    //             });
+    //     }
+    // };
     // closed
 
     const isShow = true;
@@ -264,7 +276,7 @@ const ShopWoMan = () => {
             <div className="Products-container">
                 <div className="filter">
                     <div className="filter-items">
-                        <Select
+                        {/* <Select
                             showSearch
                             style={{
                                 width: 150,
@@ -302,6 +314,48 @@ const ShopWoMan = () => {
                                 },
                                 {
                                     value: 4,
+                                    label: "Channel",
+                                },
+                            ]}
+                        /> */}
+                        <Select
+                            showSearch
+                            style={{
+                                width: 150,
+                                fontWeight: "bold",
+                            }}
+                            placeholder="Thương Hiệu"
+                            optionFilterProp="children"
+                            //value={selectedBrand}
+                            defaultValue={""}
+                            filterOption={(input, option) =>
+                                (option?.label ?? "").includes(input)
+                            }
+                            onChange={handleBrandChange}
+                            filterSort={(optionA, optionB) =>
+                                (optionA?.label ?? "")
+                                    .toLowerCase()
+                                    .localeCompare((optionB?.label ?? "").toLowerCase())
+                            }
+                            options={[
+                                {
+                                    value: "",
+                                    label: "Thương Hiệu",
+                                },
+                                {
+                                    value: "Rolex",
+                                    label: "Rolex",
+                                },
+                                {
+                                    value: "Hublot",
+                                    label: "Hublot",
+                                },
+                                {
+                                    value: "Orient",
+                                    label: "Orient",
+                                },
+                                {
+                                    value: "Channel",
                                     label: "Channel",
                                 },
                             ]}

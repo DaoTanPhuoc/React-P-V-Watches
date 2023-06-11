@@ -1,5 +1,5 @@
 import { Line, Pie } from "@ant-design/charts";
-import { Button, Card, Checkbox, Col, Form, FormInstance, Input, InputRef, Modal, Row, Space, Spin, Table, message } from "antd";
+import { Button, Card, Checkbox, Col, Form, FormInstance, Input, InputRef, Modal, Row, Space, Spin, Table, message, DatePicker, Popconfirm } from "antd";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./BrandDashboardPage.css";
 import {
@@ -11,7 +11,8 @@ import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { error } from "console";
 import { AppContext } from "../../../App";
-
+import { useParams } from "react-router-dom";
+import moment, { updateLocale } from "moment";
 // function call tổng sản phẩm
 function SumStock() {
   const [totalStock, setTotalStock] = useState(0);
@@ -125,6 +126,63 @@ const BrandDashboardPage = () => {
     maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
   });
 
+  // brand (thương hiệu)1
+  const [stateBrand, setstateBrand] = useState();
+  interface DataTypeBrand {
+    key: string;
+    Id: number;
+    Name: string;
+    Description: string;
+    IsDeleted: boolean;
+    CreatedAt: Date;
+    UpdatedAt: Date;
+  }
+
+  type DataIndexBrand = keyof DataTypeBrand;
+
+  const getDataBrand = async () => {
+    await axios.get("https://localhost:7182/api/Brands/GetBrands").then((res) => {
+      setloading(false);
+      setstateBrand(
+        res.data.map(
+          (row: {
+            Id: number;
+            Name: string;
+            Description: string;
+            CreatedAt: Date,
+            UpdatedAt: Date
+          }) => ({
+            Id: row.Id,
+            Name: row.Name,
+            Description: row.Description,
+            CreatedAt: row.CreatedAt,
+            UpdatedAt: row.UpdatedAt
+          })
+        )
+      );
+    });
+  };
+
+  //closed
+
+  // moda brand 
+  const [isModalOpenBrand, setIsModalOpenBrand] = useState(false);
+  const [currentBrand, setCurrentBrand] = useState<number>();
+  // const [currentCreatedAt, setCurrentCreatedAt] = useState(new Date());
+
+  const showModalBrand = (Id: any) => {
+    setIsModalOpenBrand(true);
+    setCurrentBrand(Id);
+  };
+
+  const handleOkBrand = () => {
+    setIsModalOpenBrand(false);
+  };
+
+  const handleCancelBrand = () => {
+    setIsModalOpenBrand(false);
+  };
+  // closed
 
   interface DataType {
     key: string;
@@ -136,75 +194,21 @@ const BrandDashboardPage = () => {
   }
   type DataIndex = keyof DataType;
 
-  // const data: DataType[] = [
-  //   {
-  //     key: "1",
-  //     nameProduct: "ROLEX DAY-DATE 40MM",
-  //     categories: "Nam",
-  //     image:
-  //       "https://bossluxurywatch.vn/uploads/san-pham/rolex/day-date-1/thumbs/418x0/rolex-day-date-40mm-228235-0045.png",
-  //     Price: 32,
-  //     caseSize: 40,
-  //   },
-  //   {
-  //     key: "2",
-  //     nameProduct: "PATEK PHILIPPE COMPLICATIONS",
-  //     categories: "Nữ",
-  //     image:
-  //       "https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/complications/thumbs/418x0/patek-philippe-complications-7130g-016.png",
-  //     Price: 42,
-  //     caseSize: 40,
-  //   },
-  //   {
-  //     key: "3",
-  //     nameProduct: "HUBLOT BIG BANG STEEL DIAMONDS",
-  //     categories: "Nam",
-  //     image:
-  //       "https://bossluxurywatch.vn/uploads/san-pham/hublot/big-bang/thumbs/418x0/hublot-big-bang-steel-diamonds-341-sx-130-rx-114.png",
 
-  //     Price: 32,
-  //     caseSize: 33,
-  //   },
-  //   {
-  //     key: "4",
-  //     nameProduct: "FRANCK MULLER VANGUARD LADY MOONPHASE",
-  //     categories: "Nam",
-  //     image:
-  //       "https://bossluxurywatch.vn/uploads/san-pham/franck-muller/thumbs/418x0/vanguard-lady-moonphase-v-32-sc-fo-l-d-cd-1p-cold.png",
-
-  //     Price: 32,
-  //     caseSize: 30,
-  //   },
-  //   {
-  //     key: "5",
-  //     nameProduct: "PATEK PHILIPPE COMPLICATIONS",
-  //     categories: "Nữ",
-  //     image:
-  //       "https://bossluxurywatch.vn/uploads/san-pham/patek-philippe/complications/thumbs/418x0/patek-philippe-complications-7130g-016.png",
-  //     Price: 42,
-  //     caseSize: 40,
-  //   },
-  //   {
-  //     key: "6",
-  //     nameProduct: "FRANCK MULLER VANGUARD LADY MOONPHASE",
-  //     categories: "Nam",
-  //     image:
-  //       "https://bossluxurywatch.vn/uploads/san-pham/franck-muller/thumbs/418x0/vanguard-lady-moonphase-v-32-sc-fo-l-d-cd-1p-cold.png",
-
-  //     Price: 32,
-  //     caseSize: 42,
-  //   },
-  // ];
 
   // call api table products
 
-  const [state, setstate] = useState([]);
+  const [state, setstate] = useState();
   const [loading, setloading] = useState(true);
   const [dataChart, setDataChart] = useState([]);
+  // delete Brand 
+  const [selectedId, setSelectedId] = useState(null);
+  // closed
 
 
   useEffect(() => {
     getData();
+    getDataBrand();
     fetchChart();
   }, []);
 
@@ -234,6 +238,12 @@ const BrandDashboardPage = () => {
   const fetchChart = () => {
     axios.get("https://localhost:7182/api/Statistics/TotalProductsCategoryOfWeek").then(res => {
       setDataChart(res.data)
+    })
+  }
+
+  const fetch = () => {
+    axios.get("https://localhost:7182/api/Brands/GetBrands").then((res) => {
+      setstateBrand(res.data);
     })
   }
 
@@ -365,6 +375,108 @@ const BrandDashboardPage = () => {
     },
   });
 
+
+  // tìm kiếm theo list brand 
+
+  const handleSearchBrand = (
+    selectedKeys: string[],
+    confirm: (param?: FilterConfirmProps) => void,
+    dataIndex: DataIndexBrand
+  ) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+
+  const handleResetBrand = (clearFilters: () => void) => {
+    clearFilters();
+    setSearchText("");
+  };
+
+  const getColumnSearchPropsBrand = (
+    dataIndex: DataIndexBrand
+  ): ColumnType<DataTypeBrand> => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }) => (
+      <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+        <Input
+          ref={searchInput}
+          // placeholder={`Search ${dataIndex}`}
+          placeholder="Tìm kiếm"
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() =>
+            handleSearchBrand(selectedKeys as string[], confirm, dataIndex)
+          }
+          style={{ marginBottom: 8, display: "block" }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() =>
+              handleSearchBrand(selectedKeys as string[], confirm, dataIndex)
+            }
+            icon={<SearchOutlined style={{ color: "#fff" }} />}
+            size="small"
+            style={{ width: 90, color: "#fff", backgroundColor: "#000000" }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleResetBrand(clearFilters)}
+            size="small"
+            style={{ width: 90, color: "#fff", backgroundColor: "#000000" }}
+          >
+            Reset
+          </Button>
+          <Button
+            style={{ color: "#fff", backgroundColor: "#000000" }}
+            type="link"
+            size="small"
+            onClick={() => {
+              confirm({ closeDropdown: false });
+              setSearchText((selectedKeys as string[])[0]);
+              setSearchedColumn(dataIndex);
+            }}
+          >
+            Filter
+          </Button>
+          <Button
+            style={{ color: "#fff", backgroundColor: "#000000" }}
+            type="link"
+            size="small"
+            onClick={() => {
+              close();
+            }}
+          >
+            close
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered: boolean) => (
+      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex]
+        .toString()
+        .toLowerCase()
+        .includes((value as string).toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+  });
+  // closed
+
   const columns: ColumnsType<DataType> = [
     {
       title: "Tên sản phẩm",
@@ -406,13 +518,99 @@ const BrandDashboardPage = () => {
       render: (CaseSize) => CaseSize + "mm",
       width: "10%",
     },
+  ];
+
+
+  // call api sửa thương hiệu
+  const onFinishBrand = (values: any) => {
+    const { Name, Id, CreatedAt } = values;
+    const currentDate = moment().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+    const data = {
+      Id: currentBrand,
+      Name,
+      CreatedAt: currentDate,
+    };
+
+
+    axios.put(`https://localhost:7182/api/Brands/${currentBrand}`, data, {
+      headers: {
+        'Authorization': `Bearer ${currentToken}`,
+      },
+    })
+      .then(response => {
+        console.log(response);
+        setIsModalOpenBrand(false);
+        fetch();
+        success();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  // closed sửa thương hiệu
+
+  // call api xóa thương hiệu
+  const handleDelete = (Id: number) => {
+    if (Id) {
+      axios
+        .delete(`https://localhost:7182/api/Brands/${Id}`, {
+          headers: {
+            'Authorization': `Bearer ${currentToken}`,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          success();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          console.log(Id);
+        });
+    }
+  }
+  function deleteBrand(Id: number) {
+    if (Id) {
+      Modal.confirm({
+        title: 'Bạn có chắc muốn xóa?',
+        //icon: <ExclamationCircleOutlined />,
+        okText: 'Có',
+        cancelText: 'Không',
+        onOk() {
+          console.log();
+          handleDelete(Id);
+        },
+      });
+    }
+  }
+  // clossed
+
+
+  const columnsBrand: ColumnsType<DataTypeBrand> = [
+    {
+      title: "Id Brand",
+      dataIndex: "Id",
+      width: "10%",
+    },
+    {
+      title: "Tên thương hiệu",
+      dataIndex: "Name",
+      width: "25%",
+      ...getColumnSearchPropsBrand("Name")
+    },
+    {
+      title: "Ngày đăng ký",
+      dataIndex: "CreatedAt",
+      key: "CreatedAt",
+      width: "10%",
+    },
     {
       title: "Chức năng",
       width: "10%",
-      dataIndex: "action",
-      render: () => (
+      dataIndex: "Id",
+      render: (Id) => (
         <Space>
-          <a href="#">Edit</a>
+          <Button onClick={() => showModalBrand(Id)} style={{ backgroundColor: "#000000", color: "#fff" }}>Sửa</Button>
+          <Button onClick={() => deleteBrand(Id)} style={{ backgroundColor: "#000000", color: "#fff" }}>Xóa</Button>
         </Space>
       ),
     },
@@ -554,9 +752,15 @@ const BrandDashboardPage = () => {
   const success = () => {
     messageApi.open({
       type: "success",
-      content: "Thêm thành công",
+      content: "Thành công",
     });
   };
+  const Error = () => {
+    messageApi.open({
+      type: "error",
+      content: "Thêm không thành công",
+    });
+  }
   const [addBrand, setAddBrand] = useState([])
   const { currentToken } = useContext(AppContext);
   const formRef = useRef<FormInstance<any>>(null);
@@ -584,10 +788,12 @@ const BrandDashboardPage = () => {
         if (result.status === 200) {
           formRef.current?.resetFields();
           setAddBrand([])
+          success();
         }
       })
       .catch((error) => {
         console.log(error);
+        Error();
       });
   };
   // closed
@@ -601,8 +807,47 @@ const BrandDashboardPage = () => {
               Thống kê loại sản phẩm
             </h4>
             <Button onClick={showModal} style={{ color: "#fff", backgroundColor: "#000000" }}>
-              Thêm loại sản phẩm
+              Thêm Thương Hiệu
             </Button>
+            {/* modal sửa thương hiệu */}
+            <Modal title="Sửa Thương Hiệu" open={isModalOpenBrand} onOk={handleOkBrand} onCancel={handleCancelBrand}>
+              <Form
+                labelCol={{ span: 6 }}
+                wrapperCol={{ span: 14 }}
+                onFinish={onFinishBrand}
+              // initialValues={{
+              //   Id: currentBrand,
+              // }}
+              >
+                <Form.Item hidden
+                  name="Id"
+                >
+                  <Input hidden />
+                </Form.Item>
+
+                <Form.Item label="Tên thương hiệu" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên thương hiệu' }]}>
+                  <Input />
+                </Form.Item>
+
+                <Form.Item
+                  label={<span style={{ color: "#000000" }}>Ngày đăng ký</span>}
+                  name="CreatedAt"
+                >
+                  <DatePicker />
+                </Form.Item>
+
+                <Form.Item>
+                  <Button style={{
+                    backgroundColor: "#000000",
+                    color: "#fff",
+                    marginLeft: "68%"
+                  }}
+                    htmlType="submit">Cập Nhật
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Modal>
+            {/* đóng modal sửa thương hiệu */}
             <Modal
               className="moadal-add-brand"
               footer={null}
@@ -617,7 +862,7 @@ const BrandDashboardPage = () => {
                 wrapperCol={{ span: 14 }}
 
               >
-                <Form.Item label="Name" name="Name" rules={[{ required: true }]}>
+                <Form.Item label="Name" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên thương hiệu' }]}>
                   <Input />
                 </Form.Item>
 
@@ -626,7 +871,7 @@ const BrandDashboardPage = () => {
                 </Form.Item>
 
                 <Form.Item>
-                  <Button onClick={success} style={{
+                  <Button style={{
                     backgroundColor: "#000000",
                     color: "#fff",
                     marginLeft: "68%"
@@ -641,7 +886,7 @@ const BrandDashboardPage = () => {
           </div>
         </div>
         <div className="brand-dash-container">
-          <Row gutter={[1, 1]}>
+          <Row className="brand-das-container-responsive" gutter={[1, 1]}>
             <Col span={6}>
               <Space direction="vertical" size={16}>
                 <Card style={{ width: 270 }}>
@@ -651,10 +896,11 @@ const BrandDashboardPage = () => {
                       padding: 10,
                       fontWeight: 700,
                     }}
+                    className="label-brand-das-responsive"
                   >
                     Tổng loại sản phẩm
                   </h4>
-                  <h4 style={{ textAlign: "center" }}>{countCateProducts}</h4>
+                  <h4 className="label-brand-das-responsive" style={{ textAlign: "center" }}>{countCateProducts}</h4>
                 </Card>
                 <Card size="small" style={{ width: 270 }}>
                   <h4
@@ -663,10 +909,11 @@ const BrandDashboardPage = () => {
                       padding: 10,
                       fontWeight: 700,
                     }}
+                    className="label-brand-das-responsive"
                   >
                     Tổng sản phẩm
                   </h4>
-                  <h4 style={{ textAlign: "center" }}>{totalStock}</h4>
+                  <h4 className="label-brand-das-responsive" style={{ textAlign: "center" }}>{totalStock}</h4>
                 </Card>
                 <Card size="small" style={{ width: 270 }}>
                   <h4
@@ -675,10 +922,11 @@ const BrandDashboardPage = () => {
                       padding: 10,
                       fontWeight: 700,
                     }}
+                    className="label-brand-das-responsive"
                   >
                     Tổng số lượng đồng hồ nam
                   </h4>
-                  <h4 style={{ textAlign: "center" }}>{wacthesMan}</h4>
+                  <h4 className="label-brand-das-responsive" style={{ textAlign: "center" }}>{wacthesMan}</h4>
                 </Card>
                 <Card size="small" style={{ width: 270 }}>
                   <h4
@@ -687,15 +935,16 @@ const BrandDashboardPage = () => {
                       padding: 10,
                       fontWeight: 700,
                     }}
+                    className="label-brand-das-responsive"
                   >
                     Tổng số lượng đồng hồ nữ
                   </h4>
-                  <h4 style={{ textAlign: "center" }}>{WatchesWoman}</h4>
+                  <h4 className="label-brand-das-responsive" style={{ textAlign: "center" }}>{WatchesWoman}</h4>
                 </Card>
               </Space>
             </Col>
             <Col span={18}>
-              <div style={{ border: "1px solid black" }}>
+              <div className="chart-brand-das-container-responsive" style={{ border: "1px solid black" }}>
                 <h4
                   style={{ padding: 10, textAlign: "center", color: "#4963AF" }}
                 >
@@ -707,23 +956,40 @@ const BrandDashboardPage = () => {
           </Row>
         </div>
         <div style={{ paddingTop: 50, paddingBottom: 50 }}>
-          <Row gutter={[16, 4]}>
-            <Col span={6}>
-              <div>
-                <h4
+          <Row className="brand-dash-container-responsive2" gutter={[16, 4]}>
+            <Col span={10}>
+              <div className="table-brand-list-responsive">
+                <h4 className="title-brand-das-responsive"
                   style={{ padding: 10, textAlign: "center", color: "#4963AF" }}
                 >
-                  Thống kê sản phẩm theo loại
+                  Danh sách thương hiệu
                 </h4>
-                <Pie
+                {/* <Pie
                   style={{}}
                   data={RoundChartData}
-                  {...configRoundChart} />
+                  {...configRoundChart} /> */}
+                {loading ? (
+                  <Spin style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    margin: "25%"
+                  }} />
+                ) : (<Table
+                  style={{
+                    paddingTop: 40
+                  }}
+                  pagination={{ pageSize: 4, position: ['bottomCenter'] }}
+                  columns={columnsBrand}
+                  dataSource={stateBrand}
+                  scroll={{ x: '100%' }}
+                />)}
               </div>
             </Col>
-            <Col span={18}>
-              <div>
+            <Col span={14}>
+              <div className="table-brand-list-responsive">
                 <h4
+                  className="title-brand-das-responsive"
                   style={{ padding: 10, textAlign: "center", color: "#4963AF" }}
                 >
                   Số lượng sản phẩm
@@ -742,6 +1008,7 @@ const BrandDashboardPage = () => {
                   pagination={{ pageSize: 3, position: ['bottomCenter'] }}
                   columns={columns}
                   dataSource={state}
+                  scroll={{ x: '100%' }}
                 />)}
               </div>
             </Col>

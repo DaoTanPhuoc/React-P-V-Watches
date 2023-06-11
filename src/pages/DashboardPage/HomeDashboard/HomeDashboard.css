@@ -272,3 +272,6 @@ table {
 .right-chart-table canvas {
   height: 512px !important;
 }
+
+@media only screen and (max-width: 375px) {
+}

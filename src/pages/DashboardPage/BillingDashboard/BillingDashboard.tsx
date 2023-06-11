@@ -38,7 +38,7 @@ interface DataType {
   Status: number;
   Address: string;
   Phone: string;
-  tag: string;
+  Tag: number;
   OrderProducts: []
 }
 type DataIndex = keyof DataType;
@@ -241,6 +241,7 @@ const BillingDashboard = () => {
               Address: string;
               Total: number;
               Phone: string;
+              Status: number;
               OrderProducts: []
 
             }) => ({
@@ -248,6 +249,7 @@ const BillingDashboard = () => {
               Address: row.Address,
               Total: row.Total,
               Phone: row.Phone,
+              Status: row.Status,
               OrderProducts: row.OrderProducts
             })
           )
@@ -313,37 +315,46 @@ const BillingDashboard = () => {
     },
     {
       title: "Tình trạng",
-      dataIndex: "tag",
-      render: (tag: string) => (
+      dataIndex: "Status",
+      render: (tag: number) => (
         <span>
-          <Tag color={tag}>
-            {tag === "processing"
-              ? "Đang chờ"
-              : tag === "success"
-                ? "Đã xác nhận"
-                : "Đã hủy"}
-          </Tag>
+          {StatusOrder(tag)}
         </span>
       ),
-      // ...getColumnSearchProps("tag"),
-    },
-    {
-      title: "Chức năng",
-      width: "15%",
-      dataIndex: "action",
-      render: () => (
-        <Space>
-          <Button onClick={showModal}>Edit</Button>
-        </Space>
-      ),
-    },
+    }
+    // {
+    //   title: "Chức năng",
+    //   width: "15%",
+    //   dataIndex: "action",
+    //   render: () => (
+    //     <Space>
+    //       <Button onClick={showModal}>Edit</Button>
+    //     </Space>
+    //   ),
+    // },
   ];
 
+  function StatusOrder(status: number) {
+    switch (status) {
+      case -2:
+        return (<Tag color="error">Đã Hủy</Tag>);
+      case -1:
+        return (<Tag color="warning">Chờ Hủy</Tag>);
+      case 0:
+        return (<Tag color="processing">Chờ xác nhận</Tag>);
+      case 1:
+        return (<Tag color="lime">Đang chuẩn bị</Tag>);
+      case 2:
+        return (<Tag color="lime">Đang Giao</Tag>);
+      default:
+        return (<Tag color="success">Đã Giao</Tag>);
+    }
+  }
   // closed
 
   return (
     <>
-      <Modal
+      {/* <Modal
         // title="Basic Modal"
         open={isModalOpen}
         onOk={handleOk}
@@ -351,38 +362,28 @@ const BillingDashboard = () => {
         footer={null}
         className="modal-bill-dash"
       >
-        <Form
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 14 }}
-          layout="horizontal"
-          style={{ maxWidth: 600 }}
-        >
-          <Form.Item label={<span style={{ color: "#000000" }}>Họ tên: </span>}>
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label={<span style={{ color: "#000000" }}>Tên sản phẩm: </span>}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label={<span style={{ color: "#000000" }}>Địa chỉ: </span>}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label={<span style={{ color: "#000000" }}>Số điện thoại: </span>}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item label="Button">
-            <Button style={{ backgroundColor: "#000000", color: "#fff" }}>
-              Xác nhận
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
+        <div>
+          <div className="moadl-header-bill-das">
+            <h4 style={{ fontWeight: 700 }}>Chi tiết hóa đơn</h4>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div>
+              <p>Hóa đơn ID: #188</p>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <p style={{ paddingRight: 10 }}>in</p>
+              <p>xuất Pdf</p>
+            </div>
+          </div>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <img
+              style={{ width: 150, height: 100 }}
+              src="https://benhviendongho.com/wp-content/uploads/2019/05/744px-Rolex_logo.svg.png"
+            />
+          </div>
+          <div className="container-"></div>
+        </div>
+      </Modal> */}
       <div className="container-bill">
         <div className="body-container">
           <div className="table-billing">

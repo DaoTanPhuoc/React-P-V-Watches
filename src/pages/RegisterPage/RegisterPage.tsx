@@ -95,7 +95,7 @@ const RegisterPage = () => {
             { required: true, message: "Vui lòng nhập Email!" },
             { type: "email", message: "Email không hợp lệ!" },
           ]}
-          label="Email"
+          label={<span style={{ color: "#fff" }}>Email</span>}
         >
           <Input
             type="email"
@@ -103,14 +103,14 @@ const RegisterPage = () => {
             placeholder="Email"
           />
         </Form.Item>
-        <Form.Item name="FullName" label="Họ Tên" rules={[{ required: true, message: "Vui lòng nhập họ tên" }, { pattern: new RegExp(/[^a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]/u), message: "Tên không hợp lệ" }]}>
+        <Form.Item name="FullName" label={<span style={{ color: "#fff" }}>Họ Tên</span>} rules={[{ required: true, message: "Vui lòng nhập họ tên" }, { pattern: new RegExp(/[^a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]/u), message: "Tên không hợp lệ" }]}>
           <Input
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="text"
             placeholder="Nhập họ tên"
           />
         </Form.Item>
-        <Form.Item name="DateOfBirth" label="Ngày sinh" rules={[{ required: true, message: "Vui lòng nhập ngày sinh" }]}>
+        <Form.Item name="DateOfBirth" label={<span style={{ color: "#fff" }}>Ngày sinh</span>} rules={[{ required: true, message: "Vui lòng nhập ngày sinh" }]}>
           <DatePicker style={{ width: '100%' }} format='YYYY-MM-DD' disabledDate={(current) => {
             let customDate = moment().format("YYYY-MM-DD");
             return current && current > moment(customDate, "YYYY-MM-DD");
@@ -118,7 +118,7 @@ const RegisterPage = () => {
         </Form.Item>
         <Form.Item
           name="Password"
-          label="Mật Khẩu"
+          label={<span style={{ color: "#fff" }}>Mật khẩu</span>}
           rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
         >
           <Input
@@ -129,7 +129,7 @@ const RegisterPage = () => {
         </Form.Item>
         <Form.Item
           name="ConfirmPassword"
-          label="Nhập lại mật Khẩu"
+          label={<span style={{ color: "#fff" }}>Nhập lại mật khẩu</span>}
           rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }, ({ getFieldValue }) => ({
             validator(rule, value) {
               if (!value || getFieldValue("Password") === value) {
@@ -145,7 +145,7 @@ const RegisterPage = () => {
             placeholder="Nhập lại Password"
           />
         </Form.Item>
-        <FormItem name="Phone" label="Số điện thoại" rules={[{ required: true, message: "Vui lòng nhập số điện thoại" }, {
+        <FormItem name="Phone" label={<span style={{ color: "#fff" }}>Số điện thoại</span>} rules={[{ required: true, message: "Vui lòng nhập số điện thoại" }, {
           pattern: new RegExp(
             "^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$"
           ),

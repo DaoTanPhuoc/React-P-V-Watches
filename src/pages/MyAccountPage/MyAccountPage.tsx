@@ -719,7 +719,7 @@ const InfoAccount = () => {
                   marginLeft: 96,
                 }}
               >
-                Lưu thay đổi
+                Cập Nhật
               </Button>
             </Form>
           </div>

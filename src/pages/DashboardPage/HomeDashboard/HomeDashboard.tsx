@@ -139,6 +139,7 @@ const HomeDas = () => {
           <Row gutter={[4, 24]}>
             <Col xs={{ span: 14, offset: 0.1 }} lg={{ span: 4, offset: 2 }}>
               <Card
+                className="card-homedashboard-responsive"
                 style={{
                   width: 290,
                   borderRadius: 12,
