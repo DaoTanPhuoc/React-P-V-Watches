@@ -230,31 +230,36 @@ const Dashboard: React.FC = () => {
         "4",
         <WalletOutlined />
       ),
+      getItem(
+        <Link to="/admin/categoryDash">Danh mục</Link>,
+        "5",
+        <WalletOutlined />
+      ),
     ]),
     getItem("Hóa đơn", "sub2", <FormOutlined />, [
       getItem(
         <Link to="/admin/dasBilling">Danh Sách</Link>,
-        "5",
-        <BookOutlined />
-      ),
-      getItem(
-        <Link to="/admin/importProducts">Nhập Hàng</Link>,
         "6",
         <BookOutlined />
       ),
       getItem(
+        <Link to="/admin/importProducts">Nhập Hàng</Link>,
+        "7",
+        <BookOutlined />
+      ),
+      getItem(
         <Link to="/admin/invoiceWait">Đơn Hàng</Link>,
-        "9",
+        "8",
         <AuditOutlined />
       )
     ]),
     getItem(
       <Link to="/admin/dasPost">Bài Viết</Link>,
-      "7",
+      "9",
       <DashboardOutlined />
     ),
-    getItem(<Link to="/admin/ros">Doanh Thu</Link>, "8", <DollarOutlined />),
-    getItem(<Link to="/admin/settingAccount">Tài Khoản</Link>, "10", <SettingFilled />),
+    getItem(<Link to="/admin/ros">Doanh Thu</Link>, "10", <DollarOutlined />),
+    getItem(<Link to="/admin/settingAccount">Tài Khoản</Link>, "11", <SettingFilled />),
   ];
 
   const [collapsed, setCollapsed] = useState(false);

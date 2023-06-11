@@ -756,12 +756,14 @@ const BrandDashboardPage = () => {
                 labelCol={{ span: 6 }}
                 wrapperCol={{ span: 14 }}
               >
-                <Form.Item label="Tên" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên thương hiệu' }]}>
+                <Form.Item label="Name" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên thương hiệu' }]}>
                   <Input />
                 </Form.Item>
-                <Form.Item label="Mô tả" name="Description" rules={[{ required: true, message: 'Vui lòng nhập mô tả' }]}>
+
+                <Form.Item label="Description" name="Description">
                   <Input />
                 </Form.Item>
+
                 <Form.Item>
                   <Button style={{
                     backgroundColor: "#000000",
