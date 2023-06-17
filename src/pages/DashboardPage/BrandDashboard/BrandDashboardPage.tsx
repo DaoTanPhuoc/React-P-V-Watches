@@ -1,5 +1,5 @@
 import { Line, Pie } from "@ant-design/charts";
-import { Button, Card, Checkbox, Col, Form, FormInstance, Input, InputRef, Modal, Row, Space, Spin, Table, message, DatePicker, Popconfirm, Typography } from "antd";
+import { Button, Card, Checkbox, Col, Form, FormInstance, Input, InputRef, Modal, Row, Space, Spin, Table, message, DatePicker, Popconfirm, Typography, DatePickerProps } from "antd";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./BrandDashboardPage.css";
 import {
@@ -13,6 +13,7 @@ import { error } from "console";
 import { AppContext } from "../../../App";
 import { useParams } from "react-router-dom";
 import moment, { updateLocale } from "moment";
+import Item from "antd/es/list/Item";
 
 const { Text } = Typography;
 // function call tổng sản phẩm
@@ -151,7 +152,6 @@ const BrandDashboardPage = () => {
   // moda brand 
   const [isModalOpenBrand, setIsModalOpenBrand] = useState(false);
   const [currentBrand, setCurrentBrand] = useState<number>();
-  // const [currentCreatedAt, setCurrentCreatedAt] = useState(new Date());
 
   const showModalBrand = (Id: any) => {
     const brand = stateBrand.find(b => b.Id === Id);
@@ -512,7 +512,6 @@ const BrandDashboardPage = () => {
 
   // call api sửa thương hiệu
   const onFinishBrand = (values: any) => {
-
     axios.put(`https://localhost:7182/api/Brands/${currentBrand}`, values, {
       headers: {
         'Authorization': `Bearer ${currentToken}`,
@@ -526,8 +525,10 @@ const BrandDashboardPage = () => {
       })
       .catch(error => {
         console.log(error);
+        console.log(values);
       });
   };
+
   // closed sửa thương hiệu
 
   // call api xóa thương hiệu
@@ -556,6 +557,7 @@ const BrandDashboardPage = () => {
         //icon: <ExclamationCircleOutlined />,
         okText: 'Có',
         cancelText: 'Không',
+        className: "delete-brand-modal",
         onOk() {
           console.log();
           handleDelete(Id);
@@ -576,10 +578,9 @@ const BrandDashboardPage = () => {
     {
       title: "Mô tả",
       dataIndex: "Description",
-      key: "Description",
       width: "10%",
-      render: (Description) => (
-        <Text ellipsis style={{ width: 200 }}>{Description}</Text>
+      render: (description) => (
+        <Text ellipsis style={{ width: 200 }}>{description}</Text>
       )
     },
     {
@@ -706,7 +707,7 @@ const BrandDashboardPage = () => {
               Thêm Thương Hiệu
             </Button>
             {/* modal sửa thương hiệu */}
-            <Modal title="Sửa Thương Hiệu" open={isModalOpenBrand} onOk={handleOkBrand} onCancel={handleCancelBrand}>
+            <Modal footer={null} className="modal-edit-brand" title="Sửa Thương Hiệu" open={isModalOpenBrand} onOk={handleOkBrand} onCancel={handleCancelBrand}>
               <Form
                 labelCol={{ span: 6 }}
                 wrapperCol={{ span: 14 }}
@@ -716,19 +717,21 @@ const BrandDashboardPage = () => {
                 <Form.Item hidden
                   name="Id"
                 >
-                  <Input hidden />
+                  <Input hidden name="Id" />
                 </Form.Item>
 
                 <Form.Item label="Tên thương hiệu" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên thương hiệu' }]}>
                   <Input />
                 </Form.Item>
 
+
+
                 <Form.Item
                   label={<span style={{ color: "#000000" }}>Mô tả</span>}
-                  name="Description"
                   rules={[{ required: true, message: 'Vui lòng nhập mô tả' }]}
+                  name="Description"
                 >
-                  <Input />
+                  <Input name="Description" />
                 </Form.Item>
 
                 <Form.Item>
@@ -886,7 +889,7 @@ const BrandDashboardPage = () => {
                   className="title-brand-das-responsive"
                   style={{ padding: 10, textAlign: "center", color: "#4963AF" }}
                 >
-                  Số lượng sản phẩm
+                  Danh sách sản phẩm
                 </h4>
                 {loading ? (
                   <Spin style={{

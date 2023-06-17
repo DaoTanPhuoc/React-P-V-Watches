@@ -26,7 +26,7 @@
   bottom: 0;
   right: 16px;
   margin: auto;
-  background-color: #1890ff;
+  background-color: #aeae93;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
   display: flex;
@@ -60,9 +60,23 @@
   box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.15);
   overflow: auto;
   position: fixed;
+  background-color: #000000 !important;
 }
 .ant-layout-sider-children {
   position: fixed;
+}
+
+.menu-dashboard-container {
+  background-color: #000000 !important;
+}
+
+.menu-dashboard-container .ant-menu-item-active {
+  background-color: none !important;
+}
+
+.menu-dashboard-container .ant-menu-item-selected,
+.menu-dashboard-container .ant-menu-item-active {
+  background-color: #dbaf56 !important;
 }
 
 @media (max-width: 800px) {

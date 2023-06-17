@@ -10,3 +10,19 @@
 .content-ros-two {
   padding-top: 60px;
 }
+
+@media only screen and (max-width: 375px) {
+  .content-Ros-items {
+    padding-top: 20px;
+  }
+  .content-Ros-items .ant-col {
+    width: 100% !important;
+  }
+  .content-Ros-items .ant-card {
+    width: 100% !important;
+    margin-bottom: 10px;
+  }
+  .content-Ros-items .ant-card h4 {
+    font-size: 16px !important;
+  }
+}

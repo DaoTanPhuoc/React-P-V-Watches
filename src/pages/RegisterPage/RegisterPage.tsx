@@ -62,7 +62,7 @@ const RegisterPage = () => {
       <Form
         form={registerForm}
         style={{
-          width: 550,
+          width: 450,
           backgroundColor: "rgba(255,255,255,0.13)",
           position: "absolute",
           transform: "Translate(-50%,-50%)",

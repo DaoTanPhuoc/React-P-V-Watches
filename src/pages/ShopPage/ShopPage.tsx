@@ -219,34 +219,47 @@ const ShopPage = () => {
 
 
 
-  const handleBrandChange = (value: string) => {
-    if (value === "") {
-      setProducts(tempProducts)
-      filterData(currentPage, products)
-    } else {
-      var tempProduct = tempProducts.filter(p => p.BrandName === value);
-      setProducts([...tempProduct])
-      filterData(currentPage, products)
-    }
+  // const handleBrandChange = (value: string) => {
+  //   if (value === "") {
+  //     setProducts(tempProducts)
+  //     filterData(currentPage, products)
+  //   } else {
+  //     var tempProduct = tempProducts.filter(p => p.BrandName === value);
+  //     setProducts([...tempProduct])
+  //     filterData(currentPage, tempProduct)
+  //   }
+  // };
+
+
+  // test thử lọc nâng cao
+  const [caseSize, setCaseSize] = useState(0);
+  const [brand, setBrand] = useState("");
+
+  const handleCaseSizeChange = (value: number) => {
+    setCaseSize(value);
+    filterProducts(value, brand);
   };
 
-  // // filter casesize
-  // const [selectedSize, setSelectedSize] = useState(1)
-  // const sortByCaseSize = (selectedSize: number) => {
-  //   setCurrentPage(1)
-  //   let filteredProductsByCaseSize = [];
+  const handleBrandChange = (value: string) => {
+    setBrand(value);
+    filterProducts(caseSize, value);
+  };
 
-  //   if (selectedSize === 1) {
-  //     filteredProductsByCaseSize = products;
-  //   } else {
-  //     filteredProductsByCaseSize = products.filter((product) => {
-  //       return selectedSize === product.CaseSize;
-  //     });
-  //   }
-  //   filterData(currentPage, filteredProductsByCaseSize);
-  // };
-  // //
+  const filterProducts = (caseSize: number, brand: string) => {
+    let filteredProducts = tempProducts;
 
+    if (caseSize !== 0) {
+      filteredProducts = filteredProducts.filter(p => p.CaseSize === caseSize);
+    }
+
+    if (brand !== "") {
+      filteredProducts = filteredProducts.filter(p => p.BrandName === brand);
+    }
+
+    setProducts(filteredProducts);
+    filterData(currentPage, filteredProducts);
+  };
+  // clossed
 
 
   // product: OrderProductModel
@@ -408,7 +421,9 @@ const ShopPage = () => {
               filterOption={(input, option) =>
                 (option?.label ?? "").includes(input)
               }
-              onChange={(value: number) => { sortByCaseSize(value) }}
+              onChange={(value: any) => {
+                handleCaseSizeChange(value, products);
+              }}
               filterSort={(optionA, optionB) =>
                 (optionA?.label ?? "")
                   .toLowerCase()
@@ -438,6 +453,66 @@ const ShopPage = () => {
               ]}
             />
           </div> */}
+          <div className="filter-items">
+
+            {/* <Select
+              placeholder="Select Case Size"
+              value={caseSize}
+              onChange={(value: number) => {
+                handleCaseSizeChange(value);
+              }}
+            >
+              {caseSizes.map((size, index) => (
+                <Select.Option key={index} value={size}>
+                  {size}
+                </Select.Option>
+              ))}
+            </Select> */}
+            <Select
+              showSearch
+              style={{
+                width: 150,
+                fontWeight: "bold",
+              }}
+              placeholder="Kích thước"
+              optionFilterProp="children"
+              defaultValue={1}
+              value={caseSize}
+              filterOption={(input, option) =>
+                (option?.label ?? "").includes(input)
+              }
+              onChange={(value: number) => {
+                handleCaseSizeChange(value);
+              }}
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? "")
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? "").toLowerCase())
+              }
+              options={[
+                {
+                  value: 0,
+                  label: "Kích thước",
+                },
+                {
+                  value: 31,
+                  label: "31mm",
+                },
+                {
+                  value: 42,
+                  label: "42mm",
+                },
+                {
+                  value: 33,
+                  label: "33mm",
+                },
+                {
+                  value: 40,
+                  label: "40mm",
+                },
+              ]}
+            />
+          </div>
         </div>
 
         <div style={{ padding: 20 }}>

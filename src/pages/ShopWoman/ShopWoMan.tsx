@@ -112,6 +112,9 @@ const ShopWoMan = () => {
     const [currentPage, setCurrentPage] = useState(1);
     // const { brandId, categoryId } = useParams();
     // (chuyen trang)
+    // test chức năng lọc nâng cao
+    const [tempProducts, setTempProducts] = useState<ProductModel[]>([]);
+    //
     const { categoryId } = useParams();
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -120,6 +123,7 @@ const ShopWoMan = () => {
             .then((result) => {
                 setProducts(result.data);
                 filterData(currentPage, result.data);
+                setTempProducts(result.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -189,14 +193,14 @@ const ShopWoMan = () => {
 
     // brand
 
-    const handleBrandChange = (value: string) => {
-        if (value === "") {
-            filterData(currentPage, products)
-        } else {
-            var tempProduct = products.filter(p => p.BrandName === value);
-            filterData(currentPage, tempProduct)
-        }
-    };
+    // const handleBrandChange = (value: string) => {
+    //     if (value === "") {
+    //         filterData(currentPage, products)
+    //     } else {
+    //         var tempProduct = products.filter(p => p.BrandName === value);
+    //         filterData(currentPage, tempProduct)
+    //     }
+    // };
     //
 
     // const handleBrandChange = (value: number) => {
@@ -245,6 +249,36 @@ const ShopWoMan = () => {
         }
     }
 
+
+    // test thử lọc nâng cao
+    const [caseSize, setCaseSize] = useState(0);
+    const [brand, setBrand] = useState("");
+
+    const handleCaseSizeChange = (value: number) => {
+        setCaseSize(value);
+        filterProducts(value, brand);
+    };
+
+    const handleBrandChange = (value: string) => {
+        setBrand(value);
+        filterProducts(caseSize, value);
+    };
+
+    const filterProducts = (caseSize: number, brand: string) => {
+        let filteredProducts = tempProducts;
+
+        if (caseSize !== 0) {
+            filteredProducts = filteredProducts.filter(p => p.CaseSize === caseSize);
+        }
+
+        if (brand !== "") {
+            filteredProducts = filteredProducts.filter(p => p.BrandName === brand);
+        }
+
+        setProducts(filteredProducts);
+        filterData(currentPage, filteredProducts);
+    };
+    // clossed
 
 
     return (
@@ -392,6 +426,52 @@ const ShopWoMan = () => {
                                 {
                                     value: 3,
                                     label: "Tăng dần",
+                                },
+                            ]}
+                        />
+                    </div>
+                    <div className="filter-items">
+                        <Select
+                            showSearch
+                            style={{
+                                width: 150,
+                                fontWeight: "bold",
+                            }}
+                            placeholder="Kích thước"
+                            optionFilterProp="children"
+                            defaultValue={1}
+                            value={caseSize}
+                            filterOption={(input, option) =>
+                                (option?.label ?? "").includes(input)
+                            }
+                            onChange={(value: number) => {
+                                handleCaseSizeChange(value);
+                            }}
+                            filterSort={(optionA, optionB) =>
+                                (optionA?.label ?? "")
+                                    .toLowerCase()
+                                    .localeCompare((optionB?.label ?? "").toLowerCase())
+                            }
+                            options={[
+                                {
+                                    value: 0,
+                                    label: "Kích thước",
+                                },
+                                {
+                                    value: 31,
+                                    label: "31mm",
+                                },
+                                {
+                                    value: 42,
+                                    label: "42mm",
+                                },
+                                {
+                                    value: 33,
+                                    label: "33mm",
+                                },
+                                {
+                                    value: 40,
+                                    label: "40mm",
                                 },
                             ]}
                         />

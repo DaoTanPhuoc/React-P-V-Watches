@@ -25,3 +25,12 @@ img {
 .modal-add-products {
   width: 50% !important;
 }
+
+/* .ant-table-tbody tr {
+  background-color: #efebe4 !important;
+} */
+
+/* mau chung thead */
+.ant-table-thead th {
+  background-color: #edc77c !important;
+}

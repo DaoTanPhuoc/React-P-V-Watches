@@ -244,7 +244,7 @@ const ProductsDashboard = () => {
         }}
         className="table-das-container"
       >
-        <div className="title-das-products">Danh sách sản phẩm</div>
+        <div className="title-das-products"><span style={{ color: "rgb(73, 99, 175)" }}>Danh sách sản phẩm</span></div>
         <div>
           <Button
             onClick={toggleModal}

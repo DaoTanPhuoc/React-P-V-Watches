@@ -183,7 +183,7 @@ const RosPage = () => {
     <div className="container-Ros">
       <div className="header-Ros">
         <div className="header-Ros-Items">
-          <h4 style={{ color: "red", fontWeight: 700 }}>Chọn tháng thống kê</h4>
+          <h4 style={{ color: "#4963AF", fontWeight: 700 }}>Chọn tháng thống kê</h4>
           <h4>Năm 2023</h4>
         </div>
         <div className="select-month">
@@ -211,7 +211,7 @@ const RosPage = () => {
       <div className="content-Ros">
         <div style={{ paddingTop: 30 }} className="content-Ros-items">
           <Row gutter={[1, 1]}>
-            <Col span={6}>
+            <Col xs={24} xl={6} >
               <Skeleton active loading={loading}>
                 <Space direction="vertical" size={16}>
                   <Card style={{ width: 250 }}>
@@ -265,7 +265,7 @@ const RosPage = () => {
                 </Space>
               </Skeleton>
             </Col>
-            <Col span={18}>
+            <Col xs={24} xl={18} >
               <div style={{ border: "1px solid black " }}>
                 <h4
                   style={{ padding: 10, textAlign: "center", color: "#4963AF" }}
@@ -281,7 +281,7 @@ const RosPage = () => {
       <div className="content-ros-two">
         <div style={{ display: "flex" }}>
           <div className="header-Ros-Items">
-            <h4 style={{ color: "red", fontWeight: 700 }}>
+            <h4 style={{ color: "#4963AF", fontWeight: 700 }}>
               Chọn thương hiệu thống kê
             </h4>
           </div>
@@ -303,7 +303,7 @@ const RosPage = () => {
         </div>
         <div style={{ paddingTop: 30, paddingBottom: 50 }}>
           <Row gutter={[4, 4]}>
-            <Col span={14}>
+            <Col xs={24} xl={18} span={14}>
               <div style={{ border: "1px solid black " }}>
                 <h4
                   style={{ padding: 10, textAlign: "center", color: "#4963AF" }}
@@ -313,7 +313,7 @@ const RosPage = () => {
                 <Column loading={loading} data={dataBrandSales} {...configBrandSales} />
               </div>
             </Col>
-            <Col span={10}>
+            <Col xs={24} xl={6} span={10}>
               <div>
                 <h4
                   style={{ padding: 10, textAlign: "center", color: "#4963AF" }}

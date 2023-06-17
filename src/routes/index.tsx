@@ -27,6 +27,20 @@ import ShopWoMan from "../pages/ShopWoman/ShopWoMan";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage/ForgotPasswordPage";
 import CategoryDashPage from "../pages/DashboardPage/CategoryDashboard/CategoryDashPage";
 import CheckOut from "../pages/CartPage/Checkout";
+import ShopFilterPriceOne from "../pages/ShopFilterPriceOne/ShopFilterPriceOne";
+import ShopFilterPriceTwo from "../pages/ShopFilterPriceTwo/ShopFilterPriceTwo";
+import ShopFilterPriceThree from "../pages/ShopFilterPriceThree/ShopFilterPriceThree";
+import ShopFilterPriceFour from "../pages/ShopFilterPriceFour/ShopFilterPriceFour";
+import CaseSizeLessThan29 from "../pages/CaseSizeLessThan29/CaseSizeLessThan29";
+import CaseSize29to37 from "../pages/CaseSize29to37/CaseSize29to37";
+import CaseSize37to42 from "../pages/CaseSize37to42/CaseSize37to42";
+import CaseSizeOver42 from "../pages/CaseSizeOver42/CaseSizeOver42";
+
+
+
+
+
+
 
 
 
@@ -86,6 +100,38 @@ export const userRoutes = createBrowserRouter([
       {
         path: "/checkout",
         element: <CheckOut />
+      },
+      {
+        path: "/ShopFilterPriceOne",
+        element: <ShopFilterPriceOne />
+      },
+      {
+        path: "/ShopFilterPriceTwo",
+        element: <ShopFilterPriceTwo />
+      },
+      {
+        path: "/ShopFilterPriceThree",
+        element: <ShopFilterPriceThree />
+      },
+      {
+        path: "/ShopFilterPriceFour",
+        element: <ShopFilterPriceFour />
+      },
+      {
+        path: "/CaseSizeLessThan29",
+        element: <CaseSizeLessThan29 />
+      },
+      {
+        path: "/CaseSize29to37",
+        element: <CaseSize29to37 />
+      },
+      {
+        path: "/CaseSize37to42",
+        element: <CaseSize37to42 />
+      },
+      {
+        path: "/CaseSizeOver42",
+        element: <CaseSizeOver42 />
       }
     ],
   },

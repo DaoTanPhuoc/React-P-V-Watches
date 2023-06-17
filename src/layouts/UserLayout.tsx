@@ -111,7 +111,7 @@ const UserLayout = () => {
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <img src={item.Image} alt={item.Name} style={{ width: 50, height: 50, objectFit: "cover", marginRight: '5px' }} />
                   <div>
-                    <div style={{ fontWeight: 600, textOverflow: "ellipsis", width: "100%" }}>{item.Name}</div>
+                    <div className="name-search-header" style={{ fontWeight: 600, textOverflow: 'ellipsis' }}>{item.Name}</div>
                     <div style={{ color: "#dbaf56" }}>{moneyFormatter.format(item.Price)}</div>
                   </div>
                 </div>
@@ -170,15 +170,17 @@ const UserLayout = () => {
               <div className="grid grid--reverse">
                 <div className="grid__item">
                   <h3>Phân khúc</h3>
-                  <p>100 triệu đến 200 triệu</p>
-                  <p>200 triệu đến 500 triệu</p>
-                  <p>500 triệu đến 1 tỷ</p>
-                  <p>Trên 1 tỷ</p>
+                  <p><a href="/ShopFilterPriceOne">100 triệu đến 150 triệu</a></p>
+                  <p><a href="/ShopFilterPriceTwo">150 triệu đến 200 triệu</a></p>
+                  <p><a href="/ShopFilterPriceThree">200 triệu đến 250 triệu</a></p>
+                  <p><a href="/ShopFilterPriceFour">Trên 250 triệu</a></p>
                 </div>
                 <div className="grid__item">
-                  <h3>Sản phẩm mới</h3>
-                  <p>Automatic</p>
-                  <p>Quartz</p>
+                  <h3>Đường Kính</h3>
+                  <p><a href="/CaseSizeLessThan29">Dưới 29MM</a></p>
+                  <p><a href="/CaseSize29to37">29MM - 37MM</a></p>
+                  <p><a href="/CaseSize37to42">37MM - 42MM</a></p>
+                  <p><a href="/CaseSizeOver42">Trên 42MM</a></p>
                 </div>
                 <div className="grid__item">
                   <h3>Chăm sóc & Dịch vụ</h3>
@@ -287,7 +289,7 @@ const UserLayout = () => {
             src="https://benhviendongho.com/wp-content/uploads/2019/05/744px-Rolex_logo.svg.png"
             style={{
               float: "left",
-              width: 240,
+              width: 200,
               height: 48,
               margin: "16px 24px 16px 0",
               objectFit: "contain",

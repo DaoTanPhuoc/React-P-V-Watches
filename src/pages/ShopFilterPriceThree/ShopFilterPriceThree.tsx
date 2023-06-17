@@ -6,7 +6,7 @@ import {
     Select,
 } from "antd";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import "./ShopMan.css";
+import "./ShopFilterPriceThree";
 import { Image } from "antd";
 import {
     ShoppingCartOutlined,
@@ -88,7 +88,7 @@ const onChangeCheckBox = (checkedValues: CheckboxValueType[]) => {
 const pageSize = 8;
 const Context = React.createContext({ name: "Default" });
 
-const ShopMan = () => {
+const ShopFilterPriceThree = () => {
 
     const navigate = useNavigate();
 
@@ -111,6 +111,8 @@ const ShopMan = () => {
     const [products, setProducts] = useState<ProductModel[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<ProductModel[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
+    // diem so luong san pham tra ve
+    const [countProducts, setCountProducts] = useState(0)
     // const { brandId, categoryId } = useParams();
     // (chuyen trang)
     // test chức năng lọc nâng cao
@@ -120,17 +122,19 @@ const ShopMan = () => {
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
         axios
-            .get(`https://localhost:7182/api/Products/GetProductsByCategory?categoryId=${categoryId}`)
+            .get(`https://localhost:7182/api/Products`)
             .then((result) => {
-                setProducts(result.data);
-                filterData(currentPage, result.data);
-                //setTempProducts(result.data)
-                setTempProducts(result.data);
+                const filteredProducts = result.data.filter((product: { Price: number; }) => product.Price >= 200000000 && product.Price <= 250000000);
+                setProducts(filteredProducts);
+                const count = filteredProducts.length;
+                filterData(currentPage, filteredProducts);
+                setCountProducts(count)
+                setTempProducts(filteredProducts)
             })
             .catch((error) => {
                 console.log(error);
             });
-    }, [categoryId]);
+    }, []);
 
     //
 
@@ -282,6 +286,8 @@ const ShopMan = () => {
     // clossed
 
 
+
+
     return (
         <div>
             <section className="ban_sec">
@@ -294,8 +300,8 @@ const ShopMan = () => {
                         />
                         <div className="ban_text">
                             <strong>
-                                <span>Meeting current</span>
-                                <br /> Đồng Hồ Nam
+                                <span>VP - Watch</span>
+                                {/* <br /> Đồng Hồ Nam */}
                             </strong>
                             <p>
                                 VP Watch rất vui vì được phục vụ quý khách ! <br />
@@ -480,7 +486,7 @@ const ShopMan = () => {
                 </div>
 
                 <div style={{ padding: 20 }}>
-                    <h4 style={{ fontWeight: "bold" }}>Watches For You!</h4>
+                    <h4 style={{ fontWeight: "bold" }}>Kết quả tìm kiếm ({countProducts}) </h4>
                 </div>
                 <Card className="card-resp">
                     {filteredProducts.map((watchItem) => (
@@ -550,4 +556,4 @@ const ShopMan = () => {
     );
 }
 
-export default ShopMan
+export default ShopFilterPriceThree

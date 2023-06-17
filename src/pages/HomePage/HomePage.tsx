@@ -298,7 +298,7 @@ const HomePage = () => {
             <div className="card">
               <img
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                src="https://luxshopping.vn/Uploads/_Temp_/UploadsNewstourneau-plungejpg_400_0.jpg"
+                src="https://www.elleman.vn/wp-content/uploads/2016/03/23/4-buoc-chon-dong-ho-nam-10-475x316.jpg"
                 alt=""
               />
               <div className="bottom-left">

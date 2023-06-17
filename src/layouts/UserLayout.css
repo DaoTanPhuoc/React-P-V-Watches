@@ -243,6 +243,11 @@ ul {
   font-size: 18px;
 }
 
+.grid__item a {
+  color: #dbaf56;
+  font-size: 18px;
+}
+
 .ant-menu-item:hover::after {
   border-bottom: none !important;
 }
@@ -282,4 +287,11 @@ ul {
   .icon-search-resp {
     font-size: 8vw;
   }
+}
+
+.name-search-header {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 150px;
 }

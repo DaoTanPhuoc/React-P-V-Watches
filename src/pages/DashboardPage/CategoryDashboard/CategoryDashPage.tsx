@@ -141,8 +141,8 @@ const CategoryDashPage = () => {
             dataIndex: "Id",
             render: (Id) => (
                 <Space>
-                    <Button style={{ backgroundColor: "#000000", color: "#fff" }}>Sửa</Button>
-                    <Button style={{ backgroundColor: "#000000", color: "#fff" }}>Xóa</Button>
+                    <Button onClick={() => showModalBrand(Id)} style={{ backgroundColor: "#000000", color: "#fff" }}>Sửa</Button>
+                    <Button onClick={() => deleteBrand(Id)} style={{ backgroundColor: "#000000", color: "#fff" }}>Xóa</Button>
                 </Space>
             ),
         },
@@ -150,7 +150,7 @@ const CategoryDashPage = () => {
 
 
     // call api danh sách
-    const [category, setCategory] = useState([])
+    const [category, setCategory] = useState<any[]>([])
     useEffect(() => {
         axios
             .get(`https://localhost:7182/api/Categories/GetCategories`)
@@ -242,17 +242,18 @@ const CategoryDashPage = () => {
 
     // onfinish add
     const [AddCategory, setAddCategory] = useState([])
-    const [addCategoryForm] = Form.useForm();
     const onFinishAddCategory = (values: any) => {
         const CategoryProducts = AddCategory.map((cate: any) => {
             return {
                 Name: cate.Name,
+                Description: cate.Description
             };
         });
         console.log(AddCategory);
 
         const dataToPost = {
-            Name: values.Name,
+            Name: values.Name || "",
+            Description: values.Description,
             CategoryProducts: CategoryProducts
         };
         axios
@@ -276,6 +277,92 @@ const CategoryDashPage = () => {
     };
     //
 
+    // sửa category
+    const editRef = useRef<FormInstance<any>>(null);
+    const [isModalOpenBrand, setIsModalOpenBrand] = useState(false);
+    const [currentBrand, setCurrentBrand] = useState<number>();
+
+    const showModalBrand = (Id: any) => {
+        const cate = category.find(b => b.Id === Id);
+        setCurrentBrand(Id);
+        editRef.current?.setFieldsValue({
+            Id: cate.Id,
+            Name: cate.Name,
+            Description: cate.Description
+        })
+        setIsModalOpenBrand(true);
+    };
+
+    const handleOkBrand = () => {
+        setIsModalOpenBrand(false);
+    };
+
+    const handleCancelBrand = () => {
+        setIsModalOpenBrand(false);
+    };
+
+    const fetch = () => {
+        axios
+            .get(`https://localhost:7182/api/Categories/GetCategories`)
+            .then((res) => setCategory(res.data))
+    }
+
+    const onFinishBrand = (values: any) => {
+        axios.post(`https://localhost:7182/api/Categories/UpdateCategory?id=${currentBrand}`, values, {
+            headers: {
+                'Authorization': `Bearer ${currentToken}`,
+            },
+        })
+            .then(response => {
+                console.log(response);
+                setIsModalOpenBrand(false);
+                fetch();
+                success();
+            })
+            .catch(error => {
+                console.log(error);
+                console.log(values);
+            });
+    };
+    // closed sửa category
+
+    // delete category 
+    const handleDelete = (Id: number) => {
+        if (Id) {
+            axios
+                .post(`https://localhost:7182/api/Categories/DeteleCategory?id=${Id}`, {}, {
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`,
+                    },
+                })
+                .then((response) => {
+                    console.log(response);
+                    success();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    console.log(Id);
+                });
+        }
+    }
+    function deleteBrand(Id: number) {
+        if (Id) {
+            Modal.confirm({
+                title: 'Bạn có chắc muốn xóa?',
+                //icon: <ExclamationCircleOutlined />,
+                okText: 'Có',
+                cancelText: 'Không',
+                // dùng chung với brand 
+                className: "delete-brand-modal",
+                onOk() {
+                    console.log();
+                    handleDelete(Id);
+                },
+            });
+        }
+    }
+    // clossed
+
     return (
         <>{contextHolder}<div style={{ display: 'flex', justifyContent: "space-between", padding: 15 }}>
             <h4 style={{ color: "#4963AF", fontWeight: 700, fontSize: 23 }}>
@@ -285,19 +372,22 @@ const CategoryDashPage = () => {
             <Modal
                 className="moadal-add-brand"
                 footer={null}
-                title="Thêm Thương hiệu"
+                title="Thêm danh mục"
                 open={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}>
                 <Form
                     onFinish={onFinishAddCategory}
                     ref={formRef}
-                    form={addCategoryForm}
                     labelCol={{ span: 6 }}
                     wrapperCol={{ span: 14 }}
 
                 >
                     <Form.Item label="Tên danh mục" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên danh mục' }]}>
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item label="Mô tả" name="Description" rules={[{ required: true, message: 'Vui lòng nhập mô tả' }]}>
                         <Input />
                     </Form.Item>
 
@@ -312,12 +402,53 @@ const CategoryDashPage = () => {
                     </Form.Item>
                 </Form>
             </Modal>
+            {/* modal sửa thương hiệu */}
+            <Modal className="edit-category-dash" footer={null} title="Sửa danh mục" open={isModalOpenBrand} onOk={handleOkBrand} onCancel={handleCancelBrand}>
+                <Form
+                    labelCol={{ span: 6 }}
+                    wrapperCol={{ span: 14 }}
+                    onFinish={onFinishBrand}
+                    ref={editRef}
+                >
+                    <Form.Item hidden
+                        name="Id"
+                    >
+                        <Input hidden name="Id" />
+                    </Form.Item>
+
+                    <Form.Item label="Tên thương hiệu" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên thương hiệu' }]}>
+                        <Input />
+                    </Form.Item>
+
+
+
+                    <Form.Item
+                        label={<span style={{ color: "#000000" }}>Mô tả</span>}
+                        rules={[{ required: true, message: 'Vui lòng nhập mô tả' }]}
+                        name="Description"
+                    >
+                        <Input name="Description" />
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Button style={{
+                            backgroundColor: "#000000",
+                            color: "#fff",
+                            marginLeft: "68%"
+                        }}
+                            htmlType="submit">Cập Nhật
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Modal>
+            {/* đóng modal sửa thương hiệu */}
         </div>
             <div style={{ paddingTop: 100 }}>
                 <Table
                     columns={columns}
                     dataSource={category}
                     pagination={{ pageSize: 4, position: ['bottomCenter'] }}
+                    scroll={{ x: '100%' }}
                 />
             </div></>
     )

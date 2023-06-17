@@ -53,7 +53,7 @@ const HomeDas = () => {
     autoFit: false,
     dataToadaySales,
     smooth: true,
-    color: "#AA61B0",
+    color: "#5c5be5",
     // areaStyle: {
     //   fill: "#AA61B0",
     // },
@@ -64,6 +64,7 @@ const HomeDas = () => {
     height: 64,
     autoFit: false,
     dataCl2,
+    color: "#5c5be5",
     tooltip: {
       customContent: function (x: any, dataCl2: any) {
         return `NO.${x}: ${dataCl2[0]?.dataCl2?.y.toFixed(2)}`;
@@ -76,7 +77,7 @@ const HomeDas = () => {
     width: 300,
     autoFit: false,
     percent: 0.7,
-    color: ["#31C66B", "#E8EDF3"],
+    color: ["#5c5be5", "#E8EDF3"],
   };
 
   const dataTinyAreaCl4 = [
@@ -91,6 +92,7 @@ const HomeDas = () => {
     areaStyle: {
       fill: "#d6e3fd",
     },
+    color: "#5c5be5"
   };
 
   const data = [
@@ -141,7 +143,8 @@ const HomeDas = () => {
               <Card
                 className="card-homedashboard-responsive"
                 style={{
-                  width: 290,
+                  width: 260,
+                  height: 190,
                   borderRadius: 12,
                   boxShadow: "0 5px 10px rgba(0,0,0,.12)",
                 }}
@@ -158,7 +161,7 @@ const HomeDas = () => {
                       {todaySales}
                     </Col>
                   </Col>
-                  <Col flex={1}>
+                  {/* <Col flex={1}>
                     <div className="icon-money">
                       <svg
                         width="22"
@@ -183,7 +186,7 @@ const HomeDas = () => {
                         />
                       </svg>
                     </div>
-                  </Col>
+                  </Col> */}
                   <Col>
                     <div>
                       <TinyLine
@@ -199,7 +202,8 @@ const HomeDas = () => {
             <Col xs={{ span: 14, offset: 0.1 }} lg={{ span: 4, offset: 2 }}>
               <Card
                 style={{
-                  width: 290,
+                  width: 260,
+                  height: 190,
                   borderRadius: 12,
                   boxShadow: "0 5px 10px rgba(0,0,0,.12)",
                 }}
@@ -216,7 +220,7 @@ const HomeDas = () => {
                       {totalUser}
                     </Col>
                   </Col>
-                  <Col flex={1}>
+                  {/* <Col flex={1}>
                     <div className="icon-money">
                       <svg
                         width="22"
@@ -245,7 +249,7 @@ const HomeDas = () => {
                         />
                       </svg>
                     </div>
-                  </Col>
+                  </Col> */}
                   <Col>
                     <div>
                       <TinyColumn
@@ -261,7 +265,8 @@ const HomeDas = () => {
             <Col xs={{ span: 14, offset: 0.1 }} lg={{ span: 4, offset: 2 }}>
               <Card
                 style={{
-                  width: 290,
+                  width: 260,
+                  height: 190,
                   borderRadius: 12,
                   boxShadow: "0 5px 10px rgba(0,0,0,.12)",
                 }}
@@ -269,7 +274,7 @@ const HomeDas = () => {
                 <Row>
                   <Col flex={3}>
                     <Col style={{ fontWeight: 600, color: "#8c8c8c" }} flex={1}>
-                      Products
+                      Sản Phẩm
                     </Col>
                     <Col
                       flex={1}
@@ -278,7 +283,7 @@ const HomeDas = () => {
                       75%
                     </Col>
                   </Col>
-                  <Col flex={1}>
+                  {/* <Col flex={1}>
                     <div className="icon-money">
                       <svg
                         width="22"
@@ -293,7 +298,7 @@ const HomeDas = () => {
                         />
                       </svg>
                     </div>
-                  </Col>
+                  </Col> */}
                   <Col>
                     <Progress className="ProgressCl3" {...configCl3} />
                   </Col>
@@ -303,7 +308,8 @@ const HomeDas = () => {
             <Col xs={{ span: 14, offset: 0.1 }} lg={{ span: 4, offset: 2 }}>
               <Card
                 style={{
-                  width: 290,
+                  width: 260,
+                  height: 190,
                   borderRadius: 12,
                   boxShadow: "0 5px 10px rgba(0,0,0,.12)",
                 }}
@@ -311,7 +317,7 @@ const HomeDas = () => {
                 <Row>
                   <Col flex={3}>
                     <Col style={{ fontWeight: 600, color: "#8c8c8c" }} flex={1}>
-                      Sản phẩm đã bán hôm nay:
+                      Sản phẩm bán hôm nay:
                     </Col>
                     <Col
                       flex={1}
@@ -320,7 +326,7 @@ const HomeDas = () => {
                       {dailyProductSale}
                     </Col>
                   </Col>
-                  <Col flex={1}>
+                  {/* <Col flex={1}>
                     <div className="icon-money">
                       <svg
                         width="22"
@@ -335,7 +341,7 @@ const HomeDas = () => {
                         />
                       </svg>
                     </div>
-                  </Col>
+                  </Col> */}
                   <Col>
                     <TinyArea
                       className="TinyAreaCl4"

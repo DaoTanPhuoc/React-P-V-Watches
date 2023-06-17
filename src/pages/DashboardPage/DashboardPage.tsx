@@ -272,8 +272,9 @@ const Dashboard: React.FC = () => {
   return (
     <Layout >
       <Sider
+        style={{ boxShadow: " 0 0 10px rgba(0, 0, 0, 0.5)" }}
         breakpoint="lg"
-        collapsedWidth="80"
+        collapsedWidth="70"
         onBreakpoint={(broken) => {
           console.log(broken);
         }}
@@ -284,15 +285,21 @@ const Dashboard: React.FC = () => {
       >
 
 
-        <div className="logo" />
+        <div
+          //  style={{
+          //   width: 200,
+          //   height: 64,
+          //   objectFit: "cover",
+          // }} 
+          className="logo" />
         <img
           style={{
-            backgroundColor: "white",
             width: 200,
             height: 64,
-            objectFit: "cover",
+            objectFit: "contain",
+            padding: 10
           }}
-          src="https://i1.sndcdn.com/artworks-000638521540-rcn15j-t500x500.jpg"
+          src="https://benhviendongho.com/wp-content/uploads/2019/05/744px-Rolex_logo.svg.png"
           alt=""
         />
         <Menu
@@ -300,6 +307,7 @@ const Dashboard: React.FC = () => {
           defaultSelectedKeys={["1"]}
           mode="inline"
           items={items}
+          className="menu-dashboard-container"
         />
       </Sider>
       <Layout className="site-layout">
@@ -310,7 +318,7 @@ const Dashboard: React.FC = () => {
             top: 0,
             zIndex: 1000,
             width: "100%",
-            background: "#000000",
+            background: " #222222",
           }}
         >
           <div style={{ width: "100%" }}>
