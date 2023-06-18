@@ -164,20 +164,20 @@ const ImportProductsPage = () => {
                                                     <Input placeholder="Mã sản phẩm" />
                                                 </Form.Item>
                                                 <Form.Item
-                                                    initialValue={1}
+                                                    initialValue={100000}
                                                     {...restField}
                                                     name={[name, 'Price']}
-                                                    rules={[{ required: true, message: 'Vui lòng nhập số lượng' }]}
+                                                    rules={[{ required: true, message: 'Vui lòng nhập giá' }]}
                                                 >
-                                                    <Input placeholder="Số lượng" type='number' />
+                                                    <Input placeholder="Giá" type='number' />
                                                 </Form.Item>
                                                 <Form.Item
                                                     initialValue={1}
                                                     {...restField}
                                                     name={[name, 'Quantity']}
-                                                    rules={[{ required: true, message: 'Vui lòng nhập đơn giá' }]}
+                                                    rules={[{ required: true, message: 'Vui lòng nhập số lượng' }]}
                                                 >
-                                                    <Input placeholder="Đơn giá nhập" type='number' />
+                                                    <Input placeholder="Số lượng" type='number' />
                                                 </Form.Item>
                                                 <MinusCircleOutlined onClick={() => remove(name)} />
                                             </Space>
