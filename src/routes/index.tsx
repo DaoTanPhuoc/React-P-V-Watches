@@ -73,7 +73,7 @@ export const userRoutes = createBrowserRouter([
       },
 
       {
-        path: "/detailNews",
+        path: "/detailNews/:Id",
         element: <DetailNews />,
       },
       {

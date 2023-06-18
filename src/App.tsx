@@ -2,7 +2,7 @@
 import { Skeleton } from "antd";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 import { RouterProvider } from "react-router-dom";
 import "./App.css";
 import { userRoutes } from "./routes";
@@ -17,7 +17,7 @@ function App() {
   const [loading, setLoading] = useState<boolean>(true)
   const baseApi = "https://localhost:7182/api"
 
-  const loadUser = async () => {
+  const loadUser = useCallback(async () => {
     setLoading(true)
     const token: any = localStorage.getItem("userToken")
     if (currentToken === null && token) {
@@ -43,18 +43,16 @@ function App() {
       })
     }
     setLoading(false)
-  }
+  }, [currentToken, baseApi])
   useEffect(() => {
-    (async () => {
-      await loadUser()
-    })();
+    loadUser()
 
     const cartOrdersString = localStorage.getItem("cartOrders");
     if (cartOrdersString) {
       const cartOrdersTmp = JSON.parse(cartOrdersString);
       setCartOrders(cartOrdersTmp);
     }
-  }, [currentToken]);
+  }, [currentToken, loadUser]);
   // Auth
   const onChangeCartOrders = (orders: any[]) => {
     const cartOrdersString = JSON.stringify(orders);

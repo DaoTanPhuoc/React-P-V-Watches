@@ -1,5 +1,5 @@
 import { Button, Checkbox, Form, Input, message, Modal, Row, Space, Upload, UploadFile } from "antd";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { FileAddOutlined } from "@ant-design/icons";
 import "./PostDashboard.css";
 import Table, { ColumnsType } from "antd/es/table";
@@ -88,10 +88,14 @@ const PostDashboard = () => {
     setOpenEdit(!openEdit)
   }
   const cancelModelEdit = () => setOpenEdit(false)
-  const getData = () => {
+  const getData = useCallback(() => {
     setLoading(true)
-    axios.get(`${baseApi}/News`).then(res => setData(res.data)).finally(() => setLoading(false))
-  }
+    axios.get(`${baseApi}/News`, {
+      headers: {
+        'Authorization': `Bearer ${currentToken}`
+      }
+    }).then(res => setData(res.data)).finally(() => setLoading(false))
+  }, [baseApi])
   const createPost = (values: any) => {
     message.open({ type: 'loading', content: 'Đang tạo bài viết...', key: 'create' })
     const dataPost = { ...values, content, Thumbnail: values["Thumbnail"].file };
@@ -146,7 +150,7 @@ const PostDashboard = () => {
   }
   useEffect(() => {
     getData();
-  }, [])
+  }, [getData])
   return (
     <>
       <div>

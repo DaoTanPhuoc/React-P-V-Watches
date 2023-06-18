@@ -7,7 +7,6 @@ import FormItem from "antd/es/form/FormItem";
 import "./PageLogin.css";
 import { Link, useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
-import { log } from "console";
 
 const PageLogin = () => {
   const navigate = useNavigate();
@@ -63,6 +62,14 @@ const PageLogin = () => {
         });
       });
   };
+  const ResetPassword = (values: any) => {
+    message.open({ key: 'password', content: 'Đang xử lý...', type: 'loading' })
+    axios.post(`${baseApi}/accounts/ResetPassword`, {}, {
+      params: values
+    }).then(res => {
+      message.open({ key: 'password', content: 'Đã gửi mail đặt lại mật khẩu', type: 'success' })
+    }).catch(err => message.open({ key: 'password', content: err.response.data, type: 'error' }))
+  }
   // forgotpassword
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -81,17 +88,6 @@ const PageLogin = () => {
   const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
-  };
-
-  const validateMessages = {
-    required: '${label} is required!',
-    types: {
-      email: '${label} không đúng định dạng!',
-      number: '${label} is not a valid number!',
-    },
-    number: {
-      range: '${label} must be between ${min} and ${max}',
-    },
   };
   //
   return (
@@ -160,8 +156,8 @@ const PageLogin = () => {
         <Form.Item
           name="email"
           rules={[
-            { required: true, message: "Please input your Email!" },
-            { type: "email", message: "Please input valid Email!" },
+            { required: true, message: "Vui lòng nhập email!" },
+            { type: "email", message: "Vui lòng nhập đúng định dạng" },
           ]}
           label={<span style={{ color: "#fff" }}>Email</span>}
         >
@@ -174,7 +170,7 @@ const PageLogin = () => {
         <Form.Item
           name="password"
           label={<span style={{ color: "#fff" }}>Mật Khẩu</span>}
-          rules={[{ required: true, message: "Please input your Password!" }]}
+          rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
         >
           <Input
             prefix={<LockOutlined className="site-form-item-icon" />}
@@ -190,15 +186,16 @@ const PageLogin = () => {
             {/* <Link to="/forgotPassword">Quên mật khẩu? </Link>{" "} */}
             <a onClick={showModal}>Quên mật khẩu ?</a>
           </span>{" "}
-          <Modal className="forgotpassword-form-inputEmail" footer={null} title="Nhập email đã đăng ký" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+          <Modal className="forgotpassword-form-inputEmail" footer={null} title="Quên mật khẩu" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
             <Form
               {...layout}
               layout="vertical"
               name="nest-messages"
-              onFinish={onFinish}
-              validateMessages={validateMessages}
+              onFinish={ResetPassword}
             >
-              <Form.Item style={{ marginLeft: "20%" }} name={['user', 'email']} label="Email" rules={[{ type: 'email' }]}>
+              <Form.Item style={{ marginLeft: "20%" }} name="Email" label="Email"
+                rules={[{ type: 'email', message: 'Vui lòng nhập đúng định dạng' }, { required: true, message: 'Vui lòng nhập email' }]}
+              >
                 <Input placeholder='Nhập địa chỉ email đăng kí ?' />
               </Form.Item>
               <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>

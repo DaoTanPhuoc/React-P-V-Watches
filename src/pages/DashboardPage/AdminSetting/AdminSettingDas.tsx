@@ -1,72 +1,58 @@
-import { Avatar, Button, Card, Col, DatePicker, Form, Input, InputNumber, Modal, Row } from 'antd'
-import TextArea from 'antd/es/input/TextArea';
-import React, { useState } from 'react'
+import { Avatar, Button, Col, Form, Input, message, Modal, Row } from 'antd'
+import { useContext, useEffect, useState } from 'react'
 import {
-    MenuUnfoldOutlined,
-    AimOutlined,
-    UserOutlined,
     AntDesignOutlined,
     KeyOutlined,
 } from "@ant-design/icons";
+import { AppContext } from '../../../App';
+import axios from 'axios';
 const AdminSettingDas = () => {
+    const [form] = Form.useForm()
+    const { currentToken, currentUser, baseApi } = useContext(AppContext);
     const onFinish = (values: any) => {
-        console.log(values);
-    };
-    const validateMessages = {
-        required: '${label} is required!',
-        types: {
-            email: '${label} is not a valid email!',
-            number: '${label} is not a valid number!',
-        },
-        number: {
-            range: '${label} must be between ${min} and ${max}',
-        },
-    };
-    const layout = {
-        labelCol: { span: 8 },
-        wrapperCol: { span: 16 },
-    };
+        message.open({ key: 'save', content: 'Đang xử lý', type: 'loading' })
+        axios.post(`${baseApi}/Accounts/UpdateUserInfo`, {
+            ...values, Id: currentUser.Id
+        }, {
+            headers: {
+                'Authorization': `Bearer ${currentToken}`
+            }
+        }).then(() => {
+            message.open({ key: 'save', content: 'Thành công', type: 'success' })
+        }).catch(error => {
+            message.open({ key: 'save', content: 'Thất bại: ' + error.response.data, type: 'error' })
+        })
+    }
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const showModal = () => {
-        setIsModalOpen(true);
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen);
     };
 
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
+    const changePassword = (values: any) => {
+        message.open({ key: 'password', content: 'Đang xử lý...', type: 'loading' })
+        axios.post(`${baseApi}/Accounts/ChangePassword`, {
+            ...values, Id: currentUser.Id
+        }, {
+            headers: {
+                'Authorization': `Bearer ${currentToken}`
+            }
+        }).then(() => {
+            message.open({ key: 'password', content: 'Thành công', type: 'success' })
+        }).catch((error) => {
+            message.open({ key: 'password', content: 'Thất bại: ' + error.respose.data, type: 'error' })
+        })
+    }
+    useEffect(() => {
+        currentUser && form.setFieldsValue({
+            FullName: currentUser.FullName,
+            Email: currentUser.Email,
+            PhoneNumber: currentUser.PhoneNumber,
+        })
+        console.log(currentUser);
 
+    }, [currentUser, form])
     return (
         <div style={{ width: "100%" }}>
-            {/* <Form
-                {...layout}
-                name="nest-messages"
-                onFinish={onFinish}
-                style={{ maxWidth: 600 }}
-                validateMessages={validateMessages}
-            >
-                <Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}>
-                    <Input />
-                </Form.Item>
-                <Form.Item name={['user', 'email']} label="Email" rules={[{ type: 'email' }]}>
-                    <Input />
-                </Form.Item>
-                <Form.Item name={['user', 'age']} label="Age" rules={[{ type: 'number', min: 0, max: 99 }]}>
-                    <InputNumber />
-                </Form.Item>
-                <Form.Item name={['user', 'website']} label="Website">
-                    <Input />
-                </Form.Item>
-                <Form.Item name={['user', 'introduction']} label="Introduction">
-                    <Input.TextArea />
-                </Form.Item>
-                <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-                    <Button type="primary" htmlType="submit">
-                        Submit
-                    </Button>
-                </Form.Item>
-            </Form> */}
-
-
             <div
                 style={{
                     display: "flex",
@@ -85,6 +71,8 @@ const AdminSettingDas = () => {
                     <Col span={12}>
                         <div style={{ paddingTop: 20 }}>
                             <Form
+                                onFinish={onFinish}
+                                form={form}
                                 labelCol={{ span: 4 }}
                                 wrapperCol={{ span: 14 }}
                                 layout="horizontal"
@@ -94,34 +82,22 @@ const AdminSettingDas = () => {
                                 <Form.Item
                                     style={{ color: "#000000" }}
                                     label={<span style={{ color: "#000000" }}>Họ và Tên</span>}
-                                    name="name"
+                                    name="FullName"
                                 >
                                     <Input />
                                 </Form.Item>
                                 <Form.Item
                                     label={<span style={{ color: "#000000" }}>Địa chỉ mail</span>}
-                                    name="email"
+                                    name="Email"
                                 >
                                     <Input type="email" />
                                 </Form.Item>
 
                                 <Form.Item
-                                    label={<span style={{ color: "#000000" }}>Ngày Sinh</span>}
-                                    name="dob"
-                                >
-                                    <DatePicker />
-                                </Form.Item>
-
-                                <Form.Item
                                     label={<span style={{ color: "#000000" }}>Số điện thoại</span>}
-                                    name="phone"
+                                    name="PhoneNumber"
                                 >
                                     <Input />
-                                </Form.Item>
-                                <Form.Item
-                                    label={<span style={{ color: "#000000" }}>Ghi chú</span>}
-                                >
-                                    <TextArea rows={4} />
                                 </Form.Item>
                                 <Button
                                     htmlType="submit"
@@ -148,7 +124,7 @@ const AdminSettingDas = () => {
                         <br />
                         <KeyOutlined style={{ fontSize: 20 }} /> ********* {"     "}
                         <Button
-                            onClick={showModal}
+                            onClick={toggleModal}
                             style={{
                                 fontSize: 10,
                                 color: "#fff",
@@ -162,11 +138,12 @@ const AdminSettingDas = () => {
                             footer={null}
                             title="Thay đổi mật khẩu"
                             open={isModalOpen}
-                            onCancel={handleCancel}
+                            onCancel={toggleModal}
                         >
                             <Form
                                 labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 14 }}
+                                onFinish={changePassword}
                                 layout="horizontal"
                                 style={{ maxWidth: 1200 }}
                             >

@@ -16,9 +16,7 @@ const RegisterPage = () => {
   const Register = async (values: any) => {
     console.log(values);
     message.open({ key: 'register', content: "Đang đăng ký...", type: 'loading' })
-    axios.post(`${baseApi}/accounts/register`, {
-      ...values, DateOfBirth: moment(values['DateOfBirth']).toDate()
-    }).then(() => {
+    axios.post(`${baseApi}/accounts/register`, values).then(() => {
       message.open({ key: 'register', content: "Đăng ký thành công!", type: 'success' })
       navigate('/login')
     }).catch(error => {
@@ -109,12 +107,6 @@ const RegisterPage = () => {
             type="text"
             placeholder="Nhập họ tên"
           />
-        </Form.Item>
-        <Form.Item name="DateOfBirth" label={<span style={{ color: "#fff" }}>Ngày sinh</span>} rules={[{ required: true, message: "Vui lòng nhập ngày sinh" }]}>
-          <DatePicker style={{ width: '100%' }} format='YYYY-MM-DD' disabledDate={(current) => {
-            let customDate = moment().format("YYYY-MM-DD");
-            return current && current > moment(customDate, "YYYY-MM-DD");
-          }} />
         </Form.Item>
         <Form.Item
           name="Password"

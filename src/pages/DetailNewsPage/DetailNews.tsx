@@ -1,6 +1,25 @@
-import React from "react";
+import axios from "axios";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { AppContext } from "../../App";
 import "./DetailNews.css";
 const DetailNews = () => {
+  const { Id } = useParams();
+  const { baseApi } = useContext(AppContext);
+  const [post, setPost] = useState();
+  const [loading, setLoading] = useState(true);
+  const fetchData = useCallback(() => {
+    setLoading(true)
+    axios.get(`${baseApi}/News/${Id}`).then(res => {
+      setPost(res.data);
+    }).catch(error => console.log(error))
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [Id, baseApi])
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
   return (
     <>
       <div className="container-detail-news">
@@ -17,65 +36,11 @@ const DetailNews = () => {
         <div className="main">
           <div className="home">
             <div className="left">
-              <img
-                src="https://bossluxurywatch.vn/uploads/anh-dong-ho-dang-bao/5004/1-5-mau-dong-ho-sanh-dieu-va-thoi-thuong-danh-cho-phai-dep/audemars-piguet-fpj-h-moser-cie-va-zenith-dat-gia-pha-ky-luc-tai-only-watch-2021/24-mau-patek-philippe-ngung-san-xuat-tu-nam-2022/rm-07-04-automatic-sport/thumbs/418x0/richa-use.jpg"
-                className="home-img"
-                alt="Paper photo"
-              />
 
               <h2 className="heading-2">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit
                 cupiditate possimus.
               </h2>
-            </div>
-
-            <div className="right">
-              <h3 className="heading-3">latest news</h3>
-              <div className="lists">
-                <div className="list">
-                  <img
-                    src="https://bossluxurywatch.vn/uploads/anh-muc-tin-tuc/thuy-linh/0-2023/thang-4/b6/thumbs/645x0/hublot-europa-league-2.jpg"
-                    alt="photo 1"
-                  />
-                  <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Odio, veritatis!
-                  </p>
-                </div>
-
-                <div className="list">
-                  <img
-                    src="https://bossluxurywatch.vn/uploads/tao/thumbs/645x0/screenshot-51.jpg"
-                    alt="photo 2"
-                  />
-                  <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Odio, veritatis!
-                  </p>
-                </div>
-
-                <div className="list">
-                  <img
-                    src="https://bossluxurywatch.vn/uploads/tao/0-0/thumbs/645x0/dong-ho-hublot-nam-2.jpg"
-                    alt="photo 3"
-                  />
-                  <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Odio, veritatis!
-                  </p>
-                </div>
-
-                <div className="list">
-                  <img
-                    src="https://bossluxurywatch.vn/uploads/thumbs/645x0/gia-dong-ho-rolex-chinh-hang.jpg"
-                    alt="photo 4"
-                  />
-                  <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Odio, veritatis!
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
 

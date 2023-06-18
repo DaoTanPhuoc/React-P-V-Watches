@@ -1,54 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import "./NewsPage.css";
 import { Button, Card, Pagination, PaginationProps } from "antd";
 import axios from "axios";
-import { ProductModel } from "../../models/ProductModel";
+import { AppContext } from "../../App";
 const gridStyle: React.CSSProperties = {
   width: "25%",
   textAlign: "center",
 };
 // chuyen trang
 
-//
-const pageSize = 8;
 
 const News = () => {
-  // chuyen trang
-  const [products, setProducts] = useState<ProductModel[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<ProductModel[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const { baseApi } = useContext(AppContext)
+  const [posts, setPosts] = useState<any[]>([])
+  const [newPosts, setNewPosts] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-    axios
-      .get(`https://localhost:7182/api/Products`)
-      .then((result) => {
-        setProducts(result.data);
-        filterData(currentPage, result.data);
+  const fetchData = useCallback(() => {
+    setLoading(true)
+    axios.get(`${baseApi}/News/GetPosts`).then(res => {
+      setPosts(res.data)
+    }).catch(error => console.log(error))
+      .finally(() => {
+        setLoading(false)
       })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [currentPage]);
-
-  const onChangePage = (page: number) => {
-    setCurrentPage(page);
-    filterData(page, products);
-  };
-
-  const filterData = (page: number, data: ProductModel[]) => {
-    let count = 1;
-    const productsTmp: ProductModel[] = [];
-    for (let i = (page - 1) * pageSize; i < data.length; i++) {
-      if (count > pageSize || i === data.length) {
-        break;
-      }
-      count++;
-      productsTmp.push(data[i]);
-    }
-    setFilteredProducts(productsTmp);
-  };
-  // close chuyen trang
+  }, [baseApi])
+  const fetchNewstPost = useCallback(() => {
+    setLoading(true)
+    axios.get(`${baseApi}/News/GetNewestPost`).then(res => {
+      setNewPosts(res.data)
+    }).catch(error => console.log(error))
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [baseApi])
+  const onChangePage = (current: number, pageSize: number) => {
+    return posts.slice((current - 1) * pageSize, current * pageSize);
+  }
+  useEffect(() => {
+    fetchData()
+    fetchNewstPost()
+  }, [fetchData, fetchNewstPost])
   return (
     <>
       <div className="blog-section">
@@ -70,6 +63,37 @@ const News = () => {
             </p>
           </div>
           <div className="cards-blog">
+            {/* <>
+              {newPosts && newPosts.map(p => (
+                <div className="card-blog">
+                  <div className="image-section">
+                    <img
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: "cover",
+                      }}
+                      src={p.Thumbnail}
+                      alt=""
+                    />
+                  </div>
+                  <div className="article">
+                    <h4>{p.Title}</h4>
+                    <p>
+                      {p.Description}
+                    </p>
+                  </div>
+                  <div className="blog-view">
+                    <Link to={`/detailNews/${p.Id}`} className="btn-blog">
+                      Xem chi tiết
+                    </Link>
+                  </div>
+                  <div className="posted-date">
+                    <p>{moment(p.CreateAt).fromNow()}</p>
+                  </div>
+                </div>
+              ))}
+            </> */}
             <div className="card-blog">
               <div className="image-section">
                 <img
@@ -167,197 +191,33 @@ const News = () => {
       </div>
       <div className="card-news-container">
         <Card title="Tin tức ">
-          <Card.Grid style={gridStyle}>
-            <div className="Card">
-              <img
-                style={{
-                  height: 250,
-                  width: "100%",
-                  objectFit: "cover",
-                }}
-                src="https://bossluxurywatch.vn/uploads/tao/0-00000a/thumbs/418x0/screenshot-2.jpg"
-                alt=""
-              />
-              <h4>Sunset ipsum dolor sit amet consectetur, adipisicing</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Temporibus fuga ex sequi eaque ea. Reiciendis recusandae
-                repudiandae delectus deleniti ratione tempora, ullam fuga,
-                consequuntur vitae dolor est, veritatis reprehenderit animi.
-              </p>
-            </div>
-          </Card.Grid>
-          <Card.Grid hoverable={false} style={gridStyle}>
-            <div className="Card">
-              <img
-                style={{
-                  width: '100%',
-                  height: 250,
-
-                  objectFit: "cover",
-                }}
-                src="https://bossluxurywatch.vn/uploads/tao/0/thumbs/418x0/h20a4609.jpg"
-                alt=""
-              />
-              <h4>Sunset ipsum dolor sit amet consectetur, adipisicing</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Temporibus fuga ex sequi eaque ea. Reiciendis recusandae
-                repudiandae delectus deleniti ratione tempora, ullam fuga,
-                consequuntur vitae dolor est, veritatis reprehenderit animi.
-              </p>
-            </div>
-          </Card.Grid>
-          <Card.Grid style={gridStyle}>
-            <div className="Card">
-              <img
-                style={{
-                  width: '100%',
-                  height: 250,
-
-                  objectFit: "cover",
-                }}
-                src="https://bossluxurywatch.vn/uploads/tao/thumbs/418x0/platinumrolexdaytona.jpeg"
-                alt=""
-              />
-              <h4>Sunset ipsum dolor sit amet consectetur, adipisicing</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Temporibus fuga ex sequi eaque ea. Reiciendis recusandae
-                repudiandae delectus deleniti ratione tempora, ullam fuga,
-                consequuntur vitae dolor est, veritatis reprehenderit animi.
-              </p>
-            </div>
-          </Card.Grid>
-          <Card.Grid style={gridStyle}>
-            <div className="Card">
-              <img
-                style={{
-                  width: '100%',
-                  height: 250,
-
-                  objectFit: "cover",
-                }}
-                src="https://bossluxurywatch.vn/uploads/tao/0-0e/thumbs/418x0/curatedition-audemars-piguet-royal-oak-2.jpg"
-                alt=""
-              />
-              <h4>Sunset ipsum dolor sit amet consectetur, adipisicing</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Temporibus fuga ex sequi eaque ea. Reiciendis recusandae
-                repudiandae delectus deleniti ratione tempora, ullam fuga,
-                consequuntur vitae dolor est, veritatis reprehenderit animi.
-              </p>
-            </div>
-          </Card.Grid>
-          <Card.Grid style={gridStyle}>
-            <div className="Card">
-              <img
-                style={{
-                  width: '100%',
-                  height: 250,
-                  objectFit: "cover",
-                }}
-                src="https://bossluxurywatch.vn/uploads/tao/0-0e/thumbs/418x0/screenshot-12.jpg"
-                alt=""
-              />
-              <h4>Sunset ipsum dolor sit amet consectetur, adipisicing</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Temporibus fuga ex sequi eaque ea. Reiciendis recusandae
-                repudiandae delectus deleniti ratione tempora, ullam fuga,
-                consequuntur vitae dolor est, veritatis reprehenderit animi.
-              </p>
-            </div>
-          </Card.Grid>
-          <Card.Grid style={gridStyle}>
-            <div className="Card">
-              <img
-                style={{
-                  width: '100%',
-                  height: 250,
-                  objectFit: "cover",
-                }}
-                src="https://bossluxurywatch.vn/uploads/tao/0-0e/thumbs/418x0/screenshot-2.jpg"
-                alt=""
-              />
-              <h4>Sunset ipsum dolor sit amet consectetur, adipisicing</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Temporibus fuga ex sequi eaque ea. Reiciendis recusandae
-                repudiandae delectus deleniti ratione tempora, ullam fuga,
-                consequuntur vitae dolor est, veritatis reprehenderit animi.
-              </p>
-            </div>
-          </Card.Grid>
-          <Card.Grid style={gridStyle}>
-            <div className="Card">
-              <img
-                style={{
-                  height: 250,
-                  width: "100%",
-                  objectFit: "cover",
-                }}
-                src="https://bossluxurywatch.vn/uploads/anh-muc-tin-tuc/thuy-linh/0-2023/thang-1/5/thumbs/418x0/dong-ho-hublot-lvmh-watch-week-2.jpg"
-                alt=""
-              />
-              <h4>Sunset ipsum dolor sit amet consectetur, adipisicing</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Temporibus fuga ex sequi eaque ea. Reiciendis recusandae
-                repudiandae delectus deleniti ratione tempora, ullam fuga,
-                consequuntur vitae dolor est, veritatis reprehenderit animi.
-              </p>
-            </div>
-          </Card.Grid>
-          <Card.Grid style={gridStyle}>
-            <div className="Card">
-              <img
-                style={{
-                  height: 250,
-                  width: "100%",
-                  objectFit: "cover",
-                }}
-                src="https://bossluxurywatch.vn/uploads/anh-muc-tin-tuc/thuy-linh/0-2023/thang-1/5/thumbs/418x0/dong-ho-hublot-lvmh-watch-week-2.jpg"
-                alt=""
-              />
-              <h4>Sunset ipsum dolor sit amet consectetur, adipisicing</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Temporibus fuga ex sequi eaque ea. Reiciendis recusandae
-                repudiandae delectus deleniti ratione tempora, ullam fuga,
-                consequuntur vitae dolor est, veritatis reprehenderit animi.
-              </p>
-            </div>
-          </Card.Grid>
-          <Card.Grid style={gridStyle}>
-            <div className="Card">
-              <img
-                style={{
-                  height: 250,
-                  width: "100%",
-                  objectFit: "cover",
-                }}
-                src="https://bossluxurywatch.vn/uploads/anh-muc-tin-tuc/thuy-linh/0-2023/thang-1/5/thumbs/418x0/dong-ho-hublot-lvmh-watch-week-2.jpg"
-                alt=""
-              />
-              <h4>Sunset ipsum dolor sit amet consectetur, adipisicing</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Temporibus fuga ex sequi eaque ea. Reiciendis recusandae
-                repudiandae delectus deleniti ratione tempora, ullam fuga,
-                consequuntur vitae dolor est, veritatis reprehenderit animi.
-              </p>
-            </div>
-          </Card.Grid>
+          {posts && posts.map(p => (
+            <Card.Grid style={gridStyle}>
+              <div className="Card">
+                <img
+                  style={{
+                    height: 250,
+                    width: "100%",
+                    objectFit: "cover",
+                  }}
+                  src={p.Thumbnail}
+                  alt=""
+                />
+                <h4>{p.Title}</h4>
+                <p>
+                  {p.Description}
+                </p>
+              </div>
+            </Card.Grid>
+          ))}
         </Card>
       </div>
       <Pagination
         style={{ textAlign: "center", padding: 35 }}
         current={currentPage}
-        pageSize={pageSize}
-        total={products.length}
-        onChange={(page) => onChangePage(page)}
+        pageSize={8}
+        total={posts.length}
+        onChange={(current, pagesize) => onChangePage(current, pagesize)}
       />
       ;
     </>

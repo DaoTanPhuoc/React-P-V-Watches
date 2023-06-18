@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import "./ImportProductsPage.css"
-import { Button, Form, Input, InputNumber, message, Modal, Select, Space } from 'antd'
+import { Button, Form, Input, InputNumber, message, Modal, Select, Space, Upload, UploadProps } from 'antd'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import Table, { ColumnsType, } from 'antd/es/table';
 import { AppContext } from '../../../App';
 import axios from 'axios';
+import { UploadOutlined } from '@ant-design/icons';
+import { RcFile } from 'antd/es/upload';
+
 
 const ImportProductsPage = () => {
     const { baseApi, currentToken } = useContext(AppContext);
@@ -12,6 +15,9 @@ const ImportProductsPage = () => {
     const [suppliers, setSuppliers] = useState<any[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [modalCSV, setModalCSV] = useState(false)
+    const [fileList, setFileList] = useState<any[]>([]);
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -24,6 +30,10 @@ const ImportProductsPage = () => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+    const onChangeFile: UploadProps['onChange'] = ({ fileList: newFileList }) => {
+        setFileList(newFileList);
+        return false;
+    }
     const fetchData = () => {
         axios.get(`${baseApi}/Imports`, {
             headers: {
@@ -75,18 +85,27 @@ const ImportProductsPage = () => {
             headers: {
                 'Authorization': `Bearer ${currentToken}`
             }
-        }).then(res => {
-            switch (res.status) {
-                case 204:
-                    message.open({ key: 'save', content: "Nhập thành công!", type: 'success' })
-                    fetchData()
-                    break;
-
-                default:
-                    break;
-            }
+        }).then(() => {
+            message.open({ key: 'save', content: "Nhập thành công!", type: 'success' })
+            fetchData()
         }).catch(err => message.open({ key: 'save', content: "Lỗi: " + err.response.data, type: 'error' }))
     };
+    const toggleCSV = () => setModalCSV(!modalCSV)
+    const uploadCSV = (values: any) => {
+        message.open({ key: 'upload', content: 'Đang xử lý...', type: 'loading' })
+        const formData = new FormData()
+        formData.append("supplierId", values["supplierId"]);
+        formData.append("file", values["file"].File);
+        axios.post(`${baseApi}/Imports/ImportFromFile`, formData, {
+            headers: {
+                'Authorization': `Bearer ${currentToken}`
+            }
+        }).then(() => {
+            message.open({ key: 'upload', content: 'Thành công', type: 'success' })
+        }).catch(error => {
+            message.open({ key: 'upload', content: 'Thất bại: ' + error.response.data, type: 'error' })
+        })
+    }
     return (
         <div className="container-import-products">
             <div className="header-import-products">
@@ -96,13 +115,22 @@ const ImportProductsPage = () => {
                     paddingTop: 30,
                     paddingBottom: 30,
                 }}>Quản Lý Hóa Đơn Nhập</h4>
-                <Button onClick={showModal} style={{
-                    color: "#fff",
-                    backgroundColor: "#000000",
-                    marginTop: 30
-                }} type="primary">
-                    Nhập sản phẩm
-                </Button>
+                <Space direction='vertical'>
+                    <Button onClick={showModal} style={{
+                        color: "#fff",
+                        backgroundColor: "#000000",
+                        marginTop: 30
+                    }} type="primary">
+                        Nhập sản phẩm
+                    </Button>
+                    <Button onClick={toggleCSV} style={{
+                        color: "#fff",
+                        backgroundColor: "#000000",
+                        marginTop: 30
+                    }} type="primary">
+                        Nhập sản phẩm CSV
+                    </Button>
+                </Space>
             </div>
             <div className="content-import-products">
                 <Modal footer={null} title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
@@ -173,7 +201,44 @@ const ImportProductsPage = () => {
                 <div className="table-import-products">
                     <Table loading={loading} columns={columns} dataSource={data} />
                 </div>
+
             </div>
+            <Modal
+                footer={null}
+                title="Nhập sản phẩm"
+                onCancel={toggleCSV}
+                open={modalCSV}
+            >
+                <Form
+                    onFinish={uploadCSV}
+                >
+                    <Form.Item
+                        name='supplierId'
+                        initialValue={1}
+                    >
+                        <Select
+                            placeholder="Chọn nhà cung cấp"
+                            style={{ width: '100%', marginBottom: 10 }}
+                            options={suppliers.map(supplier => ({ label: supplier.Name, value: supplier.Id }))}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        name="file"
+                    >
+                        <Upload
+                            fileList={fileList}
+                            onChange={onChangeFile}
+                            beforeUpload={() => false}
+                            maxCount={1}
+                        >
+                            {fileList.length < 1 && <Button icon={<UploadOutlined />}>Click to Upload</Button>}
+                        </Upload>
+                    </Form.Item>
+                    <Form.Item>
+                        <Button htmlType='submit'>Xác nhận</Button>
+                    </Form.Item>
+                </Form>
+            </Modal>
         </div>
     )
 }

@@ -561,7 +561,6 @@ const InfoAccount = () => {
     infoForm.setFieldsValue({
       name: currentUser.FullName,
       email: currentUser.Email,
-      dob: moment(currentUser.DateOfBirth),
       phone: currentUser.Phone,
     });
   }, [
@@ -579,7 +578,6 @@ const InfoAccount = () => {
       Avatar: currentUser.Avatar,
       FullName: values["name"],
       Email: values["email"],
-      DateOfBirth: moment(values["dob"]).format("YYYY-MM-DD"),
       Phone: values["phone"],
     };
     axios
@@ -691,13 +689,6 @@ const InfoAccount = () => {
                 name="email"
               >
                 <Input type="email" />
-              </Form.Item>
-
-              <Form.Item
-                label={<span style={{ color: "#000000" }}>Ngày Sinh:</span>}
-                name="dob"
-              >
-                <DatePicker />
               </Form.Item>
 
               <Form.Item
