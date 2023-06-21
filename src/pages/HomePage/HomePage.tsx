@@ -216,7 +216,10 @@ const HomePage = () => {
               <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-longines.png" alt="" />
               <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-breitling.png" alt="" />
               <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-cartier.png" alt="" />
-              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-omega.png" alt="" />
+
+              <Link to={`/FilterProductsByOmega`}>
+                <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-omega.png" alt="" />
+              </Link>
               <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-gucci.png" alt="" />
               <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-michael-kors.png" alt="" />
               <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-yoko-london.png" alt="" />
