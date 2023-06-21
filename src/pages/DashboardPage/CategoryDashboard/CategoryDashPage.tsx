@@ -170,7 +170,7 @@ const CategoryDashPage = () => {
                 );
             })
 
-    })
+    },[])
 
     //
 
