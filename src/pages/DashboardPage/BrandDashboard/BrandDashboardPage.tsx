@@ -1,6 +1,6 @@
-import { Line, Pie } from "@ant-design/charts";
-import { Button, Card, Checkbox, Col, Form, FormInstance, Input, InputRef, Modal, Row, Space, Spin, Table, message, DatePicker, Popconfirm, Typography, DatePickerProps } from "antd";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { Line } from "@ant-design/charts";
+import { Button, Card, Col, Form, FormInstance, Input, InputRef, Modal, Row, Space, Spin, Table, message, Typography } from "antd";
+import { useContext, useEffect, useRef, useState } from "react";
 import "./BrandDashboardPage.css";
 import {
   ColumnType,
@@ -9,11 +9,7 @@ import {
 } from "antd/es/table/interface";
 import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { error } from "console";
 import { AppContext } from "../../../App";
-import { useParams } from "react-router-dom";
-import moment, { updateLocale } from "moment";
-import Item from "antd/es/list/Item";
 
 const { Text } = Typography;
 // function call tổng sản phẩm
