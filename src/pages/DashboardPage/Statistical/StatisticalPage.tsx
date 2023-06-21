@@ -204,7 +204,7 @@ const StatisticalPage = () => {
       .catch((error) => {
         console.log(error);
       })
-  })
+  },[])
   const countStockProducts = countStock.length;
   // closed
 
@@ -219,7 +219,7 @@ const StatisticalPage = () => {
       .catch((error) => {
         console.log(error);
       })
-  })
+  },[])
   const countBrandProducts = countBrand.length;
   // closed
 
