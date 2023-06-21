@@ -288,7 +288,7 @@ const CartPage = () => {
     <>
       <div className="small-container cart-page">
         <Table
-          // className="table-cart-responsive"
+          className="table-cart-responsive"
           scroll={{ x: true }}
           pagination={false}
           columns={columns}

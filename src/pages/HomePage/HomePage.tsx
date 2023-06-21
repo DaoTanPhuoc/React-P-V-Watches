@@ -198,11 +198,29 @@ const HomePage = () => {
           </div>
           <div className="main-container">
             <div className="grid-wrapper">
-              {brandImages.map((brandImage) => (
+              {/* {brandImages.map((brandImage) => (
 
                 <img style={{ width: 130, height: 90 }} src={brandImage} alt="" />
 
-              ))}
+              ))} */}
+
+              <Link to={`/FilterProductsByHublot`}>
+                <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-hublot.png" alt="" />
+              </Link>
+              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-patek.png" alt="" />
+              <Link to={`/FilterProductsByRolex`}>
+                <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-rolex.png" alt="" />
+              </Link>
+
+              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-iwc.png" alt="" />
+              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-longines.png" alt="" />
+              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-breitling.png" alt="" />
+              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-cartier.png" alt="" />
+              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-omega.png" alt="" />
+              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-gucci.png" alt="" />
+              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-michael-kors.png" alt="" />
+              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-yoko-london.png" alt="" />
+              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-swarovski.png" alt="" />
             </div>
           </div>
         </div>

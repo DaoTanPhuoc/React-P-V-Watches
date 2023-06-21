@@ -288,7 +288,7 @@ const ShopWoMan = () => {
                     <div className="ban_img">
                         <img
                             style={{ height: 580, objectFit: "cover" }}
-                            src="https://theme.hstatic.net/200000596685/1000963076/14/home-banner-three-image.png?v=145"
+                            src="https://www.vacheron-constantin.com/dam/vac/homepage/Patrimony-Pink-Desktop.jpg.transform.vacbanner.jpg"
                             alt="banner"
                         />
                         <div className="ban_text">
@@ -297,8 +297,8 @@ const ShopWoMan = () => {
                                 <br /> Đồng Hồ Nữ
                             </strong>
                             <p>
-                                VP Watch rất vui vì được phục vụ quý khách ! <br />
-                                Chuyên cung cấp các đồng hồ chính hãng đến tay khách hàng{" "}
+                                VP Watch rất vui vì được phục vụ quý khách  <br />
+                                Chuyên cung cấp các đồng hồ <br /> chính hãng đến tay khách hàng{" "}
                             </p>
                             <a href="#">Mua Ngay!</a>
                         </div>

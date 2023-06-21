@@ -35,6 +35,8 @@ import CaseSizeLessThan29 from "../pages/CaseSizeLessThan29/CaseSizeLessThan29";
 import CaseSize29to37 from "../pages/CaseSize29to37/CaseSize29to37";
 import CaseSize37to42 from "../pages/CaseSize37to42/CaseSize37to42";
 import CaseSizeOver42 from "../pages/CaseSizeOver42/CaseSizeOver42";
+import FilterProductsByRolex from "../pages/HomePage/FilterProductsByBrand/FilterProductsByRolex";
+import FilterProductsByHublot from "../pages/HomePage/FilterProductsByBrand/FilterProductsByHublot";
 
 
 
@@ -132,6 +134,14 @@ export const userRoutes = createBrowserRouter([
       {
         path: "/CaseSizeOver42",
         element: <CaseSizeOver42 />
+      },
+      {
+        path: "/FilterProductsByRolex",
+        element: <FilterProductsByRolex />
+      },
+      {
+        path: "/FilterProductsByHublot",
+        element: <FilterProductsByHublot />
       }
     ],
   },

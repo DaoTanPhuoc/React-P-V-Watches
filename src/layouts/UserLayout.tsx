@@ -96,6 +96,16 @@ const UserLayout = () => {
       return;
     }
 
+    if (value.toLowerCase() === 'rolex') {
+      window.location.href = '/FilterProductsByRolex';
+      return;
+    }
+
+    if (value.toLowerCase() === 'hublot') {
+      window.location.href = '/FilterProductsByHublot';
+      return;
+    }
+
     try {
       const response = await axios.get(`https://localhost:7182/api/Products?q=${value.toLowerCase()}`);
       const data = response.data;

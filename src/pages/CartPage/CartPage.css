@@ -215,3 +215,7 @@
   display: flex;
   justify-content: space-around;
 }
+
+.table-cart-responsive .ant-table-thead th {
+  background-color: #e9e5e5 !important;
+}
