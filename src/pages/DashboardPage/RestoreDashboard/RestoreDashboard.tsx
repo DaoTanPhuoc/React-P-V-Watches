@@ -85,10 +85,13 @@ const RestoreDashboard = () => {
     }, []);
 
     const getData = async () => {
-        await axios.get("https://localhost:7182/api/Products").then((res) => {
+        await axios.get("https://localhost:7182/api/Products/GetTrashedProducts", {
+            headers: {
+                'Authorization': `Bearer ${currentToken}`,
+            },
+        }).then((res) => {
             setloading(false);
-            const deletedProducts = res.data.filter((product: any) => product.IsDelete === true);
-            setstate(deletedProducts);
+            setstate(res.data);
         });
     };
 

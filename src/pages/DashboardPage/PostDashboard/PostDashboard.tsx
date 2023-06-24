@@ -98,7 +98,7 @@ const PostDashboard = () => {
   }, [baseApi])
   const createPost = (values: any) => {
     message.open({ type: 'loading', content: 'Đang tạo bài viết...', key: 'create' })
-    const dataPost = { ...values, content, Thumbnail: values["Thumbnail"].file };
+    const dataPost = { ...values, content, Thumbnail: values["Thumbnail"].File };
     axios.post(`${baseApi}/News`, dataPost, {
       headers: {
         'Authorization': `Bearer ${currentToken}`
