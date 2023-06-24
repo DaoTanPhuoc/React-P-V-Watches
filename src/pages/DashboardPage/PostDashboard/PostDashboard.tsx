@@ -35,7 +35,7 @@ const PostDashboard = () => {
     {
       title: "Hiển thị",
       dataIndex: "IsDeleted",
-      render: (IsDeleted: boolean) => <Checkbox defaultChecked={!IsDeleted} disabled></Checkbox>
+      render: (IsDeleted: boolean) => <Checkbox checked={!IsDeleted}></Checkbox>
     },
     {
       title: "Ngày tạo",
@@ -112,7 +112,7 @@ const PostDashboard = () => {
     axios.post(`${baseApi}/News`, formData, {
       headers: {
         'Authorization': `Bearer ${currentToken}`,
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
       }
     }).then(() => {
       message.open({ type: 'success', content: 'Tạo bài viết thành công!', key: 'create' })
@@ -133,7 +133,7 @@ const PostDashboard = () => {
     formData.append("Id", `${postId}`)
     formData.append("Title", values['Title'])
     formData.append("Description", values['Description'])
-    formData.append("Content", content)
+    formData.append("Content", contentEdit)
     formData.append("Thumbnail", fileList[0])
     formData.append("IsDeleted", `${!checkbox}`)
 
@@ -331,6 +331,7 @@ const PostDashboard = () => {
           <Form.Item
             label="Hiển thị"
             valuePropName="IsDeleted"
+            initialValue={checkbox}
           >
             <Checkbox defaultChecked={checkbox} onChange={() => setCheckBox(!checkbox)} />
           </Form.Item>
