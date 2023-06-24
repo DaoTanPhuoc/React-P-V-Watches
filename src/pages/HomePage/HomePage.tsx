@@ -157,6 +157,19 @@ const HomePage = () => {
     fetchNewstProducts(1);
   }, []);
 
+  {/* call api 3 bài viết mới nhất */ }
+  const [topNews, setTopNews] = useState<any[]>([])
+  useEffect(() => {
+    axios
+      .get(`https://localhost:7182/api/News/GetNewestPost`)
+      .then((res) => {
+        setTopNews(res.data);
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  })
   return (
     <>
       <FloatButton icon={<MessageOutlined />} />
@@ -410,86 +423,40 @@ const HomePage = () => {
               <p></p>
             </div>
             <div className="cards-blog">
-              <div className="card-blog">
-                <div className="image-section">
-                  <img
-                    src="https://bossluxurywatch.vn/uploads/tao/0-0d/thumbs/418x0/rolex-cosmograph-daytona-meteorite-2021-1.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className="article">
-                  <h4>Title one</h4>
-                  <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Molestiae laudantium nihil eius nobis! Deserunt quibusdam
-                    explicabo voluptatem dignissimos, est, nulla placeat
-                    molestias praesentium ex consequatur voluptate nemo fuga
-                    labore? Cum.
-                  </p>
-                </div>
-                <div className="blog-view">
-                  {/* <a href="#" className="btn-blog">
+              {topNews.map((news) => (
+                <div className="card-blog">
+                  <div className="image-section">
+                    <img
+                      style={{
+                        width: 374,
+                        height: 250,
+                        objectFit: "cover"
+                      }}
+                      src={news.Thumbnail}
+                      alt=""
+                    />
+                  </div>
+                  <div className="article">
+                    <h4>Title one</h4>
+                    <p>
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      Molestiae laudantium nihil eius nobis! Deserunt quibusdam
+                      explicabo voluptatem dignissimos, est, nulla placeat
+                      molestias praesentium ex consequatur voluptate nemo fuga
+                      labore? Cum.
+                    </p>
+                  </div>
+                  <div className="blog-view">
+                    {/* <a href="#" className="btn-blog">
                     Xem chi tiet
                   </a> */}
+                  </div>
+                  <div className="posted-date">
+                    <p>Posted 22 July 2023</p>
+                  </div>
                 </div>
-                <div className="posted-date">
-                  <p>Posted 22 July 2023</p>
-                </div>
-              </div>
-              {/* 2 */}
-              <div className="card-blog">
-                <div className="image-section">
-                  <img
-                    src="https://bossluxurywatch.vn/uploads/tao/0-00/thumbs/418x0/2023-rolex-cosmograph-daytona-steel-ceramic-white-dial-126500ln-calibre-4131-hands-on-review-13-2048x1365.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className="article">
-                  <h4>Title two</h4>
-                  <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Molestiae laudantium nihil eius nobis! Deserunt quibusdam
-                    explicabo voluptatem dignissimos, est, nulla placeat
-                    molestias praesentium ex consequatur voluptate nemo fuga
-                    labore? Cum.
-                  </p>
-                </div>
-                <div className="blog-view">
-                  {/* <a href="#" className="btn-blog">
-                    Xem chi tiet
-                  </a> */}
-                </div>
-                <div className="posted-date">
-                  <p>Posted 22 July 2023</p>
-                </div>
-              </div>
-              {/* 3 */}
-              <div className="card-blog">
-                <div className="image-section">
-                  <img
-                    src="https://bossluxurywatch.vn/uploads/anh-muc-tin-tuc/thuy-linh/0-2023/thang-4/b11/thumbs/418x0/rolex-submariner-6538-5d3-1281-1.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className="article">
-                  <h4>Title three</h4>
-                  <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Molestiae laudantium nihil eius nobis! Deserunt quibusdam
-                    explicabo voluptatem dignissimos, est, nulla placeat
-                    molestias praesentium ex consequatur voluptate nemo fuga
-                    labore? Cum.
-                  </p>
-                </div>
-                <div className="blog-view">
-                  {/* <a href="#" className="btn-blog">
-                    Xem chi tiet
-                  </a> */}
-                </div>
-                <div className="posted-date">
-                  <p>Posted 22 July 2023</p>
-                </div>
-              </div>
+              ))}
+
             </div>
           </div>
         </div>
