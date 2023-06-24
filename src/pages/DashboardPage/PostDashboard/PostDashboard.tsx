@@ -57,7 +57,7 @@ const PostDashboard = () => {
   const [loading, setLoading] = useState(false);
   const [isOpened, setIsOpened] = useState<boolean>(false)
   const [openEdit, setOpenEdit] = useState<boolean>(false)
-  const [checkbox, setCheckBox] = useState<boolean>(false);
+  const [checkbox, setCheckBox] = useState<boolean>(true);
   const [fileList, setFileList] = useState<any>([]);
   const [content, setContent] = useState<string>("<h2>Tạo nội dung bài viết</h2>")
   const [contentEdit, setContentEdit] = useState<string>("")
@@ -87,7 +87,11 @@ const PostDashboard = () => {
     setContentEdit(post.Content)
     setOpenEdit(!openEdit)
   }
-  const cancelModelEdit = () => setOpenEdit(false)
+  const cancelModelEdit = () => {
+    setFileList([])
+    setContentEdit("")
+    setOpenEdit(false)
+  }
   const getData = useCallback(() => {
     setLoading(true)
     axios.get(`${baseApi}/News`, {
@@ -98,10 +102,17 @@ const PostDashboard = () => {
   }, [baseApi])
   const createPost = (values: any) => {
     message.open({ type: 'loading', content: 'Đang tạo bài viết...', key: 'create' })
-    const dataPost = { ...values, content, Thumbnail: values["Thumbnail"].File };
-    axios.post(`${baseApi}/News`, dataPost, {
+
+    const formData = new FormData()
+    formData.append("Title", values['Title'])
+    formData.append("Description", values['Description'])
+    formData.append("Content", content)
+    formData.append("Thumbnail", values["Thumbnail"].file)
+
+    axios.post(`${baseApi}/News`, formData, {
       headers: {
-        'Authorization': `Bearer ${currentToken}`
+        'Authorization': `Bearer ${currentToken}`,
+        'Content-Type': 'multipart/form-data'
       }
     }).then(() => {
       message.open({ type: 'success', content: 'Tạo bài viết thành công!', key: 'create' })
@@ -110,15 +121,26 @@ const PostDashboard = () => {
       setContent("<h2>Tạo nội dung bài viết</h2>")
       toggleModal()
     }).catch(err => {
-      message.open({ type: 'error', content: 'Lỗi: ' + err.respose.data, key: 'create' })
+      console.log(err);
+
+      message.open({ type: 'error', content: 'Lỗi: ' + err.response.data, key: 'create' })
     })
   }
   const updatePost = (values: any) => {
     message.open({ type: 'loading', content: 'Đang cập nhật bài viết...', key: 'update' })
-    const dataPost = { ...values, contentEdit, Id: postId, IsDeleted: !values["IsDeleted"], Thumbnail: values["Thumbnail"].file };
-    axios.put(`${baseApi}/News/${postId}`, dataPost, {
+
+    const formData = new FormData()
+    formData.append("Id", `${postId}`)
+    formData.append("Title", values['Title'])
+    formData.append("Description", values['Description'])
+    formData.append("Content", content)
+    formData.append("Thumbnail", fileList[0])
+    formData.append("IsDeleted", `${!checkbox}`)
+
+    axios.put(`${baseApi}/News/${postId}`, formData, {
       headers: {
-        'Authorization': `Bearer ${currentToken}`
+        'Authorization': `Bearer ${currentToken}`,
+        'Content-Type': 'multipart/form-data'
       }
     }).then(() => {
       message.open({ type: 'success', content: 'Cập nhật bài viết thành công!', key: 'update' })
@@ -127,7 +149,7 @@ const PostDashboard = () => {
       setContentEdit("")
       cancelModelEdit()
     }).catch(err => {
-      message.open({ type: 'error', content: 'Lỗi: ' + err.respose.data, key: 'update' })
+      message.open({ type: 'error', content: 'Lỗi: ' + err.response.data, key: 'update' })
     })
   }
   const onPreview = async (file: UploadFile) => {
@@ -310,7 +332,7 @@ const PostDashboard = () => {
             label="Hiển thị"
             valuePropName="IsDeleted"
           >
-            <Checkbox value={checkbox} />
+            <Checkbox defaultChecked={checkbox} onChange={() => setCheckBox(!checkbox)} />
           </Form.Item>
           <Form.Item>
             <Row justify={'end'}>
