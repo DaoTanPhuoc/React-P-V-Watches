@@ -170,7 +170,7 @@ const CategoryDashPage = () => {
                 );
             })
 
-    },[])
+    }, [])
 
     //
 
@@ -338,6 +338,7 @@ const CategoryDashPage = () => {
                 .then((response) => {
                     console.log(response);
                     success();
+                    fetch();
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -364,85 +365,86 @@ const CategoryDashPage = () => {
     // clossed
 
     return (
-        <>{contextHolder}<div style={{ display: 'flex', justifyContent: "space-between", padding: 15 }}>
-            <h4 style={{ color: "#4963AF", fontWeight: 700, fontSize: 23 }}>
-                Thống kê danh mục sản phẩm
-            </h4>
-            <Button onClick={showModal} style={{ color: "#fff", backgroundColor: "#000000" }}>Thêm danh mục</Button>
-            <Modal
-                className="moadal-add-brand"
-                footer={null}
-                title="Thêm danh mục"
-                open={isModalOpen}
-                onOk={handleOk}
-                onCancel={handleCancel}>
-                <Form
-                    onFinish={onFinishAddCategory}
-                    ref={formRef}
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}
+        <>{contextHolder}
+            <div style={{ display: 'flex', justifyContent: "space-between", padding: 15 }}>
+                <h4 style={{ color: "#4963AF", fontWeight: 700, fontSize: 23 }}>
+                    Thống kê danh mục sản phẩm
+                </h4>
+                <Button onClick={showModal} style={{ color: "#fff", backgroundColor: "#000000" }}>Thêm danh mục</Button>
+                <Modal
+                    className="moadal-add-brand"
+                    footer={null}
+                    title="Thêm danh mục"
+                    open={isModalOpen}
+                    onOk={handleOk}
+                    onCancel={handleCancel}>
+                    <Form
+                        onFinish={onFinishAddCategory}
+                        ref={formRef}
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}
 
-                >
-                    <Form.Item label="Tên danh mục" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên danh mục' }]}>
-                        <Input />
-                    </Form.Item>
-
-                    <Form.Item label="Mô tả" name="Description" rules={[{ required: true, message: 'Vui lòng nhập mô tả' }]}>
-                        <Input />
-                    </Form.Item>
-
-                    <Form.Item>
-                        <Button style={{
-                            backgroundColor: "#000000",
-                            color: "#fff",
-                            marginLeft: "68%"
-                        }}
-                            htmlType="submit">Thêm danh mục
-                        </Button>
-                    </Form.Item>
-                </Form>
-            </Modal>
-            {/* modal sửa thương hiệu */}
-            <Modal className="edit-category-dash" footer={null} title="Sửa danh mục" open={isModalOpenBrand} onOk={handleOkBrand} onCancel={handleCancelBrand}>
-                <Form
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}
-                    onFinish={onFinishBrand}
-                    ref={editRef}
-                >
-                    <Form.Item hidden
-                        name="Id"
                     >
-                        <Input hidden name="Id" />
-                    </Form.Item>
+                        <Form.Item label="Tên danh mục" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên danh mục' }]}>
+                            <Input />
+                        </Form.Item>
 
-                    <Form.Item label="Tên thương hiệu" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên thương hiệu' }]}>
-                        <Input />
-                    </Form.Item>
+                        <Form.Item label="Mô tả" name="Description" rules={[{ required: true, message: 'Vui lòng nhập mô tả' }]}>
+                            <Input />
+                        </Form.Item>
 
-
-
-                    <Form.Item
-                        label={<span style={{ color: "#000000" }}>Mô tả</span>}
-                        rules={[{ required: true, message: 'Vui lòng nhập mô tả' }]}
-                        name="Description"
+                        <Form.Item>
+                            <Button style={{
+                                backgroundColor: "#000000",
+                                color: "#fff",
+                                marginLeft: "68%"
+                            }}
+                                htmlType="submit">Thêm danh mục
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </Modal>
+                {/* modal sửa thương hiệu */}
+                <Modal className="edit-category-dash" footer={null} title="Sửa danh mục" open={isModalOpenBrand} onOk={handleOkBrand} onCancel={handleCancelBrand}>
+                    <Form
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}
+                        onFinish={onFinishBrand}
+                        ref={editRef}
                     >
-                        <Input name="Description" />
-                    </Form.Item>
+                        <Form.Item hidden
+                            name="Id"
+                        >
+                            <Input hidden name="Id" />
+                        </Form.Item>
 
-                    <Form.Item>
-                        <Button style={{
-                            backgroundColor: "#000000",
-                            color: "#fff",
-                            marginLeft: "68%"
-                        }}
-                            htmlType="submit">Cập Nhật
-                        </Button>
-                    </Form.Item>
-                </Form>
-            </Modal>
-            {/* đóng modal sửa thương hiệu */}
-        </div>
+                        <Form.Item label="Tên thương hiệu" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên thương hiệu' }]}>
+                            <Input />
+                        </Form.Item>
+
+
+
+                        <Form.Item
+                            label={<span style={{ color: "#000000" }}>Mô tả</span>}
+                            rules={[{ required: true, message: 'Vui lòng nhập mô tả' }]}
+                            name="Description"
+                        >
+                            <Input name="Description" />
+                        </Form.Item>
+
+                        <Form.Item>
+                            <Button style={{
+                                backgroundColor: "#000000",
+                                color: "#fff",
+                                marginLeft: "68%"
+                            }}
+                                htmlType="submit">Cập Nhật
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </Modal>
+                {/* đóng modal sửa thương hiệu */}
+            </div>
             <div style={{ paddingTop: 100 }}>
                 <Table
                     columns={columns}

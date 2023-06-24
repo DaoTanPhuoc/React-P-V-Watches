@@ -539,6 +539,7 @@ const BrandDashboardPage = () => {
         .then((response) => {
           console.log(response);
           success();
+          fetch();
         })
         .catch(error => {
           console.error('Error:', error);

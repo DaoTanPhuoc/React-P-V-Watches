@@ -38,6 +38,8 @@ import CaseSizeOver42 from "../pages/CaseSizeOver42/CaseSizeOver42";
 import FilterProductsByRolex from "../pages/HomePage/FilterProductsByBrand/FilterProductsByRolex";
 import FilterProductsByHublot from "../pages/HomePage/FilterProductsByBrand/FilterProductsByHublot";
 import FilterProductsByOmega from "../pages/HomePage/FilterProductsByBrand/FilterProductsByOmega";
+import RestoreDashboard from "../pages/DashboardPage/RestoreDashboard/RestoreDashboard";
+import FilterProductsByFranckMuller from "../pages/HomePage/FilterProductsByBrand/FilterProductsByFranckMuller";
 
 
 
@@ -147,6 +149,10 @@ export const userRoutes = createBrowserRouter([
       {
         path: "/FilterProductsByOmega",
         element: <FilterProductsByOmega />
+      },
+      {
+        path: "/FilterProductsByFranckMuller",
+        element: <FilterProductsByFranckMuller />
       }
     ],
   },
@@ -197,6 +203,10 @@ export const userRoutes = createBrowserRouter([
       {
         path: "categoryDash",
         element: <CategoryDashPage />
+      },
+      {
+        path: "RestoreDashboard",
+        element: <RestoreDashboard />
       }
     ],
   },

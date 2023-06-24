@@ -1,0 +1,27 @@
+.container-brand-cate {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+.restore-brand-cate {
+  width: 48%;
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 767px) {
+  .container-recovery-responsive {
+    width: 100% !important;
+  }
+  .container-brand-cate {
+    display: flex;
+    flex-direction: column;
+  }
+  .responsive-brandAndCate {
+    width: 100% !important;
+  }
+  .restore-brand-cate {
+    width: 100% !important;
+  }
+}

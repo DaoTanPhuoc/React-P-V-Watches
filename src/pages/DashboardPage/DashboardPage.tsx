@@ -11,6 +11,11 @@ import {
   WalletOutlined,
   BookOutlined,
   DollarOutlined,
+  UnorderedListOutlined,
+  RestOutlined,
+  ProfileOutlined,
+  ReconciliationOutlined,
+  ContainerOutlined
 } from "@ant-design/icons";
 import {
   Avatar,
@@ -218,12 +223,13 @@ const Dashboard: React.FC = () => {
       getItem(
         <Link to="/admin/dasProducts">Danh Sách</Link>,
         "2",
-        <BookOutlined />
+        <UnorderedListOutlined />
       ),
       getItem(
         <Link to="/admin/statistical">Tồn Kho</Link>,
         "3",
-        <WalletOutlined />
+        <ProfileOutlined />
+        // <WalletOutlined />
       ),
       getItem(
         <Link to="/admin/brandDash">Loại Sản Phẩm</Link>,
@@ -233,33 +239,40 @@ const Dashboard: React.FC = () => {
       getItem(
         <Link to="/admin/categoryDash">Danh mục</Link>,
         "5",
-        <WalletOutlined />
+        <UnorderedListOutlined />
+      ),
+      getItem(
+        <Link to="/admin/RestoreDashboard">Khôi Phục</Link>,
+        "6",
+        <RestOutlined />
+        // <WalletOutlined />
       ),
     ]),
     getItem("Hóa đơn", "sub2", <FormOutlined />, [
       getItem(
         <Link to="/admin/dasBilling">Danh Sách</Link>,
-        "6",
-        <BookOutlined />
+        "7",
+        <ContainerOutlined />
       ),
       getItem(
         <Link to="/admin/importProducts">Nhập Hàng</Link>,
-        "7",
-        <BookOutlined />
+        "8",
+        <ReconciliationOutlined />
+        // <BookOutlined />
       ),
       getItem(
         <Link to="/admin/invoiceWait">Đơn Hàng</Link>,
-        "8",
+        "9",
         <AuditOutlined />
       )
     ]),
     getItem(
       <Link to="/admin/dasPost">Bài Viết</Link>,
-      "9",
+      "10",
       <DashboardOutlined />
     ),
-    getItem(<Link to="/admin/ros">Doanh Thu</Link>, "10", <DollarOutlined />),
-    getItem(<Link to="/admin/settingAccount">Tài Khoản</Link>, "11", <SettingFilled />),
+    getItem(<Link to="/admin/ros">Doanh Thu</Link>, "11", <DollarOutlined />),
+    getItem(<Link to="/admin/settingAccount">Tài Khoản</Link>, "12", <SettingFilled />),
   ];
 
   const [collapsed, setCollapsed] = useState(false);

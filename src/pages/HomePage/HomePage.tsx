@@ -211,8 +211,10 @@ const HomePage = () => {
               <Link to={`/FilterProductsByRolex`}>
                 <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-rolex.png" alt="" />
               </Link>
+              <Link to={`/FilterProductsByFranckMuller`}>
+                <img style={{ width: 130, height: 90 }} src="https://luxshopping.vn/Uploads/Images/franck-muller-logo-new-23.png" alt="" />
+              </Link>
 
-              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-iwc.png" alt="" />
               <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-longines.png" alt="" />
               <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-breitling.png" alt="" />
               <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-cartier.png" alt="" />

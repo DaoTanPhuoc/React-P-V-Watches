@@ -6,7 +6,7 @@ import {
     Select,
 } from "antd";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import "./FilterProductsByOmega.css";
+import "./FilterProductsByFranckMuller.css";
 import { Image } from "antd";
 import {
     ShoppingCartOutlined,
@@ -88,7 +88,7 @@ const onChangeCheckBox = (checkedValues: CheckboxValueType[]) => {
 const pageSize = 8;
 const Context = React.createContext({ name: "Default" });
 
-const FilterProductsByOmega = () => {
+const FilterProductsByFranckMuller = () => {
 
     const navigate = useNavigate();
 
@@ -124,7 +124,7 @@ const FilterProductsByOmega = () => {
         axios
             .get(`https://localhost:7182/api/Products`)
             .then((result) => {
-                const filteredProducts = result.data.filter((product: { BrandName: string; }) => product.BrandName === "Omega");
+                const filteredProducts = result.data.filter((product: { BrandName: string; }) => product.BrandName === "Franck Muller");
                 setProducts(filteredProducts);
                 const count = filteredProducts.length;
                 filterData(currentPage, filteredProducts);
@@ -293,7 +293,7 @@ const FilterProductsByOmega = () => {
                     <div className="ban_img">
                         <img
                             style={{ height: 580, objectFit: "cover" }}
-                            src="https://images4.alphacoders.com/266/thumb-1920-266738.jpg"
+                            src="https://images.lifestyleasia.com/wp-content/uploads/sites/5/2022/08/03172728/Franck-Muller-2022-Vanguard-7-Days-Power-Reserve-Skeleton-Colour-Dreams-Wide-1350x900.jpg"
                             alt="banner"
                         />
                         <div className="ban_text">
@@ -554,4 +554,4 @@ const FilterProductsByOmega = () => {
     );
 }
 
-export default FilterProductsByOmega
+export default FilterProductsByFranckMuller

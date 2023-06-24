@@ -3,6 +3,7 @@ import "./NewsPage.css";
 import { Button, Card, Pagination, PaginationProps } from "antd";
 import axios from "axios";
 import { AppContext } from "../../App";
+import { Link } from "react-router-dom";
 const gridStyle: React.CSSProperties = {
   width: "25%",
   textAlign: "center",
@@ -47,7 +48,7 @@ const News = () => {
       <div className="blog-section">
         <div className="section-content">
           <div className="title">
-            <h2>Blog & News</h2>
+            <h2>Tin Tức</h2>
             <hr
               style={{
                 display: "block",
@@ -115,11 +116,11 @@ const News = () => {
                   praesentium ex consequatur voluptate nemo fuga labore? Cum.
                 </p>
               </div>
-              <div className="blog-view">
+              {/* <div className="blog-view">
                 <a href="/detailNews" className="btn-blog">
                   Xem chi tiet
                 </a>
-              </div>
+              </div> */}
               <div className="posted-date">
                 <p>Posted 22 July 2023</p>
               </div>
@@ -146,11 +147,11 @@ const News = () => {
                   praesentium ex consequatur voluptate nemo fuga labore? Cum.
                 </p>
               </div>
-              <div className="blog-view">
+              {/* <div className="blog-view">
                 <a href="#" className="btn-blog">
                   Xem chi tiet
                 </a>
-              </div>
+              </div> */}
               <div className="posted-date">
                 <p>Posted 22 July 2023</p>
               </div>
@@ -177,11 +178,11 @@ const News = () => {
                   praesentium ex consequatur voluptate nemo fuga labore? Cum.
                 </p>
               </div>
-              <div className="blog-view">
+              {/* <div className="blog-view">
                 <a href="#" className="btn-blog">
                   Xem chi tiet
                 </a>
-              </div>
+              </div> */}
               <div className="posted-date">
                 <p>Posted 22 July 2023</p>
               </div>
@@ -190,21 +191,23 @@ const News = () => {
         </div>
       </div>
       <div className="card-news-container">
-        <Card title="Tin tức ">
+        <Card >
           {posts && posts.map(p => (
             <Card.Grid style={gridStyle}>
               <div className="Card">
-                <img
-                  style={{
-                    height: 250,
-                    width: "100%",
-                    objectFit: "cover",
-                  }}
-                  src={p.Thumbnail}
-                  alt=""
-                />
-                <h4>{p.Title}</h4>
-                <p>
+                <Link to={`/detailNews/${p.Id}`}>
+                  <img
+                    style={{
+                      height: 250,
+                      width: "100%",
+                      objectFit: "cover",
+                    }}
+                    src={p.Thumbnail}
+                    alt=""
+                  />
+                </Link>
+                <h4 className="title-news">{p.Title}</h4>
+                <p className="description-news">
                   {p.Description}
                 </p>
               </div>
