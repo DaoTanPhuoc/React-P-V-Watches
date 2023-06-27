@@ -82,6 +82,7 @@ const ProductsDashboard = () => {
   const [fileListPreview, setFileListPreview] = useState<any[]>([]);
   const [brands, setBrands] = useState<any[]>([])
   const [categories, setCategories] = useState<any[]>([])
+  const [previewImages, setPreviewImages] = useState<string[]>([])
   const onPreview = async (file: UploadFile) => {
     let src = file.url as string;
     if (!src) {
@@ -171,6 +172,7 @@ const ProductsDashboard = () => {
       url: product.Image
     }])
     const previews: string[] = JSON.parse(product.PreviewImages)
+    setPreviewImages(previews)
     setFileListPreview(previews.map((i, index) => {
       return {
         uid: index,
@@ -219,6 +221,9 @@ const ProductsDashboard = () => {
     formData.append('ImageFile', fileList[0])
     fileListPreview.forEach(file => {
       formData.append('PreviewImageFiles', file)
+    })
+    previewImages.forEach(image=>{
+      formData.append('PreviewImages', image)
     })
     axios.put(`${baseApi}/Products/${currentId}`, formData, {
       headers: {
