@@ -206,6 +206,19 @@ hr {
   object-fit: cover;
   /* background: #fff; */
 }
+/* zoom hinh anh san pham moi nhat */
+.galleryItem {
+  overflow: hidden; /* Ẩn phần bị tràn ra ngoài */
+}
+
+.galleryItem img {
+  transition: transform 0.5s ease; /* Thời gian chuyển đổi hiệu ứng */
+}
+
+.galleryItem:hover img {
+  transform: scale(1.2); /* Thay đổi tỷ lệ kích thước */
+}
+
 .galleryContainer {
   display: grid;
   justify-content: center;
@@ -228,6 +241,27 @@ hr {
     object-fit: cover;
     margin-left: auto;
     margin-right: auto;
+  }
+  .our-featured h2 {
+    width: 100% !important;
+  }
+  .galleryWrapper h2 {
+    width: 100% !important;
+  }
+  .blog-section h2 {
+    width: 100% !important;
+  }
+  .comments h2 {
+    width: 100% !important;
+  }
+  .brand-container-grid h2 {
+    width: 100% !important;
+  }
+  .banner-row-container-banner-black-home-res {
+    flex-wrap: wrap;
+  }
+  .banner-row-container {
+    height: 20% !important;
   }
 }
 
@@ -452,16 +486,22 @@ hr {
 }
 
 .blog-section .section-content .cards-blog .card-blog .article {
-  padding: 15px 20px;
+  padding: 8px 20px;
 }
 .blog-section .section-content .cards-blog .card-blog .article h4 {
-  font-size: 29px;
-  color: #4a4a4a;
+  font-size: 20px;
+  color: #dbaf56;
+  padding-top: 20px;
 }
 .blog-section .section-content .cards-blog .card-blog .article p {
   font-size: 17px;
   margin: 10px 0px;
   color: #6a6a6a;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* số dòng tối đa */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .blog-section .section-content .cards-blog .card-blog a {
   text-decoration: none;
@@ -494,6 +534,13 @@ hr {
 @media screen and (max-width: 768px) {
   .blog-section .section-content .cards-blog {
     grid-template-columns: 1fr;
+  }
+  .blog-section .section-content .cards-blog .card-blog img {
+    width: 100% !important;
+    height: auto;
+  }
+  .blog-section .section-content .cards-blog .card-blog .article h4 {
+    padding-top: 8px !important;
   }
 }
 
@@ -795,3 +842,4 @@ figure.snip1204 .author span {
     grid-gap: 0.5rem;
   }
 } */
+/* responsive black banner shopp */

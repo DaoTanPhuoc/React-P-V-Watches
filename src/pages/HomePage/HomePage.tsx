@@ -11,6 +11,7 @@ import { MessageOutlined } from "@ant-design/icons";
 import { AppContext } from "../../App";
 import { Link, useNavigate } from "react-router-dom";
 import { responsiveArray } from "antd/es/_util/responsiveObserver";
+import moment, { updateLocale } from "moment";
 
 const moneyFormatter = new Intl.NumberFormat("vi", {
   style: "currency",
@@ -155,11 +156,13 @@ const HomePage = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     fetchNewstProducts(1);
+    NewsTop();
   }, []);
 
   {/* call api 3 bài viết mới nhất */ }
   const [topNews, setTopNews] = useState<any[]>([])
-  useEffect(() => {
+
+  const NewsTop = async () => {
     axios
       .get(`https://localhost:7182/api/News/GetNewestPost`)
       .then((res) => {
@@ -169,7 +172,7 @@ const HomePage = () => {
       .catch((error) => {
         console.log(error);
       })
-  })
+  };
   return (
     <>
       <FloatButton icon={<MessageOutlined />} />
@@ -230,7 +233,9 @@ const HomePage = () => {
 
               <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-longines.png" alt="" />
               <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-breitling.png" alt="" />
-              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-cartier.png" alt="" />
+              <Link to={`/FilterProductsByCartier`}>
+                <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-cartier.png" alt="" />
+              </Link>
 
               <Link to={`/FilterProductsByOmega`}>
                 <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-omega.png" alt="" />
@@ -259,7 +264,7 @@ const HomePage = () => {
             style={{ width: "90%", margin: "auto", marginTop: 50, padding: 36 }}
           >
             <div style={{ marginBottom: 50 }}>
-              <h2 style={{ textTransform: "uppercase" }}>Sản Phẩm nổi bật</h2>
+              <h2 style={{ textTransform: "uppercase", textAlign: "center" }}>Sản Phẩm nổi bật</h2>
               <hr />
             </div>
 
@@ -390,7 +395,7 @@ const HomePage = () => {
                   {/* <button className="btn-item">Buy Now</button> */}
                   <div
                     style={{
-                      padding: 20,
+                      padding: 33,
                       textAlign: "center",
                     }}
                   >
@@ -409,7 +414,7 @@ const HomePage = () => {
           <div className="section-content">
             <div className="title">
               <h2 style={{ textAlign: "center", textTransform: "uppercase" }}>
-                Tin tức
+                Tin tức nổi bật
               </h2>
               <hr
                 style={{
@@ -424,37 +429,38 @@ const HomePage = () => {
             </div>
             <div className="cards-blog">
               {topNews.map((news) => (
-                <div className="card-blog">
-                  <div className="image-section">
-                    <img
-                      style={{
-                        width: 374,
-                        height: 250,
-                        objectFit: "cover"
-                      }}
-                      src={news.Thumbnail}
-                      alt=""
-                    />
-                  </div>
-                  <div className="article">
-                    <h4>Title one</h4>
-                    <p>
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      Molestiae laudantium nihil eius nobis! Deserunt quibusdam
-                      explicabo voluptatem dignissimos, est, nulla placeat
-                      molestias praesentium ex consequatur voluptate nemo fuga
-                      labore? Cum.
-                    </p>
-                  </div>
-                  <div className="blog-view">
-                    {/* <a href="#" className="btn-blog">
+                <Link to={`/detailNews/${news.Id}`}>
+                  <div style={{ height: 500 }} className="card-blog">
+                    <div className="image-section">
+                      <img
+                        style={{
+                          width: 374,
+                          height: 250,
+                          objectFit: "cover"
+                        }}
+                        src={news.Thumbnail}
+                        alt=""
+                      />
+                    </div>
+                    <div className="article">
+                      <h4>{news.Title}</h4>
+                      <p>
+                        {news.Description}
+                      </p>
+                    </div>
+                    <div className="blog-view">
+                      {/* <a href="#" className="btn-blog">
                     Xem chi tiet
                   </a> */}
+                    </div>
+                    <div className="posted-date">
+                      <p style={{ textDecoration: "none", color: "#555555" }}>
+                        Posted {moment(news.CreatedAt).format("DD MMMM YYYY")}
+                      </p>
+                    </div>
                   </div>
-                  <div className="posted-date">
-                    <p>Posted 22 July 2023</p>
-                  </div>
-                </div>
+                </Link>
+
               ))}
 
             </div>
@@ -472,6 +478,7 @@ const HomePage = () => {
           className="banner-row-container"
         >
           <div
+            className="banner-row-container-banner-black-home-res"
             style={{
               display: "flex",
               justifyContent: "center",

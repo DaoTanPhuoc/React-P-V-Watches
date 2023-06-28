@@ -4,24 +4,26 @@ import { Button, Card, Pagination, PaginationProps } from "antd";
 import axios from "axios";
 import { AppContext } from "../../App";
 import { Link } from "react-router-dom";
+import moment, { updateLocale } from "moment";
 const gridStyle: React.CSSProperties = {
   width: "25%",
   textAlign: "center",
 };
 // chuyen trang
 
-
+const pageSize = 8;
 const News = () => {
   const { baseApi } = useContext(AppContext)
   const [posts, setPosts] = useState<any[]>([])
   const [newPosts, setNewPosts] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
-  const [currentPage, setCurrentPage] = useState<number>(1);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const fetchData = useCallback(() => {
     setLoading(true)
     axios.get(`${baseApi}/News/GetPosts`).then(res => {
       setPosts(res.data)
+      filterData(currentPage, res.data);
     }).catch(error => console.log(error))
       .finally(() => {
         setLoading(false)
@@ -36,13 +38,50 @@ const News = () => {
         setLoading(false)
       })
   }, [baseApi])
-  const onChangePage = (current: number, pageSize: number) => {
-    return posts.slice((current - 1) * pageSize, current * pageSize);
-  }
+  // const onChangePage = (current: number, pageSize: number) => {
+  //   return posts.slice((current - 1) * pageSize, current * pageSize);
+  // }
   useEffect(() => {
     fetchData()
     fetchNewstPost()
+    NewsTop()
   }, [fetchData, fetchNewstPost])
+
+  // call api top ba bài viết mới nhất
+  const [topNews, setTopNews] = useState<any[]>([])
+
+  const NewsTop = async () => {
+    axios
+      .get(`https://localhost:7182/api/News/GetNewestPost`)
+      .then((res) => {
+        setTopNews(res.data);
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  };
+
+  const filterData = (page: number, data: any[]) => {
+    let count = 1;
+    const productsTmp: any[] = [];
+    for (let i = (page - 1) * pageSize; i < data.length; i++) {
+      if (count > pageSize || i === data.length) {
+        break;
+      }
+      count++;
+      productsTmp.push(data[i]);
+    }
+    setFilteredProducts(productsTmp);
+  };
+  // onchange
+  const onChangePage = (page: number) => {
+    window.scrollTo({ top: 730, behavior: 'smooth' })
+    setCurrentPage(page);
+    filterData(page, posts);
+  };
+
+
   return (
     <>
       <div className="blog-section">
@@ -58,141 +97,52 @@ const News = () => {
                 backgroundColor: "#169010",
               }}
             />
-            <p>
+            {/* <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
               voluptates in nobis quia recusandae quibusdam quae incidunt
-            </p>
+            </p> */}
           </div>
           <div className="cards-blog">
-            {/* <>
-              {newPosts && newPosts.map(p => (
-                <div className="card-blog">
+            {topNews.map((news) => (
+              <Link to={`/detailNews/${news.Id}`}>
+                <div style={{ height: 500 }} className="card-blog">
                   <div className="image-section">
                     <img
                       style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: "cover",
+                        width: 374,
+                        height: 250,
+                        objectFit: "cover"
                       }}
-                      src={p.Thumbnail}
+                      src={news.Thumbnail}
                       alt=""
                     />
                   </div>
                   <div className="article">
-                    <h4>{p.Title}</h4>
+                    <h4>{news.Title}</h4>
                     <p>
-                      {p.Description}
+                      {news.Description}
                     </p>
                   </div>
                   <div className="blog-view">
-                    <Link to={`/detailNews/${p.Id}`} className="btn-blog">
-                      Xem chi tiết
-                    </Link>
+                    {/* <a href="#" className="btn-blog">
+                Xem chi tiet
+              </a> */}
                   </div>
                   <div className="posted-date">
-                    <p>{moment(p.CreateAt).fromNow()}</p>
+                    <p style={{ textDecoration: "none", color: "#555555" }}>
+                      Posted {moment(news.CreatedAt).format("DD MMMM YYYY")}
+                    </p>
                   </div>
                 </div>
-              ))}
-            </> */}
-            <div className="card-blog">
-              <div className="image-section">
-                <img
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: "cover",
-                  }}
-                  src="https://bossluxurywatch.vn/uploads/anh-muc-tin-tuc/thuy-linh/0-2023/thang-4/b11/thumbs/418x0/rolex-submariner-6538-5d3-1281-1.jpg"
-                  alt=""
-                />
-              </div>
-              <div className="article">
-                <h4>Title one</h4>
-                <p>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                  Molestiae laudantium nihil eius nobis! Deserunt quibusdam
-                  explicabo voluptatem dignissimos, est, nulla placeat molestias
-                  praesentium ex consequatur voluptate nemo fuga labore? Cum.
-                </p>
-              </div>
-              {/* <div className="blog-view">
-                <a href="/detailNews" className="btn-blog">
-                  Xem chi tiet
-                </a>
-              </div> */}
-              <div className="posted-date">
-                <p>Posted 22 July 2023</p>
-              </div>
-            </div>
-            {/* 2 */}
-            <div className="card-blog">
-              <div className="image-section">
-                <img
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: "cover",
-                  }}
-                  src="https://bossluxurywatch.vn/uploads/tao/0-00/thumbs/418x0/2023-rolex-cosmograph-daytona-steel-ceramic-white-dial-126500ln-calibre-4131-hands-on-review-13-2048x1365.jpg"
-                  alt=""
-                />
-              </div>
-              <div className="article">
-                <h4>Title two</h4>
-                <p>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                  Molestiae laudantium nihil eius nobis! Deserunt quibusdam
-                  explicabo voluptatem dignissimos, est, nulla placeat molestias
-                  praesentium ex consequatur voluptate nemo fuga labore? Cum.
-                </p>
-              </div>
-              {/* <div className="blog-view">
-                <a href="#" className="btn-blog">
-                  Xem chi tiet
-                </a>
-              </div> */}
-              <div className="posted-date">
-                <p>Posted 22 July 2023</p>
-              </div>
-            </div>
-            {/* 3 */}
-            <div className="card-blog">
-              <div className="image-section">
-                <img
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: "cover",
-                  }}
-                  src="https://bossluxurywatch.vn/uploads/tao/thumbs/418x0/screenshot-3.jpg"
-                  alt=""
-                />
-              </div>
-              <div className="article">
-                <h4>Title three</h4>
-                <p>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                  Molestiae laudantium nihil eius nobis! Deserunt quibusdam
-                  explicabo voluptatem dignissimos, est, nulla placeat molestias
-                  praesentium ex consequatur voluptate nemo fuga labore? Cum.
-                </p>
-              </div>
-              {/* <div className="blog-view">
-                <a href="#" className="btn-blog">
-                  Xem chi tiet
-                </a>
-              </div> */}
-              <div className="posted-date">
-                <p>Posted 22 July 2023</p>
-              </div>
-            </div>
+              </Link>
+            ))}
+
           </div>
         </div>
       </div>
       <div className="card-news-container">
         <Card >
-          {posts && posts.map(p => (
+          {filteredProducts.map(p => (
             <Card.Grid style={gridStyle}>
               <div className="Card">
                 <Link to={`/detailNews/${p.Id}`}>
@@ -218,9 +168,9 @@ const News = () => {
       <Pagination
         style={{ textAlign: "center", padding: 35 }}
         current={currentPage}
-        pageSize={8}
+        pageSize={pageSize}
         total={posts.length}
-        onChange={(current, pagesize) => onChangePage(current, pagesize)}
+        onChange={(page) => onChangePage(page)}
       />
       ;
     </>

@@ -767,7 +767,7 @@ const ProductDetail = () => {
                   <h4 style={{ color: "#888888" }}>
                     MSP {similarProduct.Code}
                   </h4>
-                  <h4 style={{ fontWeight: 600, whiteSpace: "nowrap" }}>
+                  <h4 style={{ fontWeight: 600 }}>
                     {similarProduct.Name}
                   </h4>
 

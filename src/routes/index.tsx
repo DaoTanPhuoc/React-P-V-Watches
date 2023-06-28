@@ -40,6 +40,8 @@ import FilterProductsByHublot from "../pages/HomePage/FilterProductsByBrand/Filt
 import FilterProductsByOmega from "../pages/HomePage/FilterProductsByBrand/FilterProductsByOmega";
 import RestoreDashboard from "../pages/DashboardPage/RestoreDashboard/RestoreDashboard";
 import FilterProductsByFranckMuller from "../pages/HomePage/FilterProductsByBrand/FilterProductsByFranckMuller";
+import SuppilersDashboard from "../pages/DashboardPage/SuppilersDashboard/SuppilersDashboard";
+import FilterProductsByCartier from "../pages/HomePage/FilterProductsByBrand/FilterProductsByCartier";
 
 
 
@@ -153,6 +155,10 @@ export const userRoutes = createBrowserRouter([
       {
         path: "/FilterProductsByFranckMuller",
         element: <FilterProductsByFranckMuller />
+      },
+      {
+        path: "/FilterProductsByCartier",
+        element: <FilterProductsByCartier />
       }
     ],
   },
@@ -207,6 +213,10 @@ export const userRoutes = createBrowserRouter([
       {
         path: "RestoreDashboard",
         element: <RestoreDashboard />
+      },
+      {
+        path: "SuppilersDashboard",
+        element: <SuppilersDashboard />
       }
     ],
   },

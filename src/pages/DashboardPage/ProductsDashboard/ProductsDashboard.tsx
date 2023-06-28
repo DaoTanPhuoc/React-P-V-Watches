@@ -418,8 +418,16 @@ const ProductsDashboard = () => {
                       label: 28,
                     },
                     {
+                      value: 29,
+                      label: 29,
+                    },
+                    {
                       value: 32,
                       label: 32,
+                    },
+                    {
+                      value: 33,
+                      label: 33,
                     },
                     {
                       value: 36,
@@ -428,6 +436,10 @@ const ProductsDashboard = () => {
                     {
                       value: 40,
                       label: 40,
+                    },
+                    {
+                      value: 42,
+                      label: 42,
                     },
                     {
                       value: 44,

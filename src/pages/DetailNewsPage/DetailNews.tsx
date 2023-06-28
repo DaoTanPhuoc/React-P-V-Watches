@@ -4,9 +4,15 @@ import { useParams } from "react-router-dom";
 import { AppContext } from "../../App";
 import "./DetailNews.css";
 const DetailNews = () => {
+  interface Post {
+    Title: string;
+    Content: string;
+    Thumbnail: string;
+  }
   const { Id } = useParams();
   const { baseApi } = useContext(AppContext);
-  const [post, setPost] = useState();
+  // const [post, setPost] = useState();
+  const [post, setPost] = useState<Post>({ Title: '', Content: '', Thumbnail: '' });
   const [loading, setLoading] = useState(true);
   const fetchData = useCallback(() => {
     setLoading(true)
@@ -22,7 +28,18 @@ const DetailNews = () => {
   }, [fetchData])
   return (
     <>
-      <div className="container-detail-news">
+      <div className="news-container">
+        <div style={{ padding: 20 }} className="news-item">
+          <div className="news-image">
+            <img style={{ width: "62%", height: "20%", marginLeft: "20%", objectFit: "contain" }} src={post.Thumbnail} alt="Rolex Submariner Date 126613LB" />
+          </div>
+          <div className="news-content">
+            <h2 style={{ fontSize: 30, color: "#dbaf56", textAlign: "center", paddingTop: 20, paddingBottom: 20 }} className="news-title">{post.Title}</h2>
+            <div className="image-detail-post-content" style={{ paddingLeft: "10%", paddingRight: "10%" }} dangerouslySetInnerHTML={{ __html: post.Content }} />
+          </div>
+        </div>
+      </div>
+      {/* <div className="container-detail-news">
         <header>
           <h1 className="heading-1">the light star</h1>
           <div className="sub-heading">
@@ -135,7 +152,8 @@ const DetailNews = () => {
             architecto sit praesentium sapiente pariatur quas error fugiat?
           </p>
         </div>
-      </div>
+      </div> */}
+
     </>
   );
 };

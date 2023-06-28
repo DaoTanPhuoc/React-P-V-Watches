@@ -283,6 +283,11 @@ img {
     margin-left: -80px !important;
     font-size: 3.5vw;
   }
+  .Similar-Product-container h2 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100% !important;
+  }
 }
 
 .container-ban {

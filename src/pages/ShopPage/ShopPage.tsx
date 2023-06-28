@@ -132,6 +132,7 @@ const ShopPage = () => {
   const onChangePage = (page: number) => {
     setCurrentPage(page);
     filterData(page, products);
+    window.scrollTo({ top: 730, behavior: 'smooth' })
   };
 
   const filterData = (page: number, data: ProductModel[]) => {
@@ -354,6 +355,10 @@ const ShopPage = () => {
                   value: "Channel",
                   label: "Channel",
                 },
+                {
+                  value: "Omega",
+                  label: "Omega",
+                }
               ]}
             />
           </div>

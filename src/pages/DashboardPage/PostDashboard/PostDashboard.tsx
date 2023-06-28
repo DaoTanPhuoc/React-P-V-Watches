@@ -20,7 +20,7 @@ const PostDashboard = () => {
       dataIndex: "Title",
     },
     {
-      title: "Description",
+      title: "Mô tả",
       dataIndex: "Description",
     },
     {
@@ -128,13 +128,13 @@ const PostDashboard = () => {
   }
   const updatePost = (values: any) => {
     message.open({ type: 'loading', content: 'Đang cập nhật bài viết...', key: 'update' })
-
+    console.log(values);
     const formData = new FormData()
     formData.append("Id", `${postId}`)
     formData.append("Title", values['Title'])
     formData.append("Description", values['Description'])
     formData.append("Content", contentEdit)
-    formData.append("Thumbnail", fileList[0])
+    formData.append("Thumbnail", values['Thumbnail'].file)
     formData.append("IsDeleted", `${!checkbox}`)
 
     axios.put(`${baseApi}/News/${postId}`, formData, {
@@ -216,7 +216,7 @@ const PostDashboard = () => {
                   <Input />
                 </Form.Item>
                 <Form.Item
-                  label="Description"
+                  label="Mô tả"
                   name="Description"
                   rules={[{ required: true, message: "Vui lòng nhập Description" }]}
                 >
@@ -271,6 +271,8 @@ const PostDashboard = () => {
               loading={loading}
               columns={columns}
               dataSource={data}
+              pagination={{ pageSize: 5, position: ['bottomCenter'] }}
+              scroll={{ x: '100%' }}
             />
           </div>
         </div>

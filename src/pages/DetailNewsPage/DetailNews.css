@@ -143,3 +143,29 @@ blockquote::before {
     grid-template-columns: 1fr;
   }
 }
+
+.image-detail-post-content img {
+  width: 640px;
+  height: 427px;
+  margin: 0 auto;
+  padding: 20px 20px;
+  object-fit: cover;
+}
+
+.image-detail-post-content p {
+  width: 600px;
+  margin: 0 auto;
+}
+
+.image-detail-post-content h4 {
+  width: 600px;
+  margin: 0 auto;
+  padding-top: 10px;
+}
+
+.image-detail-post-content h3,
+h2 {
+  width: 600px;
+  margin: 0 auto;
+  padding-top: 10px;
+}

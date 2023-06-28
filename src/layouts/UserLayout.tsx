@@ -464,10 +464,10 @@ const UserLayout = () => {
                     <a href="/">Trang chủ</a>
                   </li>
                   <li>
-                    <a href="#">Sản phẩm</a>
+                    <a href="/shop">Sản phẩm</a>
                   </li>
                   <li>
-                    <a href="#">Tin tức</a>
+                    <a href="/news">Tin tức</a>
                   </li>
                 </ul>
               </div>

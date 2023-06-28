@@ -15,7 +15,9 @@ import {
   RestOutlined,
   ProfileOutlined,
   ReconciliationOutlined,
-  ContainerOutlined
+  ContainerOutlined,
+  EditOutlined,
+  BankOutlined
 } from "@ant-design/icons";
 import {
   Avatar,
@@ -269,10 +271,11 @@ const Dashboard: React.FC = () => {
     getItem(
       <Link to="/admin/dasPost">Bài Viết</Link>,
       "10",
-      <DashboardOutlined />
+      <EditOutlined />
     ),
     getItem(<Link to="/admin/ros">Doanh Thu</Link>, "11", <DollarOutlined />),
     getItem(<Link to="/admin/settingAccount">Tài Khoản</Link>, "12", <SettingFilled />),
+    getItem(<Link to="/admin/SuppilersDashboard">Nhà cung cấp</Link>, "13", <BankOutlined />),
   ];
 
   const [collapsed, setCollapsed] = useState(false);

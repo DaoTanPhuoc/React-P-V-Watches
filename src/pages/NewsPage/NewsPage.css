@@ -87,4 +87,9 @@
   text-align: left;
   vertical-align: middle;
   font-size: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* số dòng tối đa */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
