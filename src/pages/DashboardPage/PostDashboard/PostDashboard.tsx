@@ -107,7 +107,7 @@ const PostDashboard = () => {
     formData.append("Title", values['Title'])
     formData.append("Description", values['Description'])
     formData.append("Content", content)
-    formData.append("Thumbnail", values["Thumbnail"].file)
+    formData.append("Thumbnail", fileList[0])
 
     axios.post(`${baseApi}/News`, formData, {
       headers: {
