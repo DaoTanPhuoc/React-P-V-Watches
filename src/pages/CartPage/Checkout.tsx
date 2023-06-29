@@ -11,7 +11,6 @@ const CheckOut = () => {
     const [message, setMessage] = useState("");
     const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate()
-
     const verify = React.useCallback(() => {
         setIsLoading(true)
         const payload = {
@@ -39,7 +38,6 @@ const CheckOut = () => {
     }, [baseApi, searchParams])
     useEffect(() => {
         verify()
-
     }, [verify])
 
     return (

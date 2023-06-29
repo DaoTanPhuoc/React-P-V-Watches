@@ -128,15 +128,15 @@ const PostDashboard = () => {
   }
   const updatePost = (values: any) => {
     message.open({ type: 'loading', content: 'Đang cập nhật bài viết...', key: 'update' })
-    console.log(values);
     const formData = new FormData()
     formData.append("Id", `${postId}`)
     formData.append("Title", values['Title'])
     formData.append("Description", values['Description'])
     formData.append("Content", contentEdit)
-    formData.append("Thumbnail", values['Thumbnail'].file)
+    formData.append("Thumbnail", fileList[0])
     formData.append("IsDeleted", `${!checkbox}`)
-
+    console.log(fileList[0])
+    return;
     axios.put(`${baseApi}/News/${postId}`, formData, {
       headers: {
         'Authorization': `Bearer ${currentToken}`,
@@ -305,6 +305,15 @@ const PostDashboard = () => {
           <Form.Item
             name="Thumbnail"
             label="Hình ảnh"
+            rules={[{
+              message: "Vui lòng nhập hình ảnh",
+              validator: (_, value) => {
+                if (fileList.length < 1) {
+                  return Promise.reject()
+                }
+                return Promise.resolve()
+              }
+            }]}
           >
             <Upload
               accept="image/*"

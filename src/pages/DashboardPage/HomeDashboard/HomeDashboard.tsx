@@ -23,18 +23,18 @@ const HomeDas = () => {
     currency: "VND",
     maximumFractionDigits: 0,
   });
-  const { baseApi } = useContext(AppContext);
+  const { baseApi, currentToken } = useContext(AppContext);
   const [todaySales, setTodaySales] = useState<number>();
   const [totalUser, setTotalUser] = useState<number>();
   const [dailyProductSale, setDailyProductSale] = useState<number>();
   const [topProductSales, setTopProductSales] = useState<any>([]);
   const [yearlySales, setYearlySales] = useState<any>([]);
   useEffect(() => {
-    axios.get(`${baseApi}/Statistics/DailyOrderSales`).then(res => setTodaySales(res.data))
-    axios.get(`${baseApi}/Statistics/UsersCount`).then(res => setTotalUser(res.data))
-    axios.get(`${baseApi}/Statistics/DailyProductSales`).then(res => setDailyProductSale(res.data))
-    axios.get(`${baseApi}/Statistics/GetBestProductsSale`).then(res => setTopProductSales(res.data))
-    axios.get(`${baseApi}/Statistics/GetYearlySales`).then(res => setYearlySales(res.data))
+    axios.get(`${baseApi}/Statistics/DailyOrderSales`, { headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => setTodaySales(res.data))
+    axios.get(`${baseApi}/Statistics/UsersCount`, { headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => setTotalUser(res.data))
+    axios.get(`${baseApi}/Statistics/DailyProductSales`, { headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => setDailyProductSale(res.data))
+    axios.get(`${baseApi}/Statistics/GetBestProductsSale`, { headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => setTopProductSales(res.data))
+    axios.get(`${baseApi}/Statistics/GetYearlySales`, { headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => setYearlySales(res.data))
   }, [baseApi])
 
   interface DataType {
