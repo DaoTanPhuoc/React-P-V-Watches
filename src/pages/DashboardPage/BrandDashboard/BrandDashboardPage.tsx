@@ -221,7 +221,7 @@ const BrandDashboardPage = () => {
   };
 
   const fetchChart = () => {
-    axios.get("https://localhost:7182/api/Statistics/TotalProductsCategoryOfWeek").then(res => {
+    axios.get("https://localhost:7182/api/Statistics/TotalProductsCategoryOfWeek",{ headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => {
       setDataChart(res.data)
     })
   }

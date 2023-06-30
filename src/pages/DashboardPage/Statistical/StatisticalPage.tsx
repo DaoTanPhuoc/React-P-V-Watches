@@ -12,7 +12,7 @@ import {
   Table,
   Tag,
 } from "antd";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { ShopOutlined, DollarOutlined } from "@ant-design/icons";
 import "./StatisticalPage.css";
 import {
@@ -27,6 +27,7 @@ import Item from "antd/es/list/Item";
 import { error } from "console";
 import { type } from "os";
 import style from "antd/es/alert/style";
+import { AppContext } from "../../../App";
 
 const moneyFormatter = new Intl.NumberFormat("vi", {
   style: "currency",
@@ -151,7 +152,7 @@ const myData = [
 
 const StatisticalPage = () => {
 
-
+  const {currentToken} = useContext(AppContext)
   // call api table tồn kho
   const [state, setstate] = useState([]);
   const [loading, setloading] = useState(true);
@@ -163,7 +164,7 @@ const StatisticalPage = () => {
   }, []);
 
   const getBrandStock = async () => {
-    axios.get("https://localhost:7182/api/Statistics/BrandCountStock").then(res => setBrandStock(res.data));
+    axios.get("https://localhost:7182/api/Statistics/BrandCountStock",{ headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => setBrandStock(res.data));
   }
 
   const getData = async () => {
