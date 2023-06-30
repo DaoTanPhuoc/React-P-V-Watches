@@ -66,11 +66,13 @@ const settings1 = {
   dots: false,
   arrows: false,
   infinite: true,
-  speed: 1000,
+  speed: 900,
   slidesToShow: 1,
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 3000,
+  fade: true,
+  cssEase: 'linear'
 };
 
 // slider
@@ -254,8 +256,11 @@ const HomePage = () => {
               <Link to={`/FilterProductsByGucci`}>
                 <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-gucci.png" alt="" />
               </Link>
-              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-michael-kors.png" alt="" />
 
+
+              <Link to={`/FilterProductsByJaeger`}>
+                <img style={{ width: 130, height: 90 }} src="https://1000logos.net/wp-content/uploads/2018/10/Jaeger-leCoultre-logo.png" alt="" />
+              </Link>
 
               <Link to={`/FilterProductsByChopard`}>
                 <img style={{ width: 130, height: 90 }} src="https://luxshopping.vn/Uploads/Images/chopard-luxshopping-20231.png" alt="" />

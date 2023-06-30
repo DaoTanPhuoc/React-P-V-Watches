@@ -62,7 +62,8 @@ const ProductsDashboard = () => {
       dataIndex: "Id",
       render: (Id) => (
         <Space size="middle">
-          <Button size="small" type="ghost" onClick={() => openEdit(Id)}>Cập nhật</Button>
+          <Button style={{ backgroundColor: "#000000", color: "#fff" }} onClick={() => openEdit(Id)}>Cập nhật</Button>
+          <Button style={{ backgroundColor: "#000000", color: "#fff" }}  >Xóa</Button>
         </Space>
       ),
     },

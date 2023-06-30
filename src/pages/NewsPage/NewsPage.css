@@ -81,6 +81,20 @@
 .title-news {
   color: #dbaf56;
   font-size: 20px;
+  padding-top: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* số dòng tối đa */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.article h4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* số dòng tối đa */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .description-news {

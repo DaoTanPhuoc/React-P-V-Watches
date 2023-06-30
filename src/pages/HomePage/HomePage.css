@@ -843,3 +843,11 @@ figure.snip1204 .author span {
   }
 } */
 /* responsive black banner shopp */
+.image-section img {
+  filter: brightness(100%);
+  transition: filter 0.3s ease-in-out;
+}
+
+.image-section img:hover {
+  filter: brightness(70%);
+}

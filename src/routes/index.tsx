@@ -49,6 +49,7 @@ import FilterProductsByLongines from "../pages/HomePage/FilterProductsByBrand/Fi
 import FilterProductsByBreiting from "../pages/HomePage/FilterProductsByBrand/FilterProductsByBreiting";
 import FilterProductsByIWC from "../pages/HomePage/FilterProductsByBrand/FilterProductsByIWC";
 import FilterProductsByChopard from "../pages/HomePage/FilterProductsByBrand/FilterProductsByChopard";
+import FilterProductsByJaeger from "../pages/HomePage/FilterProductsByBrand/FilterProductsByJaeger";
 
 
 
@@ -190,6 +191,10 @@ export const userRoutes = createBrowserRouter([
       {
         path: "/FilterProductsByChopard",
         element: <FilterProductsByChopard />
+      },
+      {
+        path: "/FilterProductsByJaeger",
+        element: <FilterProductsByJaeger />
       }
     ],
   },
