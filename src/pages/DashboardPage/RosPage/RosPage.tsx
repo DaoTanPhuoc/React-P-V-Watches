@@ -11,7 +11,7 @@ const handleChange = (value: string) => {
 };
 
 const RosPage = () => {
-  const { baseApi } = useContext(AppContext);
+  const { baseApi, currentToken } = useContext(AppContext);
   const date = new Date();
   const [month, setMonth] = useState<number>(date.getMonth() + 1);
   const [orderSales, setOrderSales] = useState<number>(0);
@@ -23,11 +23,11 @@ const RosPage = () => {
 
   useEffect(() => {
     setloading(true)
-    axios.get(`${baseApi}/Statistics/OrderSalesTotalMonth/${month}`).then(res => setOrderSales(res.data))
-    axios.get(`${baseApi}/Statistics/CountOrdersMonth/${month}`).then(res => setCountOrder(res.data))
-    axios.get(`${baseApi}/Statistics/ImportTotalMonth/${month}`).then(res => setImportCost(res.data))
-    axios.get(`${baseApi}/Statistics/BrandCountSales/${month}`).then(res => setBrandSale(res.data))
-    axios.get(`${baseApi}/Statistics/BrandCountStock`).then(res => setBrandStock(res.data))
+    axios.get(`${baseApi}/Statistics/OrderSalesTotalMonth/${month}`,{ headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => setOrderSales(res.data))
+    axios.get(`${baseApi}/Statistics/CountOrdersMonth/${month}`,{ headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => setCountOrder(res.data))
+    axios.get(`${baseApi}/Statistics/ImportTotalMonth/${month}`,{ headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => setImportCost(res.data))
+    axios.get(`${baseApi}/Statistics/BrandCountSales/${month}`,{ headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => setBrandSale(res.data))
+    axios.get(`${baseApi}/Statistics/BrandCountStock`,{ headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => setBrandStock(res.data))
     setloading(false)
   }, [baseApi, month])
   const moneyFormatter = new Intl.NumberFormat("vi", {
