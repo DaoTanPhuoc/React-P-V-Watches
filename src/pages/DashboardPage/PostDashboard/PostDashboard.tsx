@@ -184,7 +184,9 @@ const PostDashboard = () => {
               textTransform: 'uppercase'
             }}
           >
-            Quản Lý Bài Viết
+            <h4 style={{ color: "#4963AF", fontWeight: 700, fontSize: 23, textTransform: "uppercase" }}>
+              Quản lý bài viết
+            </h4>
           </h4>
           <div className="header-post">
             <div className="items-header-post">

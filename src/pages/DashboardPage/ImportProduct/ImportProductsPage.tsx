@@ -109,12 +109,9 @@ const ImportProductsPage = () => {
     return (
         <div className="container-import-products">
             <div className="header-import-products">
-                <h4 style={{
-                    color: "#4963AF",
-                    fontSize: 22,
-                    paddingTop: 30,
-                    paddingBottom: 30,
-                }}>Quản Lý Hóa Đơn Nhập</h4>
+                <h4 style={{ color: "#4963AF", fontWeight: 700, fontSize: 23, textTransform: "uppercase", paddingTop: 20 }}>
+                    Quản lý hóa đơn nhập
+                </h4>
                 <Space direction='vertical'>
                     <Button onClick={showModal} style={{
                         color: "#fff",

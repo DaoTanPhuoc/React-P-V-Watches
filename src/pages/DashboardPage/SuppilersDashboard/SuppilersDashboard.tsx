@@ -369,7 +369,7 @@ const SuppilersDashboard = () => {
     return (
         <>{contextHolder}
             <div style={{ display: 'flex', justifyContent: "space-between", padding: 15 }}>
-                <h4 style={{ color: "#4963AF", fontWeight: 700, fontSize: 23 }}>
+                <h4 style={{ color: "#4963AF", fontWeight: 700, fontSize: 23, textTransform: "uppercase" }}>
                     Quản lý nhà cung cấp
                 </h4>
                 <Button onClick={showModal} style={{ color: "#fff", backgroundColor: "#000000" }}>Thêm nhà cung cấp</Button>

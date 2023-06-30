@@ -6,7 +6,7 @@ import {
     Select,
 } from "antd";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import "./FilterProductsByHublot.css";
+import "./FilterProductsByPatekPhilippe.css";
 import { Image } from "antd";
 import {
     ShoppingCartOutlined,
@@ -88,7 +88,7 @@ const onChangeCheckBox = (checkedValues: CheckboxValueType[]) => {
 const pageSize = 8;
 const Context = React.createContext({ name: "Default" });
 
-const FilterProductsByHublot = () => {
+const FilterProductsByChopard = () => {
 
     const navigate = useNavigate();
 
@@ -124,7 +124,7 @@ const FilterProductsByHublot = () => {
         axios
             .get(`https://localhost:7182/api/Products`)
             .then((result) => {
-                const filteredProducts = result.data.filter((product: { BrandName: string; }) => product.BrandName === "Hublot");
+                const filteredProducts = result.data.filter((product: { BrandName: string; }) => product.BrandName === "Chopard");
                 setProducts(filteredProducts);
                 const count = filteredProducts.length;
                 filterData(currentPage, filteredProducts);
@@ -293,13 +293,13 @@ const FilterProductsByHublot = () => {
                     <div className="ban_img">
                         <img
                             style={{ height: 580, objectFit: "cover" }}
-                            src="https://wallpapercave.com/wp/wp2173843.jpg"
+                            src="https://www.burrells.co.uk/media/wysiwyg/headers/Banner_Chopard_Burrells_2000x.jpg"
                             alt="banner"
                         />
                         {/* <div className="ban_text">
                             <strong>
                                 <span>VP - Watch</span>
-                                
+                               
                             </strong>
                             <p>
                                 VP Watch rất vui vì được phục vụ quý khách<br />
@@ -554,4 +554,4 @@ const FilterProductsByHublot = () => {
     );
 }
 
-export default FilterProductsByHublot
+export default FilterProductsByChopard

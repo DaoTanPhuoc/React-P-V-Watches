@@ -293,20 +293,19 @@ const FilterProductsByFranckMuller = () => {
                     <div className="ban_img">
                         <img
                             style={{ height: 580, objectFit: "cover" }}
-                            src="https://images.lifestyleasia.com/wp-content/uploads/sites/5/2022/08/03172728/Franck-Muller-2022-Vanguard-7-Days-Power-Reserve-Skeleton-Colour-Dreams-Wide-1350x900.jpg"
+                            src="https://euluxury.vn/upload_images/20220709/files/franck_muller_geneve_remember.jpg"
                             alt="banner"
                         />
-                        <div className="ban_text">
+                        {/* <div className="ban_text">
                             <strong>
                                 <span>VP - Watch</span>
-                                {/* <br /> Đồng Hồ Nam */}
                             </strong>
                             <p>
                                 VP Watch rất vui vì được phục vụ quý khách<br />
                                 Chuyên cung cấp các đồng hồ <br /> chính hãng đến tay khách hàng{" "}
                             </p>
                             <a href="#">Mua Ngay!</a>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>

@@ -222,7 +222,7 @@ const ProductsDashboard = () => {
     fileListPreview.forEach(file => {
       formData.append('PreviewImageFiles', file)
     })
-    previewImages.forEach(image=>{
+    previewImages.forEach(image => {
       formData.append('PreviewImages', image)
     })
     axios.put(`${baseApi}/Products/${currentId}`, formData, {
@@ -427,6 +427,10 @@ const ProductsDashboard = () => {
                       label: 29,
                     },
                     {
+                      value: 30,
+                      label: 30
+                    },
+                    {
                       value: 32,
                       label: 32,
                     },
@@ -439,12 +443,24 @@ const ProductsDashboard = () => {
                       label: 36,
                     },
                     {
+                      value: 38,
+                      label: 38,
+                    },
+                    {
                       value: 40,
                       label: 40,
                     },
                     {
+                      value: 41,
+                      label: 41,
+                    },
+                    {
                       value: 42,
                       label: 42,
+                    },
+                    {
+                      value: 43,
+                      label: 43,
                     },
                     {
                       value: 44,

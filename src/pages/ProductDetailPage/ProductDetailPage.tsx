@@ -564,7 +564,7 @@ const ProductDetail = () => {
                     className={`img-item${currentPreviewIndex === index ? " active" : ""
                       }`}
                   >
-                    <img src={previewItem} alt="" />
+                    <img style={{ overflow: "hidden", objectFit: "contain" }} src={previewItem} alt="" />
                   </div>
                 ))}
               </div>

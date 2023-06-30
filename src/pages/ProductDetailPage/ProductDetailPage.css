@@ -42,8 +42,10 @@ img {
 }
 
 .img-container img {
-  width: 342px;
-  height: 315px;
+  /* width: 350px;
+  height: 410px; */
+  width: 380px;
+  height: 500px;
   object-fit: cover;
   margin: 0 auto;
 }

@@ -208,15 +208,15 @@ hr {
 }
 /* zoom hinh anh san pham moi nhat */
 .galleryItem {
-  overflow: hidden; /* Ẩn phần bị tràn ra ngoài */
+  overflow: hidden;
 }
 
 .galleryItem img {
-  transition: transform 0.5s ease; /* Thời gian chuyển đổi hiệu ứng */
+  transition: transform 0.5s ease;
 }
 
 .galleryItem:hover img {
-  transform: scale(1.2); /* Thay đổi tỷ lệ kích thước */
+  transform: scale(1.2);
 }
 
 .galleryContainer {

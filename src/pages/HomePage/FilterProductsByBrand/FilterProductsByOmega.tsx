@@ -296,17 +296,16 @@ const FilterProductsByOmega = () => {
                             src="https://images4.alphacoders.com/266/thumb-1920-266738.jpg"
                             alt="banner"
                         />
-                        <div className="ban_text">
+                        {/* <div className="ban_text">
                             <strong>
                                 <span>VP - Watch</span>
-                                {/* <br /> Đồng Hồ Nam */}
                             </strong>
                             <p>
                                 VP Watch rất vui vì được phục vụ quý khách<br />
                                 Chuyên cung cấp các đồng hồ <br /> chính hãng đến tay khách hàng{" "}
                             </p>
                             <a href="#">Mua Ngay!</a>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>

@@ -396,7 +396,9 @@ const BillingDashboard = () => {
                 paddingBottom: 50,
               }}
             >
-              Danh sách hóa đơn
+              <h4 style={{ color: "#4963AF", fontWeight: 700, fontSize: 23, textTransform: "uppercase" }}>
+                Danh sách hóa đơn
+              </h4>
             </h5>
             <div className="dashbill-Quick-Stats" style={{ textAlign: "center", paddingBottom: 50 }}>
               <Row gutter={[48, 8]}>

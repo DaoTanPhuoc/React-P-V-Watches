@@ -42,6 +42,13 @@ import RestoreDashboard from "../pages/DashboardPage/RestoreDashboard/RestoreDas
 import FilterProductsByFranckMuller from "../pages/HomePage/FilterProductsByBrand/FilterProductsByFranckMuller";
 import SuppilersDashboard from "../pages/DashboardPage/SuppilersDashboard/SuppilersDashboard";
 import FilterProductsByCartier from "../pages/HomePage/FilterProductsByBrand/FilterProductsByCartier";
+import LogsDashboard from "../pages/DashboardPage/LogsDashboard/LogsDashboard";
+import FilterProductsByPatekPhilippe from "../pages/HomePage/FilterProductsByBrand/FilterProductsByPatekPhilippe";
+import FilterProductsByGucci from "../pages/HomePage/FilterProductsByBrand/FilterProductsByGucci";
+import FilterProductsByLongines from "../pages/HomePage/FilterProductsByBrand/FilterProductsByLongines";
+import FilterProductsByBreiting from "../pages/HomePage/FilterProductsByBrand/FilterProductsByBreiting";
+import FilterProductsByIWC from "../pages/HomePage/FilterProductsByBrand/FilterProductsByIWC";
+import FilterProductsByChopard from "../pages/HomePage/FilterProductsByBrand/FilterProductsByChopard";
 
 
 
@@ -159,6 +166,30 @@ export const userRoutes = createBrowserRouter([
       {
         path: "/FilterProductsByCartier",
         element: <FilterProductsByCartier />
+      },
+      {
+        path: "/FilterProductsByPatekPhilippe",
+        element: <FilterProductsByPatekPhilippe />
+      },
+      {
+        path: "/FilterProductsByGucci",
+        element: <FilterProductsByGucci />
+      },
+      {
+        path: "/FilterProductsByLongines",
+        element: <FilterProductsByLongines />
+      },
+      {
+        path: "/FilterProductsByBreiting",
+        element: <FilterProductsByBreiting />
+      },
+      {
+        path: "/FilterProductsByIWC",
+        element: <FilterProductsByIWC />
+      },
+      {
+        path: "/FilterProductsByChopard",
+        element: <FilterProductsByChopard />
       }
     ],
   },
@@ -217,6 +248,10 @@ export const userRoutes = createBrowserRouter([
       {
         path: "SuppilersDashboard",
         element: <SuppilersDashboard />
+      },
+      {
+        path: "LogsDashboard",
+        element: <LogsDashboard />
       }
     ],
   },

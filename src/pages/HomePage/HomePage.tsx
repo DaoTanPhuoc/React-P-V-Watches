@@ -223,7 +223,10 @@ const HomePage = () => {
               <Link to={`/FilterProductsByHublot`}>
                 <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-hublot.png" alt="" />
               </Link>
-              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-patek.png" alt="" />
+              <Link to={`/FilterProductsByPatekPhilippe`}>
+                <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-patek.png" alt="" />
+              </Link>
+
               <Link to={`/FilterProductsByRolex`}>
                 <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-rolex.png" alt="" />
               </Link>
@@ -231,8 +234,15 @@ const HomePage = () => {
                 <img style={{ width: 130, height: 90 }} src="https://luxshopping.vn/Uploads/Images/franck-muller-logo-new-23.png" alt="" />
               </Link>
 
-              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-longines.png" alt="" />
-              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-breitling.png" alt="" />
+              <Link to={`/FilterProductsByLongines`}>
+                <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-longines.png" alt="" />
+              </Link>
+
+              <Link to={`/FilterProductsByBreiting`}>
+                <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-breitling.png" alt="" />
+              </Link>
+
+
               <Link to={`/FilterProductsByCartier`}>
                 <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-cartier.png" alt="" />
               </Link>
@@ -240,10 +250,19 @@ const HomePage = () => {
               <Link to={`/FilterProductsByOmega`}>
                 <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-omega.png" alt="" />
               </Link>
-              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-gucci.png" alt="" />
+
+              <Link to={`/FilterProductsByGucci`}>
+                <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-gucci.png" alt="" />
+              </Link>
               <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-michael-kors.png" alt="" />
-              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-yoko-london.png" alt="" />
-              <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-swarovski.png" alt="" />
+
+
+              <Link to={`/FilterProductsByChopard`}>
+                <img style={{ width: 130, height: 90 }} src="https://luxshopping.vn/Uploads/Images/chopard-luxshopping-20231.png" alt="" />
+              </Link>
+              <Link to={`/FilterProductsByIWC`}>
+                <img style={{ width: 130, height: 90 }} src="https://usacareers.thewosgroup.com/jobs/custom/Aurum_02/resources/images/logos/logo-iwc.png" alt="" />
+              </Link>
             </div>
           </div>
         </div>

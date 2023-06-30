@@ -286,7 +286,9 @@ const InvoiceWait = () => {
 
     return (
         <div>
-            <h4 style={{ color: "#4963af", padding: "2%", textTransform: 'uppercase', fontWeight: 'bold' }}> Quản lý đơn hàng</h4>
+            <h4 style={{ color: "#4963AF", fontWeight: 700, fontSize: 23, textTransform: "uppercase", padding: "20px 20px" }}>
+                Quản lý đơn hàng
+            </h4>
             <Tabs type='card' defaultActiveKey="1" items={items} />
         </div>
     )
