@@ -237,7 +237,7 @@ const BillingDashboard = () => {
         setBillDash(
           result.data.map(
             (row: {
-              UserFullName: string;
+              FullName: string;
               Address: string;
               Total: number;
               Phone: string;
@@ -245,7 +245,7 @@ const BillingDashboard = () => {
               OrderProducts: []
 
             }) => ({
-              UserFullName: row.UserFullName,
+              FullName: row.FullName,
               Address: row.Address,
               Total: row.Total,
               Phone: row.Phone,

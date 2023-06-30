@@ -751,6 +751,15 @@ const ProductsDashboard = () => {
               listType="picture-card"
               fileList={fileListPreview}
               {...propsPreviewFile}
+              onRemove={(file) => {
+                const index = fileListPreview.indexOf(file);
+                const newFileList = fileListPreview.slice();
+                newFileList.splice(index, 1);
+                setFileListPreview(newFileList);
+                const i = previewImages.findIndex(x => x.toLowerCase() === file.url);
+                previewImages.splice(i, 1)
+                setPreviewImages(previewImages);
+              }}
               onPreview={onPreview}
               maxCount={4}
             >
