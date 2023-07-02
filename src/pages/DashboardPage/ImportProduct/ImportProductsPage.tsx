@@ -7,9 +7,19 @@ import { AppContext } from '../../../App';
 import axios from 'axios';
 import { UploadOutlined } from '@ant-design/icons';
 import { RcFile } from 'antd/es/upload';
-
+import moment, { updateLocale } from "moment";
 
 const ImportProductsPage = () => {
+    // format money
+    const moneyFormatter = new Intl.NumberFormat("vi", {
+        style: "currency",
+        currency: "VND",
+
+        // These options are needed to round to whole numbers if that's what you want.
+        //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+        maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+    });
+    // closed
     const { baseApi, currentToken } = useContext(AppContext);
     const [data, setData] = useState<DataType[]>([])
     const [suppliers, setSuppliers] = useState<any[]>([])
@@ -68,6 +78,7 @@ const ImportProductsPage = () => {
         {
             title: 'Tổng cộng',
             dataIndex: 'Total',
+            render: ((Total: number) => moneyFormatter.format(Total))
         },
         {
             title: 'Người nhập',
@@ -76,6 +87,9 @@ const ImportProductsPage = () => {
         {
             title: 'Ngày nhập',
             dataIndex: 'CreatedAt',
+            render: (CreatedAt) => {
+                return moment(CreatedAt).format("DD MMMM YYYY");
+            }
         },
     ];
 

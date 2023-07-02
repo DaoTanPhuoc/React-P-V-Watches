@@ -152,7 +152,7 @@ const myData = [
 
 const StatisticalPage = () => {
 
-  const {currentToken} = useContext(AppContext)
+  const { currentToken } = useContext(AppContext)
   // call api table tồn kho
   const [state, setstate] = useState([]);
   const [loading, setloading] = useState(true);
@@ -164,7 +164,7 @@ const StatisticalPage = () => {
   }, []);
 
   const getBrandStock = async () => {
-    axios.get("https://localhost:7182/api/Statistics/BrandCountStock",{ headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => setBrandStock(res.data));
+    axios.get("https://localhost:7182/api/Statistics/BrandCountStock", { headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => setBrandStock(res.data));
   }
 
   const getData = async () => {
@@ -205,7 +205,7 @@ const StatisticalPage = () => {
       .catch((error) => {
         console.log(error);
       })
-  },[])
+  }, [])
   const countStockProducts = countStock.length;
   // closed
 
@@ -220,7 +220,7 @@ const StatisticalPage = () => {
       .catch((error) => {
         console.log(error);
       })
-  },[])
+  }, [])
   const countBrandProducts = countBrand.length;
   // closed
 
@@ -454,16 +454,17 @@ const StatisticalPage = () => {
     },
     {
       title: "Tình trạng",
-      dataIndex: "tag",
+      dataIndex: "Stock",
       width: "10%",
-      render: (tag: string) => (
+      render: (Stock) => (
         <span>
-          <Tag color={tag}>
-            {tag === "success" ? "Còn kinh doanh" : "Dừng kinh doanh"}
-          </Tag>
+          {Stock === 0 ? (
+            <Tag color="error">Hết hàng</Tag>
+          ) : (
+            <Tag color="success">Còn hàng</Tag>
+          )}
         </span>
       ),
-      // ...getColumnSearchProps("tag"),
     },
     // {
     //   title: "Chức năng",
@@ -548,7 +549,7 @@ const StatisticalPage = () => {
 
       <Col xs={{ span: 30, offset: 0 }} lg={{ span: 8, offset: 1 }}>
         <div className="right-chart">
-          <div style={{ fontWeight: 600, fontSize: 19, padding: "20px 20px" }}>
+          <div style={{ padding: "20px 20px", textAlign: "center", color: "#4963AF", fontSize: 18 }}>
             Thống kê số lượng tồn kho
           </div>
           <div className="chart-brand">

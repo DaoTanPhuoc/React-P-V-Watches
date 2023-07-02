@@ -63,7 +63,7 @@ const ProductsDashboard = () => {
       render: (Id) => (
         <Space size="middle">
           <Button style={{ backgroundColor: "#000000", color: "#fff" }} onClick={() => openEdit(Id)}>Cập nhật</Button>
-          <Button style={{ backgroundColor: "#000000", color: "#fff" }}  >Xóa</Button>
+          <Button style={{ backgroundColor: "#000000", color: "#fff" }} onClick={() => deleteBrand(Id)}  >Xóa</Button>
         </Space>
       ),
     },
@@ -241,6 +241,51 @@ const ProductsDashboard = () => {
     }).catch(err => message.open({ key: 'update', content: `Lỗi: ${err.response.data}!`, type: 'error' }))
   }
   //
+
+  // xóa sản phẩm
+  const fetch = () => {
+    axios.get("https://localhost:7182/api/Products")
+      .then((res) => setstate(res.data))
+  }
+
+  const handleDelete = (Id: number) => {
+    if (Id) {
+      axios
+        .delete(`https://localhost:7182/api/Products/${Id}`, {
+          headers: {
+            'Authorization': `Bearer ${currentToken}`,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          message.open({ key: 'update', content: "Xóa thành công!", type: 'success' })
+          fetch();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          message.open({ key: 'update', content: "Xóa không thành công!", type: 'error' })
+          console.log(Id);
+        });
+    }
+  }
+  function deleteBrand(Id: number) {
+    if (Id) {
+      Modal.confirm({
+        title: 'Bạn có chắc muốn xóa?',
+        //icon: <ExclamationCircleOutlined />,
+        okText: 'Có',
+        cancelText: 'Không',
+        // dùng chung với brand 
+        className: "delete-brand-modal",
+        onOk() {
+          console.log();
+          handleDelete(Id);
+        },
+      });
+    }
+  }
+  // clossed
+  // closed
   return (
     <>
       <div

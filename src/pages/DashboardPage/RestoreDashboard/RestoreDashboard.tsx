@@ -25,6 +25,56 @@ const RestoreDashboard = () => {
         address: string;
     }
 
+    // khôi phục sản phẩm
+    const fetchProducts = () => {
+        axios.get("https://localhost:7182/api/Products/GetTrashedProducts", {
+            headers: {
+                'Authorization': `Bearer ${currentToken}`,
+            },
+        }).then((res) => {
+            setloading(false);
+            setstate(res.data);
+        });
+    }
+    const recoveyProducts = (Id: number) => {
+        if (Id) {
+            axios
+                .put(`https://localhost:7182/api/Products/Recovery?id=${Id}`, {}, {
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`,
+                    },
+                })
+                .then((res) => {
+                    console.log(res.data);
+                    console.log(Id);
+                    message.open({ key: 'update', content: "khôi phục thành công!", type: 'success' })
+                    fetchProducts();
+                })
+                .catch((error) => {
+                    console.log(error);
+                    console.log(Id);
+                })
+        }
+    }
+
+    // xác nhận khôi phục
+    function DefindRecoveryProducts(Id: number) {
+        if (Id) {
+            Modal.confirm({
+                title: 'Bạn có chắc muốn khôi phục?',
+                //icon: <ExclamationCircleOutlined />,
+                okText: 'Có',
+                cancelText: 'Không',
+                className: "delete-brand-modal",
+                onOk() {
+                    console.log();
+                    recoveyProducts(Id);
+                },
+            });
+        }
+    }
+    // đóng xác nhận xóa sản phẩm
+    // đóng xóa sản phẩm
     const columns: ColumnsType<DataType> = [
         {
             title: "Mã sản phẩm",
@@ -59,7 +109,7 @@ const RestoreDashboard = () => {
             dataIndex: "Id",
             render: (Id) => (
                 <Space size="middle">
-                    <Button size="small" type="ghost">Khôi phục</Button>
+                    <Button onClick={() => DefindRecoveryProducts(Id)} style={{ backgroundColor: "#000000", color: "#fff" }} >Khôi phục</Button>
                 </Space>
             ),
         },

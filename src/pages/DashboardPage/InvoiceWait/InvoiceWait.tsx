@@ -82,6 +82,7 @@ const InvoiceWait = () => {
             setSelectedRowKeys([])
         }).catch(err => {
             message.open({ key: 'change', content: "Lỗi: " + err.response.data, type: 'error' })
+            fetchData();
         })
     }
     const rowSelection = {
