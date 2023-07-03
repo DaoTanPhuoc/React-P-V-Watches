@@ -244,7 +244,7 @@ const PostDashboard = () => {
                     accept="image/*"
                     listType="picture-card"
                     fileList={fileList}
-                    {...propsFile...}
+                    {...propsFile}
                     
                     onPreview={onPreview}
                     maxCount={1}
