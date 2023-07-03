@@ -194,7 +194,7 @@ const UserLayout = () => {
                 </div>
                 <div className="grid__item">
                   <h3>Chăm sóc & Dịch vụ</h3>
-                  <p>Phân biệt thật giả</p>
+                  <Link to={`/detailNews/1021`}><span><p>Phân biệt thật giả</p></span></Link>
                   <p>Hỗ trợ tư vấn</p>
                 </div>
                 <div className="grid__item">
