@@ -333,8 +333,8 @@ const PostDashboard = () => {
               accept="image/*"
               listType="picture-card"
               fileList={fileList}
-              beforeUpload={() => false}
-              onChange={handleChange}
+              {...propsFile}
+              
               onPreview={onPreview}
               maxCount={1}
             >
