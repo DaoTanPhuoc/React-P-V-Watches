@@ -21,6 +21,8 @@ import {
 } from "@ant-design/icons";
 import Meta from "antd/es/card/Meta";
 import { AppContext } from "../../App";
+import { Avatar, Tooltip } from "antd";
+import TextArea from "antd/es/input/TextArea";
 
 const moneyFormatter = new Intl.NumberFormat("vi", {
   style: "currency",
@@ -442,9 +444,40 @@ const PostProducts = () => {
         <h1>08/21</h1>
       </div>
     </section>
+
+    // <div className="Comment__detail_product_container">
+    //   <div style={{ display: "flex" }}>
+    //     <img style={{ borderRadius: "50%", width: 50, height: 50, margin: 10 }} src="https://source.unsplash.com/random?macaron" alt="avatar" className="comment__item_avatar" />
+    //     <TextArea placeholder="Nhập bình luận ..." style={{ width: "86%" }} allowClear rows={2} />
+    //   </div>
+    //   <div className="comment__items">
+    //     <div className="comment__flex">
+    //       <img src="https://source.unsplash.com/random?macaron" alt="avatar" className="comment__item_avatar" />
+    //       <div className="comment__flex_info">
+    //         <h3 className="comment__item__Name">Emma Smith</h3>
+    //         <h4 className="comment__item__Email">@emma_0610</h4>
+    //       </div>
+    //     </div>
+    //     <p className="comment__item_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras at laoreet ante, ac euismod elit. Nunc vitae mauris ornare, volutpat ipsum ut, euismod leo. Nullam et augue eget justo ultrices faucibus maximus in ipsum.</p>
+    //   </div>
+    //   {/* 2 */}
+    //   <div className="comment__items">
+    //     <div className="comment__flex">
+    //       <img src="https://source.unsplash.com/random?macaron" alt="avatar" className="comment__item_avatar" />
+    //       <div className="comment__flex_info">
+    //         <h3 className="comment__item__Name">Emma Smith</h3>
+    //         <h4 className="comment__item__Email">@emma_0610</h4>
+    //       </div>
+    //     </div>
+    //     <p className="comment__item_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras at laoreet ante, ac euismod elit. Nunc vitae mauris ornare, volutpat ipsum ut, euismod leo. Nullam et augue eget justo ultrices faucibus maximus in ipsum.</p>
+    //   </div>
+    // </div>
   );
 };
 
+
+// comment products
+//
 // const [products, setProducts] = useState<ProductModel[]>([]);
 // useEffect(() => {
 //   axios

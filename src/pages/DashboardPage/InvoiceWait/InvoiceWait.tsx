@@ -5,6 +5,14 @@ import React, { Children, useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../../App';
 
 const InvoiceWait = () => {
+    const moneyFormatter = new Intl.NumberFormat("vi", {
+        style: "currency",
+        currency: "VND",
+
+        // These options are needed to round to whole numbers if that's what you want.
+        //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+        maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+    });
     const { baseApi, currentToken } = useContext(AppContext);
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
     const [orders, setOrders] = useState<Order[]>([])
@@ -50,6 +58,7 @@ const InvoiceWait = () => {
         {
             title: 'Tổng tiền',
             dataIndex: 'Total',
+            render: ((Total) => moneyFormatter.format(Total))
         },
         {
             title: 'Địa chỉ',
@@ -113,6 +122,7 @@ const InvoiceWait = () => {
                         marginTop: "20px"
                     }}
                     onClick={() => changeStatus(1)}
+                    disabled={data.length === 0}
                 >
                     Xác nhận đơn hàng
                 </Button>
@@ -145,6 +155,7 @@ const InvoiceWait = () => {
                         marginTop: "20px"
                     }}
                     onClick={() => changeStatus(-2)}
+                    disabled={data.length === 0}
                 >
                     Xác nhận hủy
                 </Button>
@@ -176,6 +187,7 @@ const InvoiceWait = () => {
                         marginTop: "20px"
                     }}
                     onClick={() => changeStatus(2)}
+                    disabled={data.length === 0}
                 >
                     Cập nhật trạng thái
                 </Button>
@@ -290,7 +302,7 @@ const InvoiceWait = () => {
             <h4 style={{ color: "#4963AF", fontWeight: 700, fontSize: 23, textTransform: "uppercase", padding: "20px 20px" }}>
                 Quản lý đơn hàng
             </h4>
-            <Tabs type='card' defaultActiveKey="1" items={items} />
+            <Tabs onChange={() => setSelectedRowKeys([])} type='card' defaultActiveKey="1" items={items} />
         </div>
     )
 }
