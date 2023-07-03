@@ -67,6 +67,18 @@ const PostDashboard = () => {
   const toggleModal = () => {
     setIsOpened(!isOpened)
   }
+  const propsFile: UploadProps = {
+    onRemove: (file) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
+    },
+    beforeUpload: (file) => {
+      setFileList([...fileList, file]);
+      return false;
+    },
+  }
   const openModalEdit = (postId: any) => {
     setPostid(postId)
     const post = data.find(post => post.Id === postId);
@@ -232,8 +244,8 @@ const PostDashboard = () => {
                     accept="image/*"
                     listType="picture-card"
                     fileList={fileList}
-                    beforeUpload={() => false}
-                    onChange={handleChange}
+                    {...propsFile}
+                    
                     onPreview={onPreview}
                     maxCount={1}
                   >
