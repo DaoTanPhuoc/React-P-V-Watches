@@ -43,8 +43,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import SubMenu from "antd/es/menu/SubMenu";
 import StatisticalPage from "./Statistical/StatisticalPage";
+import logo from '../../assets/1.png'
 const { Header, Content, Footer, Sider } = Layout;
-
 interface ChartModel {
   x: string;
   y: number;
@@ -313,12 +313,11 @@ const Dashboard: React.FC = () => {
         <img
           style={{
             width: 200,
-            height: 64,
-            objectFit: "contain",
-            padding: 10
+            height: 120,
+            objectFit: "contain"
           }}
-          src="https://benhviendongho.com/wp-content/uploads/2019/05/744px-Rolex_logo.svg.png"
-          alt=""
+          src={logo}
+          alt="1"
         />
         <Menu
           theme="dark"

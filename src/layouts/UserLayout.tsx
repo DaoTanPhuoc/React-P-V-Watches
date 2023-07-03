@@ -27,7 +27,7 @@ import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../App";
 import axios from "axios";
 import { ProductModel } from "../models/ProductModel";
-
+import logo from '../assets/1.png'
 const { Search } = Input;
 
 interface Props {
@@ -222,13 +222,14 @@ const UserLayout = () => {
         title={
           <div>
             <img
-              src="https://benhviendongho.com/wp-content/uploads/2019/05/744px-Rolex_logo.svg.png"
+              src={logo}
               style={{
                 textAlign: "center",
                 width: 200,
                 height: 120,
-                margin: "16px 24px 16px 0",
+                // margin: "16px 24px 16px 0",
                 objectFit: "cover",
+                marginLeft: "20%"
               }} />
 
           </div>
@@ -296,11 +297,12 @@ const UserLayout = () => {
         >
           <img
             className="logo-header"
-            src="https://benhviendongho.com/wp-content/uploads/2019/05/744px-Rolex_logo.svg.png"
+            // src="https://benhviendongho.com/wp-content/uploads/2019/05/744px-Rolex_logo.svg.png"
+            src={logo}
             style={{
               float: "left",
               width: 200,
-              height: 48,
+              height: 150,
               margin: "16px 24px 16px 0",
               objectFit: "contain",
             }} />
