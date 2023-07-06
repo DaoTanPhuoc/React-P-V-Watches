@@ -195,7 +195,7 @@ const ImportProductsPage = () => {
                                         ))}
                                         <Form.Item>
                                             <Button style={{ color: "#fff", backgroundColor: "#000000" }} type="dashed" onClick={() => add()} block icon={<PlusOutlined style={{ color: "#fff" }} />}>
-                                                Add field
+                                                Lên đơn
                                             </Button>
                                         </Form.Item>
                                     </>

@@ -146,7 +146,7 @@ const MyOrder = () => {
       const products = order.OrderProducts.map((product: any) => {
         return (
           <div style={{ padding: 10 }}>
-            <Card type="inner" title="Sản phẩm" extra={<a href="#">More</a>}>
+            <Card type="inner" title="Sản phẩm" extra={<><span>Mã vận đơn: </span><a href="#">{order.Code}</a></>}>
               <div className="card-myacc-responsive" style={{ display: 'flex', justifyContent: "space-between" }}>
                 <p className="name-fontSize-responsive" style={{ width: "10%" }} ><img style={{ width: 100, height: 100, objectFit: "cover" }} src={product.ProductImage} alt="" /></p>
                 <p className="name-fontSize-responsive" style={{ width: "25%" }}> {product.ProductName}</p>
@@ -154,7 +154,7 @@ const MyOrder = () => {
                 <p className="name-fontSize-responsive" style={{ width: "15%" }}>{moneyFormatter.format(product.Price)}</p>
               </div>
             </Card>
-          </div>
+          </div >
         );
       }
       );
@@ -901,7 +901,7 @@ const MyAccountPage = () => {
         >
           {fileList.length < 1 && "+ Upload"}
         </Upload>
-        <h2>{currentUser.FullName}</h2>
+        {/* <h2>{currentUser.FullName}</h2> */}
       </div>
 
       <Tabs

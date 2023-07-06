@@ -44,18 +44,18 @@ const LogsDashboard = () => {
     //
     const columns: ColumnsType<DataType> = [
         {
-            title: 'FullName',
+            title: 'Tên người thao tác',
             dataIndex: 'FullName',
             key: 'FullName',
             render: (text) => <a>{text}</a>,
         },
         {
-            title: 'Action',
+            title: 'Hành động',
             dataIndex: 'Action',
             key: 'Action',
         },
         {
-            title: "CreatedDate",
+            title: "Thời gian",
             dataIndex: "CreatedDate",
             render: (CreatedDate) => moment(CreatedDate).format("DD MMMM YYYY")
         }

@@ -130,7 +130,7 @@ const News = () => {
                   </div>
                   <div className="posted-date">
                     <p style={{ textDecoration: "none", color: "#555555" }}>
-                      Posted {moment(news.CreatedAt).format("DD MMMM YYYY")}
+                      {moment(news.CreatedAt).format("DD MMMM YYYY")}
                     </p>
                   </div>
                 </div>

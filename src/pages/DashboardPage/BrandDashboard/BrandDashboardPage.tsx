@@ -221,7 +221,7 @@ const BrandDashboardPage = () => {
   };
 
   const fetchChart = () => {
-    axios.get("https://localhost:7182/api/Statistics/TotalProductsCategoryOfWeek",{ headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => {
+    axios.get("https://localhost:7182/api/Statistics/TotalProductsCategoryOfWeek", { headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => {
       setDataChart(res.data)
     })
   }
@@ -756,11 +756,11 @@ const BrandDashboardPage = () => {
                 labelCol={{ span: 6 }}
                 wrapperCol={{ span: 14 }}
               >
-                <Form.Item label="Name" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên thương hiệu' }]}>
+                <Form.Item label="Tên thương hiệu:" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên thương hiệu' }]}>
                   <Input />
                 </Form.Item>
 
-                <Form.Item label="Description" name="Description">
+                <Form.Item label="Mô tả:" name="Description">
                   <Input />
                 </Form.Item>
 

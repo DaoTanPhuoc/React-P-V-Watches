@@ -148,7 +148,6 @@ const PostDashboard = () => {
     formData.append("Thumbnail", fileList[0])
     formData.append("IsDeleted", `${!checkbox}`)
     console.log(fileList[0])
-    return;
     axios.put(`${baseApi}/News/${postId}`, formData, {
       headers: {
         'Authorization': `Bearer ${currentToken}`,
@@ -245,7 +244,7 @@ const PostDashboard = () => {
                     listType="picture-card"
                     fileList={fileList}
                     {...propsFile}
-                    
+
                     onPreview={onPreview}
                     maxCount={1}
                   >
@@ -274,6 +273,7 @@ const PostDashboard = () => {
             </Modal>
           </div>
         </div>
+
         <div className="table-list-blog">
           <div>
             <div style={{ marginBottom: 16 }}>
@@ -334,7 +334,7 @@ const PostDashboard = () => {
               listType="picture-card"
               fileList={fileList}
               {...propsFile}
-              
+
               onPreview={onPreview}
               maxCount={1}
             >
