@@ -147,7 +147,6 @@ const PostDashboard = () => {
     formData.append("Content", contentEdit)
     formData.append("Thumbnail", fileList[0])
     formData.append("IsDeleted", `${!checkbox}`)
-    console.log(fileList[0])
     axios.put(`${baseApi}/News/${postId}`, formData, {
       headers: {
         'Authorization': `Bearer ${currentToken}`,
