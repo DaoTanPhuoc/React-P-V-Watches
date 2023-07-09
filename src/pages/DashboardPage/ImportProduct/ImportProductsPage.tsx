@@ -55,7 +55,7 @@ const ImportProductsPage = () => {
         })
     }
     const fetchSupplier = () => {
-        axios.get(`${baseApi}/Suppliers`).then(res => setSuppliers(res.data))
+        axios.get(`${baseApi}/Suppliers`, { headers: { 'Authorization': `Bearer ${currentToken}` } }).then(res => setSuppliers(res.data))
     }
     useEffect(() => {
         fetchData()
@@ -109,13 +109,16 @@ const ImportProductsPage = () => {
         message.open({ key: 'upload', content: 'Đang xử lý...', type: 'loading' })
         const formData = new FormData()
         formData.append("supplierId", values["supplierId"]);
-        formData.append("file", values["file"].File);
+        formData.append("file", values["file"].file);
         axios.post(`${baseApi}/Imports/ImportFromFile`, formData, {
             headers: {
-                'Authorization': `Bearer ${currentToken}`
+                'Authorization': `Bearer ${currentToken}`,
+                'Content-Type': 'multipart/form-data',
             }
         }).then(() => {
             message.open({ key: 'upload', content: 'Thành công', type: 'success' })
+            fetchData();
+            setModalCSV(false)
         }).catch(error => {
             message.open({ key: 'upload', content: 'Thất bại: ' + error.response.data, type: 'error' })
         })
@@ -237,6 +240,7 @@ const ImportProductsPage = () => {
                         name="file"
                     >
                         <Upload
+                            accept='.csv'
                             fileList={fileList}
                             onChange={onChangeFile}
                             beforeUpload={() => false}
