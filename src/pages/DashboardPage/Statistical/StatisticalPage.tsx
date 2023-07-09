@@ -409,13 +409,13 @@ const StatisticalPage = () => {
     {
       title: "Tên sản phẩm",
       dataIndex: "Name",
-      width: "25%",
+      width: "17%",
       ...getColumnSearchProps("Name"),
     },
     {
       title: "Mã sản phẩm",
       dataIndex: "Code",
-      width: "15%",
+      width: "16%",
       ...getColumnSearchProps("Code"),
     },
     {
@@ -440,14 +440,14 @@ const StatisticalPage = () => {
       dataIndex: "Price",
       key: "Price",
       render: (Price) => moneyFormatter.format(Price),
-      width: "10%",
+
       // ...getColumnSearchProps("Price"),
     },
 
     {
       title: "Thương hiệu",
       dataIndex: "BrandName",
-      width: "10%",
+      width: "16%",
       //render: (BrandId) => brandProducts[BrandId].Name,
       render: (BrandName) => BrandName,
       ...getColumnSearchProps("BrandName"),
@@ -549,7 +549,7 @@ const StatisticalPage = () => {
 
       <Col xs={{ span: 30, offset: 0 }} lg={{ span: 8, offset: 1 }}>
         <div className="right-chart">
-          <div style={{ padding: "20px 20px", textAlign: "center", color: "#4963AF", fontSize: 18 }}>
+          <div style={{ padding: "20px 20px", textAlign: "center", color: "#4963AF", fontSize: 18, fontWeight: "bold" }}>
             Thống kê số lượng tồn kho
           </div>
           <div className="chart-brand">

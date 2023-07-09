@@ -201,8 +201,8 @@ const MyOrder = () => {
                 description="Bạn có chắc muốn hủy đơn hàng ?"
                 onConfirm={() => { handleCancelOrder(order.Id) }}
                 onCancel={cancel}
-                okText="Yes"
-                cancelText="No"
+                okText="Có"
+                cancelText="Không"
               >
                 <Button
                   className="btn-myacc-exit-order"

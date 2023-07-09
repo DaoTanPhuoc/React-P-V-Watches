@@ -298,14 +298,15 @@ const ShopPage = () => {
             />
             <div className="ban_text">
               <strong>
-                <span>Meeting current</span>
-                <br /> needs now
+                <span style={{ fontFamily: "Times New Roman" }}>VP-Watch</span>
+                {/* <br /> needs now */}
               </strong>
-              <p>
-                You can prioritize a child’s mental, emotional, <br />
-                behavioral, and physical health{" "}
+              <p style={{ fontFamily: "Futura" }}>
+                Thời gian là vô hạn, chúng tôi rất vinh dự <br />
+                khi là người mang đến giá trị đó thông qua {" "}<br />
+                những sản phẩm đầy tính nghệ thuật.
               </p>
-              <a href="#">Lend a hand</a>
+              {/* <a href="#">Lend a hand</a> */}
             </div>
           </div>
         </div>

@@ -96,15 +96,6 @@ const UserLayout = () => {
       return;
     }
 
-    // if (value.toLowerCase() === 'rolex') {
-    //   window.location.href = '/FilterProductsByRolex';
-    //   return;
-    // }
-
-    // if (value.toLowerCase() === 'hublot') {
-    //   window.location.href = '/FilterProductsByHublot';
-    //   return;
-    // }
 
     try {
       const response = await axios.get(`https://localhost:7182/api/Products?q=${value.toLowerCase()}`);
@@ -114,6 +105,7 @@ const UserLayout = () => {
       if (hasMatch) {
         const newOptions = data
           .filter((item: ProductModel) => item.Name.toLowerCase().includes(value.toLowerCase()))
+          .slice(0, 10) // lấy ra 10 sản phẩm gần nhất 
           .map((item: ProductModel) => ({
             value: item.Name,
             label: (
@@ -272,7 +264,9 @@ const UserLayout = () => {
             <Menu.Item key="4">
               <Link to={`/shopwoman/2`}><span style={{ fontSize: '5vw' }}>ĐỒNG HỒ Nữ</span></Link>
             </Menu.Item>
-            <Menu.Item key="5"><span style={{ fontSize: '5vw' }}>ĐỒNG HỒ Đôi</span></Menu.Item>
+            <Menu.Item key="5">
+              <Link to={`/shopcouple/28`}><span style={{ fontSize: '5vw' }}>ĐỒNG HỒ Đôi</span></Link>
+            </Menu.Item>
           </Menu.SubMenu>
           <Menu.Item key="6">
             <Link to="/news">
@@ -295,9 +289,8 @@ const UserLayout = () => {
             background: "#000",
           }}
         >
-          <img
+          {/* <img
             className="logo-header"
-            // src="https://benhviendongho.com/wp-content/uploads/2019/05/744px-Rolex_logo.svg.png"
             src={logo}
             style={{
               float: "left",
@@ -305,7 +298,19 @@ const UserLayout = () => {
               height: 150,
               margin: "16px 24px 16px 0",
               objectFit: "contain",
-            }} />
+            }} /> */}
+          <Link to="/">
+            <img
+              className="logo-header"
+              src={logo}
+              style={{
+                float: "left",
+                width: 200,
+                height: 150,
+                margin: "16px 24px 16px 0",
+                objectFit: "contain",
+              }} />
+          </Link>
 
           <Menu
             className="Menu-in-web"
@@ -322,17 +327,17 @@ const UserLayout = () => {
               {
                 key: 1,
                 label: (
-                  <Link to="/">
-                    <span style={{ color: "#fff" }}>TRANG CHỦ</span>
-                  </Link>
+                  <span className="user-layout-title-hover" style={{ color: "#fff" }}>
+                    <Link to="/"> TRANG CHỦ</Link>
+                  </span>
                 ),
               },
               {
                 key: 2,
                 label: (
-                  <Link to="/shop">
-                    <span style={{ color: "#fff" }}>SẢN PHẨM</span>
-                  </Link>
+                  <span style={{ color: "#fff" }}>
+                    <Link to="/shop"> SẢN PHẨM</Link>
+                  </span>
                 ),
               },
 
@@ -340,29 +345,33 @@ const UserLayout = () => {
                 key: 3,
                 // label: <span style={{ color: "#fff" }}>ĐỒNG HỒ NAM</span>,
                 label: (
-                  <Link to={`/shopman/1`}>
-                    <span style={{ color: "#fff" }}>ĐỒNG HỒ NAM</span>
-                  </Link>
+                  <span style={{ color: "#fff" }}>
+                    <Link to={`/shopman/1`}> ĐỒNG HỒ NAM</Link>
+                  </span>
                 ),
               },
               {
                 key: 4,
                 label: (
-                  <Link to={`/shopwoman/2`}>
-                    <span style={{ color: "#fff" }}>ĐỒNG HỒ NỮ</span>
-                  </Link>
+                  <span style={{ color: "#fff" }}>
+                    <Link to={`/shopwoman/2`}> ĐỒNG HỒ NỮ</Link>
+                  </span>
                 ),
               },
               {
                 key: 5,
-                label: <span style={{ color: "#fff" }}>ĐỒNG HỒ ĐÔI</span>,
+                label: (
+                  <span style={{ color: "#fff" }}>
+                    <Link to={`/shopcouple/28`}> ĐỒNG HỒ ĐÔI</Link>
+                  </span>
+                ),
               },
               {
                 key: 6,
                 label: (
-                  <Link to="/news">
-                    <span style={{ color: "#fff" }}>TIN TỨC</span>
-                  </Link>
+                  <span style={{ color: "#fff" }}>
+                    <Link to="/news"> TIN TỨC</Link>
+                  </span>
                 ),
               },
               {

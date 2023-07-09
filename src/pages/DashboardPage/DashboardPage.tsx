@@ -275,7 +275,7 @@ const Dashboard: React.FC = () => {
       <EditOutlined />
     ),
     getItem(<Link to="/admin/ros">Doanh Thu</Link>, "11", <DollarOutlined />),
-    getItem(<Link to="/admin/settingAccount">Tài Khoản</Link>, "12", <SettingFilled />),
+    // getItem(<Link to="/admin/settingAccount">Tài Khoản</Link>, "12", <SettingFilled />),
     getItem(<Link to="/admin/SuppilersDashboard">Nhà cung cấp</Link>, "13", <BankOutlined />),
     getItem(<Link to="/admin/LogsDashboard">Lịch sử thao tác</Link>, "14", <ReloadOutlined />),
   ];

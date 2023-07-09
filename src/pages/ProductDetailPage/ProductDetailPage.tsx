@@ -23,7 +23,7 @@ import Meta from "antd/es/card/Meta";
 import { AppContext } from "../../App";
 import { Avatar, Tooltip } from "antd";
 import TextArea from "antd/es/input/TextArea";
-
+import { Image } from 'antd';
 const moneyFormatter = new Intl.NumberFormat("vi", {
   style: "currency",
   currency: "VND",
@@ -217,9 +217,10 @@ const Details = () => {
             style={{
               textTransform: "uppercase",
               fontWeight: "bold",
+              fontFamily: "Times New Roman"
             }}
           >
-            Tại sao quý khách nên chọn P-watches
+            Tại sao quý khách nên chọn VP-watch
           </h4>
           <Col span={14}>
             <Descriptions.Item style={{ display: "block" }} label="Config Info">
@@ -709,13 +710,13 @@ const ProductDetail = () => {
                   width: 60,
                   height: 60,
                 }}
-                src="https://donghotantan.vn/images/strengths/original/stg21_1659589070.png"
+                src="https://donghotantan.vn/images/strengths/original/str6_1659412447.png"
                 alt=""
               />
             </div>
             <div className="card-banner-items-content">
               <h4 style={{ fontWeight: 700, padding: 10, color: "#fff" }}>
-                Đồng hồ chính hảng
+                Thiết kế nổi bật
               </h4>
             </div>
           </Card.Grid>
@@ -743,13 +744,13 @@ const ProductDetail = () => {
                   width: 60,
                   height: 60,
                 }}
-                src="https://donghotantan.vn/images/strengths/original/stg24_1659589157.png"
+                src="https://donghotantan.vn/images/strengths/original/str3_1659412350.png"
                 alt=""
               />
             </div>
             <div className="card-banner-items-content">
               <h4 style={{ fontWeight: 700, padding: 10, color: "#fff" }}>
-                Nhiều Mẫu Mã
+                Bản giới hạn
               </h4>
             </div>
           </Card.Grid>
@@ -780,6 +781,7 @@ const ProductDetail = () => {
               textAlign: "center",
               padding: 70,
               textTransform: "uppercase",
+              fontFamily: "Times New Roman"
             }}
           >
             Sản Phẩm Tương tự

@@ -115,6 +115,9 @@ const ShopWoMan = () => {
     // test chức năng lọc nâng cao
     const [tempProducts, setTempProducts] = useState<ProductModel[]>([]);
     //
+    // show ket qua tim kiem
+    const [countProducts, setCountProducts] = useState(0)
+    // dong
     const { categoryId } = useParams();
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -122,8 +125,11 @@ const ShopWoMan = () => {
             .get(`https://localhost:7182/api/Products/GetProductsByCategory?categoryId=${categoryId}`)
             .then((result) => {
                 setProducts(result.data);
+                // điêm kq sản phẩm
+                const count = result.data.length;
                 filterData(currentPage, result.data);
                 setTempProducts(result.data);
+                setCountProducts(count)
             })
             .catch((error) => {
                 console.log(error);
@@ -147,6 +153,8 @@ const ShopWoMan = () => {
     const onChangePage = (page: number) => {
         setCurrentPage(page);
         filterData(page, products);
+        // chuyển trang scroll tới vì trí chọn sản phẩm
+        window.scrollTo({ top: 730, behavior: 'smooth' })
     };
 
     const filterData = (page: number, data: ProductModel[]) => {
@@ -293,10 +301,10 @@ const ShopWoMan = () => {
                         />
                         <div className="ban_text">
                             <strong>
-                                <span>VP - Watches</span>
+                                <span style={{ fontFamily: "Times New Roman" }}>VP - Watches</span>
                                 <br /> Đồng Hồ Nữ
                             </strong>
-                            <p>
+                            <p style={{ fontFamily: "Futura" }}>
                                 VP Watch rất vui vì được phục vụ quý khách  <br />
                                 Chuyên cung cấp các đồng hồ <br /> chính hãng đến tay khách hàng{" "}
                             </p>
@@ -479,7 +487,7 @@ const ShopWoMan = () => {
                 </div>
 
                 <div style={{ padding: 20 }}>
-                    <h4 style={{ fontWeight: "bold" }}>Watches For You!</h4>
+                    <h4 style={{ fontWeight: "bold" }}>Kết quả tìm kiếm ({countProducts}) </h4>
                 </div>
                 <Card>
                     {filteredProducts.map((watchItem) => (

@@ -164,18 +164,18 @@ const BillingDashboard = () => {
             }
             icon={<SearchOutlined style={{ color: "#fff" }} />}
             size="small"
-            style={{ width: 90, color: "#fff", backgroundColor: "#000000" }}
+            style={{ width: 100, color: "#fff", backgroundColor: "#000000" }}
           >
-            Search
+            Tìm kiếm
           </Button>
           <Button
             onClick={() => clearFilters && handleReset(clearFilters)}
             size="small"
-            style={{ width: 90, color: "#fff", backgroundColor: "#000000" }}
+            style={{ width: 100, color: "#fff", backgroundColor: "#000000" }}
           >
-            Reset
+            Khôi phục
           </Button>
-          <Button
+          {/* <Button
             style={{ color: "#fff", backgroundColor: "#000000" }}
             type="link"
             size="small"
@@ -186,8 +186,8 @@ const BillingDashboard = () => {
             }}
           >
             Filter
-          </Button>
-          <Button
+          </Button> */}
+          {/* <Button
             style={{ color: "#fff", backgroundColor: "#000000" }}
             type="link"
             size="small"
@@ -196,7 +196,7 @@ const BillingDashboard = () => {
             }}
           >
             close
-          </Button>
+          </Button> */}
         </Space>
       </div>
     ),

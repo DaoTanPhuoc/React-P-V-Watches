@@ -6,7 +6,7 @@ import {
     Select,
 } from "antd";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import "./ShopMan.css";
+import "./ShopCouple.css";
 import { Image } from "antd";
 import {
     ShoppingCartOutlined,
@@ -19,7 +19,6 @@ import axios from "axios";
 import { ProductModel } from "../../models/ProductModel";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import { AppContext } from "../../App";
-import { error } from "console";
 
 const initialList = {
     sortby: {
@@ -88,7 +87,7 @@ const onChangeCheckBox = (checkedValues: CheckboxValueType[]) => {
 const pageSize = 8;
 const Context = React.createContext({ name: "Default" });
 
-const ShopMan = () => {
+const ShopCouple = () => {
 
     const navigate = useNavigate();
 
@@ -127,7 +126,6 @@ const ShopMan = () => {
             .then((result) => {
                 setProducts(result.data);
                 filterData(currentPage, result.data);
-                //setTempProducts(result.data)
                 setTempProducts(result.data);
                 // điêm kq sản phẩm
                 const count = result.data.length;
@@ -155,8 +153,6 @@ const ShopMan = () => {
     const onChangePage = (page: number) => {
         setCurrentPage(page);
         filterData(page, products);
-        // chuyển trang scroll tới vì trí chọn sản phẩm
-        window.scrollTo({ top: 730, behavior: 'smooth' })
     };
 
     const filterData = (page: number, data: ProductModel[]) => {
@@ -183,7 +179,7 @@ const ShopMan = () => {
         }
     }
 
-    // lọc sản phẩm theo thương hiệu của sản phẩm
+    // lọc sản phẩm theo thương hiệu sản phẩm
     const [selectedBrand, setSelectedBrand] = useState(0)
     useEffect(() => {
         if (selectedBrand === 0) {
@@ -193,13 +189,25 @@ const ShopMan = () => {
             .get(`https://localhost:7182/api/Products/GetProductsByBrand?brandId=${selectedBrand}`)
             .then((result) => {
                 //filterData(currentPage, result.data);
-                const filterman = result.data.filter((manpro: any) => manpro.CategoryName === "male")
+                const filterman = result.data.filter((manpro: any) => manpro.CategoryName === "Couple")
                 filterData(currentPage, filterman)
             })
             .catch((error) => {
                 console.log(error);
             });
     }, [selectedBrand, currentPage]);
+
+    // brand
+
+    // const handleBrandChange = (value: string) => {
+    //     if (value === "") {
+    //         filterData(currentPage, products)
+    //     } else {
+    //         var tempProduct = products.filter(p => p.BrandName === value);
+    //         filterData(currentPage, tempProduct)
+    //     }
+    // };
+    //
 
     // const handleBrandChange = (value: number) => {
     //     if (value === 0) {
@@ -212,7 +220,7 @@ const ShopMan = () => {
     //         axios
     //             .get(`https://localhost:7182/api/Products/GetProductsByBrand?brandId=${value}`)
     //             .then((result) => {
-    //                 //const filterMan = result.data.filter((manproducts: any) => manproducts.categoryId === 1)
+    //                 //const filterMan = result.data.filter((manproducts: any) => manproducts.categoryId === 2)
     //                 setFilteredProducts(result.data);
     //             })
     //             .catch((error) => {
@@ -220,19 +228,8 @@ const ShopMan = () => {
     //             });
     //     }
     // };
-
-    // phuoc viet
-    // const handleBrandChange = (value: string) => {
-    //     if (value == "") {
-    //         filterData(currentPage, products)
-    //     } else {
-    //         var filterPro = products.filter(p => p.BrandName === value);
-    //         filterData(currentPage, filterPro)
-    //     }
-    // }
-    //
-
     // closed
+
     const isShow = true;
 
     // product: OrderProductModel
@@ -297,16 +294,16 @@ const ShopMan = () => {
                     <div className="ban_img">
                         <img
                             style={{ height: 580, objectFit: "cover" }}
-                            src="https://www.vacheron-constantin.com/dam/ric-import/vac/abb5/d8b2/2177265.jpeg.transform.vacbanner.jpg"
+                            src="https://theadultman.com/wp-content/uploads/2021/10/Couple-Watches-Man-and-Girlfriend-Wearing-His-and-Hers-Watches-and-Hugging.jpg"
                             alt="banner"
                         />
                         <div className="ban_text">
                             <strong>
-                                <span style={{ fontFamily: "Times New Roman" }}>VP-Watches</span>
-                                <br /> Đồng Hồ Nam
+                                <span style={{ fontFamily: "Times New Roman" }} >VP - Watches</span>
+                                <br /> Đồng Hồ Đôi
                             </strong>
                             <p style={{ fontFamily: "Futura" }}>
-                                VP Watch rất vui vì được phục vụ quý khách ! <br />
+                                VP Watch rất vui vì được phục vụ quý khách  <br />
                                 Chuyên cung cấp các đồng hồ <br /> chính hãng đến tay khách hàng{" "}
                             </p>
                             <a href="#">Mua Ngay!</a>
@@ -490,7 +487,7 @@ const ShopMan = () => {
                 <div style={{ padding: 20 }}>
                     <h4 style={{ fontWeight: "bold" }}>Kết quả tìm kiếm ({countProducts}) </h4>
                 </div>
-                <Card className="card-resp">
+                <Card>
                     {filteredProducts.map((watchItem) => (
                         <Card.Grid style={gridStyle} key={watchItem.Id}>
                             <Link to={`/ProductDetail/${watchItem.BrandName}/${watchItem.Code}`}>
@@ -511,7 +508,7 @@ const ShopMan = () => {
                     Add to cart
                   </Button> */}
                             <h4 style={{ color: "#888888" }}>MSP {watchItem.Code}</h4>
-                            <h4 style={{ fontWeight: 600, height: 60 }}>{watchItem.Name}</h4>
+                            <h4 style={{ fontWeight: 600 }}>{watchItem.Name}</h4>
                             <h4 style={{ color: "#dbaf56" }}>
                                 {moneyFormatter.format(watchItem.Price)}{" "}
                             </h4>
@@ -526,7 +523,7 @@ const ShopMan = () => {
                                 {watchItem.Stock !== 0 ? (
                                     <Button
                                         className="btn-shopping"
-                                        icon={<ShoppingCartOutlined className="icon-btn-shopping" style={{ color: "#fff" }} />}
+                                        icon={<ShoppingCartOutlined style={{ color: "#fff" }} />}
                                         style={{
                                             margin: 53,
                                             color: "#fff",
@@ -558,4 +555,4 @@ const ShopMan = () => {
     );
 }
 
-export default ShopMan
+export default ShopCouple

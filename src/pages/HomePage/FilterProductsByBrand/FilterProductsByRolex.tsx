@@ -153,6 +153,7 @@ const FilterProductsByRolex = () => {
     const onChangePage = (page: number) => {
         setCurrentPage(page);
         filterData(page, products);
+        window.scrollTo({ top: 730, behavior: 'smooth' })
     };
 
     const filterData = (page: number, data: ProductModel[]) => {
@@ -293,20 +294,21 @@ const FilterProductsByRolex = () => {
                     <div className="ban_img">
                         <img
                             style={{ height: 580, objectFit: "cover" }}
-                            src="https://cdn3.dhht.vn/wp-content/uploads/2016/08/dong-ho-thoi-trang-rolex-banner.jpg"
+                            src="https://vrolex.shop/banner_slider1.jpg"
                             alt="banner"
                         />
-                        <div className="ban_text">
+                        {/* https://vrolex.shop/banner_slider1.jpg */}
+                        {/* <div className="ban_text">
                             <strong>
                                 <span>VP - Watch</span>
-                                {/* <br /> Đồng Hồ Nam */}
+                                
                             </strong>
                             <p>
                                 VP Watch rất vui vì được phục vụ quý khách<br />
                                 Chuyên cung cấp các đồng hồ <br /> chính hãng đến tay khách hàng{" "}
                             </p>
                             <a href="#">Mua Ngay!</a>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>

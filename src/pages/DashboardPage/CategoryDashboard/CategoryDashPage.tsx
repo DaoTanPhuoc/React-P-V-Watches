@@ -66,18 +66,18 @@ const CategoryDashPage = () => {
                         }
                         icon={<SearchOutlined style={{ color: "#fff" }} />}
                         size="small"
-                        style={{ width: 90, color: "#fff", backgroundColor: "#000000" }}
+                        style={{ width: 100, color: "#fff", backgroundColor: "#000000" }}
                     >
-                        Search
+                        Tìm kiếm
                     </Button>
                     <Button
                         onClick={() => clearFilters && handleReset(clearFilters)}
                         size="small"
-                        style={{ width: 90, color: "#fff", backgroundColor: "#000000" }}
+                        style={{ width: 100, color: "#fff", backgroundColor: "#000000" }}
                     >
-                        Reset
+                        khôi phục
                     </Button>
-                    <Button
+                    {/* <Button
                         style={{ color: "#fff", backgroundColor: "#000000" }}
                         type="link"
                         size="small"
@@ -88,8 +88,8 @@ const CategoryDashPage = () => {
                         }}
                     >
                         Filter
-                    </Button>
-                    <Button
+                    </Button> */}
+                    {/* <Button
                         style={{ color: "#fff", backgroundColor: "#000000" }}
                         type="link"
                         size="small"
@@ -97,8 +97,8 @@ const CategoryDashPage = () => {
                             close();
                         }}
                     >
-                        close
-                    </Button>
+                        Đóng
+                    </Button> */}
                 </Space>
             </div>
         ),
@@ -141,8 +141,8 @@ const CategoryDashPage = () => {
             dataIndex: "Id",
             render: (Id) => (
                 <Space>
-                    <Button onClick={() => showModalBrand(Id)} style={{ backgroundColor: "#000000", color: "#fff" }}>Sửa</Button>
-                    <Button onClick={() => deleteBrand(Id)} style={{ backgroundColor: "#000000", color: "#fff" }}>Xóa</Button>
+                    <Button onClick={() => showModalBrand(Id)} style={{ backgroundColor: "#000000", color: "#fff", fontWeight: "bold" }}>Sửa</Button>
+                    <Button onClick={() => deleteBrand(Id)} style={{ backgroundColor: "#000000", color: "#fff", fontWeight: "bold" }}>Xóa</Button>
                 </Space>
             ),
         },
@@ -268,6 +268,7 @@ const CategoryDashPage = () => {
                     setAddCategory([])
                     setIsModalOpen(false)
                     success();
+                    fetch();
                 }
             })
             .catch((error) => {
@@ -282,16 +283,38 @@ const CategoryDashPage = () => {
     const [isModalOpenBrand, setIsModalOpenBrand] = useState(false);
     const [currentBrand, setCurrentBrand] = useState<number>();
 
+    // const showModalBrand = (Id: any) => {
+    //     const cate = category.find(b => b.Id === Id);
+    //     setCurrentBrand(Id);
+    //     editRef.current?.setFieldsValue({
+    //         Id: cate.Id,
+    //         Name: cate.Name,
+    //         Description: cate.Description
+    //     })
+    //     setIsModalOpenBrand(true);
+    // };
+
+
     const showModalBrand = (Id: any) => {
         const cate = category.find(b => b.Id === Id);
         setCurrentBrand(Id);
-        editRef.current?.setFieldsValue({
-            Id: cate.Id,
-            Name: cate.Name,
-            Description: cate.Description
-        })
+
         setIsModalOpenBrand(true);
     };
+
+    useEffect(() => {
+        if (currentBrand) {
+            const cate = category.find(b => b.Id === currentBrand);
+
+            if (cate) {
+                editRef.current?.setFieldsValue({
+                    Id: cate.Id,
+                    Name: cate.Name,
+                    Description: cate.Description
+                });
+            }
+        }
+    }, [currentBrand, category]);
 
     const handleOkBrand = () => {
         setIsModalOpenBrand(false);
@@ -370,7 +393,7 @@ const CategoryDashPage = () => {
                 <h4 style={{ color: "#4963AF", fontWeight: 700, fontSize: 23 }}>
                     Thống kê danh mục sản phẩm
                 </h4>
-                <Button onClick={showModal} style={{ color: "#fff", backgroundColor: "#000000" }}>Thêm danh mục</Button>
+                <Button onClick={showModal} style={{ color: "#fff", backgroundColor: "#000000", fontWeight: "bold" }}>Thêm danh mục</Button>
                 <Modal
                     className="moadal-add-brand"
                     footer={null}

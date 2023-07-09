@@ -87,7 +87,7 @@ const News = () => {
       <div className="blog-section">
         <div className="section-content">
           <div className="title">
-            <h2>Tin Tức</h2>
+            <h2 style={{ fontFamily: "Times New Roman" }}>Tin Tức</h2>
             <hr
               style={{
                 display: "block",

@@ -1,8 +1,10 @@
-import { Button, message, Tabs, TabsProps } from 'antd';
+import { Button, Input, InputRef, message, Space, Tabs, TabsProps } from 'antd';
 import Table, { ColumnsType } from 'antd/es/table';
 import axios from 'axios';
-import React, { Children, useContext, useEffect, useState } from 'react'
+import React, { Children, useContext, useEffect, useRef, useState } from 'react'
 import { AppContext } from '../../../App';
+import { ColumnType, FilterConfirmProps } from 'antd/es/table/interface';
+import { SearchOutlined } from "@ant-design/icons";
 
 const InvoiceWait = () => {
     const moneyFormatter = new Intl.NumberFormat("vi", {
@@ -112,6 +114,153 @@ const InvoiceWait = () => {
         // table đơn đang chờ xác nhận
         const data = orders.filter(order => order.Status === 0)
         // closed
+        // tim kiem rieng cho cho xac nhan
+        interface Order {
+            Id: number;
+            FullName: string;
+            OrderProducts: any;
+            Total: number;
+            Address: string;
+            Phone: string;
+            Status: number;
+        }
+        type DataIndex = keyof Order;
+
+
+        //chức năng tìm kiếm
+        const [searchText, setSearchText] = useState("");
+        const [searchedColumn, setSearchedColumn] = useState("");
+        const searchInput = useRef<InputRef>(null);
+
+        const handleSearch = (
+            selectedKeys: string[],
+            confirm: (param?: FilterConfirmProps) => void,
+            dataIndex: DataIndex
+        ) => {
+            confirm();
+            setSearchText(selectedKeys[0]);
+            setSearchedColumn(dataIndex);
+        };
+
+        const handleReset = (clearFilters: () => void) => {
+            clearFilters();
+            setSearchText("");
+        };
+
+        const getColumnSearchProps = (
+            dataIndex: DataIndex
+        ): ColumnType<Order> => ({
+            filterDropdown: ({
+                setSelectedKeys,
+                selectedKeys,
+                confirm,
+                clearFilters,
+                close,
+            }) => (
+                <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+                    <Input
+                        ref={searchInput}
+                        // placeholder={`Search ${dataIndex}`}
+                        placeholder="Tìm kiếm"
+                        value={selectedKeys[0]}
+                        onChange={(e) =>
+                            setSelectedKeys(e.target.value ? [e.target.value] : [])
+                        }
+                        onPressEnter={() =>
+                            handleSearch(selectedKeys as string[], confirm, dataIndex)
+                        }
+                        style={{ marginBottom: 8, display: "block" }}
+                    />
+                    <Space>
+                        <Button
+                            type="primary"
+                            onClick={() =>
+                                handleSearch(selectedKeys as string[], confirm, dataIndex)
+                            }
+                            icon={<SearchOutlined style={{ color: "#fff" }} />}
+                            size="small"
+                            style={{ width: 100, color: "#fff", backgroundColor: "#000000" }}
+                        >
+                            Tìm kiếm
+                        </Button>
+                        <Button
+                            onClick={() => clearFilters && handleReset(clearFilters)}
+                            size="small"
+                            style={{ width: 100, color: "#fff", backgroundColor: "#000000" }}
+                        >
+                            Khôi phục
+                        </Button>
+                    </Space>
+                </div>
+            ),
+            filterIcon: (filtered: boolean) => (
+                <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+            ),
+            onFilter: (value, record) =>
+                record[dataIndex]
+                    .toString()
+                    .toLowerCase()
+                    .includes((value as string).toLowerCase()),
+            onFilterDropdownOpenChange: (visible) => {
+                if (visible) {
+                    setTimeout(() => searchInput.current?.select(), 100);
+                }
+            },
+        });
+        // đóng
+
+        const columns: ColumnsType<Order> = [
+            {
+                title: 'Mã đơn hàng',
+                dataIndex: 'Id',
+                ...getColumnSearchProps("Id"),
+                width: "11%"
+            },
+            {
+                title: 'Tên khách hàng',
+                dataIndex: 'FullName',
+                render: (text: string) => <a>{text}</a>,
+                width: "12%",
+                ...getColumnSearchProps("FullName"),
+            },
+            {
+                title: 'Hình ảnh',
+                dataIndex: 'OrderProducts',
+                render: (orderProducts: any[]) => (
+                    orderProducts.map(p =>
+                        <img
+                            src={p.ProductImage}
+                            style={{ width: 100, height: 100, objectFit: "cover", margin: 15 }}
+                            alt=""
+                        />)
+                )
+            },
+            {
+                title: 'Tên sản phẩm',
+                dataIndex: 'OrderProducts',
+                ...getColumnSearchProps("OrderProducts"),
+                render: (OrderProducts) => <div style={{ whiteSpace: "pre-line" }}>
+                    {OrderProducts.map((OrderProduct: { ProductName: any; }) => OrderProduct.ProductName).join('\n \n \n \n')}
+                </div>
+            },
+            {
+                title: 'Tổng tiền',
+                dataIndex: 'Total',
+                render: ((Total) => moneyFormatter.format(Total))
+            },
+            {
+                title: 'Địa chỉ',
+                dataIndex: 'Address',
+                ...getColumnSearchProps("Address"),
+            },
+            {
+                title: 'Số điện thoại',
+                dataIndex: 'Phone',
+                width: "12%",
+                ...getColumnSearchProps("Phone"),
+            }
+        ];
+        // đóng tìm kiếm cho việc tìm kiếm cho đang chờ xác nhận
         return (
             <>
                 <Button
@@ -144,6 +293,153 @@ const InvoiceWait = () => {
     const WaittingExit = () => {
         // table đơn đang chờ hủy
         const data = orders.filter(order => order.Status === -1)
+        // tim kiem rieng cho cho xac nhan
+        interface Order {
+            Id: number;
+            FullName: string;
+            OrderProducts: any;
+            Total: number;
+            Address: string;
+            Phone: string;
+            Status: number;
+        }
+        type DataIndex = keyof Order;
+
+
+        //chức năng tìm kiếm
+        const [searchText, setSearchText] = useState("");
+        const [searchedColumn, setSearchedColumn] = useState("");
+        const searchInput = useRef<InputRef>(null);
+
+        const handleSearch = (
+            selectedKeys: string[],
+            confirm: (param?: FilterConfirmProps) => void,
+            dataIndex: DataIndex
+        ) => {
+            confirm();
+            setSearchText(selectedKeys[0]);
+            setSearchedColumn(dataIndex);
+        };
+
+        const handleReset = (clearFilters: () => void) => {
+            clearFilters();
+            setSearchText("");
+        };
+
+        const getColumnSearchProps = (
+            dataIndex: DataIndex
+        ): ColumnType<Order> => ({
+            filterDropdown: ({
+                setSelectedKeys,
+                selectedKeys,
+                confirm,
+                clearFilters,
+                close,
+            }) => (
+                <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+                    <Input
+                        ref={searchInput}
+                        // placeholder={`Search ${dataIndex}`}
+                        placeholder="Tìm kiếm"
+                        value={selectedKeys[0]}
+                        onChange={(e) =>
+                            setSelectedKeys(e.target.value ? [e.target.value] : [])
+                        }
+                        onPressEnter={() =>
+                            handleSearch(selectedKeys as string[], confirm, dataIndex)
+                        }
+                        style={{ marginBottom: 8, display: "block" }}
+                    />
+                    <Space>
+                        <Button
+                            type="primary"
+                            onClick={() =>
+                                handleSearch(selectedKeys as string[], confirm, dataIndex)
+                            }
+                            icon={<SearchOutlined style={{ color: "#fff" }} />}
+                            size="small"
+                            style={{ width: 100, color: "#fff", backgroundColor: "#000000" }}
+                        >
+                            Tìm kiếm
+                        </Button>
+                        <Button
+                            onClick={() => clearFilters && handleReset(clearFilters)}
+                            size="small"
+                            style={{ width: 100, color: "#fff", backgroundColor: "#000000" }}
+                        >
+                            Khôi phục
+                        </Button>
+                    </Space>
+                </div>
+            ),
+            filterIcon: (filtered: boolean) => (
+                <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+            ),
+            onFilter: (value, record) =>
+                record[dataIndex]
+                    .toString()
+                    .toLowerCase()
+                    .includes((value as string).toLowerCase()),
+            onFilterDropdownOpenChange: (visible) => {
+                if (visible) {
+                    setTimeout(() => searchInput.current?.select(), 100);
+                }
+            },
+        });
+        // đóng
+
+        const columns: ColumnsType<Order> = [
+            {
+                title: 'Mã đơn hàng',
+                dataIndex: 'Id',
+                ...getColumnSearchProps("Id"),
+                width: "11%"
+            },
+            {
+                title: 'Tên khách hàng',
+                dataIndex: 'FullName',
+                render: (text: string) => <a>{text}</a>,
+                width: "12%",
+                ...getColumnSearchProps("FullName"),
+            },
+            {
+                title: 'Hình ảnh',
+                dataIndex: 'OrderProducts',
+                render: (orderProducts: any[]) => (
+                    orderProducts.map(p =>
+                        <img
+                            src={p.ProductImage}
+                            style={{ width: 100, height: 100, objectFit: "cover", margin: 15 }}
+                            alt=""
+                        />)
+                )
+            },
+            {
+                title: 'Tên sản phẩm',
+                dataIndex: 'OrderProducts',
+                ...getColumnSearchProps("OrderProducts"),
+                render: (OrderProducts) => <div style={{ whiteSpace: "pre-line" }}>
+                    {OrderProducts.map((OrderProduct: { ProductName: any; }) => OrderProduct.ProductName).join('\n \n \n \n')}
+                </div>
+            },
+            {
+                title: 'Tổng tiền',
+                dataIndex: 'Total',
+                render: ((Total) => moneyFormatter.format(Total))
+            },
+            {
+                title: 'Địa chỉ',
+                dataIndex: 'Address',
+                ...getColumnSearchProps("Address"),
+            },
+            {
+                title: 'Số điện thoại',
+                dataIndex: 'Phone',
+                width: "12%",
+                ...getColumnSearchProps("Phone"),
+            }
+        ];
+        // đóng tìm kiếm cho việc tìm kiếm cho đang chờ xác nhận
         // closed
         return (
             <>
@@ -177,6 +473,153 @@ const InvoiceWait = () => {
     // Đang chuẩn bị hàng
     const PreparingGoods = () => {
         const data = orders.filter(order => order.Status === 1)
+        // tim kiem rieng cho cho xac nhan
+        interface Order {
+            Id: number;
+            FullName: string;
+            OrderProducts: any;
+            Total: number;
+            Address: string;
+            Phone: string;
+            Status: number;
+        }
+        type DataIndex = keyof Order;
+
+
+        //chức năng tìm kiếm
+        const [searchText, setSearchText] = useState("");
+        const [searchedColumn, setSearchedColumn] = useState("");
+        const searchInput = useRef<InputRef>(null);
+
+        const handleSearch = (
+            selectedKeys: string[],
+            confirm: (param?: FilterConfirmProps) => void,
+            dataIndex: DataIndex
+        ) => {
+            confirm();
+            setSearchText(selectedKeys[0]);
+            setSearchedColumn(dataIndex);
+        };
+
+        const handleReset = (clearFilters: () => void) => {
+            clearFilters();
+            setSearchText("");
+        };
+
+        const getColumnSearchProps = (
+            dataIndex: DataIndex
+        ): ColumnType<Order> => ({
+            filterDropdown: ({
+                setSelectedKeys,
+                selectedKeys,
+                confirm,
+                clearFilters,
+                close,
+            }) => (
+                <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+                    <Input
+                        ref={searchInput}
+                        // placeholder={`Search ${dataIndex}`}
+                        placeholder="Tìm kiếm"
+                        value={selectedKeys[0]}
+                        onChange={(e) =>
+                            setSelectedKeys(e.target.value ? [e.target.value] : [])
+                        }
+                        onPressEnter={() =>
+                            handleSearch(selectedKeys as string[], confirm, dataIndex)
+                        }
+                        style={{ marginBottom: 8, display: "block" }}
+                    />
+                    <Space>
+                        <Button
+                            type="primary"
+                            onClick={() =>
+                                handleSearch(selectedKeys as string[], confirm, dataIndex)
+                            }
+                            icon={<SearchOutlined style={{ color: "#fff" }} />}
+                            size="small"
+                            style={{ width: 100, color: "#fff", backgroundColor: "#000000" }}
+                        >
+                            Tìm kiếm
+                        </Button>
+                        <Button
+                            onClick={() => clearFilters && handleReset(clearFilters)}
+                            size="small"
+                            style={{ width: 100, color: "#fff", backgroundColor: "#000000" }}
+                        >
+                            Khôi phục
+                        </Button>
+                    </Space>
+                </div>
+            ),
+            filterIcon: (filtered: boolean) => (
+                <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+            ),
+            onFilter: (value, record) =>
+                record[dataIndex]
+                    .toString()
+                    .toLowerCase()
+                    .includes((value as string).toLowerCase()),
+            onFilterDropdownOpenChange: (visible) => {
+                if (visible) {
+                    setTimeout(() => searchInput.current?.select(), 100);
+                }
+            },
+        });
+        // đóng
+
+        const columns: ColumnsType<Order> = [
+            {
+                title: 'Mã đơn hàng',
+                dataIndex: 'Id',
+                ...getColumnSearchProps("Id"),
+                width: "11%"
+            },
+            {
+                title: 'Tên khách hàng',
+                dataIndex: 'FullName',
+                render: (text: string) => <a>{text}</a>,
+                width: "12%",
+                ...getColumnSearchProps("FullName"),
+            },
+            {
+                title: 'Hình ảnh',
+                dataIndex: 'OrderProducts',
+                render: (orderProducts: any[]) => (
+                    orderProducts.map(p =>
+                        <img
+                            src={p.ProductImage}
+                            style={{ width: 100, height: 100, objectFit: "cover", margin: 15 }}
+                            alt=""
+                        />)
+                )
+            },
+            {
+                title: 'Tên sản phẩm',
+                dataIndex: 'OrderProducts',
+                ...getColumnSearchProps("OrderProducts"),
+                render: (OrderProducts) => <div style={{ whiteSpace: "pre-line" }}>
+                    {OrderProducts.map((OrderProduct: { ProductName: any; }) => OrderProduct.ProductName).join('\n \n \n \n')}
+                </div>
+            },
+            {
+                title: 'Tổng tiền',
+                dataIndex: 'Total',
+                render: ((Total) => moneyFormatter.format(Total))
+            },
+            {
+                title: 'Địa chỉ',
+                dataIndex: 'Address',
+                ...getColumnSearchProps("Address"),
+            },
+            {
+                title: 'Số điện thoại',
+                dataIndex: 'Phone',
+                width: "12%",
+                ...getColumnSearchProps("Phone"),
+            }
+        ];
+        // đóng tìm kiếm cho việc tìm kiếm cho đang chờ xác nhận
         return (
             <>
                 <Button
@@ -208,6 +651,153 @@ const InvoiceWait = () => {
     //Đang giao
     const Delivering = () => {
         const data = orders.filter(order => order.Status === 2)
+        // tim kiem rieng cho cho xac nhan
+        interface Order {
+            Id: number;
+            FullName: string;
+            OrderProducts: any;
+            Total: number;
+            Address: string;
+            Phone: string;
+            Status: number;
+        }
+        type DataIndex = keyof Order;
+
+
+        //chức năng tìm kiếm
+        const [searchText, setSearchText] = useState("");
+        const [searchedColumn, setSearchedColumn] = useState("");
+        const searchInput = useRef<InputRef>(null);
+
+        const handleSearch = (
+            selectedKeys: string[],
+            confirm: (param?: FilterConfirmProps) => void,
+            dataIndex: DataIndex
+        ) => {
+            confirm();
+            setSearchText(selectedKeys[0]);
+            setSearchedColumn(dataIndex);
+        };
+
+        const handleReset = (clearFilters: () => void) => {
+            clearFilters();
+            setSearchText("");
+        };
+
+        const getColumnSearchProps = (
+            dataIndex: DataIndex
+        ): ColumnType<Order> => ({
+            filterDropdown: ({
+                setSelectedKeys,
+                selectedKeys,
+                confirm,
+                clearFilters,
+                close,
+            }) => (
+                <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+                    <Input
+                        ref={searchInput}
+                        // placeholder={`Search ${dataIndex}`}
+                        placeholder="Tìm kiếm"
+                        value={selectedKeys[0]}
+                        onChange={(e) =>
+                            setSelectedKeys(e.target.value ? [e.target.value] : [])
+                        }
+                        onPressEnter={() =>
+                            handleSearch(selectedKeys as string[], confirm, dataIndex)
+                        }
+                        style={{ marginBottom: 8, display: "block" }}
+                    />
+                    <Space>
+                        <Button
+                            type="primary"
+                            onClick={() =>
+                                handleSearch(selectedKeys as string[], confirm, dataIndex)
+                            }
+                            icon={<SearchOutlined style={{ color: "#fff" }} />}
+                            size="small"
+                            style={{ width: 100, color: "#fff", backgroundColor: "#000000" }}
+                        >
+                            Tìm kiếm
+                        </Button>
+                        <Button
+                            onClick={() => clearFilters && handleReset(clearFilters)}
+                            size="small"
+                            style={{ width: 100, color: "#fff", backgroundColor: "#000000" }}
+                        >
+                            Khôi phục
+                        </Button>
+                    </Space>
+                </div>
+            ),
+            filterIcon: (filtered: boolean) => (
+                <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+            ),
+            onFilter: (value, record) =>
+                record[dataIndex]
+                    .toString()
+                    .toLowerCase()
+                    .includes((value as string).toLowerCase()),
+            onFilterDropdownOpenChange: (visible) => {
+                if (visible) {
+                    setTimeout(() => searchInput.current?.select(), 100);
+                }
+            },
+        });
+        // đóng
+
+        const columns: ColumnsType<Order> = [
+            {
+                title: 'Mã đơn hàng',
+                dataIndex: 'Id',
+                ...getColumnSearchProps("Id"),
+                width: "11%"
+            },
+            {
+                title: 'Tên khách hàng',
+                dataIndex: 'FullName',
+                render: (text: string) => <a>{text}</a>,
+                width: "12%",
+                ...getColumnSearchProps("FullName"),
+            },
+            {
+                title: 'Hình ảnh',
+                dataIndex: 'OrderProducts',
+                render: (orderProducts: any[]) => (
+                    orderProducts.map(p =>
+                        <img
+                            src={p.ProductImage}
+                            style={{ width: 100, height: 100, objectFit: "cover", margin: 15 }}
+                            alt=""
+                        />)
+                )
+            },
+            {
+                title: 'Tên sản phẩm',
+                dataIndex: 'OrderProducts',
+                ...getColumnSearchProps("OrderProducts"),
+                render: (OrderProducts) => <div style={{ whiteSpace: "pre-line" }}>
+                    {OrderProducts.map((OrderProduct: { ProductName: any; }) => OrderProduct.ProductName).join('\n \n \n \n')}
+                </div>
+            },
+            {
+                title: 'Tổng tiền',
+                dataIndex: 'Total',
+                render: ((Total) => moneyFormatter.format(Total))
+            },
+            {
+                title: 'Địa chỉ',
+                dataIndex: 'Address',
+                ...getColumnSearchProps("Address"),
+            },
+            {
+                title: 'Số điện thoại',
+                dataIndex: 'Phone',
+                width: "12%",
+                ...getColumnSearchProps("Phone"),
+            }
+        ];
+        // đóng tìm kiếm cho việc tìm kiếm cho đang chờ xác nhận
         return (
             <>
                 <Table
@@ -227,6 +817,153 @@ const InvoiceWait = () => {
     // đã hoàn thành
     const Complete = () => {
         const data = orders.filter(order => order.Status === 3)
+        // tim kiem rieng cho cho xac nhan
+        interface Order {
+            Id: number;
+            FullName: string;
+            OrderProducts: any;
+            Total: number;
+            Address: string;
+            Phone: string;
+            Status: number;
+        }
+        type DataIndex = keyof Order;
+
+
+        //chức năng tìm kiếm
+        const [searchText, setSearchText] = useState("");
+        const [searchedColumn, setSearchedColumn] = useState("");
+        const searchInput = useRef<InputRef>(null);
+
+        const handleSearch = (
+            selectedKeys: string[],
+            confirm: (param?: FilterConfirmProps) => void,
+            dataIndex: DataIndex
+        ) => {
+            confirm();
+            setSearchText(selectedKeys[0]);
+            setSearchedColumn(dataIndex);
+        };
+
+        const handleReset = (clearFilters: () => void) => {
+            clearFilters();
+            setSearchText("");
+        };
+
+        const getColumnSearchProps = (
+            dataIndex: DataIndex
+        ): ColumnType<Order> => ({
+            filterDropdown: ({
+                setSelectedKeys,
+                selectedKeys,
+                confirm,
+                clearFilters,
+                close,
+            }) => (
+                <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+                    <Input
+                        ref={searchInput}
+                        // placeholder={`Search ${dataIndex}`}
+                        placeholder="Tìm kiếm"
+                        value={selectedKeys[0]}
+                        onChange={(e) =>
+                            setSelectedKeys(e.target.value ? [e.target.value] : [])
+                        }
+                        onPressEnter={() =>
+                            handleSearch(selectedKeys as string[], confirm, dataIndex)
+                        }
+                        style={{ marginBottom: 8, display: "block" }}
+                    />
+                    <Space>
+                        <Button
+                            type="primary"
+                            onClick={() =>
+                                handleSearch(selectedKeys as string[], confirm, dataIndex)
+                            }
+                            icon={<SearchOutlined style={{ color: "#fff" }} />}
+                            size="small"
+                            style={{ width: 100, color: "#fff", backgroundColor: "#000000" }}
+                        >
+                            Tìm kiếm
+                        </Button>
+                        <Button
+                            onClick={() => clearFilters && handleReset(clearFilters)}
+                            size="small"
+                            style={{ width: 100, color: "#fff", backgroundColor: "#000000" }}
+                        >
+                            Khôi phục
+                        </Button>
+                    </Space>
+                </div>
+            ),
+            filterIcon: (filtered: boolean) => (
+                <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+            ),
+            onFilter: (value, record) =>
+                record[dataIndex]
+                    .toString()
+                    .toLowerCase()
+                    .includes((value as string).toLowerCase()),
+            onFilterDropdownOpenChange: (visible) => {
+                if (visible) {
+                    setTimeout(() => searchInput.current?.select(), 100);
+                }
+            },
+        });
+        // đóng
+
+        const columns: ColumnsType<Order> = [
+            {
+                title: 'Mã đơn hàng',
+                dataIndex: 'Id',
+                ...getColumnSearchProps("Id"),
+                width: "11%"
+            },
+            {
+                title: 'Tên khách hàng',
+                dataIndex: 'FullName',
+                render: (text: string) => <a>{text}</a>,
+                width: "12%",
+                ...getColumnSearchProps("FullName"),
+            },
+            {
+                title: 'Hình ảnh',
+                dataIndex: 'OrderProducts',
+                render: (orderProducts: any[]) => (
+                    orderProducts.map(p =>
+                        <img
+                            src={p.ProductImage}
+                            style={{ width: 100, height: 100, objectFit: "cover", margin: 15 }}
+                            alt=""
+                        />)
+                )
+            },
+            {
+                title: 'Tên sản phẩm',
+                dataIndex: 'OrderProducts',
+                ...getColumnSearchProps("OrderProducts"),
+                render: (OrderProducts) => <div style={{ whiteSpace: "pre-line" }}>
+                    {OrderProducts.map((OrderProduct: { ProductName: any; }) => OrderProduct.ProductName).join('\n \n \n \n')}
+                </div>
+            },
+            {
+                title: 'Tổng tiền',
+                dataIndex: 'Total',
+                render: ((Total) => moneyFormatter.format(Total))
+            },
+            {
+                title: 'Địa chỉ',
+                dataIndex: 'Address',
+                ...getColumnSearchProps("Address"),
+            },
+            {
+                title: 'Số điện thoại',
+                dataIndex: 'Phone',
+                width: "12%",
+                ...getColumnSearchProps("Phone"),
+            }
+        ];
+        // đóng tìm kiếm cho việc tìm kiếm cho đang chờ xác nhận
         return (
             <>
                 <Table

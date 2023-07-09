@@ -208,6 +208,7 @@ const HomePage = () => {
                 textAlign: "center",
                 padding: 10,
                 textTransform: "uppercase",
+                fontFamily: "Times New Roman"
               }}
             >
               Thương hiệu nổi bật
@@ -288,7 +289,7 @@ const HomePage = () => {
             style={{ width: "90%", margin: "auto", marginTop: 50, padding: 36 }}
           >
             <div style={{ marginBottom: 50 }}>
-              <h2 style={{ textTransform: "uppercase", textAlign: "center" }}>Sản Phẩm nổi bật</h2>
+              <h2 style={{ textTransform: "uppercase", textAlign: "center", fontFamily: "Times New Roman" }}>Sản Phẩm nổi bật</h2>
               <hr />
             </div>
 
@@ -389,7 +390,7 @@ const HomePage = () => {
 
         <div className="galleryWrapper">
           <div>
-            <h2 style={{ textAlign: "center", textTransform: "uppercase" }}>
+            <h2 style={{ textAlign: "center", textTransform: "uppercase", fontFamily: "Times New Roman" }}>
               Sản phẩm mới nhất
             </h2>
             <hr />
@@ -424,7 +425,7 @@ const HomePage = () => {
                     }}
                   >
                     <h4 style={{ color: "#888888" }}>MSP: {item.Code}</h4>
-                    <h4>{item.Name}</h4>
+                    <h4 className="btn-inStore-name-product">{item.Name}</h4>
                     <h4 style={{ color: "#dbaf56" }}>{moneyFormatter.format(item.Price)}</h4>
                   </div>
                 </div>
@@ -437,7 +438,7 @@ const HomePage = () => {
         <div className="blog-section">
           <div className="section-content">
             <div className="title">
-              <h2 style={{ textAlign: "center", textTransform: "uppercase" }}>
+              <h2 style={{ textAlign: "center", textTransform: "uppercase", fontFamily: "Times New Roman" }}>
                 Tin tức nổi bật
               </h2>
               <hr
@@ -479,7 +480,7 @@ const HomePage = () => {
                     </div>
                     <div className="posted-date">
                       <p style={{ textDecoration: "none", color: "#555555" }}>
-                        Posted {moment(news.CreatedAt).format("DD MMMM YYYY")}
+                        {moment(news.CreatedAt).format("DD MMMM YYYY")}
                       </p>
                     </div>
                   </div>
@@ -517,13 +518,13 @@ const HomePage = () => {
                     width: 60,
                     height: 60,
                   }}
-                  src="https://donghotantan.vn/images/strengths/original/stg21_1659589070.png"
+                  src="https://donghotantan.vn/images/strengths/original/str6_1659412447.png"
                   alt=""
                 />
               </div>
               <div className="card-banner-items-content">
                 <h4 style={{ fontWeight: 700, padding: 10, color: "#fff" }}>
-                  Đồng hồ chính hảng
+                  Thiết kế nổi bật
                 </h4>
               </div>
             </Card.Grid>
@@ -551,13 +552,13 @@ const HomePage = () => {
                     width: 60,
                     height: 60,
                   }}
-                  src="https://donghotantan.vn/images/strengths/original/stg24_1659589157.png"
+                  src="https://donghotantan.vn/images/strengths/original/str3_1659412350.png"
                   alt=""
                 />
               </div>
               <div className="card-banner-items-content">
                 <h4 style={{ fontWeight: 700, padding: 10, color: "#fff" }}>
-                  Đa dạng mẫu mã
+                  Bản giới hạn
                 </h4>
               </div>
             </Card.Grid>
@@ -583,7 +584,7 @@ const HomePage = () => {
 
         {/* comment */}
         <div className="comments">
-          <h2 style={{ textAlign: "center", textTransform: "uppercase" }}>
+          <h2 style={{ textAlign: "center", textTransform: "uppercase", fontFamily: "Times New Roman" }}>
             Đánh Giá
           </h2>
           <hr />
@@ -591,9 +592,9 @@ const HomePage = () => {
           <div className="comment-container">
             <figure className="snip1204">
               <blockquote>
-                Calvin: Sometimes when I'm talking to other people, my words
-                can't keep up with my thoughts. I wonder why we think faster
-                than we speak. Hobbes: Probably so we can think twice.{" "}
+                Tôi rất hài lòng về các dịch vụ, tôi được tư vấn.{" "}
+                và chọn được mẫu đồng hồ ưng ý cho mình, tôi rất hài lòng khi mua sắm
+                đồng hồ tại shop
               </blockquote>
               <div className="author">
                 <img
@@ -606,10 +607,9 @@ const HomePage = () => {
             </figure>
             <figure className="snip1204 hover">
               <blockquote>
-                Thank you. before I begin, I'd like everyone to notice that my
-                report is in a professional, clear plastic binder...When a
-                report looks this good, you know it'll get an A. That's a tip
-                kids. Write it down.
+                Cảm ơn shop đã mang lại trải nghiệm mua sắm tuyệt vời,
+                tôi được gọi hỗ trợ tư vấn miễn phí, tôi rất thích cách
+                cửa hàng chăm sóc khách hàng.
               </blockquote>
               <div className="author">
                 <img
@@ -622,9 +622,8 @@ const HomePage = () => {
             </figure>
             <figure className="snip1204">
               <blockquote>
-                My behaviour is addictive functioning in a disease process of
-                toxic co-dependency. I need holistic healing and wellness before
-                I'll accept any responsibility for my actions.
+                Tôi đã được hỗ trợ và tư vấn nhiệt tình khi mua đồng hồ tại shop.
+                Shop có nhiều mẫu mã đẹp và đa dạng để tôi có thể lựa chọn.
               </blockquote>
               <div className="author">
                 <img

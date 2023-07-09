@@ -144,7 +144,7 @@ const ImportProductsPage = () => {
                 </Space>
             </div>
             <div className="content-import-products">
-                <Modal footer={null} title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <Modal footer={null} title="Nhập sản phẩm" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                     <div className="form-import-products">
                         <Form
                             name="dynamic_form_nest_item"

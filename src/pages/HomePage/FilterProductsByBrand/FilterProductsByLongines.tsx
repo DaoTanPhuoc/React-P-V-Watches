@@ -153,6 +153,8 @@ const FilterProductsByLongines = () => {
     const onChangePage = (page: number) => {
         setCurrentPage(page);
         filterData(page, products);
+        // chuyển trang scroll tới vì trí chọn sản phẩm
+        window.scrollTo({ top: 730, behavior: 'smooth' })
     };
 
     const filterData = (page: number, data: ProductModel[]) => {

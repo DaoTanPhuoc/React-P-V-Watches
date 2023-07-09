@@ -58,12 +58,16 @@ const ProductsDashboard = () => {
       dataIndex: "CategoryName",
     },
     {
+      title: "Tồn kho",
+      dataIndex: "Stock",
+    },
+    {
       title: "Chức năng",
       dataIndex: "Id",
-      render: (Id) => (
+      render: (Id, Record) => (
         <Space size="middle">
-          <Button style={{ backgroundColor: "#000000", color: "#fff" }} onClick={() => openEdit(Id)}>Cập nhật</Button>
-          <Button style={{ backgroundColor: "#000000", color: "#fff" }} onClick={() => deleteBrand(Id)}  >Xóa</Button>
+          <Button style={{ backgroundColor: "#000000", color: "#fff", fontWeight: "bold" }} onClick={() => openEdit(Id)}>Cập nhật</Button>
+          <Button disabled={Record.Stock != 0} style={{ backgroundColor: "#000000", color: "#fff", fontWeight: "bold" }} onClick={() => deleteBrand(Id)}  >Xóa</Button>
         </Space>
       ),
     },
@@ -296,11 +300,11 @@ const ProductsDashboard = () => {
         }}
         className="table-das-container"
       >
-        <div className="title-das-products"><span style={{ color: "rgb(73, 99, 175)" }}>Danh sách sản phẩm</span></div>
+        <div className="title-das-products"><span style={{ color: "rgb(73, 99, 175)", fontWeight: "bold" }}>Danh sách sản phẩm</span></div>
         <div>
           <Button
             onClick={toggleModal}
-            style={{ color: "#fff", backgroundColor: "#000000" }}
+            style={{ color: "#fff", backgroundColor: "#000000", fontWeight: "bold" }}
           >
             Thêm sản phẩm
           </Button>
@@ -389,6 +393,14 @@ const ProductsDashboard = () => {
                     {
                       value: "Bạch Kim",
                       label: "Bạch Kim",
+                    },
+                    {
+                      value: "Đen",
+                      label: "Đen",
+                    },
+                    {
+                      value: "Trắng",
+                      label: "Trắng",
                     },
                   ]}
                 />
@@ -491,6 +503,10 @@ const ProductsDashboard = () => {
                     {
                       value: 38,
                       label: 38,
+                    },
+                    {
+                      value: 39,
+                      label: 39,
                     },
                     {
                       value: 40,

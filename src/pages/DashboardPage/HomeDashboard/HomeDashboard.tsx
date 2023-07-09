@@ -369,7 +369,7 @@ const HomeDas = () => {
                   <table className="table-left-chart">
                     {topProductSales && topProductSales.map((p: any, index: number) => (
                       <tr className="tr-left-chart">
-                        <td className="number">{index + 1}</td>
+                        <td style={{ fontFamily: "Global", fontSize: 30 }} className="number">{index + 1}</td>
                         <td className="name">{p.Name}</td>
                         <td className="points">
                           {p.Sales}{" "}
