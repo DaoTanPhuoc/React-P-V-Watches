@@ -27,11 +27,11 @@ const LogsDashboard = () => {
                         (row: {
                             FullName: string;
                             Action: string;
-                            CreatedDate: Date;
+                            CreatedAt: Date;
                         }) => ({
                             FullName: row.FullName,
                             Action: row.Action,
-                            CreatedDate: row.CreatedDate,
+                            CreatedAt: row.CreatedAt,
                         })
                     )
                 );
@@ -56,7 +56,7 @@ const LogsDashboard = () => {
         {
             title: "Thời gian",
             dataIndex: "CreatedAt",
-            render: (CreatedAt) => moment(CreatedAt).format("DD MMMM YYYY")
+            render: (CreatedAt) => moment(CreatedAt).format("DD-MM-YYYY, hh:mm:ss")
         }
     ];
     return (

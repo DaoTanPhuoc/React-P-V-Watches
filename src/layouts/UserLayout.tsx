@@ -98,14 +98,10 @@ const UserLayout = () => {
 
 
     try {
-      const response = await axios.get(`https://localhost:7182/api/Products?q=${value.toLowerCase()}`);
+      const response = await axios.get(`https://localhost:7182/api/Products/SearchProduct?name=${value.toLowerCase()}`);
       const data = response.data;
-      const hasMatch = data.some((item: ProductModel) => item.Name.toLowerCase().includes(value.toLowerCase()));
-
-      if (hasMatch) {
+      if (data) {
         const newOptions = data
-          .filter((item: ProductModel) => item.Name.toLowerCase().includes(value.toLowerCase()))
-          .slice(0, 10) // lấy ra 10 sản phẩm gần nhất 
           .map((item: ProductModel) => ({
             value: item.Name,
             label: (
