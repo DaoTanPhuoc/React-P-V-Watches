@@ -358,7 +358,8 @@ const FilterProductsByOmega = () => {
                                 },
                             ]}
                         /> */}
-                        <Select
+
+                        {/* <Select
                             showSearch
                             style={{
                                 width: 150,
@@ -399,7 +400,7 @@ const FilterProductsByOmega = () => {
                                     label: "Channel",
                                 },
                             ]}
-                        />
+                        /> */}
                     </div>
                     <div className="filter-items">
                         <Select
@@ -464,21 +465,45 @@ const FilterProductsByOmega = () => {
                                     label: "Kích thước",
                                 },
                                 {
-                                    value: 31,
-                                    label: "31mm",
+                                    value: 28,
+                                    label: "28mm",
                                 },
                                 {
-                                    value: 42,
-                                    label: "42mm",
+                                    value: 29,
+                                    label: "29mm",
+                                },
+                                {
+                                    value: 31,
+                                    label: "31mm",
                                 },
                                 {
                                     value: 33,
                                     label: "33mm",
                                 },
                                 {
+                                    value: 36,
+                                    label: "36mm",
+                                },
+                                {
                                     value: 40,
                                     label: "40mm",
                                 },
+                                {
+                                    value: 41,
+                                    label: "41mm",
+                                },
+                                {
+                                    value: 42,
+                                    label: "42mm"
+                                },
+                                {
+                                    value: 43,
+                                    label: "43mm"
+                                },
+                                {
+                                    value: 44,
+                                    label: "44mm",
+                                }
                             ]}
                         />
                     </div>

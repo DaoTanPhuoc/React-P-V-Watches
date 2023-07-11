@@ -42,6 +42,8 @@ const News = () => {
   //   return posts.slice((current - 1) * pageSize, current * pageSize);
   // }
   useEffect(() => {
+    // về trang đầu
+    window.scrollTo({ top: 0, behavior: "smooth" });
     fetchData()
     fetchNewstPost()
     NewsTop()

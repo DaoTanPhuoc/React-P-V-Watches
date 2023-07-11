@@ -394,13 +394,33 @@ const ShopMan = () => {
                                     label: "Hublot",
                                 },
                                 {
-                                    value: "Orient",
-                                    label: "Orient",
+                                    value: "Franck Muller",
+                                    label: "Franck Muller",
                                 },
                                 {
-                                    value: "Channel",
-                                    label: "Channel",
+                                    value: "Gucci",
+                                    label: "Gucci",
                                 },
+                                {
+                                    value: "Omega",
+                                    label: "Omega",
+                                },
+                                {
+                                    value: "Breiting",
+                                    label: "Breiting",
+                                },
+                                {
+                                    value: "Longines",
+                                    label: "Longines",
+                                },
+                                {
+                                    value: "IWC",
+                                    label: "IWC",
+                                },
+                                {
+                                    value: "Cartier",
+                                    label: "Cartier",
+                                }
                             ]}
                         />
                     </div>
@@ -467,21 +487,45 @@ const ShopMan = () => {
                                     label: "Kích thước",
                                 },
                                 {
-                                    value: 31,
-                                    label: "31mm",
+                                    value: 28,
+                                    label: "28mm",
                                 },
                                 {
-                                    value: 42,
-                                    label: "42mm",
+                                    value: 29,
+                                    label: "29mm",
+                                },
+                                {
+                                    value: 31,
+                                    label: "31mm",
                                 },
                                 {
                                     value: 33,
                                     label: "33mm",
                                 },
                                 {
+                                    value: 36,
+                                    label: "36mm",
+                                },
+                                {
                                     value: 40,
                                     label: "40mm",
                                 },
+                                {
+                                    value: 41,
+                                    label: "41mm",
+                                },
+                                {
+                                    value: 42,
+                                    label: "42mm"
+                                },
+                                {
+                                    value: 43,
+                                    label: "43mm"
+                                },
+                                {
+                                    value: 44,
+                                    label: "44mm",
+                                }
                             ]}
                         />
                     </div>

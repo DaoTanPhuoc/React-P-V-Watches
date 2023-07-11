@@ -486,16 +486,16 @@ const UserLayout = () => {
                 <h4>Liên kết với các hãng</h4>
                 <ul>
                   <li>
-                    <a href="#">Rolex</a>
+                    <Link to="/FilterProductsByRolex" >Rolex</Link>
                   </li>
                   <li>
-                    <a href="#">Hublot</a>
+                    <Link to="/FilterProductsByHublot" >Hublot</Link>
                   </li>
                   <li>
-                    <a href="#">Channel</a>
+                    <Link to="/FilterProductsByBreiting" >Breitling</Link>
                   </li>
                   <li>
-                    <a href="#">Orient</a>
+                    <Link to="/FilterProductsByCartier" >Carier</Link>
                   </li>
                 </ul>
               </div>

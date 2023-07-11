@@ -113,6 +113,9 @@ const ShopPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   // const { brandId, categoryId } = useParams();
   // (chuyen trang)
+  // show ket qua tim kiem
+  const [countProducts, setCountProducts] = useState(0)
+  // dong
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
     axios
@@ -121,6 +124,8 @@ const ShopPage = () => {
         setProducts(result.data);
         setTempProducts(result.data);
         filterData(currentPage, result.data);
+        const count = result.data.length;
+        setCountProducts(count)
       })
       .catch((error) => {
         console.log(error);
@@ -349,16 +354,32 @@ const ShopPage = () => {
                   label: "Hublot",
                 },
                 {
-                  value: "Orient",
-                  label: "Orient",
+                  value: "Franck Muller",
+                  label: "Franck Muller",
                 },
                 {
-                  value: "Channel",
-                  label: "Channel",
+                  value: "Gucci",
+                  label: "Gucci",
                 },
                 {
                   value: "Omega",
                   label: "Omega",
+                },
+                {
+                  value: "Breiting",
+                  label: "Breiting",
+                },
+                {
+                  value: "Longines",
+                  label: "Longines",
+                },
+                {
+                  value: "IWC",
+                  label: "IWC",
+                },
+                {
+                  value: "Cartier",
+                  label: "Cartier",
                 }
               ]}
             />
@@ -501,28 +522,52 @@ const ShopPage = () => {
                   label: "Kích thước",
                 },
                 {
-                  value: 31,
-                  label: "31mm",
+                  value: 28,
+                  label: "28mm",
                 },
                 {
-                  value: 42,
-                  label: "42mm",
+                  value: 29,
+                  label: "29mm",
+                },
+                {
+                  value: 31,
+                  label: "31mm",
                 },
                 {
                   value: 33,
                   label: "33mm",
                 },
                 {
+                  value: 36,
+                  label: "36mm",
+                },
+                {
                   value: 40,
                   label: "40mm",
                 },
+                {
+                  value: 41,
+                  label: "41mm",
+                },
+                {
+                  value: 42,
+                  label: "42mm"
+                },
+                {
+                  value: 43,
+                  label: "43mm"
+                },
+                {
+                  value: 44,
+                  label: "44mm",
+                }
               ]}
             />
           </div>
         </div>
 
         <div style={{ padding: 20 }}>
-          <h4 style={{ fontWeight: "bold" }}>Watches For You!</h4>
+          <h4 style={{ fontWeight: "bold" }}>Tìm thấy {countProducts} đồng hồ !</h4>
         </div>
         <Card className="card-resp">
           {filteredProducts.map((watchItem) => (

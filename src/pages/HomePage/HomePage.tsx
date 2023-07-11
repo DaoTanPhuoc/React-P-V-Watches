@@ -356,7 +356,7 @@ const HomePage = () => {
               <div className="bottom-left">
                 <h3 style={{ color: "white" }}>Đồng Hồ Nữ</h3>
                 <Link to={`/shopwoman/2`}>
-                  <button>Xem Thêm</button>
+                  <button style={{ backgroundColor: "#dbaf56", color: "#000000" }}>Xem Thêm</button>
                 </Link>
               </div>
             </div>
@@ -370,7 +370,7 @@ const HomePage = () => {
               <div className="bottom-left">
                 <h3 style={{ color: "white" }}>Đồng Hồ Nam</h3>
                 <Link to={`/shopman/1`}>
-                  <button>Xem Thêm</button>
+                  <button style={{ backgroundColor: "#dbaf56", color: "#000000" }}>Xem Thêm</button>
                 </Link>
               </div>
             </div>
@@ -382,7 +382,7 @@ const HomePage = () => {
               />
               <div className="bottom-left">
                 <h3 style={{ color: "white" }}>Đồng Hồ Đôi</h3>
-                <button>Xem Thêm</button>
+                <button style={{ backgroundColor: "#dbaf56", color: "#000000" }}>Xem Thêm</button>
               </div>
             </div>
           </div>

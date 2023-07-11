@@ -293,20 +293,20 @@ const CaseSize29to37 = () => {
                     <div className="ban_img">
                         <img
                             style={{ height: 580, objectFit: "cover" }}
-                            src="https://theme.hstatic.net/200000596685/1000963076/14/home-banner-three-image.png?v=145"
+                            src="https://media.gq.com/photos/63efd9291ff05e504d451049/master/w_2560%2Cc_limit/mahomes.jpg"
                             alt="banner"
                         />
-                        <div className="ban_text">
+                        {/* <div className="ban_text">
                             <strong>
                                 <span>VP - Watch</span>
-                                {/* <br /> Đồng Hồ Nam */}
+                               
                             </strong>
                             <p>
                                 VP Watch rất vui vì được phục vụ quý khách ! <br />
                                 Chuyên cung cấp các đồng hồ chính hãng đến tay khách hàng{" "}
                             </p>
                             <a href="#">Mua Ngay!</a>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>

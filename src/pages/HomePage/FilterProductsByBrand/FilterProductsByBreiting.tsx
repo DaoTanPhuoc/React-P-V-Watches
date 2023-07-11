@@ -295,7 +295,7 @@ const FilterProductsByBreiting = () => {
                     <div className="ban_img">
                         <img
                             style={{ height: 580, objectFit: "cover" }}
-                            src="https://www.cresuswatches.com/api/image//catalog/category/Top_Banner_72.jpg?output=png&type=module&action=resize&width=910&height=450"
+                            src="https://cdn.shopify.com/s/files/1/2794/0396/files/Breitling-Banner-Official.jpg?v=1545175663"
                             alt="banner"
                         />
                         {/* <div className="ban_text">
@@ -317,48 +317,7 @@ const FilterProductsByBreiting = () => {
             <div className="Products-container">
                 <div className="filter">
                     <div className="filter-items">
-                        {/* <Select
-                            showSearch
-                            style={{
-                                width: 150,
-                                fontWeight: "bold",
-                            }}
-                            placeholder="Thương Hiệu"
-                            optionFilterProp="children"
-                            value={selectedBrand}
-                            defaultValue={0}
-                            filterOption={(input, option) =>
-                                (option?.label ?? "").includes(input)
-                            }
-                            onChange={handleBrandChange}
-                            filterSort={(optionA, optionB) =>
-                                (optionA?.label ?? "")
-                                    .toLowerCase()
-                                    .localeCompare((optionB?.label ?? "").toLowerCase())
-                            }
-                            options={[
-                                {
-                                    value: 0,
-                                    label: "Thương Hiệu",
-                                },
-                                {
-                                    value: 1,
-                                    label: "Rolex",
-                                },
-                                {
-                                    value: 2,
-                                    label: "Hublot",
-                                },
-                                {
-                                    value: 3,
-                                    label: "Orient",
-                                },
-                                {
-                                    value: 4,
-                                    label: "Channel",
-                                },
-                            ]}
-                        /> */}
+                        {/*                         
                         <Select
                             showSearch
                             style={{
@@ -400,7 +359,7 @@ const FilterProductsByBreiting = () => {
                                     label: "Channel",
                                 },
                             ]}
-                        />
+                        /> */}
                     </div>
                     <div className="filter-items">
                         <Select
@@ -465,21 +424,45 @@ const FilterProductsByBreiting = () => {
                                     label: "Kích thước",
                                 },
                                 {
-                                    value: 31,
-                                    label: "31mm",
+                                    value: 28,
+                                    label: "28mm",
                                 },
                                 {
-                                    value: 42,
-                                    label: "42mm",
+                                    value: 29,
+                                    label: "29mm",
+                                },
+                                {
+                                    value: 31,
+                                    label: "31mm",
                                 },
                                 {
                                     value: 33,
                                     label: "33mm",
                                 },
                                 {
+                                    value: 36,
+                                    label: "36mm",
+                                },
+                                {
                                     value: 40,
                                     label: "40mm",
                                 },
+                                {
+                                    value: 41,
+                                    label: "41mm",
+                                },
+                                {
+                                    value: 42,
+                                    label: "42mm"
+                                },
+                                {
+                                    value: 43,
+                                    label: "43mm"
+                                },
+                                {
+                                    value: 44,
+                                    label: "44mm",
+                                }
                             ]}
                         />
                     </div>

@@ -178,33 +178,33 @@ const Details = () => {
             size="small"
           // column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
           >
-            <Descriptions.Item className="lable-product-detail-resp" label="Mã:">{product?.Code}</Descriptions.Item>
-            <Descriptions.Item className="lable-product-detail-resp" label="Tình Trạng">New</Descriptions.Item>
-            <Descriptions.Item className="lable-product-detail-resp" label="Xuất xứ:">Thụy Sĩ</Descriptions.Item>
-            <Descriptions.Item className="lable-product-detail-resp" label="Kích thước:">
+            <Descriptions.Item className="lable-product-detail-resp" label={<span style={{ fontWeight: "bold" }}>Mã</span>}>{product?.Code}</Descriptions.Item>
+            <Descriptions.Item className="lable-product-detail-resp" label={<span style={{ fontWeight: "bold" }}>Tình Trạng</span>}>New</Descriptions.Item>
+            <Descriptions.Item className="lable-product-detail-resp" label={<span style={{ fontWeight: "bold" }}>Xuất Sứ</span>}>Thụy Sĩ</Descriptions.Item>
+            <Descriptions.Item className="lable-product-detail-resp" label={<span style={{ fontWeight: "bold" }}>Kích thước</span>}>
               {product?.CaseSize}
             </Descriptions.Item>
-            <Descriptions.Item className="lable-product-detail-resp" label="Kính:">
+            <Descriptions.Item className="lable-product-detail-resp" label={<span style={{ fontWeight: "bold" }}>Kính</span>}>
               {product?.GlassMaterial}
             </Descriptions.Item>
-            <Descriptions.Item className="lable-product-detail-resp" label="Mặt số:">Khảm trai</Descriptions.Item>
-            <Descriptions.Item className="lable-product-detail-resp" label="Bộ máy:">
+            <Descriptions.Item className="lable-product-detail-resp" label={<span style={{ fontWeight: "bold" }}>Mặt Số</span>}>Khảm trai</Descriptions.Item>
+            <Descriptions.Item className="lable-product-detail-resp" label={<span style={{ fontWeight: "bold" }}>Bộ Máy</span>}>
               {product?.Movement}
             </Descriptions.Item>
-            <Descriptions.Item className="lable-product-detail-resp" label="Dự trữ năng lượng: ">
+            <Descriptions.Item className="lable-product-detail-resp" label={<span style={{ fontWeight: "bold" }}>Dự Trữ Năng Lượng:</span>}>
               55 giờ
             </Descriptions.Item>
-            <Descriptions.Item className="lable-product-detail-resp" label="Chức năng: ">
+            <Descriptions.Item className="lable-product-detail-resp" label={<span style={{ fontWeight: "bold" }}>Chức Năng</span>}>
               Giờ, Phút, Giây, Ngày
             </Descriptions.Item>
-            <Descriptions.Item className="lable-product-detail-resp" label="Chất liệu: ">
+            <Descriptions.Item className="lable-product-detail-resp" label={<span style={{ fontWeight: "bold" }}>Chất Liệu</span>}>
               {product?.CaseMaterial}
             </Descriptions.Item>
-            <Descriptions.Item className="lable-product-detail-resp" label="Bezel: ">Nạm kim cương</Descriptions.Item>
-            <Descriptions.Item className="lable-product-detail-resp" label="dây đeo: ">
+            <Descriptions.Item className="lable-product-detail-resp" label={<span style={{ fontWeight: "bold" }}>Bezel</span>}>Nạm kim cương</Descriptions.Item>
+            <Descriptions.Item className="lable-product-detail-resp" label={<span style={{ fontWeight: "bold" }}>Dây Đeo</span>}>
               President, liên kết ba mảnh hình bán nguyệt
             </Descriptions.Item>
-            <Descriptions.Item className="lable-product-detail-resp" label="Chất liệu dây đeo: ">
+            <Descriptions.Item className="lable-product-detail-resp" label={<span style={{ fontWeight: "bold" }}>Màu Sắc</span>}>
               {product?.Color}
             </Descriptions.Item>
           </Descriptions>
@@ -220,7 +220,7 @@ const Details = () => {
               fontFamily: "Times New Roman"
             }}
           >
-            Tại sao quý khách nên chọn VP-watch
+            Tại sao quý khách nên chọn <span style={{ color: "#dbaf56" }}>VP-watch</span>
           </h4>
           <Col span={14}>
             <Descriptions.Item style={{ display: "block" }} label="Config Info">

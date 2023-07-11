@@ -295,7 +295,7 @@ const FilterProductsByCartier = () => {
                     <div className="ban_img">
                         <img
                             style={{ height: 580, objectFit: "cover" }}
-                            src="https://www.thehourglass.com/vn/wp-content/uploads/sites/22/2019/02/SIHH2019-santos-de-cartier-chronograph-banner.jpg"
+                            src="https://zadok.com/wp-content/uploads/banner-blp-cartier-2560x870-pasha-steel-wspa0009.jpg"
                             alt="banner"
                         />
                         {/* <div className="ban_text">
@@ -359,7 +359,8 @@ const FilterProductsByCartier = () => {
                                 },
                             ]}
                         /> */}
-                        <Select
+
+                        {/* <Select
                             showSearch
                             style={{
                                 width: 150,
@@ -400,7 +401,7 @@ const FilterProductsByCartier = () => {
                                     label: "Channel",
                                 },
                             ]}
-                        />
+                        /> */}
                     </div>
                     <div className="filter-items">
                         <Select
@@ -465,21 +466,45 @@ const FilterProductsByCartier = () => {
                                     label: "Kích thước",
                                 },
                                 {
-                                    value: 31,
-                                    label: "31mm",
+                                    value: 28,
+                                    label: "28mm",
                                 },
                                 {
-                                    value: 42,
-                                    label: "42mm",
+                                    value: 29,
+                                    label: "29mm",
+                                },
+                                {
+                                    value: 31,
+                                    label: "31mm",
                                 },
                                 {
                                     value: 33,
                                     label: "33mm",
                                 },
                                 {
+                                    value: 36,
+                                    label: "36mm",
+                                },
+                                {
                                     value: 40,
                                     label: "40mm",
                                 },
+                                {
+                                    value: 41,
+                                    label: "41mm",
+                                },
+                                {
+                                    value: 42,
+                                    label: "42mm"
+                                },
+                                {
+                                    value: 43,
+                                    label: "43mm"
+                                },
+                                {
+                                    value: 44,
+                                    label: "44mm",
+                                }
                             ]}
                         />
                     </div>

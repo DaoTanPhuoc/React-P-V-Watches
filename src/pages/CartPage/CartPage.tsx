@@ -276,6 +276,7 @@ const CartPage = () => {
   };
   useEffect(() => {
     fetchProvices();
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
   //
 

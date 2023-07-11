@@ -293,20 +293,20 @@ const CaseSizeLessThan29 = () => {
                     <div className="ban_img">
                         <img
                             style={{ height: 580, objectFit: "cover" }}
-                            src="https://theme.hstatic.net/200000596685/1000963076/14/home-banner-three-image.png?v=145"
+                            src="https://www.watchpilot.com/cdn/shop/files/WP_Product_Page_Brand_Banner_Hamilton_v1Desktop_Ladies_1920_x_600px.jpg?v=3767438411375682681"
                             alt="banner"
                         />
-                        <div className="ban_text">
+                        {/* <div className="ban_text">
                             <strong>
                                 <span>VP - Watch</span>
-                                {/* <br /> Đồng Hồ Nam */}
+                                
                             </strong>
                             <p>
                                 VP Watch rất vui vì được phục vụ quý khách ! <br />
                                 Chuyên cung cấp các đồng hồ chính hãng đến tay khách hàng{" "}
                             </p>
                             <a href="#">Mua Ngay!</a>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>

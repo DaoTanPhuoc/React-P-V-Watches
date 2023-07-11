@@ -144,7 +144,8 @@ img {
 
 .add-cart-btn:hover {
   opacity: 0.8;
-  background-color: #272727;
+  /* background-color: #272727; */
+  background-color: #ffc62d;
   transition: all 0.2s ease-in-out;
 }
 
@@ -253,6 +254,9 @@ img {
 /* container-tab-detail */
 .container-tab-detail {
   display: flex;
+  background-image: url(https://www.breitling.com/assets/images/br-11-20/be-3365-temp/watch-outline.svg);
+  background-repeat: no-repeat;
+  background-position: 80px 26%;
 }
 
 @media only screen and (max-width: 480px) {

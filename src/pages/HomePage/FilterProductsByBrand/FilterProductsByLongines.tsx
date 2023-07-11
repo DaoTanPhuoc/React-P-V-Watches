@@ -295,7 +295,7 @@ const FilterProductsByLongines = () => {
                     <div className="ban_img">
                         <img
                             style={{ height: 580, objectFit: "cover" }}
-                            src="https://www.swisstimehouse.com/img/cms/22%20Jan/longines%20banner2000x600-min.jpg"
+                            src="https://www.bedetti.it/wp-content/uploads/2023/01/banner-logines-new.jpg"
                             alt="banner"
                         />
                         {/* <div className="ban_text">
@@ -359,7 +359,8 @@ const FilterProductsByLongines = () => {
                                 },
                             ]}
                         /> */}
-                        <Select
+
+                        {/* <Select
                             showSearch
                             style={{
                                 width: 150,
@@ -400,7 +401,7 @@ const FilterProductsByLongines = () => {
                                     label: "Channel",
                                 },
                             ]}
-                        />
+                        /> */}
                     </div>
                     <div className="filter-items">
                         <Select
@@ -465,21 +466,45 @@ const FilterProductsByLongines = () => {
                                     label: "Kích thước",
                                 },
                                 {
-                                    value: 31,
-                                    label: "31mm",
+                                    value: 28,
+                                    label: "28mm",
                                 },
                                 {
-                                    value: 42,
-                                    label: "42mm",
+                                    value: 29,
+                                    label: "29mm",
+                                },
+                                {
+                                    value: 31,
+                                    label: "31mm",
                                 },
                                 {
                                     value: 33,
                                     label: "33mm",
                                 },
                                 {
+                                    value: 36,
+                                    label: "36mm",
+                                },
+                                {
                                     value: 40,
                                     label: "40mm",
                                 },
+                                {
+                                    value: 41,
+                                    label: "41mm",
+                                },
+                                {
+                                    value: 42,
+                                    label: "42mm"
+                                },
+                                {
+                                    value: 43,
+                                    label: "43mm"
+                                },
+                                {
+                                    value: 44,
+                                    label: "44mm",
+                                }
                             ]}
                         />
                     </div>
