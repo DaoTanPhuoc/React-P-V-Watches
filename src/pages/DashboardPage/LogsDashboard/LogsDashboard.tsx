@@ -35,12 +35,11 @@ const LogsDashboard = () => {
                         })
                     )
                 );
-                console.log(res.data);
             })
             .catch((error) => {
                 console.log(error);
             })
-    })
+    }, [])
     //
     const columns: ColumnsType<DataType> = [
         {
@@ -56,8 +55,8 @@ const LogsDashboard = () => {
         },
         {
             title: "Thời gian",
-            dataIndex: "CreatedDate",
-            render: (CreatedDate) => moment(CreatedDate).format("DD MMMM YYYY")
+            dataIndex: "CreatedAt",
+            render: (CreatedAt) => moment(CreatedAt).format("DD MMMM YYYY")
         }
     ];
     return (

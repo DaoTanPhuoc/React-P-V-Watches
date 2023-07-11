@@ -48,8 +48,6 @@ const AdminSettingDas = () => {
             Email: currentUser.Email,
             PhoneNumber: currentUser.PhoneNumber,
         })
-        console.log(currentUser);
-
     }, [currentUser, form])
     return (
         <div style={{ width: "100%" }}>

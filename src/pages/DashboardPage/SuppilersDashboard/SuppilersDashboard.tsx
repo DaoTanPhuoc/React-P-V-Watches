@@ -305,7 +305,7 @@ const SuppilersDashboard = () => {
 
     const fetch = () => {
         axios
-            .get(`https://localhost:7182/api/Suppliers`)
+            .get(`https://localhost:7182/api/Suppliers`, { headers: { 'Authorization': `Bearer ${currentToken}` } })
             .then((res) => setCategory(res.data))
     }
 
