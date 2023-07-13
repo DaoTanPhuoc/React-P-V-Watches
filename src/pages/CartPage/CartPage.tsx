@@ -76,6 +76,11 @@ const CartPage = () => {
       message.open({ key: 'order', content: "Vui lòng cập nhật địa chỉ", type: 'error' })
       return;
     }
+    const total = cartOrders.reduce((sum: number, object: any)=> sum + (object.Quantity * object.Price), 0)
+    if(total > 2000000000 && paymentType === "NganLuong"){
+      message.open({ key: 'order', content: "Lỗi: Không thể tạo giao dịch Ngân Lượng với đơn hàng trên 2 tỷ" , type: 'error' })
+      return
+    }
     message.open({ key: 'order', content: "Đang tạo đơn hàng", type: 'loading' })
     const orderProducts = cartOrders.map((cardOrder: any) => {
       return {
@@ -100,7 +105,6 @@ const CartPage = () => {
       })
       .then((result) => {
         if (result.status === 200) {
-          form.resetFields();
           onChangeCartOrders([]);
           message.open({ key: 'order', content: "Tạo đơn hàng thành công", type: 'success' })
           if (paymentType === "NganLuong") {
@@ -124,6 +128,8 @@ const CartPage = () => {
       }
     }).then(res => {
       window.location.href = res.data
+    }).catch(error=>{
+      console.log(error);
     })
   }
 
