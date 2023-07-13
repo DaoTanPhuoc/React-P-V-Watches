@@ -785,7 +785,9 @@ const ProductDetail = () => {
             }}
           >
             Sản Phẩm Tương tự
+            <hr />
           </h2>
+
           <Slider {...settings}>
             {similarProducts.map((similarProduct) => (
               <div key={similarProduct.Id}>
@@ -802,7 +804,7 @@ const ProductDetail = () => {
                   <h4 style={{ color: "#888888" }}>
                     MSP {similarProduct.Code}
                   </h4>
-                  <h4 style={{ fontWeight: 600 }}>
+                  <h4 className="Name__products_in_Store" style={{ fontWeight: 600 }}>
                     {similarProduct.Name}
                   </h4>
 

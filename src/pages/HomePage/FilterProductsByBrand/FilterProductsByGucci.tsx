@@ -295,7 +295,7 @@ const FilterProductsByGucci = () => {
                     <div className="ban_img">
                         <img
                             style={{ height: 580, objectFit: "cover" }}
-                            src="https://3.bp.blogspot.com/-GRMMi-oTI6s/WqDCmcVrlCI/AAAAAAAABKM/tVhb_ktx8FUI7dojpXitKvwSG8CcKv3EwCK4BGAYYCw/s1600/HeroGridStandard_S71-Jwl-adv-02_001_Default.jpg"
+                            src="https://cdn-img-v2.webbnc.net/uploadv2/web/94/9433/slide/2020/05/08/09/58/1588931892_gucci-banner-home.jpg?v=4"
                             alt="banner"
                         />
                         {/* <div className="ban_text">
@@ -534,7 +534,7 @@ const FilterProductsByGucci = () => {
                     Add to cart
                   </Button> */}
                             <h4 style={{ color: "#888888" }}>MSP {watchItem.Code}</h4>
-                            <h4 style={{ fontWeight: 600, height: 60 }}>{watchItem.Name}</h4>
+                            <h4 className="Name__products_in_Store" style={{ fontWeight: 600 }}>{watchItem.Name}</h4>
                             <h4 style={{ color: "#dbaf56" }}>
                                 {moneyFormatter.format(watchItem.Price)}{" "}
                             </h4>
@@ -551,16 +551,18 @@ const FilterProductsByGucci = () => {
                                         className="btn-shopping"
                                         icon={<ShoppingCartOutlined className="icon-btn-shopping" style={{ color: "#fff" }} />}
                                         style={{
-                                            margin: 53,
+                                            // margin: 53,
+                                            marginTop: 25,
                                             color: "#fff",
                                             backgroundColor: "#000000",
+                                            fontWeight: "bold"
                                         }}
                                         size={"large"}
                                         onClick={() => {
                                             addToCart(watchItem);
                                         }}
                                     >
-                                        Thêm vào giỏ hàng
+                                        Thêm vào giỏ
                                     </Button>
                                 ) : (
                                     ""

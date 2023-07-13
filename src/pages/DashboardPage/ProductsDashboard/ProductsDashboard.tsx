@@ -8,6 +8,7 @@ import {
   Select,
   Space,
   Spin,
+  Tag,
   Upload,
   UploadFile,
 } from "antd";
@@ -60,6 +61,15 @@ const ProductsDashboard = () => {
     {
       title: "Tồn kho",
       dataIndex: "Stock",
+      render: (Stock) => (
+        <span>
+          {Stock === 0 ? (
+            <Tag color="error">Hết hàng</Tag>
+          ) : (
+            <Tag color="success">Còn hàng</Tag>
+          )}
+        </span>
+      ),
     },
     {
       title: "Chức năng",

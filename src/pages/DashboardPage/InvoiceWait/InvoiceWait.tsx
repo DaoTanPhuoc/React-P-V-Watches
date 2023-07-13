@@ -268,12 +268,26 @@ const InvoiceWait = () => {
                         backgroundColor: "#000000",
                         color: "#fff",
                         marginBottom: "40px",
-                        marginTop: "20px"
+                        marginTop: "20px",
+                        marginRight: "10px"
                     }}
                     onClick={() => changeStatus(1)}
                     disabled={data.length === 0}
                 >
-                    Xác nhận đơn hàng
+                    Xác nhận đơn
+                </Button>
+                <Button
+                    style={{
+                        backgroundColor: "#000000",
+                        color: "#fff",
+                        marginBottom: "40px",
+                        marginTop: "20px",
+                        marginLeft: "10px",
+                    }}
+                    onClick={() => changeStatus(-2)}
+                    disabled={data.length === 0}
+                >
+                    Hủy đơn hàng
                 </Button>
                 <Table
                     rowSelection={{

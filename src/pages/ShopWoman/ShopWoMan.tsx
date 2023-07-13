@@ -274,15 +274,17 @@ const ShopWoMan = () => {
 
     const filterProducts = (caseSize: number, brand: string) => {
         let filteredProducts = tempProducts;
-
+        let count = filteredProducts.length;
         if (caseSize !== 0) {
             filteredProducts = filteredProducts.filter(p => p.CaseSize === caseSize);
         }
 
         if (brand !== "") {
             filteredProducts = filteredProducts.filter(p => p.BrandName === brand);
+            count = filteredProducts.length;
         }
 
+        setCountProducts(count)
         setProducts(filteredProducts);
         filterData(currentPage, filteredProducts);
     };
@@ -554,7 +556,7 @@ const ShopWoMan = () => {
                     Add to cart
                   </Button> */}
                             <h4 style={{ color: "#888888" }}>MSP {watchItem.Code}</h4>
-                            <h4 style={{ fontWeight: 600 }}>{watchItem.Name}</h4>
+                            <h4 className="Name__products_in_Store" style={{ fontWeight: 600 }}>{watchItem.Name}</h4>
                             <h4 style={{ color: "#dbaf56" }}>
                                 {moneyFormatter.format(watchItem.Price)}{" "}
                             </h4>
@@ -571,16 +573,18 @@ const ShopWoMan = () => {
                                         className="btn-shopping"
                                         icon={<ShoppingCartOutlined style={{ color: "#fff" }} />}
                                         style={{
-                                            margin: 53,
+                                            // margin: 53,
+                                            marginTop: 25,
                                             color: "#fff",
                                             backgroundColor: "#000000",
+                                            fontWeight: "bold"
                                         }}
                                         size={"large"}
                                         onClick={() => {
                                             addToCart(watchItem);
                                         }}
                                     >
-                                        Thêm vào giỏ hàng
+                                        Thêm vào giỏ
                                     </Button>
                                 ) : (
                                     ""

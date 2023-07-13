@@ -298,14 +298,15 @@ const ShopFilterPriceOne = () => {
                         />
                         <div className="ban_text">
                             <strong>
-                                <span>VP - Watch</span>
+                                <span style={{ fontFamily: "Times New Roman" }}>VP-Watch</span>
                                 {/* <br /> Đồng Hồ Nam */}
                             </strong>
-                            <p>
-                                VP Watch rất vui vì được phục vụ quý khách ! <br />
-                                Chuyên cung cấp các đồng hồ chính hãng đến tay khách hàng{" "}
+                            <p style={{ fontFamily: "Futura" }}>
+                                Thời gian là vô hạn, chúng tôi rất vinh dự <br />
+                                khi là người mang đến giá trị đó thông qua {" "}<br />
+                                những sản phẩm đầy tính nghệ thuật.
                             </p>
-                            <a href="#">Mua Ngay!</a>
+                            {/* <a href="#">Mua Ngay!</a> */}
                         </div>
                     </div>
                 </div>
@@ -507,7 +508,7 @@ const ShopFilterPriceOne = () => {
                     Add to cart
                   </Button> */}
                             <h4 style={{ color: "#888888" }}>MSP {watchItem.Code}</h4>
-                            <h4 style={{ fontWeight: 600, height: 60 }}>{watchItem.Name}</h4>
+                            <h4 className="Name__products_in_Store" style={{ fontWeight: 600 }}>{watchItem.Name}</h4>
                             <h4 style={{ color: "#dbaf56" }}>
                                 {moneyFormatter.format(watchItem.Price)}{" "}
                             </h4>
@@ -524,16 +525,18 @@ const ShopFilterPriceOne = () => {
                                         className="btn-shopping"
                                         icon={<ShoppingCartOutlined className="icon-btn-shopping" style={{ color: "#fff" }} />}
                                         style={{
-                                            margin: 53,
+                                            // margin: 53,
+                                            marginTop: 25,
                                             color: "#fff",
                                             backgroundColor: "#000000",
+                                            fontWeight: "bold"
                                         }}
                                         size={"large"}
                                         onClick={() => {
                                             addToCart(watchItem);
                                         }}
                                     >
-                                        Thêm vào giỏ hàng
+                                        Thêm vào giỏ
                                     </Button>
                                 ) : (
                                     ""

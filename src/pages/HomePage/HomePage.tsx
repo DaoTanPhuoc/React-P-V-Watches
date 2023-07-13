@@ -318,7 +318,7 @@ const HomePage = () => {
                     }}
                   >
                     <h4 style={{ color: "#888888" }}>{brandImage.Code}</h4>
-                    <h4 style={{ fontWeight: 600 }}>{brandImage.Name}</h4>
+                    <h4 className="Name__products_in_Store" style={{ fontWeight: 600 }}>{brandImage.Name}</h4>
                     <h4 style={{ color: "#dbaf56" }}>
                       {moneyFormatter.format(brandImage.Price)}
                     </h4>
@@ -356,7 +356,7 @@ const HomePage = () => {
               <div className="bottom-left">
                 <h3 style={{ color: "white" }}>Đồng Hồ Nữ</h3>
                 <Link to={`/shopwoman/2`}>
-                  <button style={{ backgroundColor: "#dbaf56", color: "#000000" }}>Xem Thêm</button>
+                  <button style={{ backgroundColor: "#dbaf56", color: "#000000" }}>Xem thêm</button>
                 </Link>
               </div>
             </div>

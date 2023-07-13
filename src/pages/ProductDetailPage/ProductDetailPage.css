@@ -144,8 +144,8 @@ img {
 
 .add-cart-btn:hover {
   opacity: 0.8;
-  /* background-color: #272727; */
-  background-color: #ffc62d;
+  background-color: #272727;
+  /* background-color: #ffc62d; */
   transition: all 0.2s ease-in-out;
 }
 
@@ -203,7 +203,20 @@ img {
 .Similar-Product-container {
   background-color: #fff;
 }
-
+.Similar-Product-container hr {
+  display: block;
+  margin: auto;
+  width: 160px;
+  height: 3px;
+  background-color: #169010;
+}
+.Name__products_in_Store {
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* số dòng tối đa */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .App {
   width: 70%;
   margin: 0 auto;

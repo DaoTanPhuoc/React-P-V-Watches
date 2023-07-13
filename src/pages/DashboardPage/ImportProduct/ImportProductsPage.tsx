@@ -157,7 +157,7 @@ const ImportProductsPage = () => {
                         >
                             <Form.Item
                                 name='supplierId'
-                                initialValue={1}
+                                initialValue={2}
                             >
                                 <Select
                                     placeholder="Chọn nhà cung cấp"
@@ -228,7 +228,7 @@ const ImportProductsPage = () => {
                 >
                     <Form.Item
                         name='supplierId'
-                        initialValue={1}
+                        initialValue={2}
                     >
                         <Select
                             placeholder="Chọn nhà cung cấp"

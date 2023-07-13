@@ -178,3 +178,11 @@
   width: 100%;
   height: 100%;
 }
+
+.Name__products_in_Store {
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* số dòng tối đa */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

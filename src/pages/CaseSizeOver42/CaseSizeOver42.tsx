@@ -296,17 +296,17 @@ const CaseSizeOver42 = () => {
                             src="https://theme.hstatic.net/200000596685/1000963076/14/home-banner-three-image.png?v=145"
                             alt="banner"
                         />
-                        <div className="ban_text">
+                        {/* <div className="ban_text">
                             <strong>
                                 <span>VP - Watch</span>
-                                {/* <br /> Đồng Hồ Nam */}
+                                
                             </strong>
                             <p>
                                 VP Watch rất vui vì được phục vụ quý khách ! <br />
                                 Chuyên cung cấp các đồng hồ chính hãng đến tay khách hàng{" "}
                             </p>
                             <a href="#">Mua Ngay!</a>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>
@@ -463,20 +463,20 @@ const CaseSizeOver42 = () => {
                                     label: "Kích thước",
                                 },
                                 {
-                                    value: 31,
-                                    label: "31mm",
-                                },
-                                {
                                     value: 42,
                                     label: "42mm",
                                 },
                                 {
-                                    value: 33,
-                                    label: "33mm",
+                                    value: 43,
+                                    label: "43mm",
                                 },
                                 {
-                                    value: 40,
-                                    label: "40mm",
+                                    value: 44,
+                                    label: "44mm",
+                                },
+                                {
+                                    value: 45,
+                                    label: "45mm",
                                 },
                             ]}
                         />
@@ -507,7 +507,7 @@ const CaseSizeOver42 = () => {
                     Add to cart
                   </Button> */}
                             <h4 style={{ color: "#888888" }}>MSP {watchItem.Code}</h4>
-                            <h4 style={{ fontWeight: 600, height: 60 }}>{watchItem.Name}</h4>
+                            <h4 className="Name__products_in_Store" style={{ fontWeight: 600 }}>{watchItem.Name}</h4>
                             <h4 style={{ color: "#dbaf56" }}>
                                 {moneyFormatter.format(watchItem.Price)}{" "}
                             </h4>
@@ -524,16 +524,18 @@ const CaseSizeOver42 = () => {
                                         className="btn-shopping"
                                         icon={<ShoppingCartOutlined className="icon-btn-shopping" style={{ color: "#fff" }} />}
                                         style={{
-                                            margin: 53,
+                                            // margin: 53,
+                                            marginTop: 25,
                                             color: "#fff",
                                             backgroundColor: "#000000",
+                                            fontWeight: "bold"
                                         }}
                                         size={"large"}
                                         onClick={() => {
                                             addToCart(watchItem);
                                         }}
                                     >
-                                        Thêm vào giỏ hàng
+                                        Thêm vào giỏ
                                     </Button>
                                 ) : (
                                     ""
