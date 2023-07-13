@@ -3,6 +3,7 @@ import {
   Form,
   Input,
   InputNumber,
+  InputRef,
   message,
   Modal,
   Select,
@@ -13,12 +14,13 @@ import {
   UploadFile,
 } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "./ProductsDashboard.css";
 import { RcFile, UploadProps } from "antd/es/upload";
 import axios from "axios";
 import { AppContext } from "../../../App";
-
+import { ColumnType, FilterConfirmProps } from "antd/es/table/interface";
+import { SearchOutlined } from "@ant-design/icons";
 
 const moneyFormatter = new Intl.NumberFormat("vi", {
   style: "currency",
@@ -29,16 +31,113 @@ const moneyFormatter = new Intl.NumberFormat("vi", {
   maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
 });
 const ProductsDashboard = () => {
+
+  interface Order {
+    Code: number;
+    Name: string;
+    Image: string;
+    Price: number;
+    BrandName: string;
+    CategoryName: string;
+    Stock: number;
+  }
+  type DataIndex = keyof Order;
+
+  //chức năng tìm kiếm
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
+  const searchInput = useRef<InputRef>(null);
+
+  const handleSearch = (
+    selectedKeys: string[],
+    confirm: (param?: FilterConfirmProps) => void,
+    dataIndex: DataIndex
+  ) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+
+  const handleReset = (clearFilters: () => void) => {
+    clearFilters();
+    setSearchText("");
+  };
+
+  const getColumnSearchProps = (
+    dataIndex: DataIndex
+  ): ColumnType<Order> => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }) => (
+      <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+        <Input
+          ref={searchInput}
+          // placeholder={`Search ${dataIndex}`}
+          placeholder="Tìm kiếm"
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() =>
+            handleSearch(selectedKeys as string[], confirm, dataIndex)
+          }
+          style={{ marginBottom: 8, display: "block" }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() =>
+              handleSearch(selectedKeys as string[], confirm, dataIndex)
+            }
+            icon={<SearchOutlined style={{ color: "#fff" }} />}
+            size="small"
+            style={{ width: 100, color: "#fff", backgroundColor: "#000000" }}
+          >
+            Tìm kiếm
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleReset(clearFilters)}
+            size="small"
+            style={{ width: 100, color: "#fff", backgroundColor: "#000000" }}
+          >
+            Khôi phục
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered: boolean) => (
+      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex]
+        .toString()
+        .toLowerCase()
+        .includes((value as string).toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+  });
+  // đóng
+
+
   const columns: ColumnsType<any> = [
     {
       title: "Mã sản phẩm",
       dataIndex: "Code",
       // render: (text) => <a>{text}</a>,
+      ...getColumnSearchProps("Code")
     },
     {
       title: "Tên sản phẩm",
       dataIndex: "Name",
       // render: (text) => <a>{text}</a>,
+      ...getColumnSearchProps("Name")
     },
     {
       title: "Hình ảnh",
@@ -53,10 +152,12 @@ const ProductsDashboard = () => {
     {
       title: "Nhãn hiệu",
       dataIndex: "BrandName",
+      ...getColumnSearchProps("BrandName")
     },
     {
       title: "Loại sản phẩm",
       dataIndex: "CategoryName",
+      ...getColumnSearchProps("CategoryName")
     },
     {
       title: "Tồn kho",

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import './CategoryDashPage.css'
-import { Button, Form, FormInstance, Input, InputRef, Modal, Space, message } from 'antd'
+import { Button, Form, FormInstance, Input, InputRef, Modal, Select, Space, message } from 'antd'
 import Table, { ColumnType } from 'antd/es/table';
 import { SearchOutlined } from '@ant-design/icons';
 import { ColumnsType, FilterConfirmProps } from 'antd/es/table/interface';
@@ -132,6 +132,11 @@ const CategoryDashPage = () => {
         },
         {
             title: 'Mô tả',
+            dataIndex: 'Description',
+            ...getColumnSearchProps('Description'),
+        },
+        {
+            title: 'Dành cho',
             dataIndex: 'Description',
             ...getColumnSearchProps('Description'),
         },
@@ -415,12 +420,25 @@ const CategoryDashPage = () => {
                         <Form.Item label="Mô tả" name="Description" rules={[{ required: true, message: 'Vui lòng nhập mô tả' }]}>
                             <Input />
                         </Form.Item>
+                        <Form.Item label="Dành cho" rules={[{ required: true, message: 'Vui lòng chọn loại dành cho !' }]}>
+                            <Select
+                                defaultValue="Nam"
+                                style={{ width: 120 }}
+                                //   onChange={handleChange}
+                                options={[
+                                    { value: 'Nam', label: 'Nam' },
+                                    { value: 'Nữ', label: 'Nữ' },
+                                    { value: 'Cả Nam & Nữ', label: 'Cả Nam & Nữ' },
+                                ]}
+                            />
+                        </Form.Item>
 
                         <Form.Item>
                             <Button style={{
                                 backgroundColor: "#000000",
                                 color: "#fff",
-                                marginLeft: "68%"
+                                marginLeft: "68%",
+                                fontWeight: "bold"
                             }}
                                 htmlType="submit">Thêm danh mục
                             </Button>

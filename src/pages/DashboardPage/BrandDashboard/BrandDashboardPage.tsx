@@ -308,19 +308,19 @@ const BrandDashboardPage = () => {
               handleSearch(selectedKeys as string[], confirm, dataIndex)
             }
             icon={<SearchOutlined style={{ color: "#fff" }} />}
-            size="small"
-            style={{ width: 90, color: "#fff", backgroundColor: "#000000" }}
+
+            style={{ width: 110, color: "#fff", backgroundColor: "#000000" }}
           >
-            Search
+            Tìm kiếm
           </Button>
           <Button
             onClick={() => clearFilters && handleReset(clearFilters)}
-            size="small"
-            style={{ width: 90, color: "#fff", backgroundColor: "#000000" }}
+
+            style={{ width: 100, color: "#fff", backgroundColor: "#000000" }}
           >
-            Reset
+            Khôi phục
           </Button>
-          <Button
+          {/* <Button
             style={{ color: "#fff", backgroundColor: "#000000" }}
             type="link"
             size="small"
@@ -331,8 +331,8 @@ const BrandDashboardPage = () => {
             }}
           >
             Filter
-          </Button>
-          <Button
+          </Button> */}
+          {/* <Button
             style={{ color: "#fff", backgroundColor: "#000000" }}
             type="link"
             size="small"
@@ -341,7 +341,7 @@ const BrandDashboardPage = () => {
             }}
           >
             close
-          </Button>
+          </Button> */}
         </Space>
       </div>
     ),
@@ -409,19 +409,19 @@ const BrandDashboardPage = () => {
               handleSearchBrand(selectedKeys as string[], confirm, dataIndex)
             }
             icon={<SearchOutlined style={{ color: "#fff" }} />}
-            size="small"
-            style={{ width: 90, color: "#fff", backgroundColor: "#000000" }}
+
+            style={{ width: 110, color: "#fff", backgroundColor: "#000000" }}
           >
-            Search
+            Tìm kiếm
           </Button>
           <Button
             onClick={() => clearFilters && handleResetBrand(clearFilters)}
-            size="small"
-            style={{ width: 90, color: "#fff", backgroundColor: "#000000" }}
+
+            style={{ width: 100, color: "#fff", backgroundColor: "#000000" }}
           >
-            Reset
+            Khôi phục
           </Button>
-          <Button
+          {/* <Button
             style={{ color: "#fff", backgroundColor: "#000000" }}
             type="link"
             size="small"
@@ -432,8 +432,8 @@ const BrandDashboardPage = () => {
             }}
           >
             Filter
-          </Button>
-          <Button
+          </Button> */}
+          {/* <Button
             style={{ color: "#fff", backgroundColor: "#000000" }}
             type="link"
             size="small"
@@ -442,7 +442,7 @@ const BrandDashboardPage = () => {
             }}
           >
             close
-          </Button>
+          </Button> */}
         </Space>
       </div>
     ),
@@ -507,6 +507,21 @@ const BrandDashboardPage = () => {
 
 
   // call api sửa thương hiệu
+
+  useEffect(() => {
+    if (currentBrand) {
+      const brand = stateBrand.find(b => b.Id === currentBrand);
+
+      if (brand) {
+        editRef.current?.setFieldsValue({
+          Id: brand.Id,
+          Name: brand.Name,
+          Description: brand.Description
+        });
+      }
+    }
+  }, [currentBrand, stateBrand]);
+
   const onFinishBrand = (values: any) => {
     axios.put(`https://localhost:7182/api/Brands/${currentBrand}`, values, {
       headers: {
@@ -586,8 +601,8 @@ const BrandDashboardPage = () => {
       dataIndex: "Id",
       render: (Id) => (
         <Space>
-          <Button onClick={() => showModalBrand(Id)} style={{ backgroundColor: "#000000", color: "#fff" }}>Sửa</Button>
-          <Button onClick={() => deleteBrand(Id)} style={{ backgroundColor: "#000000", color: "#fff" }}>Xóa</Button>
+          <Button onClick={() => showModalBrand(Id)} style={{ backgroundColor: "#000000", color: "#fff", fontWeight: "bold" }}>Sửa</Button>
+          <Button onClick={() => deleteBrand(Id)} style={{ backgroundColor: "#000000", color: "#fff", fontWeight: "bold" }}>Xóa</Button>
         </Space>
       ),
     },
@@ -700,11 +715,11 @@ const BrandDashboardPage = () => {
             <h4 style={{ color: "#4963AF", fontWeight: 700, fontSize: 23 }}>
               Thống kê loại sản phẩm
             </h4>
-            <Button onClick={showModal} style={{ color: "#fff", backgroundColor: "#000000" }}>
+            <Button onClick={showModal} style={{ color: "#fff", backgroundColor: "#000000", fontWeight: "bold" }}>
               Thêm Thương Hiệu
             </Button>
             {/* modal sửa thương hiệu */}
-            <Modal footer={null} className="modal-edit-brand" title="Sửa Thương Hiệu" open={isModalOpenBrand} onOk={handleOkBrand} onCancel={handleCancelBrand}>
+            <Modal footer={null} className="modal-edit-brand" title={<span style={{ fontWeight: "bold" }}>Sửa Thương Hiệu</span>} open={isModalOpenBrand} onOk={handleOkBrand} onCancel={handleCancelBrand}>
               <Form
                 labelCol={{ span: 6 }}
                 wrapperCol={{ span: 14 }}
@@ -735,7 +750,8 @@ const BrandDashboardPage = () => {
                   <Button style={{
                     backgroundColor: "#000000",
                     color: "#fff",
-                    marginLeft: "68%"
+                    marginLeft: "68%",
+                    fontWeight: "bold"
                   }}
                     htmlType="submit">Cập Nhật
                   </Button>
@@ -746,7 +762,7 @@ const BrandDashboardPage = () => {
             <Modal
               className="moadal-add-brand"
               footer={null}
-              title="Thêm Thương hiệu"
+              title={<span style={{ fontWeight: "bold" }}>Thêm Thương hiệu</span>}
               open={isModalOpen}
               onOk={handleOk}
               onCancel={handleCancel}>
@@ -768,7 +784,8 @@ const BrandDashboardPage = () => {
                   <Button style={{
                     backgroundColor: "#000000",
                     color: "#fff",
-                    marginLeft: "68%"
+                    marginLeft: "68%",
+                    fontWeight: 'bold'
                   }}
                     htmlType="submit">Thêm thương hiệu
                   </Button>
@@ -840,7 +857,7 @@ const BrandDashboardPage = () => {
             <Col span={18}>
               <div className="chart-brand-das-container-responsive" style={{ border: "1px solid black" }}>
                 <h4
-                  style={{ padding: 10, textAlign: "center", color: "#4963AF" }}
+                  style={{ padding: 10, textAlign: "center", color: "#4963AF", fontWeight: "bold" }}
                 >
                   Số lượng sản phẩm bán theo loại
                 </h4>
@@ -854,7 +871,7 @@ const BrandDashboardPage = () => {
             <Col span={10}>
               <div className="table-brand-list-responsive">
                 <h4 className="title-brand-das-responsive"
-                  style={{ padding: 10, textAlign: "center", color: "#4963AF" }}
+                  style={{ padding: 10, textAlign: "center", color: "#4963AF", fontWeight: "bold" }}
                 >
                   Danh sách thương hiệu
                 </h4>
@@ -884,7 +901,7 @@ const BrandDashboardPage = () => {
               <div className="table-brand-list-responsive">
                 <h4
                   className="title-brand-das-responsive"
-                  style={{ padding: 10, textAlign: "center", color: "#4963AF" }}
+                  style={{ padding: 10, textAlign: "center", color: "#4963AF", fontWeight: "bold" }}
                 >
                   Danh sách sản phẩm
                 </h4>
