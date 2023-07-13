@@ -137,8 +137,10 @@ const CategoryDashPage = () => {
         },
         {
             title: 'Dành cho',
-            dataIndex: 'Description',
-            ...getColumnSearchProps('Description'),
+            dataIndex: 'Type',
+            render: (type: number) => (
+                <p>{getType(type)}</p>
+            ),
         },
         {
             title: "Chức năng",
@@ -153,6 +155,18 @@ const CategoryDashPage = () => {
         },
     ];
 
+    const getType = (type: number) => {
+        switch (type) {
+            case 0:
+                return "Nam"
+            case 1:
+                return "Nữ"
+            case 2:
+                return "Cả Nam và Nữ"
+            default:
+                break;
+        }
+    }
 
     // call api danh sách
     const [category, setCategory] = useState<any[]>([])
@@ -166,10 +180,12 @@ const CategoryDashPage = () => {
                             Id: number
                             Name: string;
                             Description: string;
+                            Type: number
                         }) => ({
                             Id: row.Id,
                             Name: row.Name,
                             Description: row.Description,
+                            Type: row.Type
                         })
                     )
                 );
@@ -246,20 +262,11 @@ const CategoryDashPage = () => {
     // closed
 
     // onfinish add
-    const [AddCategory, setAddCategory] = useState([])
     const onFinishAddCategory = (values: any) => {
-        const CategoryProducts = AddCategory.map((cate: any) => {
-            return {
-                Name: cate.Name,
-                Description: cate.Description
-            };
-        });
-        console.log(AddCategory);
-
         const dataToPost = {
             Name: values.Name || "",
             Description: values.Description,
-            CategoryProducts: CategoryProducts
+            Type: values.Type
         };
         axios
             .post(`https://localhost:7182/api/Categories/AddCategory`, dataToPost, {
@@ -270,7 +277,6 @@ const CategoryDashPage = () => {
             .then((result) => {
                 if (result.status === 200) {
                     formRef.current?.resetFields();
-                    setAddCategory([])
                     setIsModalOpen(false)
                     success();
                     fetch();
@@ -315,7 +321,8 @@ const CategoryDashPage = () => {
                 editRef.current?.setFieldsValue({
                     Id: cate.Id,
                     Name: cate.Name,
-                    Description: cate.Description
+                    Description: cate.Description,
+                    Type: cate.Type
                 });
             }
         }
@@ -420,15 +427,14 @@ const CategoryDashPage = () => {
                         <Form.Item label="Mô tả" name="Description" rules={[{ required: true, message: 'Vui lòng nhập mô tả' }]}>
                             <Input />
                         </Form.Item>
-                        <Form.Item label="Dành cho" rules={[{ required: true, message: 'Vui lòng chọn loại dành cho !' }]}>
+                        <Form.Item label="Dành cho" name="Type">
                             <Select
-                                defaultValue="Nam"
+                                defaultValue={0}
                                 style={{ width: 120 }}
-                                //   onChange={handleChange}
                                 options={[
-                                    { value: 'Nam', label: 'Nam' },
-                                    { value: 'Nữ', label: 'Nữ' },
-                                    { value: 'Cả Nam & Nữ', label: 'Cả Nam & Nữ' },
+                                    { value: 0, label: 'Nam' },
+                                    { value: 1, label: 'Nữ' },
+                                    { value: 2, label: 'Cả Nam & Nữ' },
                                 ]}
                             />
                         </Form.Item>
@@ -459,7 +465,7 @@ const CategoryDashPage = () => {
                             <Input hidden name="Id" />
                         </Form.Item>
 
-                        <Form.Item label="Tên thương hiệu" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên thương hiệu' }]}>
+                        <Form.Item label="Tên danh mục" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên danh mục' }]}>
                             <Input />
                         </Form.Item>
 
@@ -472,7 +478,16 @@ const CategoryDashPage = () => {
                         >
                             <Input name="Description" />
                         </Form.Item>
-
+                        <Form.Item label="Dành cho" name="Type">
+                            <Select
+                                style={{ width: 120 }}
+                                options={[
+                                    { value: 0, label: 'Nam' },
+                                    { value: 1, label: 'Nữ' },
+                                    { value: 2, label: 'Cả Nam & Nữ' },
+                                ]}
+                            />
+                        </Form.Item>
                         <Form.Item>
                             <Button style={{
                                 backgroundColor: "#000000",
