@@ -17,6 +17,7 @@ const RosPage = () => {
   const [orderSales, setOrderSales] = useState<number>(0);
   const [importCost, setImportCost] = useState<number>(0);
   const [countOrder, setCountOrder] = useState<number>(0);
+  const [interest, setInterest] = useState<number>(0);
   const [brandSales, setBrandSale] = useState([]);
   const [brandStock, setBrandStock] = useState([])
   const [loading, setloading] = useState<boolean>(true)
@@ -27,6 +28,7 @@ const RosPage = () => {
     axios.get(`${baseApi}/Statistics/CountOrdersMonth/${month}`,{ headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => setCountOrder(res.data))
     axios.get(`${baseApi}/Statistics/ImportTotalMonth/${month}`,{ headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => setImportCost(res.data))
     axios.get(`${baseApi}/Statistics/BrandCountSales/${month}`,{ headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => setBrandSale(res.data))
+    axios.get(`${baseApi}/Statistics/InterestMonth/${month}`,{ headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => setInterest(res.data))
     axios.get(`${baseApi}/Statistics/BrandCountStock`,{ headers: { 'Access-Control-Allow-Origin': "*", 'Authorization': `Bearer ${currentToken}` } }).then(res => setBrandStock(res.data))
     setloading(false)
   }, [baseApi, month])
@@ -260,7 +262,7 @@ const RosPage = () => {
                     >
                       Lợi nhuận
                     </h4>
-                    <h4 style={{ textAlign: "center" }}>{moneyFormatter.format(orderSales - importCost)}</h4>
+                    <h4 style={{ textAlign: "center" }}>{moneyFormatter.format(interest)}</h4>
                   </Card>
                 </Space>
               </Skeleton>
