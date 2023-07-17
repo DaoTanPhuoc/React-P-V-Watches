@@ -284,6 +284,20 @@ const SuppilersDashboard = () => {
     const [isModalOpenBrand, setIsModalOpenBrand] = useState(false);
     const [currentBrand, setCurrentBrand] = useState<number>();
 
+    useEffect(() => {
+        if (currentBrand) {
+            const supp = category.find(b => b.Id === currentBrand);
+
+            if (supp) {
+                editRef.current?.setFieldsValue({
+                    Id: supp.Id,
+                    Name: supp.Name,
+                    Address: supp.Address
+                });
+            }
+        }
+    }, [currentBrand, category]);
+
     const showModalBrand = (Id: any) => {
         const cate = category.find(b => b.Id === Id);
         setCurrentBrand(Id);
